@@ -1,0 +1,266 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Mohave:ital,wght@0,300..700;1,300..700&family=Orbitron:wght@400..900&display=swap");
+
+:root {
+  font-family: "Mohave", sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: #000;
+  background-color: #fff;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --background1-color: #8b0000;
+  --background2-color: #ffffff;
+
+  --foreground1a-color: #ffffff;
+  --foreground1b-color: #ffff00;
+  --foreground2-color: #000000;
+
+  --antiquebronce-color: #6d4800;
+  --emerald-color: #72ff30;
+  --gamboge-color: #ed9c00;
+  --gray-color: #ababab;
+  --blackWhite1-color: #333333;
+  --koi-color: #609bd3;
+  --redwhite1-color: #feeaea;
+  --redwhite2-color: #eb9494;
+  --ultramarin-color: #305dff;
+  --water-color: #0081d1;
+
+  --header-font-size: 2.4rem;
+  --title-font-size: 2rem;
+  --text-font-size: 1.2rem;
+}
+
+* {
+  font-size: 62.5%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: var(--background2-color);
+  text-decoration: inherit;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+/* font family styles */
+
+.mohave--regular {
+  font-family: "Mohave", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+.mohave--medium {
+  font-family: "Mohave", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+.mohave--semibold {
+  font-family: "Mohave", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
+.mohave--bold {
+  font-family: "Mohave", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.orbitron--regular {
+  font-family: "Orbitron", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+.orbitron--medium {
+  font-family: "Orbitron", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+.orbitron--semibold {
+  font-family: "Orbitron", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
+.orbitron--bold {
+  font-family: "Orbitron", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.bebasneue--regular {
+  font-family: "Bebas Neue", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.centerPanel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.container {
+  background-color: var(--background1-color);
+  border-radius: 45px;
+  width: calc(100vw - 60px);
+  height: calc(100vh - 40px);
+  box-sizing: border-box;
+  transform-origin: center;
+  padding: 30px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.box {
+  width: 200px;
+  height: 200px;
+  background: var(--koi-color);
+}
+
+.wraper--date__filter {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  gap: 16px;
+}
+
+.date-dropdown {
+  display: flex;
+  flex-direction: column;
+}
+
+.date-label {
+  font-size: 2.4rem;
+  font-weight: 800;
+}
+
+.date-input {
+  width: 50%;
+  border: transparent;
+  cursor: pointer;
+  background-color: #fff;
+  font-size: 2.4rem;
+  color: #000;
+  position: relative;
+}
+
+.date-input:focus {
+  border: transparent;
+  outline: none;
+}
+.select-input {
+  width: 30%;
+  border: transparent;
+  cursor: pointer;
+  background-color: #fff;
+  font-size: 2.4rem;
+  color: #000;
+  position: relative;
+}
+
+.select-input:focus {
+  border: transparent;
+  outline: none;
+}
+.date-input {
+  width: 50%;
+  border: transparent;
+  cursor: pointer;
+  background-color: #fff;
+  font-size: 2.4rem;
+  color: #000;
+  position: relative;
+}
+
+.date-input:focus {
+  border: transparent;
+  outline: none;
+}
+
+/* Custom arrow */
+.date-input::after {
+  content: "\25BC";
+  font-size: 2.4rem;
+  font-weight: 800;
+  position: absolute;
+  right: 0;
+  top: -5%;
+  pointer-events: none;
+  cursor: pointer;
+}
+
+@media (prefers-color-scheme: light) {
+  /* :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  } */
+}

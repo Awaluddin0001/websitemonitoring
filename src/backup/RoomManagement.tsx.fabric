@@ -1,0 +1,259 @@
+import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { fabric } from "fabric";
+import styles from "./RoomManagement.module.css";
+import move from "../assets/move.svg";
+import rect from "../assets/rect.svg";
+import circle from "../assets/circle.svg";
+import text from "../assets/text.svg";
+import save from "../assets/save.svg";
+import off from "../assets/off.svg";
+import uploadIcon from "../assets/upload.svg";
+
+const RoomManagement: React.FC = () => {
+  const navigate = useNavigate();
+  const canvasRef = useRef<fabric.Canvas | null>(null);
+  const [selectedObject, setSelectedObject] = useState<fabric.Object | null>(
+    null
+  );
+  const [objectProperties, setObjectProperties] = useState({
+    fill: "",
+    width: 0,
+    height: 0,
+  });
+
+  useEffect(() => {
+    const canvas = new fabric.Canvas("canvas", {
+      width: window.innerWidth * 0.92,
+      height: window.innerHeight,
+    });
+    canvasRef.current = canvas;
+
+    const handleObjectSelected = () => {
+      const activeObject = canvas.getActiveObject();
+      if (activeObject) {
+        setSelectedObject(activeObject);
+        setObjectProperties({
+          fill: activeObject.get("fill") as string,
+          width: activeObject.get("width") as number,
+          height: activeObject.get("height") as number,
+        });
+      }
+    };
+
+    canvas.on("selection:created", handleObjectSelected);
+    canvas.on("selection:updated", handleObjectSelected);
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Delete" || event.key === "Backspace") {
+        const activeObject = canvas.getActiveObject();
+        if (activeObject) {
+          canvas.remove(activeObject);
+          setSelectedObject(null);
+          setObjectProperties({
+            fill: "",
+            width: 0,
+            height: 0,
+          });
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      canvas.dispose();
+    };
+  }, []);
+
+  const addRectangle = () => {
+    const rect = new fabric.Rect({
+      left: 100,
+      top: 100,
+      fill: "red",
+      width: 50,
+      height: 50,
+    });
+    canvasRef.current?.add(rect);
+  };
+
+  const addCircle = () => {
+    const circle = new fabric.Circle({
+      left: 150,
+      top: 150,
+      radius: 50,
+      fill: "green",
+    });
+    canvasRef.current?.add(circle);
+  };
+
+  const addText = () => {
+    const text = new fabric.Textbox("Hello Fabric.js", {
+      left: 200,
+      top: 200,
+      width: 200,
+      fontSize: 20,
+    });
+    canvasRef.current?.add(text);
+  };
+
+  const handleUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (f) {
+        const data = f.target?.result;
+        if (data && typeof data === "string") {
+          fabric.Image.fromURL(data, (img) => {
+            canvasRef.current?.add(img);
+          });
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handlePropertyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setObjectProperties((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+
+    if (selectedObject) {
+      if (name === "fill") {
+        selectedObject.set(name, value);
+      } else if (name === "width" || name === "height") {
+        selectedObject.set(name, parseFloat(value));
+      }
+      canvasRef.current?.renderAll();
+    }
+  };
+
+  const groupObjects = () => {
+    if (!canvasRef.current) return;
+    const activeObject = canvasRef.current.getActiveObject();
+    if (!activeObject) return;
+
+    if (activeObject.type === "activeSelection") {
+      const group = (activeObject as fabric.ActiveSelection).toGroup();
+      canvasRef.current.setActiveObject(group);
+      canvasRef.current.requestRenderAll();
+    }
+  };
+
+  const ungroupObjects = () => {
+    if (!canvasRef.current) return;
+    const activeObject = canvasRef.current.getActiveObject();
+    if (!activeObject) return;
+
+    if (activeObject.type === "group") {
+      const items = (activeObject as fabric.Group).getObjects();
+      canvasRef.current.remove(activeObject);
+      canvasRef.current.add(...items);
+      canvasRef.current.setActiveObject(
+        new fabric.ActiveSelection(items, {
+          canvas: canvasRef.current,
+        })
+      );
+      canvasRef.current.requestRenderAll();
+    }
+  };
+
+  const bringForward = () => {
+    if (selectedObject) {
+      selectedObject.bringForward();
+      canvasRef.current?.renderAll();
+    }
+  };
+
+  const sendBackward = () => {
+    if (selectedObject) {
+      selectedObject.sendBackwards();
+      canvasRef.current?.renderAll();
+    }
+  };
+
+  return (
+    <div
+      className={styles.containerRm}
+      style={{
+        width: `${window.innerWidth}px`,
+        height: `${window.innerHeight}px`,
+      }}
+    >
+      <div className={styles.detailObject}>
+        {selectedObject && (
+          <div className={styles.properties}>
+            <div className={styles.propertiesLabel}>
+              <label className="mohave--medium">Color:</label>
+              <input
+                type="color"
+                name="fill"
+                value={objectProperties.fill}
+                onChange={handlePropertyChange}
+                className={styles.color}
+              />
+            </div>
+            <div className={styles.propertiesLabel}>
+              <label className="mohave--medium">Width:</label>
+              <input
+                type="number"
+                name="width"
+                value={objectProperties.width}
+                onChange={handlePropertyChange}
+              />
+            </div>
+            <div className={styles.propertiesLabel}>
+              <label className="mohave--medium">Height:</label>
+              <input
+                type="number"
+                name="height"
+                value={objectProperties.height}
+                onChange={handlePropertyChange}
+              />
+            </div>
+            <button onClick={groupObjects}>Group</button>
+            <button onClick={ungroupObjects}>Ungroup</button>
+            <button onClick={bringForward}>Bring Forward</button>
+            <button onClick={sendBackward}>Send Backward</button>
+          </div>
+        )}
+      </div>
+      <div className={styles.playground}>
+        <div className={styles.containerButton}>
+          <div className={styles.actionButton}>
+            <img src={move} alt="move" />
+            <img src={rect} alt="rect" onClick={addRectangle} />
+            <img src={circle} alt="circle" onClick={addCircle} />
+            <img src={text} alt="text" onClick={addText} />
+            <label htmlFor="upload" className={styles.uploadLabel}>
+              <img src={uploadIcon} alt="upload" />
+              <input
+                id="upload"
+                type="file"
+                accept="image/*"
+                style={{ display: "none" }}
+                onChange={handleUpload}
+              />
+            </label>
+          </div>
+          <div className={styles.otherButton}>
+            <div className={styles.saveButton}>
+              <img src={save} alt="save" />
+            </div>
+            <div className={styles.offButton} onClick={() => navigate(-1)}>
+              <img src={off} alt="off" />
+            </div>
+          </div>
+        </div>
+        <div className={styles.containerDrawing}>
+          <canvas id="canvas"></canvas>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default RoomManagement;

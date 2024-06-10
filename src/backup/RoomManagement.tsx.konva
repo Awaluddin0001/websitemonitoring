@@ -1,0 +1,553 @@
+import React, { useState, useRef, useEffect, useCallback } from "react";
+import {
+  Stage,
+  Layer,
+  Rect,
+  Text,
+  Circle,
+  Image as KonvaImage,
+  Transformer,
+} from "react-konva";
+import Konva from "konva";
+import useImage from "use-image";
+import { useNavigate } from "react-router-dom";
+import styles from "./RoomManagement.module.css";
+import move from "../assets/move.svg";
+import rect from "../assets/rect.svg";
+import circle from "../assets/circle.svg";
+import text from "../assets/text.svg";
+import save from "../assets/save.svg";
+import off from "../assets/off.svg";
+import uploadIcon from "../assets/upload.svg";
+
+type Rectangle = {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  fill: string;
+  id: string;
+  stroke: string;
+  strokeWidth: number;
+};
+
+type EditableText = {
+  x: number;
+  y: number;
+  text: string;
+  id: string;
+  fontSize: number;
+  fontWeight: string;
+};
+
+type EditableCircle = {
+  x: number;
+  y: number;
+  radius: number;
+  fill: string;
+  id: string;
+  stroke: string;
+  strokeWidth: number;
+};
+
+type EditableImage = {
+  x: number;
+  y: number;
+  src: string;
+  id: string;
+  width: number;
+  height: number;
+};
+
+const RoomManagement: React.FC = () => {
+  const navigate = useNavigate();
+  const [mode, setMode] = useState<string>("move");
+  const [rectangles, setRectangles] = useState<Rectangle[]>([]);
+  const [texts, setTexts] = useState<EditableText[]>([]);
+  const [circles, setCircles] = useState<EditableCircle[]>([]);
+  const [images, setImages] = useState<EditableImage[]>([]);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [editingTextId, setEditingTextId] = useState<string | null>(null);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [textAreaStyle, setTextAreaStyle] = useState({});
+  const [currentText, setCurrentText] = useState("");
+  const [drawing, setDrawing] = useState<boolean>(false);
+  const stageRef = useRef<any>(null);
+  const transformerRef = useRef<any>(null);
+  const textInputRef = useRef<HTMLTextAreaElement | null>(null);
+
+  const handleMouseMove = (event: React.MouseEvent) => {
+    setMousePos({
+      x: event.clientX,
+      y: event.clientY,
+    });
+
+    if (drawing && mode === "rect") {
+      const newRectangles = rectangles.slice();
+      const index = newRectangles.length - 1;
+      const rect = newRectangles[index];
+      if (rect) {
+        newRectangles[index] = {
+          ...rect,
+          width: mousePos.x - rect.x,
+          height: mousePos.y - rect.y,
+        };
+        setRectangles(newRectangles);
+      }
+    } else if (drawing && mode === "circle") {
+      const newCircles = circles.slice();
+      const index = newCircles.length - 1;
+      const circle = newCircles[index];
+      if (circle) {
+        const radius = Math.sqrt(
+          Math.pow(mousePos.x - circle.x, 2) +
+            Math.pow(mousePos.y - circle.y, 2)
+        );
+        newCircles[index] = {
+          ...circle,
+          radius,
+        };
+        setCircles(newCircles);
+      }
+    } else if (drawing && mode === "text") {
+      const newTexts = texts.slice();
+      const index = newTexts.length - 1;
+      const text = newTexts[index];
+      if (text) {
+        newTexts[index] = {
+          ...text,
+          fontSize: Math.max(10, mousePos.x - text.x),
+        };
+        setTexts(newTexts);
+      }
+    }
+  };
+
+  const handleMouseDown = (event: React.MouseEvent) => {
+    if (mode === "move" && event.target === stageRef.current) {
+      setSelectedId(null);
+      setEditingTextId(null);
+    }
+
+    if (mode === "rect") {
+      if (!drawing) {
+        const rect: Rectangle = {
+          x: mousePos.x,
+          y: mousePos.y,
+          width: 0,
+          height: 0,
+          fill: "red",
+          id: `rect${rectangles.length + 1}`,
+          stroke: "black",
+          strokeWidth: 1,
+        };
+        setRectangles([...rectangles, rect]);
+        setDrawing(true);
+      } else {
+        setDrawing(false);
+      }
+    }
+
+    if (mode === "circle") {
+      if (!drawing) {
+        const circle: EditableCircle = {
+          x: mousePos.x,
+          y: mousePos.y,
+          radius: 0,
+          fill: "blue",
+          id: `circle${circles.length + 1}`,
+          stroke: "black",
+          strokeWidth: 1,
+        };
+        setCircles([...circles, circle]);
+        setDrawing(true);
+      } else {
+        setDrawing(false);
+      }
+    }
+
+    if (mode === "text") {
+      if (!drawing) {
+        const text: EditableText = {
+          x: mousePos.x,
+          y: mousePos.y,
+          text: "Double-click to edit",
+          id: `text${texts.length + 1}`,
+          fontSize: 20,
+          fontWeight: "normal",
+        };
+        setTexts([...texts, text]);
+        setDrawing(true);
+      } else {
+        setDrawing(false);
+      }
+    }
+  };
+
+  const addImage = useCallback((src: string) => {
+    if (stageRef.current) {
+      const stage = stageRef.current;
+      const stageWidth = stage.width();
+      const stageHeight = stage.height();
+      const img: EditableImage = {
+        x: stageWidth / 2 - 50,
+        y: stageHeight / 2 - 50,
+        src,
+        id: `img${images.length + 1}`,
+        width: 100,
+        height: 100,
+      };
+      setImages((prevImages) => [...prevImages, img]);
+      setMode("move");
+      setSelectedId(img.id);
+    }
+  }, []);
+
+  const handleObjectClick = (id: string) => {
+    if (mode === "move") {
+      setSelectedId(id);
+    }
+  };
+
+  const handleTextDblClick = (textNode: any) => {
+    if (mode === "move") {
+      const { x, y, text } = textNode.attrs;
+      const stageBox = stageRef.current.container().getBoundingClientRect();
+
+      setTextAreaStyle({
+        position: "absolute",
+        top: `${stageBox.top + y}px`,
+        left: `${stageBox.left + x}px`,
+        width: "200px",
+        height: "50px",
+        fontSize: "20px",
+        padding: "0px",
+        margin: "0px",
+        border: "none",
+        outline: "none",
+        resize: "none",
+        backgroundColor: "transparent",
+        transformOrigin: "left top",
+        textAlign: "left",
+        color: "black",
+        overflow: "hidden",
+        lineHeight: "normal",
+        fontFamily: "Arial",
+        transform: "rotate(0deg)",
+        zIndex: 1000,
+      });
+
+      setCurrentText(text);
+      setEditingTextId(textNode.attrs.id);
+    }
+  };
+
+  const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setCurrentText(e.target.value);
+    const updatedTexts = texts.map((text) => {
+      if (text.id === editingTextId) {
+        return { ...text, text: e.target.value };
+      }
+      return text;
+    });
+    setTexts(updatedTexts);
+  };
+
+  const handleTextBlur = () => {
+    setEditingTextId(null);
+  };
+
+  const deleteSelectedShape = useCallback(() => {
+    if (selectedId) {
+      setRectangles(rectangles.filter((rect) => rect.id !== selectedId));
+      setTexts(texts.filter((text) => text.id !== selectedId));
+      setCircles(circles.filter((circle) => circle.id !== selectedId));
+      setImages(images.filter((img) => img.id !== selectedId));
+      setSelectedId(null);
+    }
+  }, [selectedId, rectangles, texts, circles, images]);
+
+  useEffect(() => {
+    if (selectedId && transformerRef.current) {
+      const selectedNode = stageRef.current.findOne(`#${selectedId}`);
+      if (selectedNode) {
+        transformerRef.current.nodes([selectedNode]);
+        transformerRef.current.getLayer().batchDraw();
+      }
+    }
+  }, [selectedId, rectangles, texts, circles, images]);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Delete" || event.key === "Backspace") {
+        deleteSelectedShape();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [deleteSelectedShape]);
+
+  const URLImage = ({ image }: { image: EditableImage }) => {
+    const [img] = useImage(image.src);
+    const imageRef = useRef<Konva.Image>(null);
+
+    useEffect(() => {
+      if (
+        selectedId === image.id &&
+        transformerRef.current &&
+        imageRef.current
+      ) {
+        transformerRef.current.nodes([imageRef.current]);
+        transformerRef.current.getLayer().batchDraw();
+      }
+    }, [selectedId]);
+
+    return (
+      <KonvaImage
+        image={img}
+        x={image.x}
+        y={image.y}
+        width={image.width}
+        height={image.height}
+        draggable={mode === "move"}
+        onClick={() => handleObjectClick(image.id)}
+        onTap={() => handleObjectClick(image.id)}
+        onDragEnd={(e) => {
+          if (mode === "move") {
+            const updatedImages = images.map((i) => {
+              if (i.id === image.id) {
+                return {
+                  ...i,
+                  x: e.target.x(),
+                  y: e.target.y(),
+                };
+              }
+              return i;
+            });
+            setImages(updatedImages);
+          }
+        }}
+        onTransformEnd={(e) => {
+          if (mode === "move") {
+            const node = e.target;
+            const scaleX = node.scaleX();
+            const scaleY = node.scaleY();
+            const updatedImages = images.map((i) => {
+              if (i.id === image.id) {
+                return {
+                  ...i,
+                  x: node.x(),
+                  y: node.y(),
+                  width: Math.max(5, node.width() * scaleX),
+                  height: Math.max(5, node.height() * scaleY),
+                };
+              }
+              return i;
+            });
+            node.scaleX(1);
+            node.scaleY(1);
+            setImages(updatedImages);
+          }
+        }}
+        ref={imageRef}
+      />
+    );
+  };
+
+  return (
+    <div
+      className={styles.containerRm}
+      onMouseMove={handleMouseMove}
+      onMouseDown={handleMouseDown}
+    >
+      <div className={styles.detailObject}>
+        {/* Implement detail editing UI here */}
+      </div>
+      <div className={styles.playground}>
+        <div className={styles.containerButton}>
+          <div className={styles.actionButton}>
+            <img src={move} alt="move" onClick={() => setMode("move")} />
+            <img src={rect} alt="rect" onClick={() => setMode("rect")} />
+            <img src={circle} alt="circle" onClick={() => setMode("circle")} />
+            <img src={text} alt="text" onClick={() => setMode("text")} />
+            <label htmlFor="upload" className={styles.uploadLabel}>
+              <img src={uploadIcon} alt="upload" />
+              <input
+                id="upload"
+                type="file"
+                accept="image/*"
+                style={{ display: "none" }}
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) {
+                    const reader = new FileReader();
+                    reader.onload = () => {
+                      addImage(reader.result as string);
+                    };
+                    reader.readAsDataURL(file);
+                  }
+                }}
+              />
+            </label>
+          </div>
+          <div className={styles.otherButton}>
+            <div className={styles.saveButton}>
+              <img src={save} alt="save" />
+            </div>
+            <div className={styles.offButton} onClick={() => navigate(-1)}>
+              <img src={off} alt="off" />
+            </div>
+          </div>
+        </div>
+        <div className={styles.containerDrawing}>
+          <Stage
+            width={window.innerWidth}
+            height={window.innerHeight}
+            ref={stageRef}
+          >
+            <Layer>
+              {rectangles.map((rect) => (
+                <Rect
+                  key={rect.id}
+                  {...rect}
+                  draggable={mode === "move"}
+                  onClick={() => handleObjectClick(rect.id)}
+                  onTap={() => handleObjectClick(rect.id)}
+                  onDragEnd={(e) => {
+                    if (mode === "move") {
+                      const updatedRectangles = rectangles.map((r) => {
+                        if (r.id === rect.id) {
+                          return {
+                            ...r,
+                            x: e.target.x(),
+                            y: e.target.y(),
+                          };
+                        }
+                        return r;
+                      });
+                      setRectangles(updatedRectangles);
+                    }
+                  }}
+                  onTransformEnd={(e) => {
+                    if (mode === "move") {
+                      const node = e.target;
+                      const scaleX = node.scaleX();
+                      const scaleY = node.scaleY();
+                      const updatedRectangles = rectangles.map((r) => {
+                        if (r.id === rect.id) {
+                          return {
+                            ...r,
+                            x: node.x(),
+                            y: node.y(),
+                            width: Math.max(5, node.width() * scaleX),
+                            height: Math.max(5, node.height() * scaleY),
+                          };
+                        }
+                        return r;
+                      });
+                      node.scaleX(1);
+                      node.scaleY(1);
+                      setRectangles(updatedRectangles);
+                    }
+                  }}
+                />
+              ))}
+              {texts.map((text) => (
+                <Text
+                  key={text.id}
+                  id={text.id}
+                  x={text.x}
+                  y={text.y}
+                  text={text.text}
+                  fontSize={text.fontSize}
+                  fontStyle={text.fontWeight}
+                  draggable={mode === "move"}
+                  onClick={() => handleObjectClick(text.id)}
+                  onTap={() => handleObjectClick(text.id)}
+                  onDblClick={(e) => handleTextDblClick(e.target)}
+                  onDragEnd={(e) => {
+                    if (mode === "move") {
+                      const updatedTexts = texts.map((t) => {
+                        if (t.id === text.id) {
+                          return {
+                            ...t,
+                            x: e.target.x(),
+                            y: e.target.y(),
+                          };
+                        }
+                        return t;
+                      });
+                      setTexts(updatedTexts);
+                    }
+                  }}
+                />
+              ))}
+              {circles.map((circle) => (
+                <Circle
+                  key={circle.id}
+                  {...circle}
+                  draggable={mode === "move"}
+                  onClick={() => handleObjectClick(circle.id)}
+                  onTap={() => handleObjectClick(circle.id)}
+                  onDragEnd={(e) => {
+                    if (mode === "move") {
+                      const updatedCircles = circles.map((c) => {
+                        if (c.id === circle.id) {
+                          return {
+                            ...c,
+                            x: e.target.x(),
+                            y: e.target.y(),
+                          };
+                        }
+                        return c;
+                      });
+                      setCircles(updatedCircles);
+                    }
+                  }}
+                  onTransformEnd={(e) => {
+                    if (mode === "move") {
+                      const node = e.target as Konva.Circle;
+                      const scaleX = node.scaleX();
+                      const updatedCircles = circles.map((c) => {
+                        if (c.id === circle.id) {
+                          return {
+                            ...c,
+                            x: node.x(),
+                            y: node.y(),
+                            radius: Math.max(5, node.radius() * scaleX),
+                          };
+                        }
+                        return c;
+                      });
+                      node.scaleX(1);
+                      node.scaleY(1);
+                      setCircles(updatedCircles);
+                    }
+                  }}
+                />
+              ))}
+              {images.map((img) => (
+                <URLImage key={img.id} image={img} />
+              ))}
+              <Transformer ref={transformerRef} />
+            </Layer>
+          </Stage>
+          {editingTextId && (
+            <textarea
+              ref={textInputRef}
+              style={textAreaStyle}
+              value={currentText}
+              onChange={handleTextChange}
+              onBlur={handleTextBlur}
+            />
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default RoomManagement;

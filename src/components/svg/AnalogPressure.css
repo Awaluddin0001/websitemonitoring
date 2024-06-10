@@ -1,0 +1,6 @@
+/* AnalogPressure.css */
+.jarum {
+  transform-box: fill-box;
+  transform-origin: bottom center;
+  transition: transform 1s ease-in-out;
+}

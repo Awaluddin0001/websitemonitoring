@@ -1,0 +1,693 @@
+import React, { useEffect, useRef, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { fabric } from "fabric";
+import axios from "axios";
+import styles from "./RoomManagement.module.css";
+import rect from "../assets/rect.svg";
+import circle from "../assets/circle.svg";
+import triangle from "../assets/triangle.svg";
+import text from "../assets/text.svg";
+import save from "../assets/save.svg";
+import undo from "../assets/undo.svg";
+import off from "../assets/off.svg";
+import uploadIcon from "../assets/upload.svg";
+import HandSvg from "../components/svg/HandSvg";
+
+// Perluas interface fabric.Canvas dengan properti tambahan
+interface CustomFabricCanvas extends fabric.Canvas {
+  isDragging?: boolean;
+  lastPosX?: number;
+  lastPosY?: number;
+}
+
+const throttle = (func: (...args: any[]) => void, limit: number) => {
+  let inThrottle: boolean;
+  return function (this: any, ...args: any[]) {
+    const context = this;
+    if (!inThrottle) {
+      func.apply(context, args);
+      inThrottle = true;
+      setTimeout(() => (inThrottle = false), limit);
+    }
+  };
+};
+
+const RoomManagement: React.FC = () => {
+  const navigate = useNavigate();
+  const { floor } = useParams();
+  const canvasRef = useRef<CustomFabricCanvas | null>(null);
+  const [selectedObject, setSelectedObject] = useState<fabric.Object | null>(
+    null
+  );
+  const [objectProperties, setObjectProperties] = useState({
+    fill: "",
+    stroke: "",
+    strokeWidth: 1,
+  });
+  const [isPanMode, setIsPanMode] = useState(false);
+  const [selectedCanvas, setSelectedCanvas] = useState(floor);
+  const [selectedObjects, setSelectedObjects] = useState<fabric.Object[]>([]);
+  const copiedObjectRef = useRef<fabric.Object | null>(null);
+
+  useEffect(() => {
+    navigate(`/roomManagement/${selectedCanvas}`);
+    const canvas = new fabric.Canvas("canvas", {
+      width: window.innerWidth * 0.92,
+      height: window.innerHeight,
+    }) as CustomFabricCanvas;
+    canvasRef.current = canvas;
+
+    const handleObjectSelected = () => {
+      const activeObject = canvas.getActiveObject();
+      const activeGroup = canvas.getActiveObjects();
+      if (activeObject) {
+        setSelectedObject(activeObject);
+        setSelectedObjects(activeGroup);
+        setObjectProperties({
+          fill: activeObject.get("fill") as string,
+          stroke: activeObject.get("stroke") as string,
+          strokeWidth: activeObject.get("strokeWidth") as number,
+        });
+      }
+    };
+
+    canvas.on("selection:created", handleObjectSelected);
+    canvas.on("selection:updated", handleObjectSelected);
+    canvas.on("selection:cleared", () => {
+      setSelectedObject(null);
+      setSelectedObjects([]);
+      setObjectProperties({
+        fill: "",
+        stroke: "",
+        strokeWidth: 1,
+      });
+    });
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Delete") {
+        const activeObject = canvas.getActiveObject();
+        if (activeObject) {
+          canvas.remove(activeObject);
+          setSelectedObject(null);
+          setSelectedObjects([]);
+          setObjectProperties({
+            fill: "",
+            stroke: "",
+            strokeWidth: 1,
+          });
+        }
+      }
+
+      // Copy (Ctrl + C)
+      if (event.ctrlKey && event.key === "c") {
+        const activeObject = canvas.getActiveObject();
+        if (activeObject) {
+          activeObject.clone((cloned: fabric.Object) => {
+            copiedObjectRef.current = cloned;
+          });
+        }
+      }
+
+      // Paste (Ctrl + V)
+      if (event.ctrlKey && event.key === "v") {
+        if (copiedObjectRef.current) {
+          copiedObjectRef.current.clone((clonedObj: fabric.Object) => {
+            canvas.discardActiveObject();
+            clonedObj.set({
+              left: clonedObj.left! + 10,
+              top: clonedObj.top! + 10,
+            });
+            canvas.add(clonedObj);
+            canvas.setActiveObject(clonedObj);
+            canvas.requestRenderAll();
+          });
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    loadCanvas(selectedCanvas!);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      canvas.dispose();
+    };
+  }, [selectedCanvas, navigate]);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+
+    if (!canvas) return;
+
+    const handleMouseWheel = throttle((opt: fabric.IEvent<WheelEvent>) => {
+      if (!isPanMode) return;
+      const delta = opt.e.deltaY;
+      let zoom = canvas.getZoom();
+      zoom *= 0.999 ** delta;
+      if (zoom > 20) zoom = 20;
+      if (zoom < 0.01) zoom = 0.01;
+      canvas.zoomToPoint({ x: opt.e.offsetX, y: opt.e.offsetY }, zoom);
+      opt.e.preventDefault();
+      opt.e.stopPropagation();
+      canvas.requestRenderAll();
+    }, 50);
+
+    const handleMouseDown = (opt: fabric.IEvent<MouseEvent>) => {
+      if (!isPanMode) return;
+      canvas.isDragging = true;
+      canvas.selection = false;
+      canvas.lastPosX = opt.e.clientX;
+      canvas.lastPosY = opt.e.clientY;
+    };
+
+    const handleMouseMove = (opt: fabric.IEvent<MouseEvent>) => {
+      if (!canvas.isDragging) return;
+      const e = opt.e;
+      const vpt = canvas.viewportTransform!;
+      vpt[4] += e.clientX - canvas.lastPosX!;
+      vpt[5] += e.clientY - canvas.lastPosY!;
+      canvas.requestRenderAll();
+      canvas.lastPosX = e.clientX;
+      canvas.lastPosY = e.clientY;
+    };
+
+    const handleMouseUp = () => {
+      canvas.setViewportTransform(canvas.viewportTransform!);
+      canvas.isDragging = false;
+      canvas.selection = true;
+    };
+
+    canvas.on("mouse:wheel", handleMouseWheel);
+    canvas.on("mouse:down", handleMouseDown);
+    canvas.on("mouse:move", handleMouseMove);
+    canvas.on("mouse:up", handleMouseUp);
+
+    return () => {
+      canvas.off("mouse:wheel", handleMouseWheel);
+      canvas.off("mouse:down", handleMouseDown);
+      canvas.off("mouse:move", handleMouseMove);
+      canvas.off("mouse:up", handleMouseUp);
+    };
+  }, [isPanMode]);
+
+  const togglePanMode = () => {
+    setIsPanMode((prevMode) => !prevMode);
+  };
+
+  const getVisibleCenter = () => {
+    const canvas = canvasRef.current;
+    if (canvas) {
+      const viewportTransform = canvas.viewportTransform || [1, 0, 0, 1, 0, 0];
+      const zoom = canvas.getZoom();
+      const centerX = canvas.width! / 2 / zoom - viewportTransform[4] / zoom;
+      const centerY = canvas.height! / 2 / zoom - viewportTransform[5] / zoom;
+      return { left: centerX, top: centerY };
+    }
+    return { left: 100, top: 100 };
+  };
+
+  const addRectangle = () => {
+    const center = getVisibleCenter();
+    const rect = new fabric.Rect({
+      ...center,
+      fill: "red",
+      width: 50,
+      height: 50,
+      stroke: objectProperties.stroke,
+      strokeWidth: objectProperties.strokeWidth,
+    });
+    canvasRef.current?.add(rect);
+  };
+
+  const addCircle = () => {
+    const center = getVisibleCenter();
+    const circle = new fabric.Circle({
+      ...center,
+      radius: 50,
+      fill: "green",
+      stroke: objectProperties.stroke,
+      strokeWidth: objectProperties.strokeWidth,
+    });
+    canvasRef.current?.add(circle);
+  };
+
+  const addTriangle = () => {
+    const center = getVisibleCenter();
+    const triangle = new fabric.Triangle({
+      ...center,
+      width: 50,
+      height: 50,
+      fill: "blue",
+      stroke: objectProperties.stroke,
+      strokeWidth: objectProperties.strokeWidth,
+    });
+    canvasRef.current?.add(triangle);
+  };
+
+  const addText = () => {
+    const center = getVisibleCenter();
+    const text = new fabric.Textbox("Klik 2x Untuk Mengubah Teks", {
+      ...center,
+      width: 200,
+      fontSize: 20,
+    });
+    canvasRef.current?.add(text);
+  };
+
+  const handleUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function (f) {
+        const data = f.target?.result;
+        if (data && typeof data === "string") {
+          fabric.Image.fromURL(data, (img) => {
+            canvasRef.current?.add(img);
+          });
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handlePropertyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setObjectProperties((prevState) => ({
+      ...prevState,
+      [name]: name === "strokeWidth" ? parseFloat(value) : value,
+    }));
+
+    if (selectedObject) {
+      if (name === "fill" || name === "stroke") {
+        selectedObject.set(name, value);
+      } else if (name === "strokeWidth") {
+        selectedObject.set(name, parseFloat(value));
+      }
+      canvasRef.current?.renderAll();
+    }
+  };
+
+  const groupObjects = () => {
+    if (!canvasRef.current) return;
+    const activeObject = canvasRef.current.getActiveObject();
+    if (!activeObject) return;
+
+    if (activeObject.type === "activeSelection") {
+      const group = (activeObject as fabric.ActiveSelection).toGroup();
+      canvasRef.current.setActiveObject(group);
+      canvasRef.current.requestRenderAll();
+    }
+  };
+
+  const ungroupObjects = () => {
+    if (!canvasRef.current) return;
+    const activeObject = canvasRef.current.getActiveObject();
+    if (!activeObject) return;
+
+    if (activeObject.type === "group") {
+      const items = (activeObject as fabric.Group).getObjects();
+      const groupLeft = activeObject.left || 0;
+      const groupTop = activeObject.top || 0;
+      canvasRef.current.remove(activeObject);
+      items.forEach((item) => {
+        item.left! += groupLeft;
+        item.top! += groupTop;
+        canvasRef.current!.add(item);
+      });
+      canvasRef.current.setActiveObject(
+        new fabric.ActiveSelection(items, {
+          canvas: canvasRef.current,
+        })
+      );
+      canvasRef.current.requestRenderAll();
+    }
+  };
+
+  const bringForward = () => {
+    if (selectedObject) {
+      selectedObject.bringForward();
+      canvasRef.current?.renderAll();
+    }
+  };
+
+  const sendBackward = () => {
+    if (selectedObject) {
+      selectedObject.sendBackwards();
+      canvasRef.current?.renderAll();
+    }
+  };
+
+  const alignLeft = () => {
+    if (selectedObjects.length > 1) {
+      const minX = Math.min(...selectedObjects.map((obj) => obj.left || 0));
+      selectedObjects.forEach((obj) => obj.set({ left: minX }));
+      canvasRef.current?.renderAll();
+    }
+  };
+
+  const alignRight = () => {
+    if (selectedObjects.length > 1 && canvasRef.current) {
+      const maxX = Math.max(
+        ...selectedObjects.map(
+          (obj) => (obj.left || 0) + (obj.getBoundingRect().width || 0)
+        )
+      );
+      selectedObjects.forEach((obj) =>
+        obj.set({ left: maxX - (obj.getBoundingRect().width || 0) })
+      );
+      canvasRef.current?.renderAll();
+    }
+  };
+
+  const alignTop = () => {
+    if (selectedObjects.length > 1) {
+      const minY = Math.min(...selectedObjects.map((obj) => obj.top || 0));
+      selectedObjects.forEach((obj) => obj.set({ top: minY }));
+      canvasRef.current?.renderAll();
+    }
+  };
+
+  const alignBottom = () => {
+    if (selectedObjects.length > 1 && canvasRef.current) {
+      const maxY = Math.max(
+        ...selectedObjects.map(
+          (obj) => (obj.top || 0) + (obj.getBoundingRect().height || 0)
+        )
+      );
+      selectedObjects.forEach((obj) =>
+        obj.set({ top: maxY - (obj.getBoundingRect().height || 0) })
+      );
+      canvasRef.current?.renderAll();
+    }
+  };
+
+  const alignCenterVertical = () => {
+    if (selectedObjects.length > 1) {
+      const centerY =
+        selectedObjects.reduce(
+          (sum, obj) =>
+            sum + ((obj.top || 0) + (obj.getBoundingRect().height || 0) / 2),
+          0
+        ) / selectedObjects.length;
+      selectedObjects.forEach((obj) =>
+        obj.set({ top: centerY - (obj.getBoundingRect().height || 0) / 2 })
+      );
+      canvasRef.current?.renderAll();
+    }
+  };
+
+  const alignCenterHorizontal = () => {
+    if (selectedObjects.length > 1) {
+      const centerX =
+        selectedObjects.reduce(
+          (sum, obj) =>
+            sum + ((obj.left || 0) + (obj.getBoundingRect().width || 0) / 2),
+          0
+        ) / selectedObjects.length;
+      selectedObjects.forEach((obj) =>
+        obj.set({ left: centerX - (obj.getBoundingRect().width || 0) / 2 })
+      );
+      canvasRef.current?.renderAll();
+    }
+  };
+
+  const saveCanvas = async (canvasName: string) => {
+    if (canvasRef.current) {
+      const canvas = canvasRef.current;
+      const objects = canvas.getObjects();
+      if (objects.length === 0) return;
+
+      // Calculate the bounding box of all objects
+      const boundingBox = canvas.getObjects().reduce(
+        (bbox, obj) => {
+          const objBbox = obj.getBoundingRect();
+          return {
+            left: Math.min(bbox.left, objBbox.left),
+            top: Math.min(bbox.top, objBbox.top),
+            right: Math.max(bbox.right, objBbox.left + objBbox.width),
+            bottom: Math.max(bbox.bottom, objBbox.top + objBbox.height),
+          };
+        },
+        { left: Infinity, top: Infinity, right: -Infinity, bottom: -Infinity }
+      );
+
+      // Set the dimensions based on the bounding box
+      const width = boundingBox.right - boundingBox.left;
+      const height = boundingBox.bottom - boundingBox.top;
+
+      // Create a temporary canvas to render the cropped content
+      const tempCanvas = new fabric.StaticCanvas(null, {
+        width,
+        height,
+      });
+
+      // Add a white background rectangle
+      const background = new fabric.Rect({
+        left: 0,
+        top: 0,
+        width,
+        height,
+        fill: "#ffffff",
+      });
+      tempCanvas.add(background);
+
+      // Clone objects and add them to the temporary canvas with adjusted positions
+      for (const obj of objects) {
+        await new Promise<void>((resolve) => {
+          obj.clone((cloned: fabric.Object) => {
+            cloned.set({
+              left: (obj.left || 0) - boundingBox.left,
+              top: (obj.top || 0) - boundingBox.top,
+            });
+            tempCanvas.add(cloned);
+            resolve();
+          });
+        });
+      }
+
+      // Render and save the canvas content
+      tempCanvas.renderAll();
+      const imageContent = tempCanvas.toDataURL({
+        format: "png",
+        quality: 1,
+        multiplier: 2,
+      });
+
+      const json = canvas.toJSON();
+
+      axios
+        .post("http://localhost:3001/api/v1/savespace", {
+          fileName: canvasName,
+          jsonContent: json,
+          imageContent: imageContent,
+        })
+        .then(() => {
+          alert(`${canvasName} saved!`);
+        })
+        .catch((err) => {
+          console.log(err);
+          alert("Failed to save file.");
+        });
+    }
+  };
+
+  const loadCanvas = (canvasName: string) => {
+    axios
+      .get(`http://localhost:3001/api/v1/loadspace/${canvasName}`)
+      .then((response) => {
+        if (canvasRef.current) {
+          canvasRef.current.loadFromJSON(response.data, () => {
+            canvasRef.current?.renderAll();
+            alert(`${canvasName} loaded!`);
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        alert("Failed to load file.");
+      });
+  };
+
+  const setTextStyle = (style: keyof fabric.Textbox) => {
+    if (selectedObject && selectedObject instanceof fabric.Textbox) {
+      if (style === "fontWeight") {
+        selectedObject.set(
+          "fontWeight",
+          selectedObject.fontWeight === "bold" ? "normal" : "bold"
+        );
+      } else if (style === "fontStyle") {
+        selectedObject.set(
+          "fontStyle",
+          selectedObject.fontStyle === "italic" ? "normal" : "italic"
+        );
+      } else if (style === "underline") {
+        selectedObject.set("underline", !selectedObject.underline);
+      }
+      canvasRef.current?.renderAll();
+    }
+  };
+
+  const handleTextPropertyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    if (selectedObject && selectedObject instanceof fabric.Textbox) {
+      selectedObject.set(name as keyof fabric.Textbox, value);
+      canvasRef.current?.renderAll();
+    }
+  };
+
+  return (
+    <div
+      className={styles.containerRm}
+      style={{
+        width: `${window.innerWidth}px`,
+        height: `${window.innerHeight}px`,
+      }}
+    >
+      <div className={styles.detailObject}>
+        {selectedObject && (
+          <div className={styles.properties}>
+            <div className={styles.propertiesLabel}>
+              <label className="mohave--medium">Color:</label>
+              <input
+                type="color"
+                name="fill"
+                value={objectProperties.fill}
+                onChange={handlePropertyChange}
+                className={styles.color}
+              />
+            </div>
+            {(selectedObject.type === "rect" ||
+              selectedObject.type === "circle" ||
+              selectedObject.type === "triangle") && (
+              <>
+                <div className={styles.propertiesLabel}>
+                  <label className="mohave--medium">Border Color:</label>
+                  <input
+                    type="color"
+                    name="stroke"
+                    value={objectProperties.stroke}
+                    onChange={handlePropertyChange}
+                    className={styles.color}
+                  />
+                </div>
+                <div className={styles.propertiesLabel}>
+                  <label className="mohave--medium">Border Width:</label>
+                  <input
+                    type="number"
+                    name="strokeWidth"
+                    value={objectProperties.strokeWidth}
+                    onChange={handlePropertyChange}
+                    className={styles.number}
+                    step="0.1"
+                  />
+                </div>
+              </>
+            )}
+            {selectedObject &&
+              selectedObjects.length === 1 &&
+              selectedObject instanceof fabric.Textbox && (
+                <>
+                  <button onClick={() => setTextStyle("fontWeight")}>
+                    Bold
+                  </button>
+                  <button onClick={() => setTextStyle("fontStyle")}>
+                    Italic
+                  </button>
+                  <button onClick={() => setTextStyle("underline")}>
+                    Underline
+                  </button>
+                  <div className={styles.propertiesLabel}>
+                    <label className="mohave--medium">Background Color:</label>
+                    <input
+                      type="color"
+                      name="backgroundColor"
+                      value={selectedObject.backgroundColor || ""}
+                      onChange={handleTextPropertyChange}
+                      className={styles.color}
+                    />
+                  </div>
+                </>
+              )}
+            <button onClick={groupObjects}>Group</button>
+            <button onClick={ungroupObjects}>Ungroup</button>
+            <button onClick={bringForward}>Bring Forward</button>
+            <button onClick={sendBackward}>Send Backward</button>
+            {selectedObjects.length > 1 && (
+              <>
+                <button onClick={alignLeft}>Align Left</button>
+                <button onClick={alignRight}>Align Right</button>
+                <button onClick={alignTop}>Align Top</button>
+                <button onClick={alignBottom}>Align Bottom</button>
+                <button onClick={alignCenterVertical}>
+                  Align Center Vertical
+                </button>
+                <button onClick={alignCenterHorizontal}>
+                  Align Center Horizontal
+                </button>
+              </>
+            )}
+          </div>
+        )}
+      </div>
+      <div className={styles.playground}>
+        <div className={styles.containerButton}>
+          <div onClick={togglePanMode} className={styles.handButton}>
+            <HandSvg color={isPanMode ? "#ffff00" : "#fff"} />
+          </div>
+          <div className={styles.actionButton}>
+            <img src={rect} alt="rect" onClick={addRectangle} />
+            <img src={circle} alt="circle" onClick={addCircle} />
+            <img src={triangle} alt="triangle" onClick={addTriangle} />
+            <img src={text} alt="text" onClick={addText} />
+            <label htmlFor="upload" className={styles.uploadLabel}>
+              <img src={uploadIcon} alt="upload" />
+              <input
+                id="upload"
+                type="file"
+                accept="image/*"
+                style={{ display: "none" }}
+                onChange={handleUpload}
+              />
+            </label>
+          </div>
+          <div className={styles.actionButton}>
+            <select
+              id="canvas-select"
+              value={selectedCanvas}
+              onChange={(e) => setSelectedCanvas(e.target.value)}
+              className={styles.selectionLantai}
+            >
+              <option value="lantai1">Lantai 1</option>
+              <option value="lantai2">Lantai 2</option>
+              <option value="lantai3">Lantai 3</option>
+              <option value="lantai4">Lantai 4</option>
+            </select>
+          </div>
+          <div className={styles.otherButton}>
+            <div className={styles.saveButton}>
+              <img src={undo} alt="undo" />
+              <img
+                src={save}
+                alt="save"
+                onClick={() => saveCanvas(selectedCanvas!)}
+              />
+            </div>
+
+            <div
+              className={styles.offButton}
+              onClick={() => navigate(`/space`)}
+            >
+              <img src={off} alt="off" />
+            </div>
+          </div>
+        </div>
+        <div className={styles.containerDrawing}>
+          <canvas id="canvas"></canvas>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default RoomManagement;

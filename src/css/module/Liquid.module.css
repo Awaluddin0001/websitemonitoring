@@ -1,0 +1,189 @@
+.headerDashboard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.headerDashboard h1 {
+  font-size: 2.4rem;
+  font-weight: 800;
+}
+
+.navRooms {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 2rem;
+}
+.navRooms div {
+  font-size: 2.4rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.inputDateWraper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  width: 40%;
+  gap: 16px;
+}
+
+.sectionWrapper {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: scroll;
+}
+
+.sectionWrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.sectionInfo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  padding: 10px 40px 10px 10px;
+}
+
+.sectionDetail {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 35px;
+}
+.sectionImage {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 20px;
+  font-size: 6.4rem;
+}
+
+.card {
+  padding: 25px 20px;
+  background-color: var(--background2-color);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  -webkit-box-shadow: 10px 15px 20px 4px rgba(0, 0, 0, 0.3);
+  box-shadow: 10px 15px 20px 4px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s linear;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  -webkit-box-shadow: 13px 18px 22px 4px rgba(139, 0, 0, 0.3);
+  box-shadow: 13px 18px 22px 4px rgba(139, 0, 0, 0.3);
+}
+
+.loadingData {
+  width: 75%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cardGrafik {
+  padding: 10px 16px;
+  background-color: var(--background2-color);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  -webkit-box-shadow: 10px 15px 10px 4px rgba(0, 0, 0, 0.3);
+  box-shadow: 10px 15px 10px 4px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s linear;
+}
+
+.cardGrafik:hover {
+  transform: translateY(-3px);
+  -webkit-box-shadow: 13px 18px 22px 4px rgba(139, 0, 0, 0.3);
+  box-shadow: 13px 18px 22px 4px rgba(139, 0, 0, 0.3);
+}
+.cardGrafikSmall {
+  padding: 10px 16px;
+  background-color: var(--background2-color);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+
+  -webkit-box-shadow: 10px 15px 10px 4px rgba(0, 0, 0, 0.3);
+  box-shadow: 10px 15px 10px 4px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s linear;
+}
+
+.cardGrafikSmall:hover {
+  transform: translateY(-3px);
+  -webkit-box-shadow: 13px 18px 22px 4px rgba(139, 0, 0, 0.3);
+  box-shadow: 13px 18px 22px 4px rgba(139, 0, 0, 0.3);
+}
+
+.headerCard {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: 16px;
+}
+
+.headerCard img {
+  width: 21px;
+  height: 23px;
+}
+
+.headerCard p {
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.bodyCard {
+  display: flex;
+  flex-direction: row;
+
+  justify-content: space-evenly;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.valueMeters {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 35px;
+}
+
+.valueMeter {
+  background-color: #212121;
+  padding: 5px 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--foreground1b-color);
+  font-size: 4.5rem;
+}
+
+.valueMeterFlex {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}

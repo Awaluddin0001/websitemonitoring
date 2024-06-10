@@ -1,0 +1,160 @@
+.containerRm {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.playground {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.detailObject {
+  background-color: var(--gray-color);
+  width: 10%;
+  height: 100%;
+}
+
+.containerButton {
+  flex-direction: column;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+
+  position: absolute;
+  top: 0%;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  z-index: 2;
+}
+
+.actionButton {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 20px;
+  border: 2px solid var(--gray-color);
+  border-radius: 10px;
+  background-color: #fff;
+}
+
+.actionButton img {
+  cursor: pointer;
+}
+
+.otherButton {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.addImage {
+  background-color: var(--foreground1b-color);
+  padding: 6px 8px;
+  font-size: 1.4rem;
+  font-weight: 800;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.saveButton {
+  padding: 13px;
+  border: 2px solid var(--gray-color);
+  border-radius: 10px;
+  gap: 20px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+}
+.handButton {
+  padding: 7px;
+  border: transparent;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.offButton {
+  padding: 13px;
+  border: 2px solid var(--gray-color);
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: #fff;
+}
+
+.containerDrawing {
+  width: 100%;
+  height: 100%;
+}
+
+.properties {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 16px;
+  margin-top: 20px;
+  margin-left: 10px;
+}
+
+.properties button {
+  background-color: white;
+  color: black;
+  font-size: 1.4rem;
+  width: 120px;
+}
+
+.propertiesLabel {
+  font-size: 3.2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.propertiesLabel input {
+  border: 2px solid black;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: transparent;
+  color: black;
+  width: 120px;
+}
+.propertiesLabel .color {
+  padding: 0px;
+  height: 60px;
+  width: 120px;
+}
+
+.btnLoad {
+  background-color: transparent;
+  color: black;
+  font-weight: 600;
+  font-size: 1.8rem;
+  padding: 0;
+  margin: 0;
+  padding: 4px 10px;
+}
+
+.selectionLantai {
+  background-color: transparent;
+  color: black;
+  font-weight: 600;
+  font-size: 1.8rem;
+  border: none;
+  outline: none;
+  padding: 4px 0px;
+}

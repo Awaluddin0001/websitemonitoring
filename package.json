@@ -1,0 +1,52 @@
+{
+  "name": "websitemonitorttcpengayoman",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --mode development",
+    "build": "tsc && vite build",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "axios": "^1.7.2",
+    "d3": "^7.9.0",
+    "fabric": "^5.3.0",
+    "framer-motion": "^11.1.9",
+    "konva": "^9.3.6",
+    "localforage": "^1.10.0",
+    "lottie-react": "^2.4.0",
+    "lottie-web": "^5.12.2",
+    "match-sorter": "^6.3.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-konva": "^18.2.10",
+    "react-router-dom": "^6.23.0",
+    "socket.io": "^4.7.5",
+    "socket.io-client": "^4.7.5",
+    "sort-by": "^0.0.2",
+    "use-image": "^1.1.1"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.4.5",
+    "@testing-library/react": "^15.0.7",
+    "@types/d3": "^7.4.3",
+    "@types/fabric": "^5.3.7",
+    "@types/node": "^20.12.11",
+    "@types/react": "^18.2.66",
+    "@types/react-dom": "^18.2.22",
+    "@typescript-eslint/eslint-plugin": "^7.2.0",
+    "@typescript-eslint/parser": "^7.2.0",
+    "@vitejs/plugin-react-swc": "^3.7.0",
+    "@vitest/ui": "^1.6.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.6",
+    "typescript": "^5.2.2",
+    "vite": "^5.2.11",
+    "vite-tsconfig-paths": "^4.3.2",
+    "vitest": "^1.6.0"
+  }
+}

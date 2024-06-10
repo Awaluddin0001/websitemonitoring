@@ -1,0 +1,29 @@
+.navbarContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  height: 100%;
+}
+
+.labelSwitch {
+  cursor: pointer;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.labelSwitch p {
+  font-size: 4rem;
+  font-weight: 600;
+  color: #ffffff;
+  transform-origin: center;
+}
+
+.navbarWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 33px;
+}
