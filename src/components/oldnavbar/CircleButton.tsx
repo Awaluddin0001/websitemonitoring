@@ -26,8 +26,6 @@ const CircleButton = ({
       ? location.pathname === "/"
       : location.pathname.startsWith(`${to}`);
 
-  console.log(to, isActive);
-
   return (
     <Link to={to} className={styles.buttonWrapper}>
       <motion.div

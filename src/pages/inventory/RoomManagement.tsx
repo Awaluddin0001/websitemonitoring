@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { fabric } from "fabric";
+import { Tooltip } from "react-tooltip";
 import axios from "axios";
 
 /* images */
@@ -10,12 +11,14 @@ import triangle from "@/assets/svg/triangle.svg";
 import text from "@/assets/svg/text.svg";
 import save from "@/assets/svg/save.svg";
 import undoImg from "@/assets/svg/undo.svg";
-import off from "@/assets/svg/off.svg";
+import off from "@/assets/svg/closing.svg";
 import uploadIcon from "@/assets/svg/upload.svg";
 import HandSvg from "@/components/svg/HandSvg";
 
 /* styles */
 import styles from "@/css/module/RoomManagement.module.css";
+import "react-tooltip/dist/react-tooltip.css";
+
 type CanvasState = {
   version: string;
   objects: unknown[];
@@ -732,16 +735,65 @@ const RoomManagement: React.FC = () => {
       </div>
       <div className={styles.playground}>
         <div className={styles.containerButton}>
-          <div onClick={togglePanMode} className={styles.handButton}>
+          <div
+            onClick={togglePanMode}
+            className={styles.handButton}
+            id="rmHand"
+          >
+            <Tooltip
+              anchorSelect="#rmHand"
+              content="Mode Pan"
+              style={{ fontSize: "2rem" }}
+            />
             <HandSvg color={isPanMode ? "#ffff00" : "#fff"} />
           </div>
           <div className={styles.actionButton}>
-            <img src={rect} alt="rect" onClick={addRectangle} />
-            <img src={circle} alt="circle" onClick={addCircle} />
-            <img src={triangle} alt="triangle" onClick={addTriangle} />
-            <img src={text} alt="text" onClick={addText} />
+            <img
+              src={rect}
+              alt="rect"
+              onClick={addRectangle}
+              className="rect"
+            />
+            <Tooltip
+              anchorSelect=".rect"
+              content="Masukkan Objek Persegi"
+              style={{ fontSize: "2rem" }}
+            />
+            <img
+              src={circle}
+              alt="circle"
+              onClick={addCircle}
+              className="circ"
+            />
+            <Tooltip
+              anchorSelect=".circ"
+              content="Masukkan Objek Lingkaran"
+              style={{ fontSize: "2rem" }}
+            />
+            <img
+              src={triangle}
+              alt="triangle"
+              onClick={addTriangle}
+              className="tri"
+            />
+            <Tooltip
+              anchorSelect=".tri"
+              content="Masukkan Objek Segitiga"
+              style={{ fontSize: "2rem" }}
+            />
+            <img src={text} alt="text" onClick={addText} className="tex" />
+            <Tooltip
+              anchorSelect=".tex"
+              content="Masukkan Text"
+              style={{ fontSize: "2rem" }}
+            />
             <label htmlFor="upload" className={styles.uploadLabel}>
-              <img src={uploadIcon} alt="upload" />
+              <img src={uploadIcon} alt="upload" className="upl" />
+              <Tooltip
+                anchorSelect=".upl"
+                content="Masukkan Gambar"
+                style={{ fontSize: "2rem" }}
+              />
               <input
                 id="upload"
                 type="file"
@@ -770,19 +822,38 @@ const RoomManagement: React.FC = () => {
                 src={undoImg}
                 alt="undo"
                 onClick={() => undo(canvasRef.current!)}
+                className="und"
+              />
+              <Tooltip
+                anchorSelect=".und"
+                content="undo"
+                style={{ fontSize: "2rem" }}
               />
               <img
                 src={save}
                 alt="save"
                 onClick={() => saveCanvas(selectedCanvas!)}
+                className="sav"
+              />
+              <Tooltip
+                anchorSelect=".sav"
+                content="simpan"
+                style={{ fontSize: "2rem" }}
               />
             </div>
 
             <div
               className={styles.offButton}
-              onClick={() => navigate(`/space`)}
+              onClick={() => navigate(`/space/plan/${floor}`)}
+              style={{ borderColor: "red" }}
+              id="closeOff"
             >
               <img src={off} alt="off" />
+              <Tooltip
+                anchorSelect="#closeOff"
+                content="tutup"
+                style={{ fontSize: "2rem" }}
+              />
             </div>
           </div>
         </div>

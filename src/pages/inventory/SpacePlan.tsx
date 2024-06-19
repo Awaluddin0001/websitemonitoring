@@ -1,11 +1,13 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
-
+import HeadPage from "@/components/header/HeadPage";
 import styles from "@/css/module/Room.module.css";
 
-function Room() {
+function SpacePlan() {
+  const { floor } = useParams();
+  console.log(floor);
   const navigate = useNavigate();
-  const [lantai, setLantai] = useState("lantai1");
+  const [lantai, setLantai] = useState(floor ? floor : "lantai1");
 
   // URL gambar yang ingin ditampilkan
   const imageUrl1 = `http://localhost:3001/gambar/lantai1.png`;
@@ -22,17 +24,18 @@ function Room() {
           gap: "8px",
         }}
       >
-        <div className={styles.headerDashboard}>
-          <h1>SPACE MANAGEMENT - TTC PENGAYOMAN</h1>
-          <div className={styles.inputDateWraper}></div>
-        </div>
+        <HeadPage
+          title={`Denah ${
+            floor ? "Lantai " + floor[floor.length - 1] : "Loading..."
+          }`}
+        />
         <div className={styles.headerDashboard}>
           <div className={styles.navRooms}>
             <div onClick={() => navigate(`/roomManagement/${lantai}`)}>
               EDIT LANTAI
             </div>
           </div>
-          <div className={styles.inputDateWraper}>
+          {/* <div className={styles.inputDateWraper}>
             <div className="wraper--date__filter">
               <label htmlFor="start" className="date-label">
                 BUILDING FLOOR
@@ -50,7 +53,7 @@ function Room() {
                 <option value="lantai4">Floor 4</option>
               </select>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
       <div className={styles.imgDenahCenter}>
@@ -68,4 +71,4 @@ function Room() {
   );
 }
 
-export default Room;
+export default SpacePlan;

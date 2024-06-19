@@ -34,7 +34,7 @@ export default function DapotHeader({
             <option value="electrical">ELECTRICAL BUILDING</option>
             <option value="extinguish">EXTINGUISH BUILDING</option>
             <option value="finishing">FINISHING BUILDING</option>
-            <option value="fuel">FUEL BUILDING</option>
+            <option value="fuel">Liquid BUILDING</option>
             <option value="installation">INSTALLATION MATERIALS</option>
             <option value="lighting">LIGHTING BUILDING</option>
             <option value="network">NETWORK IT DEVICE</option>

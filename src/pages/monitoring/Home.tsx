@@ -1,12 +1,15 @@
 import { useRef, useState } from "react";
 import styles from "@/css/module/Home.module.css";
+import CardValue from "@/components/card/CardValue";
 import listrik from "@/assets/svg/power.svg";
 import baterai from "@/assets/svg/battery.svg";
 import Lottie from "lottie-react";
 import graphLoading from "@/assets/lottie/graphLoading.json";
 // import dataLoading from "@/assets/lottie/dataLoading.json";
 import { useDrawChart, useDrawChartThreeLine } from "@/hooks/useDrawChart";
+import HeadPage from "@/components/header/HeadPage";
 
+import BoxPlot from "@/components/grafic/BoxPlate";
 // Define the type for the data
 interface DataPoint {
   date: Date;
@@ -22,6 +25,8 @@ export default function Home() {
   const chartThreeLine = useRef<HTMLDivElement>(null);
   // const [dataCard1, setDataCard1] = useState(false);
   const [graphData1, setGraphData1] = useState(true);
+
+  const data = [18, 20, 22, 24, 26, 30];
 
   // Generate dummy data
   const generateDummyData1 = (): Promise<DataPoint[]> => {
@@ -211,66 +216,69 @@ export default function Home() {
 
   return (
     <>
-      <div className={styles.headerDashboard}>
-        <h1>DASHBOARD MONITORING - TTC PENGAYOMAN</h1>
-        <div className={styles.inputDateWraper}>
-          <div className="wraper--date__filter">
-            <label htmlFor="start" className="date-label">
-              Start Date
-            </label>
-            <input
-              type="date"
-              name="start"
-              className="date-input bebasneue--regular"
-            />
-          </div>
-          <div className="wraper--date__filter">
-            <label htmlFor="end" className="date-label">
-              End Date
-            </label>
-            <input
-              type="date"
-              name="end"
-              className="date-input bebasneue--regular"
-            />
-          </div>
-        </div>
-      </div>
+      <HeadPage title="Dashboard Pantau Gedung Telkomsel - TTC Pengayoman" />
       <div className={styles.sectionWrapper}>
-        <div className={styles.sectionInfo}>
-          {/* {dataCard1 ? (
-            <Lottie
-              animationData={dataLoading}
-              loop={true}
-              style={{
-                width: "20%",
-              }}
+        <div className={styles.sectionContainerValue}>
+          <div className={styles.cardSectionValue}>
+            <CardValue
+              title="Temperature Minimal"
+              value={`${data[1]}°C`}
+              cardColor="#0ECBC0"
+              valueColor="#fff"
+              width="14rem"
+              height="14rem"
             />
-          ) : ( */}
-          <div className={styles.card}>
-            <div className={styles.headerCard}>
-              <img src={listrik} alt="listrik" />
-              <p>POWER USAGE EFFECTIVENESS</p>
-            </div>
-            <div className={styles.bodyCard}>
-              <img src={baterai} alt="baterai" />
-              <p className="mohave--regular">1.80</p>
-            </div>
+            <CardValue
+              title="Temperature Maximal"
+              value={`${data[data.length - 1]}°C`}
+              cardColor="#56CB0E"
+              valueColor="#fff"
+              width="14rem"
+              height="14rem"
+            />
+            <CardValue
+              title="Temperature Percentile 25%"
+              value="24°C"
+              cardColor="#56CB0E"
+              valueColor="#fff"
+              width="14rem"
+              height="14rem"
+            />
+            <CardValue
+              title="Temperature Percentile 50%"
+              value="25°C"
+              cardColor="#56CB0E"
+              valueColor="#fff"
+              width="14rem"
+              height="14rem"
+            />
+            <CardValue
+              title="Temperature Percentile 75%"
+              value="26°C"
+              cardColor="#56CB0E"
+              valueColor="#fff"
+              width="14rem"
+              height="14rem"
+            />
+            <CardValue
+              title="Temperature IQR (75% -25%)"
+              value="3°C"
+              cardColor="#56CB0E"
+              valueColor="#fff"
+              width="14rem"
+              height="14rem"
+            />
+            <CardValue
+              title="Temperature Mode"
+              value="24°C"
+              cardColor="#56CB0E"
+              valueColor="#fff"
+              width="14rem"
+              height="14rem"
+            />
           </div>
-          {/* )} */}
-          {graphData1 ? (
-            <div className={styles.loadingData}>
-              <Lottie
-                animationData={graphLoading}
-                loop={true}
-                style={{
-                  width: "20%",
-                }}
-              />
-            </div>
-          ) : (
-            <div className={styles.cardGrafik} ref={chartRef}></div>
-          )}
+
+          <BoxPlot data={data} height={150} />
         </div>
         <div className={styles.sectionInfo}>
           {/* {dataCard1 ? (

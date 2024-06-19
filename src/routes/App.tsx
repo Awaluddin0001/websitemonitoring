@@ -1,17 +1,24 @@
-import { Route, Routes, useLocation, Navigate } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 
 /* pages */
+import Desktopdash from "@/components/navbar/Desktopdash";
+import Assets from "@/pages/inventory/Assets";
+import Monitoring from "@/pages/monitoring/Monitoring";
 import Cooling from "@/pages/monitoring/Cooling.tsx";
-import FullScreen from "@/components/oldnavbar/FullScreen";
 import Gas from "@/pages/monitoring/Gas.tsx";
 import Home from "@/pages/monitoring/Home.tsx";
 import Liquid from "@/pages/monitoring/Liquid.tsx";
 import Login from "@/pages/login/Login";
 import Power from "@/pages/monitoring/Power.tsx";
-import Room from "@/pages/inventory/Room.tsx";
+import SpacePlan from "@/pages/inventory/SpacePlan";
 import RoomManagement from "@/pages/inventory/RoomManagement.tsx";
 
 /* Inventory */
+import AssetsList from "@/pages/inventory/AssetsList";
+import AssetListBrand from "@/pages/inventory/AssetsListBrand";
+import AssetListRoom from "@/pages/inventory/AssetsListRoom";
+import AssetListCategory from "@/pages/inventory/AssetsListCategory";
+import AssetListVendor from "@/pages/inventory/AssetsListVendor";
 import AirAll from "@/pages/inventory/AirAll";
 import ComfortAll from "@/pages/inventory/ComfortAll";
 import ConveyanceAll from "@/pages/inventory/ConveyanceAll";
@@ -33,6 +40,7 @@ import PumpAll from "@/pages/inventory/PumpAll";
 import SafetyAll from "@/pages/inventory/SafetyAll";
 import SecurityAll from "@/pages/inventory/SecurityAll";
 import ToolAll from "@/pages/inventory/ToolAll";
+import SpaceList from "@/pages/inventory/SpaceList";
 
 function App() {
   const location = useLocation();
@@ -52,14 +60,21 @@ function App() {
       <Route path="/roomManagement/:floor" element={<RoomManagement />} />
     </Routes>
   ) : (
-    <FullScreen>
+    <Desktopdash>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/monitoring" element={<Monitoring />} />
         <Route path="/power" element={<Power />} />
-        <Route path="/cooling" element={<Cooling />} />
-        <Route path="/gas" element={<Gas />} />
-        <Route path="/liquid" element={<Liquid />} />
-        <Route path="/assets" element={<Navigate to="/assets/air/all" />} />
+        <Route path="/thermal" element={<Cooling />} />
+        <Route path="/fire" element={<Gas />} />
+        <Route path="/bbm" element={<Liquid />} />
+        {/* <Route path="/assets" element={<Navigate to="/assets/air/all" />} /> */}
+        <Route path="/assets" element={<Assets />} />
+        <Route path="/assets/list" element={<AssetsList />} />
+        <Route path="/assets/list/brand" element={<AssetListBrand />} />
+        <Route path="/assets/list/room" element={<AssetListRoom />} />
+        <Route path="/assets/list/category" element={<AssetListCategory />} />
+        <Route path="/assets/list/vendor" element={<AssetListVendor />} />
         <Route path="/assets/air/all" element={<AirAll />} />
         <Route path="/assets/comfort/all" element={<ComfortAll />} />
         <Route path="/assets/conveyance/all" element={<ConveyanceAll />} />
@@ -90,10 +105,18 @@ function App() {
         <Route path="/assets/safety/all" element={<SafetyAll />} />
         <Route path="/assets/security/all" element={<SecurityAll />} />
         <Route path="/assets/tool/all" element={<ToolAll />} />
-        <Route path="/space" element={<Room />} />
+        <Route path="/space/list" element={<SpaceList />} />
+        <Route path="/space/plan/:floor" element={<SpacePlan />} />
       </Routes>
-    </FullScreen>
+    </Desktopdash>
   );
 }
 
 export default App;
+
+/**
+ * Author: Awaluddin .
+ * Github: https://github.com/Awaluddin0001
+ * Date: 2024-06-10
+ * Copyright © 2024 Awaluddin. All rights reserved.
+ */

@@ -33,7 +33,7 @@ export const useDrawChart = (
 
       const x = d3
         .scaleUtc()
-        .domain(dateRange) // May 1, 2024 to May 30, 2024
+        .domain(dateRange)
         .range([margin.left, width - margin.right]);
 
       const y = d3

@@ -1,25 +1,3 @@
-.headerDashboard {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-}
-
-.headerDashboard h1 {
-  font-size: 2.4rem;
-  font-weight: 800;
-}
-
-.inputDateWraper {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-
-  width: 40%;
-  gap: 16px;
-}
-
 .sectionWrapper {
   height: 100%;
   width: 100%;
@@ -29,6 +7,19 @@
   flex-direction: column;
   gap: 10px;
   overflow-y: scroll;
+}
+
+.sectionContainerValue {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  width: 100%;
+}
+
+.cardSectionValue {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
 }
 
 .sectionWrapper::-webkit-scrollbar {
