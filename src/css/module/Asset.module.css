@@ -149,3 +149,23 @@
   text-align: center;
   color: var(--foreground1a-color);
 }
+
+.addButton {
+  background-color: #fcd100;
+  color: var(--background1-color);
+  padding: 10px 16px;
+  font-size: 1.8rem;
+  font-weight: 600;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.pageButton {
+  background-color: var(--background1-color);
+  color: var(--foreground1a-color);
+  padding: 10px 16px;
+  font-size: 1.8rem;
+  font-weight: 600;
+  border-radius: 15px;
+  cursor: pointer;
+}

@@ -1,0 +1,37 @@
+.inputContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.titleInput {
+  font-size: 2.8rem;
+}
+
+.inputText {
+  background-color: #d9d9d9;
+  border-radius: 10px;
+  padding: 1rem 2rem;
+  outline: none;
+  border: none;
+  font-size: 2.1rem;
+  color: black;
+}
+
+.btnInput {
+  font-size: 2.1rem;
+  background-color: var(--background1-color);
+  color: var(--foreground1a-color);
+  padding: 12px 20px;
+  height: fit-content;
+}
+
+.inputGrouping {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 16px;
+}

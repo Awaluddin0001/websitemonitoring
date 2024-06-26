@@ -1,9 +1,9 @@
 import { useState, useRef, useEffect } from "react";
-import io from "socket.io-client";
+// import io from "socket.io-client";
 import styles from "@/css/module/Power.module.css";
 import listrik from "@/assets/svg/power.svg";
-import Lottie from "lottie-react";
-import graphLoading from "@/assets/lottie/graphLoading.json";
+// import Lottie from "lottie-react";
+// import graphLoading from "@/assets/lottie/graphLoading.json";
 import { useDrawChart } from "@/hooks/useDrawChart";
 
 // Define the type for the data
@@ -12,56 +12,56 @@ interface DataPoint {
   value: number;
 }
 
-const socket = io("http://localhost:3000");
+// const socket = io("http://localhost:3000");
 
 function Power() {
-  const [btnActive, setBtnActive] = useState("vl");
-  const [graphData1, setGraphData1] = useState(true);
+  // const [btnActive, setBtnActive] = useState("vl");
+  // const [graphData1, setGraphData1] = useState(true);
   const chartRef1 = useRef<HTMLDivElement>(null);
   const chartRef2 = useRef<HTMLDivElement>(null);
   const chartRef3 = useRef<HTMLDivElement>(null);
 
-  const [voltageData, setVoltageData] = useState();
-  const [currentData, setCurrentData] = useState();
-  const [powerData, setPowerData] = useState();
+  // const [voltageData, setVoltageData] = useState();
+  // const [currentData, setCurrentData] = useState();
+  // const [powerData, setPowerData] = useState();
 
-  useEffect(() => {
-    socket.on("voltageData", (data) => {
-      console.log("Voltage Data:", data);
-      setVoltageData(data);
-    });
+  // useEffect(() => {
+  //   socket.on("voltageData", (data) => {
+  //     console.log("Voltage Data:", data);
+  //     setVoltageData(data);
+  //   });
 
-    socket.on("currentData", (data) => {
-      console.log("Current Data:", data);
-      setCurrentData(data);
-    });
+  //   socket.on("currentData", (data) => {
+  //     console.log("Current Data:", data);
+  //     setCurrentData(data);
+  //   });
 
-    socket.on("powerData", (data) => {
-      console.log("Power Data:", data);
-      setPowerData(data);
-    });
+  //   socket.on("powerData", (data) => {
+  //     console.log("Power Data:", data);
+  //     setPowerData(data);
+  //   });
 
-    socket.on("error", (err) => {
-      console.error("Error:", err);
-    });
+  //   socket.on("error", (err) => {
+  //     console.error("Error:", err);
+  //   });
 
-    return () => {
-      socket.off("voltageData");
-      socket.off("currentData");
-      socket.off("powerData");
-      socket.off("error");
-    };
-  }, []);
+  //   return () => {
+  //     socket.off("voltageData");
+  //     socket.off("currentData");
+  //     socket.off("powerData");
+  //     socket.off("error");
+  //   };
+  // }, []);
 
-  const requestData = (type) => {
-    if (type === "vl") {
-      socket.emit("readVoltage");
-    } else if (type === "i") {
-      socket.emit("readCurrent");
-    } else if (type === "w") {
-      socket.emit("readPower");
-    }
-  };
+  // const requestData = (type) => {
+  //   if (type === "vl") {
+  //     socket.emit("readVoltage");
+  //   } else if (type === "i") {
+  //     socket.emit("readCurrent");
+  //   } else if (type === "w") {
+  //     socket.emit("readPower");
+  //   }
+  // };
 
   // Generate dummy data
   const generateDummyData1 = (): Promise<DataPoint[]> => {
@@ -75,7 +75,7 @@ function Power() {
           });
         }
         resolve(data);
-        setGraphData1(false);
+        // setGraphData1(false);
       }, 500); // Delay of 500 milliseconds
     });
   };
@@ -91,7 +91,7 @@ function Power() {
           });
         }
         resolve(data);
-        setGraphData1(false);
+        // setGraphData1(false);
       }, 500); // Delay of 500 milliseconds
     });
   };
@@ -107,7 +107,7 @@ function Power() {
           });
         }
         resolve(data);
-        setGraphData1(false);
+        // setGraphData1(false);
       }, 500); // Delay of 500 milliseconds
     });
   };
@@ -211,7 +211,7 @@ function Power() {
               <img src={listrik} alt="listrik" />
               <p>UPS 2</p>
             </div>
-            <div className={styles.bodyCard}>
+            {/* <div className={styles.bodyCard}>
               <div className={styles.valueMeters}>
                 {btnActive === "vl" ? (
                   voltageData ? (
@@ -384,9 +384,9 @@ function Power() {
                   <p className="mohave--semibold">W</p>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
-          {btnActive === "vl" ? (
+          {/* {btnActive === "vl" ? (
             graphData1 ? (
               <div className={styles.loadingData}>
                 <Lottie
@@ -436,7 +436,7 @@ function Power() {
             )
           ) : (
             ""
-          )}
+          )} */}
         </div>
       </div>
     </>

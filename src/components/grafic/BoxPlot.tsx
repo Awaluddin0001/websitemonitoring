@@ -1,15 +1,14 @@
-// src/BoxPlot.tsx
-
 import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
 
 interface BoxPlotProps {
-  data: number[];
+  data: Promise<number[]>; // Accepts a Promise<number[]>
   height: number;
   tickInterval?: number; // Optional prop for tick interval
+  unit: string;
 }
 
-const BoxPlot: React.FC<BoxPlotProps> = ({ data, height }) => {
+const BoxPlot: React.FC<BoxPlotProps> = ({ data, height, unit }) => {
   const svgRef = useRef<SVGSVGElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -18,14 +17,17 @@ const BoxPlot: React.FC<BoxPlotProps> = ({ data, height }) => {
       drawPlot();
     };
 
-    const drawPlot = () => {
-      if (!svgRef.current || !containerRef.current || data.length === 0) return;
+    const drawPlot = async () => {
+      if (!svgRef.current || !containerRef.current) return;
 
       // Clear previous plot
       d3.select(svgRef.current).selectAll("*").remove();
 
+      // Get the resolved data
+      const resolvedData = await data;
+
       // Sort the data
-      const sortedData = [...data].sort(d3.ascending);
+      const sortedData = [...resolvedData].sort(d3.ascending);
 
       // Calculate summary statistics using d3.quantileSorted
       const q1 = d3.quantileSorted(sortedData, 0.25)!;
@@ -36,8 +38,8 @@ const BoxPlot: React.FC<BoxPlotProps> = ({ data, height }) => {
 
       const tickInterval = q3 - q1;
 
-      const firstDomain = data[1] - tickInterval;
-      const lastDomain = data[data.length - 1] + tickInterval;
+      const firstDomain = resolvedData[0] - tickInterval;
+      const lastDomain = resolvedData[resolvedData.length - 1] + tickInterval;
 
       // Get the current width of the container
       const width = containerRef.current.clientWidth;
@@ -50,7 +52,7 @@ const BoxPlot: React.FC<BoxPlotProps> = ({ data, height }) => {
       // Create scales
       const xScale = d3
         .scaleLinear()
-        .domain([firstDomain, lastDomain]) // Fixed temperature range from 0 to 30
+        .domain([firstDomain, lastDomain])
         .range([0, plotWidth]);
 
       // Create the SVG container
@@ -62,13 +64,13 @@ const BoxPlot: React.FC<BoxPlotProps> = ({ data, height }) => {
         .attr("transform", `translate(${margin.left},${margin.top})`);
 
       // Generate ticks based on the tickInterval
-      const xTicks = d3.range(0, 31, tickInterval); // Generate ticks from 0 to 30 with interval
+      const xTicks = d3.range(firstDomain, lastDomain, tickInterval); // Generate ticks from 0 to 30 with interval
 
       // Add X axis
       const xAxis = d3
         .axisBottom(xScale)
         .tickValues(xTicks) // Use tick values
-        .tickFormat((d) => `${d}°C`); // Append °C to each tick value
+        .tickFormat((d) => `${d}${unit}`); // Append °C to each tick value
 
       // Add gridlines for x axis
       const xGridlines = d3
@@ -145,7 +147,7 @@ const BoxPlot: React.FC<BoxPlotProps> = ({ data, height }) => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [data, height]); // Include tickInterval in dependencies
+  }, [data, height, unit]); // Include tickInterval in dependencies
 
   return (
     <div ref={containerRef} style={{ width: "100%", height: `${height}px` }}>

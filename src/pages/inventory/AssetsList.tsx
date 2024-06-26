@@ -1,5 +1,5 @@
 import styles from "@/css/module/Monitoring.module.css";
-import room from "@/assets/svg/assetRoom.svg";
+// import room from "@/assets/svg/assetRoom.svg";
 import item from "@/assets/svg/assetItem.svg";
 import vendor from "@/assets/svg/assetVendor.svg";
 import brand from "@/assets/svg/assetBrand.svg";
@@ -10,7 +10,7 @@ export default function AssetsList() {
   return (
     <>
       <div className={styles.groupingChoice}>
-        <motion.div
+        {/* <motion.div
           className={styles.cardChoice}
           whileHover={{
             scale: 1.02,
@@ -21,7 +21,7 @@ export default function AssetsList() {
         >
           <img src={room} alt="asset per room" />
           <h2>Data Potensi Tiap Lantai</h2>
-        </motion.div>
+        </motion.div> */}
         <motion.div
           className={styles.cardChoice}
           whileHover={{

@@ -12,4 +12,7 @@ export default defineConfig({
     setupFiles: "./src/setupTests.ts",
     exclude: [...configDefaults.exclude, "node_modules/**"],
   },
+  define: {
+    "process.env": process.env,
+  },
 });

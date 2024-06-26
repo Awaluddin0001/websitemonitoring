@@ -1,0 +1,361 @@
+import styles from "@/css/module/Home.module.css";
+import CardValue from "@/components/card/CardValue";
+import { useEffect, useState } from "react";
+import HeadPage from "@/components/header/HeadPage";
+import useThermalSummary from "@/hooks/useThermalSummary";
+import BoxPlot from "@/components/grafic/BoxPlot";
+import TrendGrafic from "@/components/grafic/TendGrafic";
+import PieChart from "@/components/grafic/PieChart";
+
+interface DataPoint {
+  date: Date;
+  value: number;
+}
+
+// React component
+export default function Home() {
+  const [pueData, setPueData] = useState<DataPoint[]>();
+  const [itLoad, setItLoad] = useState<DataPoint[]>();
+  const [facilityLoad, setFacilityLoad] = useState<DataPoint[]>();
+
+  const arrayTemp = [18, 20, 20, 21, 21, 22, 26, 30];
+  const dataTemp = Promise.resolve(arrayTemp);
+  const [q25Temp, q50Temp, q75Temp, iqrTemp, modesTemp, minTemp, maxTemp] =
+    useThermalSummary(dataTemp);
+
+  const arrayHumid = [50, 52, 60, 58, 55, 55, 54, 57];
+  const dataHumid = Promise.resolve(arrayHumid);
+  const [
+    q25Humid,
+    q50Humid,
+    q75Humid,
+    iqrHumid,
+    modesHumid,
+    minHumid,
+    maxHumid,
+  ] = useThermalSummary(dataHumid);
+
+  useEffect(() => {
+    const generateDataPue = (): Promise<DataPoint[]> => {
+      return new Promise<DataPoint[]>((resolve) => {
+        setTimeout(() => {
+          const start = new Date(2023, 5, 1, 0, 0); // Starting at midnight
+          const end = new Date(2023, 5, 2, 0, 0); // Ending at the next midnight
+          const interval = 5 * 60 * 1000; // 5 minutes in milliseconds
+          const data: DataPoint[] = [];
+
+          for (
+            let time = start.getTime();
+            time <= end.getTime();
+            time += interval
+          ) {
+            data.push({
+              date: new Date(time),
+              value: parseFloat((Math.random() * (3 - 1.5) + 1.5).toFixed(2)), // Random value between 1.5 and 3
+            });
+          }
+
+          resolve(data);
+        }, 1000); // Simulating async delay
+      });
+    };
+    const generateDataItLoad = (): Promise<DataPoint[]> => {
+      return new Promise<DataPoint[]>((resolve) => {
+        setTimeout(() => {
+          const start = new Date(2023, 5, 1, 0, 0); // Starting at midnight
+          const end = new Date(2023, 5, 2, 0, 0); // Ending at the next midnight
+          const interval = 5 * 60 * 1000; // 5 minutes in milliseconds
+          const data: DataPoint[] = [];
+
+          for (
+            let time = start.getTime();
+            time <= end.getTime();
+            time += interval
+          ) {
+            data.push({
+              date: new Date(time),
+              value: parseFloat((Math.random() * (200 - 180) + 180).toFixed(0)), // Random value between 1.5 and 3
+            });
+          }
+
+          resolve(data);
+        }, 1000); // Simulating async delay
+      });
+    };
+    const generateDataFacilityLoad = (): Promise<DataPoint[]> => {
+      return new Promise<DataPoint[]>((resolve) => {
+        setTimeout(() => {
+          const start = new Date(2023, 5, 1, 0, 0); // Starting at midnight
+          const end = new Date(2023, 5, 2, 0, 0); // Ending at the next midnight
+          const interval = 5 * 60 * 1000; // 5 minutes in milliseconds
+          const data: DataPoint[] = [];
+
+          for (
+            let time = start.getTime();
+            time <= end.getTime();
+            time += interval
+          ) {
+            data.push({
+              date: new Date(time),
+              value: parseFloat((Math.random() * (300 - 180) + 180).toFixed(0)), // Random value between 1.5 and 3
+            });
+          }
+
+          resolve(data);
+        }, 1000); // Simulating async delay
+      });
+    };
+
+    const fetchData = async () => {
+      const randomDataPue = await generateDataPue();
+      const randomDataIt = await generateDataItLoad();
+      const randomDataFacility = await generateDataFacilityLoad();
+      setPueData(randomDataPue);
+      setItLoad(randomDataIt);
+      setFacilityLoad(randomDataFacility);
+    };
+
+    fetchData();
+  }, []);
+
+  return (
+    <>
+      <HeadPage title="Dashboard Pantau Gedung Telkomsel - TTC Pengayoman" />
+      <div className={styles.sectionWrapper}>
+        <div className={styles.sectionHome}>
+          <h1>Thermal Building Information</h1>
+          <div className={styles.containerValue}>
+            <div className={styles.cardSectionValue}>
+              <CardValue
+                title="Temperature Minimal"
+                value={`${minTemp}°C`}
+                cardColor="#0ECBC0"
+                valueColor="#fff"
+                width="14rem"
+                height="14rem"
+              />
+              <CardValue
+                title="Temperature Maximal"
+                value={`${maxTemp}°C`}
+                cardColor="#56CB0E"
+                valueColor="#fff"
+                width="14rem"
+                height="14rem"
+              />
+              <CardValue
+                title="Temperature Percentile 25%"
+                value={`${q25Temp}°C`}
+                cardColor="#56CB0E"
+                valueColor="#fff"
+                width="14rem"
+                height="14rem"
+              />
+              <CardValue
+                title="Temperature Percentile 50%"
+                value={`${q50Temp}°C`}
+                cardColor="#56CB0E"
+                valueColor="#fff"
+                width="14rem"
+                height="14rem"
+              />
+              <CardValue
+                title="Temperature Percentile 75%"
+                value={`${q75Temp}°C`}
+                cardColor="#56CB0E"
+                valueColor="#fff"
+                width="14rem"
+                height="14rem"
+              />
+              <CardValue
+                title="Temperature IQR (75% -25%)"
+                value={`${iqrTemp}°C`}
+                cardColor="#56CB0E"
+                valueColor="#fff"
+                width="14rem"
+                height="14rem"
+              />
+              <CardValue
+                title="Temperature Mode"
+                value={`${modesTemp}°C`}
+                cardColor="#56CB0E"
+                valueColor="#fff"
+                width="14rem"
+                height="14rem"
+              />
+            </div>
+
+            <BoxPlot data={dataTemp} height={150} unit="°C" />
+          </div>
+          <div className={styles.containerValue}>
+            <div className={styles.cardSectionValue}>
+              <CardValue
+                title="Humidity Minimal"
+                value={`${minHumid}%`}
+                cardColor="#0ECBC0"
+                valueColor="#fff"
+                width="14rem"
+                height="14rem"
+              />
+              <CardValue
+                title="Humidity Maximal"
+                value={`${maxHumid}%`}
+                cardColor="#56CB0E"
+                valueColor="#fff"
+                width="14rem"
+                height="14rem"
+              />
+              <CardValue
+                title="Humidity Percentile 25%"
+                value={`${q25Humid}%`}
+                cardColor="#56CB0E"
+                valueColor="#fff"
+                width="14rem"
+                height="14rem"
+              />
+              <CardValue
+                title="Humidity Percentile 50%"
+                value={`${q50Humid}%`}
+                cardColor="#56CB0E"
+                valueColor="#fff"
+                width="14rem"
+                height="14rem"
+              />
+              <CardValue
+                title="Humidity Percentile 75%"
+                value={`${q75Humid}%`}
+                cardColor="#56CB0E"
+                valueColor="#fff"
+                width="14rem"
+                height="14rem"
+              />
+              <CardValue
+                title="Humidity IQR (75% -25%)"
+                value={`${iqrHumid}%`}
+                cardColor="#56CB0E"
+                valueColor="#fff"
+                width="14rem"
+                height="14rem"
+              />
+              <CardValue
+                title="Humidity Mode"
+                value={`${modesHumid}%`}
+                cardColor="#56CB0E"
+                valueColor="#fff"
+                width="14rem"
+                height="14rem"
+              />
+            </div>
+
+            <BoxPlot data={dataHumid} height={150} unit="%" />
+          </div>
+        </div>
+        <div className={styles.sectionHomeBottom}>
+          <div className={styles.sectionHome}>
+            <h1>Power Usage Effectiveness</h1>
+            <div className={styles.containerValue}>
+              <div className={styles.cardSectionValue}>
+                <CardValue
+                  title="Power Usage Effectiveness"
+                  value={pueData ? pueData[pueData.length - 1].value : "0"}
+                  cardColor="#0ECBC0"
+                  valueColor="#fff"
+                  width="17rem"
+                  height="14rem"
+                />
+              </div>
+
+              <TrendGrafic
+                data={pueData}
+                heightGrafic={150}
+                lineColor="#782B1A"
+                pointColor="#0C1234"
+                label="Data PUE - 24 Jam"
+                fontSize="12px"
+                unit=" "
+                mode="24hour"
+              />
+            </div>
+            <div className={styles.containerValue}>
+              <div className={styles.cardSectionValue}>
+                <CardValue
+                  title="IT Load"
+                  value={
+                    itLoad ? `${itLoad[itLoad.length - 1].value} kVa` : "0"
+                  }
+                  cardColor="#0ECBC0"
+                  valueColor="#fff"
+                  width="17rem"
+                  height="14rem"
+                />
+              </div>
+
+              <TrendGrafic
+                data={itLoad}
+                heightGrafic={150}
+                lineColor="#782B1A"
+                pointColor="#0C1234"
+                label="Data PUE - 24 Jam"
+                fontSize="12px"
+                unit=" kVa"
+                mode="24hour"
+              />
+            </div>
+            <div className={styles.containerValue}>
+              <div className={styles.cardSectionValue}>
+                <CardValue
+                  title="Facility Load"
+                  value={
+                    facilityLoad
+                      ? `${facilityLoad[facilityLoad.length - 1].value} kVa`
+                      : "0"
+                  }
+                  cardColor="#0ECBC0"
+                  valueColor="#fff"
+                  width="17rem"
+                  height="14rem"
+                />
+              </div>
+
+              <TrendGrafic
+                data={facilityLoad}
+                heightGrafic={150}
+                lineColor="#782B1A"
+                pointColor="#0C1234"
+                label="Data PUE - 24 Jam"
+                fontSize="12px"
+                unit=" kVa"
+                mode="24hour"
+              />
+            </div>
+          </div>
+          <div className={styles.sectionHome} style={{ height: "100%" }}>
+            <h1>BBM Usage Information</h1>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                width: "100%",
+                height: "100%",
+              }}
+            >
+              <PieChart
+                data={[
+                  { label: "Free", value: 80 },
+                  { label: "Usage", value: 20 },
+                ]}
+                title="Tangki cadangan"
+              />
+              <PieChart
+                data={[
+                  { label: "Free", value: 90 },
+                  { label: "Usage", value: 10 },
+                ]}
+                title="Tangki harian"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}

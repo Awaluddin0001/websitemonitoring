@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import styles from "@/css/module/Desktop.module.css";
-import logo from "@/assets/svg/logowhite.svg";
+// import logo from "@/assets/svg/logowhite.svg";
+import logo from "@/assets/svg/logoonly.svg";
 import DesktopIconBar from "./DesktopIconBar";
 import { useSelector } from "react-redux";
 
@@ -12,7 +13,8 @@ const variants = {
     transition: { duration: 0.1 },
   },
   visible: {
-    width: "16.5rem",
+    // width: "16.5rem",
+    width: "10rem",
     transform: "translateX(0px)",
     opacity: 1,
     transition: { duration: 0.1 },
@@ -31,7 +33,7 @@ export default function DekstopNavbar() {
       animate={showNavbar ? "visible" : "hidden"}
     >
       <motion.div className={styles.navbarGroupingTop}>
-        <div style={{ width: "75%" }}>
+        <div style={{ width: "60%" }}>
           <img src={logo} alt="logo pagetsel" className={styles.logo} />
         </div>
         <div className={styles.navbarGrouping}>

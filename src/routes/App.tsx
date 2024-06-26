@@ -42,6 +42,53 @@ import SecurityAll from "@/pages/inventory/SecurityAll";
 import ToolAll from "@/pages/inventory/ToolAll";
 import SpaceList from "@/pages/inventory/SpaceList";
 
+// brand
+import NewBrandAirConditioning from "@/pages/inventory/brand/NewBrandAirConditioning";
+import NewBrandElectrical from "@/pages/inventory/brand/NewBrandElectrical";
+import NewBrandExtinguish from "@/pages/inventory/brand/NewBrandExtinguish";
+import NewBrandFluidTank from "@/pages/inventory/brand/NewBrandFluidTank";
+import NewBrandFurniture from "@/pages/inventory/brand/NewBrandFurniture";
+import NewBrandLighting from "@/pages/inventory/brand/NewBrandLighting";
+import NewBrandNetworkIt from "@/pages/inventory/brand/NewBrandNetworkIt";
+import NewBrandPump from "@/pages/inventory/brand/NewBrandPump";
+import NewBrandSafety from "@/pages/inventory/brand/NewBrandSafety";
+import NewBrandSecurity from "@/pages/inventory/brand/NewBrandSecurity";
+import ListBrandAirConditioning from "@/pages/inventory/brand/ListBrandAirConditioning";
+import ListBrandElectrical from "@/pages/inventory/brand/ListBrandElectrical";
+import ListBrandExtinguish from "@/pages/inventory/brand/ListBrandExtinguish";
+import ListBrandFluidTank from "@/pages/inventory/brand/ListBrandFluidTank";
+import ListBrandFurniture from "@/pages/inventory/brand/ListBrandFurniture";
+import ListBrandLighting from "@/pages/inventory/brand/ListBrandLighting";
+import ListBrandNetworkIt from "@/pages/inventory/brand/ListBrandNetworkIt";
+import ListBrandPump from "@/pages/inventory/brand/ListBrandPump";
+import ListBrandSafety from "@/pages/inventory/brand/ListBrandSafety";
+import ListBrandSecurity from "@/pages/inventory/brand/ListBrandSecurity";
+
+// vendor
+import NewVendorAirConditioning from "@/pages/inventory/vendor/NewVendorAirConditioning";
+import NewVendorConveyance from "@/pages/inventory/vendor/NewVendorConveyance";
+import NewVendorElectrical from "@/pages/inventory/vendor/NewVendorElectrical";
+import NewVendorExtinguish from "@/pages/inventory/vendor/NewVendorExtinguish";
+import NewVendorFinishing from "@/pages/inventory/vendor/NewVendorFinishing";
+import NewVendorFluidTank from "@/pages/inventory/vendor/NewVendorFluidTank";
+import NewVendorFurniture from "@/pages/inventory/vendor/NewVendorFurniture";
+import NewVendorLighting from "@/pages/inventory/vendor/NewVendorLighting";
+import NewVendorNetworkIt from "@/pages/inventory/vendor/NewVendorNetworkIt";
+import NewVendorPump from "@/pages/inventory/vendor/NewVendorPump";
+import NewVendorSafety from "@/pages/inventory/vendor/NewVendorSafety";
+import NewVendorSecurity from "@/pages/inventory/vendor/NewVendorSecurity";
+import ListVendorAirConditioning from "@/pages/inventory/vendor/ListVendorAirConditioning";
+import ListVendorConveyance from "@/pages/inventory/vendor/ListVendorConveyance";
+import ListVendorElectrical from "@/pages/inventory/vendor/ListVendorElectrical";
+import ListVendorExtinguish from "@/pages/inventory/vendor/ListVendorExtinguish";
+import ListVendorFinishing from "@/pages/inventory/vendor/ListVendorFinishing";
+import ListVendorFluidTank from "@/pages/inventory/vendor/ListVendorFluidTank";
+import ListVendorFurniture from "@/pages/inventory/vendor/ListVendorFurniture";
+import ListVendorLighting from "@/pages/inventory/vendor/ListVendorLighting";
+import ListVendorNetworkIt from "@/pages/inventory/vendor/ListVendorNetworkIt";
+import ListVendorPump from "@/pages/inventory/vendor/ListVendorPump";
+import ListVendorSafety from "@/pages/inventory/vendor/ListVendorSafety";
+import ListVendorSecurity from "@/pages/inventory/vendor/ListVendorSecurity";
 function App() {
   const location = useLocation();
 
@@ -68,8 +115,181 @@ function App() {
         <Route path="/thermal" element={<Cooling />} />
         <Route path="/fire" element={<Gas />} />
         <Route path="/bbm" element={<Liquid />} />
+
         {/* <Route path="/assets" element={<Navigate to="/assets/air/all" />} /> */}
         <Route path="/assets" element={<Assets />} />
+
+        {/* Brand */}
+        <Route
+          path="/assets/brand/addAirConditioning/:type"
+          element={<NewBrandAirConditioning />}
+        />
+        <Route
+          path="/assets/brand/addElectrical/:type"
+          element={<NewBrandElectrical />}
+        />
+        <Route
+          path="/assets/brand/addExtinguish/:type"
+          element={<NewBrandExtinguish />}
+        />
+        <Route
+          path="/assets/brand/addFluidTank/:type"
+          element={<NewBrandFluidTank />}
+        />
+        <Route
+          path="/assets/brand/addFurniture/:type"
+          element={<NewBrandFurniture />}
+        />
+        <Route
+          path="/assets/brand/addLighting/:type"
+          element={<NewBrandLighting />}
+        />
+        <Route
+          path="/assets/brand/addNetworkIt/:type"
+          element={<NewBrandNetworkIt />}
+        />
+        <Route path="/assets/brand/addPump/:type" element={<NewBrandPump />} />
+        <Route
+          path="/assets/brand/addSafety/:type"
+          element={<NewBrandSafety />}
+        />
+        <Route
+          path="/assets/brand/addSecurity/:type"
+          element={<NewBrandSecurity />}
+        />
+        <Route
+          path="/assets/brand/list/airconditioning/:type"
+          element={<ListBrandAirConditioning />}
+        />
+        <Route
+          path="/assets/brand/list/electrical/:type"
+          element={<ListBrandElectrical />}
+        />
+        <Route
+          path="/assets/brand/list/extinguish/:type"
+          element={<ListBrandExtinguish />}
+        />
+        <Route
+          path="/assets/brand/list/fluidtank/:type"
+          element={<ListBrandFluidTank />}
+        />
+        <Route
+          path="/assets/brand/list/furniture/:type"
+          element={<ListBrandFurniture />}
+        />
+        <Route
+          path="/assets/brand/list/lighting/:type"
+          element={<ListBrandLighting />}
+        />
+        <Route
+          path="/assets/brand/list/networkit/:type"
+          element={<ListBrandNetworkIt />}
+        />
+        <Route
+          path="/assets/brand/list/pump/:type"
+          element={<ListBrandPump />}
+        />
+        <Route
+          path="/assets/brand/list/safety/:type"
+          element={<ListBrandSafety />}
+        />
+        <Route
+          path="/assets/brand/list/security/:type"
+          element={<ListBrandSecurity />}
+        />
+        {/* end of routes brand */}
+
+        {/* Vendor  */}
+        <Route
+          path="/assets/vendor/addAirConditioning"
+          element={<NewVendorAirConditioning />}
+        />
+        <Route
+          path="/assets/vendor/addConveyance"
+          element={<NewVendorConveyance />}
+        />
+        <Route
+          path="/assets/vendor/addElectrical"
+          element={<NewVendorElectrical />}
+        />
+        <Route
+          path="/assets/vendor/addExtinguish"
+          element={<NewVendorExtinguish />}
+        />
+        <Route
+          path="/assets/vendor/addFinishing"
+          element={<NewVendorFinishing />}
+        />
+        <Route
+          path="/assets/vendor/addFluidTank"
+          element={<NewVendorFluidTank />}
+        />
+        <Route
+          path="/assets/vendor/addFurniture"
+          element={<NewVendorFurniture />}
+        />
+        <Route
+          path="/assets/vendor/addLighting"
+          element={<NewVendorLighting />}
+        />
+        <Route
+          path="/assets/vendor/addNetworkIt"
+          element={<NewVendorNetworkIt />}
+        />
+        <Route path="/assets/vendor/addPump" element={<NewVendorPump />} />
+        <Route path="/assets/vendor/addSafety" element={<NewVendorSafety />} />
+        <Route
+          path="/assets/vendor/addSecurity"
+          element={<NewVendorSecurity />}
+        />
+
+        <Route
+          path="/assets/vendor/list/airconditioning"
+          element={<ListVendorAirConditioning />}
+        />
+        <Route
+          path="/assets/vendor/list/conveyance"
+          element={<ListVendorConveyance />}
+        />
+        <Route
+          path="/assets/vendor/list/electrical"
+          element={<ListVendorElectrical />}
+        />
+        <Route
+          path="/assets/vendor/list/extinguish"
+          element={<ListVendorExtinguish />}
+        />
+        <Route
+          path="/assets/vendor/list/finishing"
+          element={<ListVendorFinishing />}
+        />
+        <Route
+          path="/assets/vendor/list/fluidtank"
+          element={<ListVendorFluidTank />}
+        />
+        <Route
+          path="/assets/vendor/list/furniture"
+          element={<ListVendorFurniture />}
+        />
+        <Route
+          path="/assets/vendor/list/lighting"
+          element={<ListVendorLighting />}
+        />
+        <Route
+          path="/assets/vendor/list/networkit"
+          element={<ListVendorNetworkIt />}
+        />
+        <Route path="/assets/vendor/list/pump" element={<ListVendorPump />} />
+        <Route
+          path="/assets/vendor/list/safety"
+          element={<ListVendorSafety />}
+        />
+        <Route
+          path="/assets/vendor/list/security"
+          element={<ListVendorSecurity />}
+        />
+        {/* end of routes vendor */}
+
         <Route path="/assets/list" element={<AssetsList />} />
         <Route path="/assets/list/brand" element={<AssetListBrand />} />
         <Route path="/assets/list/room" element={<AssetListRoom />} />
