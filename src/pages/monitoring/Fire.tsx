@@ -1,18 +1,18 @@
 import { useState, useRef } from "react";
 import Lottie from "lottie-react";
 
-import styles from "@/css/module/Liquid.module.css";
-import AnalogPressure from "@/components/svg/AnalogPressure";
-import TheBarrel from "@/components/svg/TheBarrel";
-import graphLoading from "@/assets/lottie/graphLoading.json";
 import { useDrawChart } from "@/hooks/useDrawChart";
+import AnalogPressure from "@/components/svg/AnalogPressure";
+import FirePressure from "@/components/svg/FirePressure";
+import graphLoading from "@/assets/lottie/graphLoading.json";
+import styles from "@/css/module/Gas.module.css";
 
 interface DataPoint {
   date: Date;
   value: number;
 }
 
-function Liquid() {
+function Fire() {
   const chartRef = useRef<HTMLDivElement>(null);
   const [graphData1, setGraphData1] = useState(true);
   const generateDummyData1 = (): Promise<DataPoint[]> => {
@@ -36,12 +36,12 @@ function Liquid() {
     chartRef,
     [new Date(2024, 4, 1), new Date(2024, 4, 30)],
     [200, 1000],
-    "#ffca67",
-    "TANGKI BULANAN",
+    "#305DFF",
+    "APART",
     0.22,
     "0.8rem",
     "",
-    " Liter"
+    " psi"
   );
   return (
     <>
@@ -54,7 +54,7 @@ function Liquid() {
         }}
       >
         <div className={styles.headerDashboard}>
-          <h1>FUEL SYSTEM - TTC PENGAYOMAN</h1>
+          <h1>FIRE SYSTEM - TTC PENGAYOMAN</h1>
           <div className={styles.inputDateWraper}>
             <div className="wraper--date__filter">
               <label htmlFor="start" className="date-label">
@@ -79,26 +79,22 @@ function Liquid() {
           </div>
         </div>
         <div className={styles.headerDashboard}>
-          <div className={styles.navRooms}></div>
-          <div className={styles.inputDateWraper}>
-            <div className="wraper--date__filter">
-              <label htmlFor="start" className="date-label">
-                TANGKI BBM
-              </label>
-              <select name="floor" className="select-input bebasneue--regular">
-                <option>TANGKI CADANGAN</option>
-                <option>TANGKI BULANAN</option>
-              </select>
-            </div>
+          <div className={styles.navRooms}>
+            <div>RUANGAN A</div>
+            <div>RUANGAN B</div>
+            <div>RUANGAN C</div>
+            <div>RUANGAN D</div>
           </div>
+          <div className={styles.inputDateWraper}></div>
         </div>
       </div>
+
       <div className={styles.sectionWrapper}>
         <div className={styles.sectionInfo}>
           <div className={styles.sectionDetail}>
             <div className={styles.card}>
               <div className={styles.headerCard}>
-                <AnalogPressure volume={90} color="#ffca67" />
+                <AnalogPressure volume={90} color="#0081D1" />
               </div>
               <div className={styles.bodyCard}>
                 <div className={styles.valueMeters}>
@@ -136,7 +132,7 @@ function Liquid() {
             )}
           </div>
           <div className={styles.sectionImage}>
-            <TheBarrel volume={90} />
+            <FirePressure volume={90} />
             <div>
               <h6>900/1000 psi</h6>
               <h6>90%</h6>
@@ -148,4 +144,4 @@ function Liquid() {
   );
 }
 
-export default Liquid;
+export default Fire;

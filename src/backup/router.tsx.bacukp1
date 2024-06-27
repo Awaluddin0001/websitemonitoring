@@ -1,0 +1,9 @@
+import { createBrowserRouter } from "react-router-dom";
+import Desktopdash from "@/components/navbar/Desktopdash";
+
+export const router = createBrowserRouter([
+  {
+    path: "/main",
+    element: <Desktopdash />,
+  },
+]);

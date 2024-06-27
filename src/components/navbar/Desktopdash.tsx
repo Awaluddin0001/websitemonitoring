@@ -1,10 +1,10 @@
 import styles from "@/css/module/Desktop.module.css";
 import DekstopNavbar from "./DekstopNavbar";
-import { BasicReactProps } from "@/types/basicTypes";
 import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
+import { Outlet } from "react-router-dom";
 
-export default function Desktopdash({ children }: BasicReactProps) {
+export default function Desktopdash() {
   const showNavbar = useSelector(
     (state: { navbar: { showNavbar: boolean } }) => state.navbar.showNavbar
   );
@@ -24,7 +24,8 @@ export default function Desktopdash({ children }: BasicReactProps) {
           }}
           transition={{ duration: 0.1 }}
         >
-          {children}
+          {/* {children} */}
+          <Outlet />
         </motion.div>
       </motion.div>
     </div>

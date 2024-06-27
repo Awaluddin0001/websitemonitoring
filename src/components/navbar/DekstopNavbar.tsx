@@ -37,20 +37,28 @@ export default function DekstopNavbar() {
           <img src={logo} alt="logo pagetsel" className={styles.logo} />
         </div>
         <div className={styles.navbarGrouping}>
-          <DesktopIconBar to="/" label="dashboard" icon="dashboard" />
           <DesktopIconBar
-            to="/monitoring"
+            to="/main/dashboard"
+            label="dashboard"
+            icon="dashboard"
+          />
+          <DesktopIconBar
+            to="/main/monitoring"
             label="monitoring"
             icon="monitoring"
           />
-          <DesktopIconBar to="/assets" label="assets" icon="asset" />
-          <DesktopIconBar to="/checklist" label="checklist" icon="checklist" />
-          <DesktopIconBar to="/admin" label="admin" icon="admin" />
+          <DesktopIconBar to="/main/assets" label="assets" icon="asset" />
+          <DesktopIconBar
+            to="/main/checklist"
+            label="checklist"
+            icon="checklist"
+          />
+          <DesktopIconBar to="/main/admin" label="admin" icon="admin" />
         </div>
       </motion.div>
       <motion.div className={styles.navbarGroupingBottom}>
-        <DesktopIconBar to="/setting" label="setting" icon="setting" />
-        <DesktopIconBar to="/logout" label="logout" icon="logout" />
+        <DesktopIconBar to="/main/setting" label="setting" icon="setting" />
+        <DesktopIconBar to="/main/logout" label="logout" icon="logout" />
       </motion.div>
     </motion.nav>
   );

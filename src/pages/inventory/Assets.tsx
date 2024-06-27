@@ -18,7 +18,7 @@ export default function Assets() {
             boxShadow: "10px 15px 20px 4px rgba(131, 8, 8, 0.3)",
             transition: { duration: 0.2 },
           }}
-          onClick={() => navigate("/assets/list")}
+          onClick={() => navigate("/main/assets/datapotensi/")}
         >
           <Lottie
             animationData={dataPotensi}
@@ -34,14 +34,14 @@ export default function Assets() {
             boxShadow: "10px 15px 20px 4px rgba(131, 8, 8, 0.3)",
             transition: { duration: 0.2 },
           }}
-          onClick={() => navigate("/space/list")}
+          onClick={() => navigate("/main/assets/space/")}
         >
           <Lottie
             animationData={spaceManagement}
             loop={true}
             style={{ height: "590px" }}
           />
-          <h2>Space Management</h2>
+          <h2>Manajemen Ruangan</h2>
         </motion.div>
       </div>
     </>

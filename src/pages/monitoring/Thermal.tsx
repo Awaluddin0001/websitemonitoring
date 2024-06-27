@@ -14,7 +14,7 @@ interface DataPoint {
   value: number;
 }
 
-function Cooling() {
+function Thermal() {
   const chartRef1 = useRef<HTMLDivElement>(null);
   const chartRef2 = useRef<HTMLDivElement>(null);
   const [graphData1, setGraphData1] = useState(true);
@@ -244,4 +244,4 @@ function Cooling() {
   );
 }
 
-export default Cooling;
+export default Thermal;

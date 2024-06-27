@@ -4,12 +4,14 @@ import styles from "@/css/module/Asset.module.css";
 import Pen from "@/assets/svg/pen.svg";
 import Trash from "@/assets/svg/trash.svg";
 import HeadPage from "@/components/header/HeadPage";
-import { useNavigate, useParams } from "react-router-dom";
+import DapotButtons from "@/components/dapotFilter/DapotButtons";
 
 interface Rectifier {
   id: string;
   vendor_id: string;
+  vendor_name: string;
   brand_id: string;
+  brand_name: string;
   name: string;
   role: string;
   type: string;
@@ -23,25 +25,15 @@ interface Rectifier {
   warranty: string | null;
   installation_date: string;
   maintenance_id: string | null;
+  maintenance_date: string | null;
   created_at: string;
   user_id: string;
+  user_name: string;
 }
 
 export default function ElectricalRectifier() {
-  const pages = [
-    "rectifier",
-    "battery",
-    "panel",
-    "ups",
-    "trafo",
-    "genset",
-    "pdu",
-    "cubicle",
-  ];
   const [rectifiers, setRectifiers] = useState<Rectifier[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const { type } = useParams();
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchRectifiers = async () => {
@@ -55,6 +47,7 @@ export default function ElectricalRectifier() {
 
     fetchRectifiers();
   }, []);
+  console.log(rectifiers);
 
   if (error) {
     return <p>{error}</p>;
@@ -63,31 +56,7 @@ export default function ElectricalRectifier() {
   return (
     <>
       <HeadPage title={`List Rectifier`} />
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          width: "100%",
-          gap: "16px",
-        }}
-      >
-        {pages.map((page, index) => (
-          <div
-            onClick={() => navigate(`/assets/brand/list/electrical/${page}`)}
-            className={styles.pageButton}
-            key={index}
-            style={{ color: page === type ? "yellow" : "white" }}
-          >
-            {page}
-          </div>
-        ))}
-      </div>
-      <div
-        onClick={() => navigate(`/assets/brand/addElectrical/${type}`)}
-        className={styles.addButton}
-      >
-        + Add New Brand
-      </div>
+      <DapotButtons />
       {/* <div
         style={{
           width: "100%",
@@ -110,9 +79,9 @@ export default function ElectricalRectifier() {
         <table className={styles.assetTable}>
           <thead>
             <tr className={`${styles.sticky} ${styles.stickyHeader}`}>
-              <th>Id_rectifier</th>
-              <th>Vendor_id</th>
-              <th>Brand_id</th>
+              <th>Id</th>
+              <th>Vendor</th>
+              <th>Brand</th>
               <th>Name</th>
               <th>Type</th>
               <th>Role</th>
@@ -123,7 +92,7 @@ export default function ElectricalRectifier() {
               <th>Occupancy</th>
               <th>System</th>
               <th>Installation Date</th>
-              <th>Maintenance Id</th>
+              <th>Maintenance Date</th>
               <th>Remark Aging</th>
               <th>Last update</th>
               <th>Update By</th>
@@ -145,14 +114,14 @@ export default function ElectricalRectifier() {
                     background: index % 2 !== 0 ? "rgb(255 194 194)" : "",
                   }}
                 >
-                  {item.vendor_id}
+                  {item.vendor_name}
                 </td>
                 <td
                   style={{
                     background: index % 2 !== 0 ? "rgb(255 194 194)" : "",
                   }}
                 >
-                  {item.brand_id}
+                  {item.brand_name}
                 </td>
                 <td
                   style={{
@@ -229,7 +198,7 @@ export default function ElectricalRectifier() {
                     background: index % 2 !== 0 ? "rgb(255 194 194)" : "",
                   }}
                 >
-                  {item.maintenance_id}
+                  {item.maintenance_date}
                 </td>
                 <td
                   style={{
@@ -250,7 +219,7 @@ export default function ElectricalRectifier() {
                     background: index % 2 !== 0 ? "rgb(255 194 194)" : "",
                   }}
                 >
-                  {item.user_id}
+                  {item.user_name}
                 </td>
                 <td
                   style={{

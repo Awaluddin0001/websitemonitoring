@@ -1,0 +1,237 @@
+import { lazy } from "react";
+
+const Home = lazy(() => import("@/pages/monitoring/Home"));
+const Monitoring = lazy(() => import("@/pages/monitoring/Monitoring"));
+const Cooling = lazy(() => import("@/pages/monitoring/Cooling"));
+const Gas = lazy(() => import("@/pages/monitoring/Gas"));
+const Liquid = lazy(() => import("@/pages/monitoring/Liquid"));
+const Power = lazy(() => import("@/pages/monitoring/Power"));
+const Assets = lazy(() => import("@/pages/inventory/Assets"));
+const RoomManagement = lazy(() => import("@/pages/inventory/RoomManagement"));
+const Login = lazy(() => import("@/pages/login/Login"));
+const SpacePlan = lazy(() => import("@/pages/inventory/SpacePlan"));
+const SpaceList = lazy(() => import("@/pages/inventory/SpaceList"));
+
+const AssetsList = lazy(() => import("@/pages/inventory/AssetsList"));
+const AssetListBrand = lazy(() => import("@/pages/inventory/AssetsListBrand"));
+const AssetListCategory = lazy(
+  () => import("@/pages/inventory/AssetsListCategory")
+);
+const AssetListRoom = lazy(() => import("@/pages/inventory/AssetsListRoom"));
+const AssetListVendor = lazy(
+  () => import("@/pages/inventory/AssetsListVendor")
+);
+
+const NewBrandAirConditioning = lazy(
+  () => import("@/pages/inventory/brand/NewBrandAirConditioning")
+);
+const NewBrandElectrical = lazy(
+  () => import("@/pages/inventory/brand/NewBrandElectrical")
+);
+const NewBrandExtinguish = lazy(
+  () => import("@/pages/inventory/brand/NewBrandExtinguish")
+);
+const NewBrandFluidTank = lazy(
+  () => import("@/pages/inventory/brand/NewBrandFluidTank")
+);
+const NewBrandFurniture = lazy(
+  () => import("@/pages/inventory/brand/NewBrandFurniture")
+);
+const NewBrandLighting = lazy(
+  () => import("@/pages/inventory/brand/NewBrandLighting")
+);
+const NewBrandNetworkIt = lazy(
+  () => import("@/pages/inventory/brand/NewBrandNetworkIt")
+);
+const NewBrandPump = lazy(() => import("@/pages/inventory/brand/NewBrandPump"));
+const NewBrandSafety = lazy(
+  () => import("@/pages/inventory/brand/NewBrandSafety")
+);
+const NewBrandSecurity = lazy(
+  () => import("@/pages/inventory/brand/NewBrandSecurity")
+);
+
+const ListBrandAirConditioning = lazy(
+  () => import("@/pages/inventory/brand/ListBrandAirConditioning")
+);
+const ListBrandElectrical = lazy(
+  () => import("@/pages/inventory/brand/ListBrandElectrical")
+);
+const ListBrandExtinguish = lazy(
+  () => import("@/pages/inventory/brand/ListBrandExtinguish")
+);
+const ListBrandFluidTank = lazy(
+  () => import("@/pages/inventory/brand/ListBrandFluidTank")
+);
+const ListBrandFurniture = lazy(
+  () => import("@/pages/inventory/brand/ListBrandFurniture")
+);
+const ListBrandLighting = lazy(
+  () => import("@/pages/inventory/brand/ListBrandLighting")
+);
+const ListBrandNetworkIt = lazy(
+  () => import("@/pages/inventory/brand/ListBrandNetworkIt")
+);
+const ListBrandPump = lazy(
+  () => import("@/pages/inventory/brand/ListBrandPump")
+);
+const ListBrandSafety = lazy(
+  () => import("@/pages/inventory/brand/ListBrandSafety")
+);
+const ListBrandSecurity = lazy(
+  () => import("@/pages/inventory/brand/ListBrandSecurity")
+);
+
+const NewVendorAirConditioning = lazy(
+  () => import("@/pages/inventory/vendor/NewVendorAirConditioning")
+);
+const NewVendorConveyance = lazy(
+  () => import("@/pages/inventory/vendor/NewVendorConveyance")
+);
+const NewVendorElectrical = lazy(
+  () => import("@/pages/inventory/vendor/NewVendorElectrical")
+);
+const NewVendorExtinguish = lazy(
+  () => import("@/pages/inventory/vendor/NewVendorExtinguish")
+);
+const NewVendorFinishing = lazy(
+  () => import("@/pages/inventory/vendor/NewVendorFinishing")
+);
+const NewVendorFluidTank = lazy(
+  () => import("@/pages/inventory/vendor/NewVendorFluidTank")
+);
+const NewVendorFurniture = lazy(
+  () => import("@/pages/inventory/vendor/NewVendorFurniture")
+);
+const NewVendorLighting = lazy(
+  () => import("@/pages/inventory/vendor/NewVendorLighting")
+);
+const NewVendorNetworkIt = lazy(
+  () => import("@/pages/inventory/vendor/NewVendorNetworkIt")
+);
+const NewVendorPump = lazy(
+  () => import("@/pages/inventory/vendor/NewVendorPump")
+);
+const NewVendorSafety = lazy(
+  () => import("@/pages/inventory/vendor/NewVendorSafety")
+);
+const NewVendorSecurity = lazy(
+  () => import("@/pages/inventory/vendor/NewVendorSecurity")
+);
+
+const ListVendorAirConditioning = lazy(
+  () => import("@/pages/inventory/vendor/ListVendorAirConditioning")
+);
+const ListVendorConveyance = lazy(
+  () => import("@/pages/inventory/vendor/ListVendorConveyance")
+);
+const ListVendorElectrical = lazy(
+  () => import("@/pages/inventory/vendor/ListVendorElectrical")
+);
+const ListVendorExtinguish = lazy(
+  () => import("@/pages/inventory/vendor/ListVendorExtinguish")
+);
+const ListVendorFinishing = lazy(
+  () => import("@/pages/inventory/vendor/ListVendorFinishing")
+);
+const ListVendorFluidTank = lazy(
+  () => import("@/pages/inventory/vendor/ListVendorFluidTank")
+);
+const ListVendorFurniture = lazy(
+  () => import("@/pages/inventory/vendor/ListVendorFurniture")
+);
+const ListVendorLighting = lazy(
+  () => import("@/pages/inventory/vendor/ListVendorLighting")
+);
+const ListVendorNetworkIt = lazy(
+  () => import("@/pages/inventory/vendor/ListVendorNetworkIt")
+);
+const ListVendorPump = lazy(
+  () => import("@/pages/inventory/vendor/ListVendorPump")
+);
+const ListVendorSafety = lazy(
+  () => import("@/pages/inventory/vendor/ListVendorSafety")
+);
+const ListVendorSecurity = lazy(
+  () => import("@/pages/inventory/vendor/ListVendorSecurity")
+);
+
+const NotFound = lazy(() => import("@/pages/NotFound"));
+
+const routes = [
+  { path: "/", element: <Home /> },
+  { path: "/monitoring", element: <Monitoring /> },
+  { path: "/monitoring/cooling", element: <Cooling /> },
+  { path: "/monitoring/gas", element: <Gas /> },
+  { path: "/monitoring/liquid", element: <Liquid /> },
+  { path: "/monitoring/power", element: <Power /> },
+  { path: "/assets", element: <Assets /> },
+  { path: "/assets/room-management", element: <RoomManagement /> },
+  { path: "/login", element: <Login /> },
+  { path: "/space-plan", element: <SpacePlan /> },
+  { path: "/space-list", element: <SpaceList /> },
+  { path: "/assets/list", element: <AssetsList /> },
+  { path: "/assets/list/brand", element: <AssetListBrand /> },
+  { path: "/assets/list/category", element: <AssetListCategory /> },
+  { path: "/assets/list/room", element: <AssetListRoom /> },
+  { path: "/assets/list/vendor", element: <AssetListVendor /> },
+  {
+    path: "/assets/brand/addAirConditioning",
+    element: <NewBrandAirConditioning />,
+  },
+  { path: "/assets/brand/addElectrical", element: <NewBrandElectrical /> },
+  { path: "/assets/brand/addExtinguish", element: <NewBrandExtinguish /> },
+  { path: "/assets/brand/addFluidTank", element: <NewBrandFluidTank /> },
+  { path: "/assets/brand/addFurniture", element: <NewBrandFurniture /> },
+  { path: "/assets/brand/addLighting", element: <NewBrandLighting /> },
+  { path: "/assets/brand/addNetworkIt", element: <NewBrandNetworkIt /> },
+  { path: "/assets/brand/addPump", element: <NewBrandPump /> },
+  { path: "/assets/brand/addSafety", element: <NewBrandSafety /> },
+  { path: "/assets/brand/addSecurity", element: <NewBrandSecurity /> },
+  {
+    path: "/assets/brand/list/airconditioning",
+    element: <ListBrandAirConditioning />,
+  },
+  { path: "/assets/brand/list/electrical", element: <ListBrandElectrical /> },
+  { path: "/assets/brand/list/extinguish", element: <ListBrandExtinguish /> },
+  { path: "/assets/brand/list/fluidtank", element: <ListBrandFluidTank /> },
+  { path: "/assets/brand/list/furniture", element: <ListBrandFurniture /> },
+  { path: "/assets/brand/list/lighting", element: <ListBrandLighting /> },
+  { path: "/assets/brand/list/networkit", element: <ListBrandNetworkIt /> },
+  { path: "/assets/brand/list/pump", element: <ListBrandPump /> },
+  { path: "/assets/brand/list/safety", element: <ListBrandSafety /> },
+  { path: "/assets/brand/list/security", element: <ListBrandSecurity /> },
+  {
+    path: "/assets/vendor/addAirConditioning",
+    element: <NewVendorAirConditioning />,
+  },
+  { path: "/assets/vendor/addConveyance", element: <NewVendorConveyance /> },
+  { path: "/assets/vendor/addElectrical", element: <NewVendorElectrical /> },
+  { path: "/assets/vendor/addExtinguish", element: <NewVendorExtinguish /> },
+  { path: "/assets/vendor/addFinishing", element: <NewVendorFinishing /> },
+  { path: "/assets/vendor/addFluidTank", element: <NewVendorFluidTank /> },
+  { path: "/assets/vendor/addFurniture", element: <NewVendorFurniture /> },
+  { path: "/assets/vendor/addLighting", element: <NewVendorLighting /> },
+  { path: "/assets/vendor/addNetworkIt", element: <NewVendorNetworkIt /> },
+  { path: "/assets/vendor/addPump", element: <NewVendorPump /> },
+  { path: "/assets/vendor/addSafety", element: <NewVendorSafety /> },
+  { path: "/assets/vendor/addSecurity", element: <NewVendorSecurity /> },
+  {
+    path: "/assets/vendor/list/airconditioning",
+    element: <ListVendorAirConditioning />,
+  },
+  { path: "/assets/vendor/list/conveyance", element: <ListVendorConveyance /> },
+  { path: "/assets/vendor/list/electrical", element: <ListVendorElectrical /> },
+  { path: "/assets/vendor/list/extinguish", element: <ListVendorExtinguish /> },
+  { path: "/assets/vendor/list/finishing", element: <ListVendorFinishing /> },
+  { path: "/assets/vendor/list/fluidtank", element: <ListVendorFluidTank /> },
+  { path: "/assets/vendor/list/furniture", element: <ListVendorFurniture /> },
+  { path: "/assets/vendor/list/lighting", element: <ListVendorLighting /> },
+  { path: "/assets/vendor/list/networkit", element: <ListVendorNetworkIt /> },
+  { path: "/assets/vendor/list/pump", element: <ListVendorPump /> },
+  { path: "/assets/vendor/list/safety", element: <ListVendorSafety /> },
+  { path: "/assets/vendor/list/security", element: <ListVendorSecurity /> },
+  { path: "*", element: <NotFound /> },
+];
+
+export default routes;

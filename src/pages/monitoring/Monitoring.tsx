@@ -19,10 +19,10 @@ export default function Monitoring() {
             boxShadow: "10px 15px 20px 4px rgba(131, 8, 8, 0.3)",
             transition: { duration: 0.2 },
           }}
-          onClick={() => navigate("/power")}
+          onClick={() => navigate("/main/monitoring/power")}
         >
           <Lottie animationData={electrical} loop={true} />
-          <h2>Power Monitoring System</h2>
+          <h2>Sistem Pemantauan Kelistrikan</h2>
         </motion.div>
         <motion.div
           className={styles.cardChoice}
@@ -31,10 +31,10 @@ export default function Monitoring() {
             boxShadow: "10px 15px 20px 4px rgba(131, 8, 8, 0.3)",
             transition: { duration: 0.2 },
           }}
-          onClick={() => navigate("/thermal")}
+          onClick={() => navigate("/main/monitoring/thermal")}
         >
           <Lottie animationData={thermal} loop={true} />
-          <h2>Thermal Monitoring System</h2>
+          <h2>Sistem Pemantauan Termal</h2>
         </motion.div>
         <motion.div
           className={styles.cardChoice}
@@ -43,10 +43,10 @@ export default function Monitoring() {
             boxShadow: "10px 15px 20px 4px rgba(131, 8, 8, 0.3)",
             transition: { duration: 0.2 },
           }}
-          onClick={() => navigate("/bbm")}
+          onClick={() => navigate("/main/monitoring/bbm")}
         >
           <Lottie animationData={bbm} loop={true} />
-          <h2>BBM Monitoring System</h2>
+          <h2>Sistem Pemantauan BBM</h2>
         </motion.div>
         <motion.div
           className={styles.cardChoice}
@@ -55,10 +55,10 @@ export default function Monitoring() {
             boxShadow: "10px 15px 20px 4px rgba(131, 8, 8, 0.3)",
             transition: { duration: 0.2 },
           }}
-          onClick={() => navigate("/fire")}
+          onClick={() => navigate("/main/monitoring/fire")}
         >
           <Lottie animationData={fire} loop={true} />
-          <h2>Fire Monitoring System</h2>
+          <h2>Sistem Pemantuan Kebakaran</h2>
         </motion.div>
       </div>
     </>
