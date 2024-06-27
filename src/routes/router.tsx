@@ -6,56 +6,57 @@ import Power from "@/pages/monitoring/Power";
 import Thermal from "@/pages/monitoring/Thermal";
 import Fire from "@/pages/monitoring/Fire";
 import Bbm from "@/pages/monitoring/Bbm";
-import Assets from "@/pages/inventory/Assets";
-import NewBrandAirConditioning from "@/pages/inventory/brand/NewBrandAirConditioning";
-import NewBrandElectrical from "@/pages/inventory/brand/NewBrandElectrical";
-import NewBrandExtinguish from "@/pages/inventory/brand/NewBrandExtinguish";
-import NewBrandFurniture from "@/pages/inventory/brand/NewBrandFurniture";
-import NewBrandFluidTank from "@/pages/inventory/brand/NewBrandFluidTank";
-import NewBrandLighting from "@/pages/inventory/brand/NewBrandLighting";
-import NewBrandNetworkIt from "@/pages/inventory/brand/NewBrandNetworkIt";
-import NewBrandPump from "@/pages/inventory/brand/NewBrandPump";
-import NewBrandSafety from "@/pages/inventory/brand/NewBrandSafety";
-import NewBrandSecurity from "@/pages/inventory/brand/NewBrandSecurity";
-import ListBrandAirConditioning from "@/pages/inventory/brand/ListBrandAirConditioning";
-import ListBrandElectrical from "@/pages/inventory/brand/ListBrandElectrical";
-import ListBrandExtinguish from "@/pages/inventory/brand/ListBrandExtinguish";
-import ListBrandFluidTank from "@/pages/inventory/brand/ListBrandFluidTank";
-import ListBrandFurniture from "@/pages/inventory/brand/ListBrandFurniture";
-import ListBrandLighting from "@/pages/inventory/brand/ListBrandLighting";
-import ListBrandNetworkIt from "@/pages/inventory/brand/ListBrandNetworkIt";
-import ListBrandPump from "@/pages/inventory/brand/ListBrandPump";
-import ListBrandSafety from "@/pages/inventory/brand/ListBrandSafety";
-import ListBrandSecurity from "@/pages/inventory/brand/ListBrandSecurity";
-import NewVendorAirConditioning from "@/pages/inventory/vendor/NewVendorAirConditioning";
-import NewVendorConveyance from "@/pages/inventory/vendor/NewVendorConveyance";
-import NewVendorElectrical from "@/pages/inventory/vendor/NewVendorElectrical";
-import NewVendorExtinguish from "@/pages/inventory/vendor/NewVendorExtinguish";
-import NewVendorFinishing from "@/pages/inventory/vendor/NewVendorFinishing";
-import NewVendorFluidTank from "@/pages/inventory/vendor/NewVendorFluidTank";
-import NewVendorNetworkIt from "@/pages/inventory/vendor/NewVendorNetworkIt";
-import NewVendorPump from "@/pages/inventory/vendor/NewVendorPump";
-import NewVendorSafety from "@/pages/inventory/vendor/NewVendorSafety";
-import NewVendorSecurity from "@/pages/inventory/vendor/NewVendorSecurity";
-import ListVendorAirConditioning from "@/pages/inventory/vendor/ListVendorAirConditioning";
-import ListVendorConveyance from "@/pages/inventory/vendor/ListVendorConveyance";
-import ListVendorElectrical from "@/pages/inventory/vendor/ListVendorElectrical";
-import ListVendorExtinguish from "@/pages/inventory/vendor/ListVendorExtinguish";
-import ListVendorFinishing from "@/pages/inventory/vendor/ListVendorFinishing";
-import ListVendorFluidTank from "@/pages/inventory/vendor/ListVendorFluidTank";
-import ListVendorNetworkIt from "@/pages/inventory/vendor/ListVendorNetworkIt";
-import ListVendorPump from "@/pages/inventory/vendor/ListVendorPump";
-import ListVendorSafety from "@/pages/inventory/vendor/ListVendorSafety";
-import ListVendorSecurity from "@/pages/inventory/vendor/ListVendorSecurity";
-import AssetListBrand from "@/pages/inventory/AssetsListBrand";
-import AssetListVendor from "@/pages/inventory/AssetsListVendor";
-import AssetsList from "@/pages/inventory/AssetsList";
-import AssetListCategory from "@/pages/inventory/AssetsListCategory";
-import SpaceList from "@/pages/inventory/SpaceList";
-import SpacePlan from "@/pages/inventory/SpacePlan";
+import Assets from "@/pages/assets/Assets";
+import NewBrandAirConditioning from "@/pages/assets/dapot/brand/NewBrandAirConditioning";
+import NewBrandElectrical from "@/pages/assets/dapot/brand/NewBrandElectrical";
+import NewBrandExtinguish from "@/pages/assets/dapot/brand/NewBrandExtinguish";
+import NewBrandFurniture from "@/pages/assets/dapot/brand/NewBrandFurniture";
+import NewBrandFluidTank from "@/pages/assets/dapot/brand/NewBrandFluidTank";
+import NewBrandLighting from "@/pages/assets/dapot/brand/NewBrandLighting";
+import NewBrandNetworkIt from "@/pages/assets/dapot/brand/NewBrandNetworkIt";
+import NewBrandPump from "@/pages/assets/dapot/brand/NewBrandPump";
+import NewBrandSafety from "@/pages/assets/dapot/brand/NewBrandSafety";
+import NewBrandSecurity from "@/pages/assets/dapot/brand/NewBrandSecurity";
+import ListBrandAirConditioning from "@/pages/assets/dapot/brand/ListBrandAirConditioning";
+import ListBrandElectrical from "@/pages/assets/dapot/brand/ListBrandElectrical";
+import ListBrandExtinguish from "@/pages/assets/dapot/brand/ListBrandExtinguish";
+import ListBrandFluidTank from "@/pages/assets/dapot/brand/ListBrandFluidTank";
+import ListBrandFurniture from "@/pages/assets/dapot/brand/ListBrandFurniture";
+import ListBrandLighting from "@/pages/assets/dapot/brand/ListBrandLighting";
+import ListBrandNetworkIt from "@/pages/assets/dapot/brand/ListBrandNetworkIt";
+import ListBrandPump from "@/pages/assets/dapot/brand/ListBrandPump";
+import ListBrandSafety from "@/pages/assets/dapot/brand/ListBrandSafety";
+import ListBrandSecurity from "@/pages/assets/dapot/brand/ListBrandSecurity";
+import NewVendorAirConditioning from "@/pages/assets/dapot/vendor/NewVendorAirConditioning";
+import NewVendorConveyance from "@/pages/assets/dapot/vendor/NewVendorConveyance";
+import NewVendorElectrical from "@/pages/assets/dapot/vendor/NewVendorElectrical";
+import NewVendorExtinguish from "@/pages/assets/dapot/vendor/NewVendorExtinguish";
+import NewVendorFinishing from "@/pages/assets/dapot/vendor/NewVendorFinishing";
+import NewVendorFluidTank from "@/pages/assets/dapot/vendor/NewVendorFluidTank";
+import NewVendorNetworkIt from "@/pages/assets/dapot/vendor/NewVendorNetworkIt";
+import NewVendorPump from "@/pages/assets/dapot/vendor/NewVendorPump";
+import NewVendorSafety from "@/pages/assets/dapot/vendor/NewVendorSafety";
+import NewVendorSecurity from "@/pages/assets/dapot/vendor/NewVendorSecurity";
+import ListVendorAirConditioning from "@/pages/assets/dapot/vendor/ListVendorAirConditioning";
+import ListVendorConveyance from "@/pages/assets/dapot/vendor/ListVendorConveyance";
+import ListVendorElectrical from "@/pages/assets/dapot/vendor/ListVendorElectrical";
+import ListVendorExtinguish from "@/pages/assets/dapot/vendor/ListVendorExtinguish";
+import ListVendorFinishing from "@/pages/assets/dapot/vendor/ListVendorFinishing";
+import ListVendorFluidTank from "@/pages/assets/dapot/vendor/ListVendorFluidTank";
+import ListVendorNetworkIt from "@/pages/assets/dapot/vendor/ListVendorNetworkIt";
+import ListVendorPump from "@/pages/assets/dapot/vendor/ListVendorPump";
+import ListVendorSafety from "@/pages/assets/dapot/vendor/ListVendorSafety";
+import ListVendorSecurity from "@/pages/assets/dapot/vendor/ListVendorSecurity";
+import AssetListBrand from "@/pages/assets/dapot/AssetsListBrand";
+import AssetListVendor from "@/pages/assets/dapot/AssetsListVendor";
+import AssetsList from "@/pages/assets/AssetsList";
+import AssetListCategory from "@/pages/assets/dapot/AssetsListCategory";
+import SpaceList from "@/pages/assets/space/SpaceList";
+import SpacePlan from "@/pages/assets/space/SpacePlan";
 
 import Login from "@/pages/login/Login";
-import RoomManagement from "@/pages/inventory/RoomManagement";
+import RoomManagement from "@/pages/assets/dapot/category/RoomManagement";
+import NotFound from "@/pages/NotFound";
 
 export const router = createBrowserRouter([
   {
@@ -329,12 +330,16 @@ export const router = createBrowserRouter([
         element: <SpaceList />,
       },
       {
-        path: ":floor",
+        path: "assets/space/:floor",
         element: <SpacePlan />,
       },
     ],
   },
   {
     path: "/v1/",
+  },
+  {
+    path: "*",
+    element: <NotFound />,
   },
 ]);
