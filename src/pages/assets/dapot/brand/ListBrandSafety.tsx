@@ -19,7 +19,9 @@ export default function ListBrandSafety() {
     <>
       <HeadPage title={`List Brand Safety - ${type}`} />
       <div
-        onClick={() => navigate(`/assets/brand/addSafety/${type}`)}
+        onClick={() =>
+          navigate(`/main/assets/datapotensi/brand/add/safety/${type}`)
+        }
         className={styles.addButton}
       >
         + Add New Brand

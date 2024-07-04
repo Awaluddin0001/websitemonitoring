@@ -21,7 +21,7 @@ export default function ListVendorPump() {
       <HeadPage title={`List Vendor Pump `} />
 
       <div
-        onClick={() => navigate(`/assets/vendor/addPump`)}
+        onClick={() => navigate(`/main/assets/datapotensi/vendor/add/pump`)}
         className={styles.addButton}
       >
         + Add New Vendor

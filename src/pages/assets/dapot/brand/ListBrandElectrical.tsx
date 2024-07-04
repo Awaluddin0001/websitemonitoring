@@ -29,7 +29,9 @@ export default function ListBrandElectrical() {
       >
         {pages.map((page, index) => (
           <div
-            onClick={() => navigate(`/assets/brand/list/electrical/${page}`)}
+            onClick={() =>
+              navigate(`/main/assets/datapotensi/brand/list/electrical/${page}`)
+            }
             className={styles.pageButton}
             key={index}
             style={{ color: page === type ? "yellow" : "white" }}
@@ -39,7 +41,9 @@ export default function ListBrandElectrical() {
         ))}
       </div>
       <div
-        onClick={() => navigate(`/assets/brand/addElectrical/${type}`)}
+        onClick={() =>
+          navigate(`/main/assets/datapotensi/brand/add/electrical/${type}`)
+        }
         className={styles.addButton}
       >
         + Add New Brand

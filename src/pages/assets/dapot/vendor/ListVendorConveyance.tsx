@@ -21,7 +21,9 @@ export default function ListVendorConveyance() {
       <HeadPage title={`List Vendor Conveyance`} />
 
       <div
-        onClick={() => navigate(`/assets/vendor/addConveyance`)}
+        onClick={() =>
+          navigate(`/main/assets/datapotensi/vendor/add/conveyance`)
+        }
         className={styles.addButton}
       >
         + Add New Vendor

@@ -20,7 +20,7 @@ export default function ListVendorLighting() {
     <>
       <HeadPage title={`List Vendor Lighting `} />
       <div
-        onClick={() => navigate(`/assets/vendor/addLighting`)}
+        onClick={() => navigate(`/main/assets/datapotensi/vendor/add/lighting`)}
         className={styles.addButton}
       >
         + Add New Vendor

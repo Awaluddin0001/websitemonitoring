@@ -1,13 +1,14 @@
 import DashboardSvg from "@/components/svg/DashboardSvg";
 import MonitorSvg from "@/components/svg/MonitorSvg";
-import RoomSvg from "@/components/svg/RoomSvg";
 import ChecklistSvg from "@/components/svg/ChecklistSvg";
 import SettingSvg from "@/components/svg/SettingSvg";
 import LogoutSvg from "@/components/svg/LogoutSvg";
 import AdminSvg from "@/components/svg/AdminSvg";
+import BuildingSvg from "../svg/BuildingSvg";
 import styles from "@/css/module/CircleButton.module.css";
 import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
+// import RoomSvg from "@/components/svg/RoomSvg";
 export default function DesktopIconBar({
   to,
   icon,
@@ -56,7 +57,7 @@ export default function DesktopIconBar({
             height="30"
           />
         ) : icon === "asset" ? (
-          <RoomSvg
+          <BuildingSvg
             color={isActive ? "#8b0000" : "#000000"}
             width="26"
             height="30"

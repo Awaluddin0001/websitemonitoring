@@ -57,6 +57,7 @@ import SpacePlan from "@/pages/assets/space/SpacePlan";
 import Login from "@/pages/login/Login";
 import RoomManagement from "@/pages/assets/dapot/category/RoomManagement";
 import NotFound from "@/pages/NotFound";
+import ElectricalRectifier from "@/pages/assets/dapot/category/ElectricalRectifier";
 
 export const router = createBrowserRouter([
   {
@@ -210,6 +211,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "assets/datapotensi/category/electrical/rectifier/list",
+        element: <ElectricalRectifier />,
       },
       {
         path: "assets/datapotensi/category/electrical/rectifier/edit",

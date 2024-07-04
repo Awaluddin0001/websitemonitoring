@@ -20,18 +20,18 @@ export default function AssetListCategory() {
   return (
     <>
       <CategoryNavbar
-        link1="/assets/air/all"
-        link2="/assets/conveyance/all"
-        link3="/assets/electrical/all"
-        link4="/assets/extinguish/all"
-        link5="/assets/finishing/all"
-        link6="/assets/comfort/all"
-        link7="/assets/lighting/all"
-        link8="/assets/fuel/all"
-        link9="/assets/network/all"
-        link10="/assets/pump/all"
-        link11="/assets/safety/all"
-        link12="/assets/security/all"
+        link1="/main/assets/datapotensi/category/air/"
+        link2="/main/assets/datapotensi/category/conveyance/"
+        link3="/main/assets/datapotensi/category/electrical/rectifier/list"
+        link4="/main/assets/datapotensi/category/extinguish/"
+        link5="/main/assets/datapotensi/category/finishing/"
+        link6="/main/assets/datapotensi/category/comfort/"
+        link7="/main/assets/datapotensi/category/lighting/"
+        link8="/main/assets/datapotensi/category/fuel/"
+        link9="/main/assets/datapotensi/category/network/"
+        link10="/main/assets/datapotensi/category/pump/"
+        link11="/main/assets/datapotensi/category/safety/"
+        link12="/main/assets/datapotensi/category/security/"
       />
     </>
   );

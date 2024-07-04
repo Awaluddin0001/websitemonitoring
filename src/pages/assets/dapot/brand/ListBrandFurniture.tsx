@@ -20,7 +20,9 @@ export default function ListBrandFurniture() {
       <HeadPage title={`List Brand Furniture - ${type}`} />
 
       <div
-        onClick={() => navigate(`/assets/brand/addFurniture/${type}`)}
+        onClick={() =>
+          navigate(`/main/assets/datapotensi/brand/add/furniture/${type}`)
+        }
         className={styles.addButton}
       >
         + Add New Brand

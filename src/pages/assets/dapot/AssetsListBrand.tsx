@@ -20,16 +20,16 @@ export default function AssetListBrand() {
   return (
     <>
       <CategoryNavbar
-        link1="/assets/brand/list/airconditioning/air"
-        link3="/assets/brand/list/electrical/rectifier"
-        link4="/assets/brand/list/extinguish/cylinder"
-        link6="/assets/brand/list/furniture/furniture"
-        link7="/assets/brand/list/lighting/lighting"
-        link8="/assets/brand/list/fluidtank/tank"
-        link9="/assets/brand/list/networkit/rak_server"
-        link10="/assets/brand/list/pump/pump"
-        link11="/assets/brand/list/safety/safety"
-        link12="/assets/brand/list/security/access_control"
+        link1="/main/assets/datapotensi/brand/list/airconditioning/air"
+        link3="/main/assets/datapotensi/brand/list/electrical/rectifier"
+        link4="/main/assets/datapotensi/brand/list/extinguish/cylinder"
+        link6="/main/assets/datapotensi/brand/list/furniture/furniture"
+        link7="/main/assets/datapotensi/brand/list/lighting/lighting"
+        link8="/main/assets/datapotensi/brand/list/fluidtank/tank"
+        link9="/main/assets/datapotensi/brand/list/networkit/rak_server"
+        link10="/main/assets/datapotensi/brand/list/pump/pump"
+        link11="/main/assets/datapotensi/brand/list/safety/safety"
+        link12="/main/assets/datapotensi/brand/list/security/access_control"
       />
     </>
   );

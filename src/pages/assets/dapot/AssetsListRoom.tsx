@@ -13,7 +13,7 @@ export default function AssetListRoom() {
             boxShadow: "10px 15px 20px 4px rgba(131, 8, 8, 0.3)",
             transition: { duration: 0.2 },
           }}
-          onClick={() => navigate("/power")}
+          onClick={() => navigate("/floor1")}
         >
           <h2 style={{ fontSize: "7rem" }}>1</h2>
           <h2>Lantai</h2>
@@ -25,7 +25,7 @@ export default function AssetListRoom() {
             boxShadow: "10px 15px 20px 4px rgba(131, 8, 8, 0.3)",
             transition: { duration: 0.2 },
           }}
-          onClick={() => navigate("/thermal")}
+          onClick={() => navigate("/floor2")}
         >
           <h2 style={{ fontSize: "7rem" }}>2</h2>
           <h2>Lantai</h2>
@@ -37,7 +37,7 @@ export default function AssetListRoom() {
             boxShadow: "10px 15px 20px 4px rgba(131, 8, 8, 0.3)",
             transition: { duration: 0.2 },
           }}
-          onClick={() => navigate("/bbm")}
+          onClick={() => navigate("/floor3")}
         >
           <h2 style={{ fontSize: "7rem" }}>3</h2>
           <h2>Lantai</h2>
@@ -49,7 +49,7 @@ export default function AssetListRoom() {
             boxShadow: "10px 15px 20px 4px rgba(131, 8, 8, 0.3)",
             transition: { duration: 0.2 },
           }}
-          onClick={() => navigate("/fire")}
+          onClick={() => navigate("/floor4")}
         >
           <h2 style={{ fontSize: "7rem" }}>4</h2>
           <h2>Lantai</h2>

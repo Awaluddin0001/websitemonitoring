@@ -21,7 +21,7 @@ export default function ListVendorSafety() {
       <HeadPage title={`List Vendor Safety `} />
 
       <div
-        onClick={() => navigate(`/assets/vendor/addSafety`)}
+        onClick={() => navigate(`/main/assets/datapotensi/vendor/add/safety`)}
         className={styles.addButton}
       >
         + Add New Vendor

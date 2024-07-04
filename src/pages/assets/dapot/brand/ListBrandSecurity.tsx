@@ -38,7 +38,9 @@ export default function ListBrandSecurity() {
       >
         {pages.map((page, index) => (
           <div
-            onClick={() => navigate(`/assets/brand/list/security/${page}`)}
+            onClick={() =>
+              navigate(`/main/assets/datapotensi/brand/list/security/${page}`)
+            }
             className={styles.pageButton}
             key={index}
             style={{ color: page === type ? "yellow" : "white" }}
@@ -48,7 +50,9 @@ export default function ListBrandSecurity() {
         ))}
       </div>
       <div
-        onClick={() => navigate(`/assets/brand/addSecurity/${type}`)}
+        onClick={() =>
+          navigate(`/main/assets/datapotensi/brand/add/security/${type}`)
+        }
         className={styles.addButton}
       >
         + Add New Brand

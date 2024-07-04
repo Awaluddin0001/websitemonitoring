@@ -20,7 +20,9 @@ export default function ListBrandLighting() {
       <HeadPage title={`List Brand Lighting - ${type}`} />
 
       <div
-        onClick={() => navigate(`/assets/brand/addLighting/${type}`)}
+        onClick={() =>
+          navigate(`/main/assets/datapotensi/brand/add/lighting/${type}`)
+        }
         className={styles.addButton}
       >
         + Add New Brand

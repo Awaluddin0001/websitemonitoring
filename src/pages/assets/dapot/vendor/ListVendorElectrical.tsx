@@ -20,7 +20,9 @@ export default function ListVendorElectrical() {
     <>
       <HeadPage title={`List Vendor Electrical `} />
       <div
-        onClick={() => navigate(`/assets/vendor/addElectrical`)}
+        onClick={() =>
+          navigate(`/main/assets/datapotensi/vendor/add/electrical`)
+        }
         className={styles.addButton}
       >
         + Add New Vendor

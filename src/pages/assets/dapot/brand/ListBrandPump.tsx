@@ -20,7 +20,9 @@ export default function ListBrandPump() {
       <HeadPage title={`List Brand Pump - ${type}`} />
 
       <div
-        onClick={() => navigate(`/assets/brand/addPump/${type}`)}
+        onClick={() =>
+          navigate(`/main/assets/datapotensi/brand/add/pump/${type}`)
+        }
         className={styles.addButton}
       >
         + Add New Brand

@@ -36,7 +36,9 @@ export default function ListBrandNetworkIt() {
       >
         {pages.map((page, index) => (
           <div
-            onClick={() => navigate(`/assets/brand/list/networkit/${page}`)}
+            onClick={() =>
+              navigate(`/main/assets/datapotensi/brand/list/networkit/${page}`)
+            }
             className={styles.pageButton}
             key={index}
             style={{ color: page === type ? "yellow" : "white" }}
@@ -46,7 +48,9 @@ export default function ListBrandNetworkIt() {
         ))}
       </div>
       <div
-        onClick={() => navigate(`/assets/brand/addNetworkIt/${type}`)}
+        onClick={() =>
+          navigate(`/main/assets/datapotensi/brand/add/networkit/${type}`)
+        }
         className={styles.addButton}
       >
         + Add New Brand

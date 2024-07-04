@@ -30,7 +30,9 @@ export default function ListBrandAirConditioning() {
         {pages.map((page, index) => (
           <div
             onClick={() =>
-              navigate(`/assets/brand/list/airconditioning/${page}`)
+              navigate(
+                `/main/assets/datapotensi/brand/list/airconditioning/${page}`
+              )
             }
             className={styles.pageButton}
             key={index}
@@ -41,7 +43,9 @@ export default function ListBrandAirConditioning() {
         ))}
       </div>
       <div
-        onClick={() => navigate(`/assets/brand/addAirConditioning/${type}`)}
+        onClick={() =>
+          navigate(`/main/assets/datapotensi/brand/add/airconditioning/${type}`)
+        }
         className={styles.addButton}
       >
         + Add New Brand

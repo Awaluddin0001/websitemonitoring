@@ -20,7 +20,9 @@ export default function ListVendorFluidTank() {
     <>
       <HeadPage title={`List Vendor Fluid tank `} />
       <div
-        onClick={() => navigate(`/assets/vendor/addFluidTank`)}
+        onClick={() =>
+          navigate(`/main/assets/datapotensi/vendor/add/fluidtank`)
+        }
         className={styles.addButton}
       >
         + Add New Vendor

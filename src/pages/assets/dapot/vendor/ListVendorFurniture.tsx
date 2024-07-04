@@ -21,7 +21,9 @@ export default function ListVendorFurniture() {
       <HeadPage title={`List Vendor Furnitures `} />
 
       <div
-        onClick={() => navigate(`/assets/vendor/addFurniture`)}
+        onClick={() =>
+          navigate(`/main/assets/datapotensi/vendor/add/furniture`)
+        }
         className={styles.addButton}
       >
         + Add New Vendor

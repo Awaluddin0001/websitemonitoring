@@ -20,7 +20,9 @@ export default function ListVendorFinishing() {
     <>
       <HeadPage title={`List Vendor Finishing `} />
       <div
-        onClick={() => navigate(`/assets/vendor/addFinishing`)}
+        onClick={() =>
+          navigate(`/main/assets/datapotensi/vendor/add/finishing`)
+        }
         className={styles.addButton}
       >
         + Add New Vendor

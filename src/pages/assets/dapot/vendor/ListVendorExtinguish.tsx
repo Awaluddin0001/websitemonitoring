@@ -20,7 +20,9 @@ export default function ListVendorExtinguish() {
     <>
       <HeadPage title={`List Vendor Extinguish `} />
       <div
-        onClick={() => navigate(`/assets/vendor/addExtinguish`)}
+        onClick={() =>
+          navigate(`/main/assets/datapotensi/vendor/add/extinguish`)
+        }
         className={styles.addButton}
       >
         + Add New Vendor

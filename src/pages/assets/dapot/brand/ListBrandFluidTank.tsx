@@ -19,7 +19,9 @@ export default function ListBrandFluidTank() {
     <>
       <HeadPage title={`List Brand Fluid Tank - ${type}`} />
       <div
-        onClick={() => navigate(`/assets/brand/addFluidTank/${type}`)}
+        onClick={() =>
+          navigate(`/main/assets/datapotensi/brand/add/fluidtank/${type}`)
+        }
         className={styles.addButton}
       >
         + Add New Brand

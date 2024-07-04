@@ -21,7 +21,9 @@ export default function ListVendorAirConditioning() {
       <HeadPage title={`List Vendor Air Conditioning`} />
 
       <div
-        onClick={() => navigate(`/assets/vendor/addAirConditioning`)}
+        onClick={() =>
+          navigate(`/main/assets/datapotensi/vendor/add/airconditioning`)
+        }
         className={styles.addButton}
       >
         + Add New Vendor

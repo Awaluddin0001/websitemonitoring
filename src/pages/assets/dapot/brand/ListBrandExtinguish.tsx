@@ -20,7 +20,9 @@ export default function ListBrandExtinguish() {
       <HeadPage title={`List Brand Extinguish - ${type}`} />
 
       <div
-        onClick={() => navigate(`/assets/brand/addExtinguish/${type}`)}
+        onClick={() =>
+          navigate(`/main/assets/datapotensi/brand/add/extinguish/${type}`)
+        }
         className={styles.addButton}
       >
         + Add New Brand

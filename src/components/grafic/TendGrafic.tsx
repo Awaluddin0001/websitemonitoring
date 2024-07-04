@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
+import moment from "moment-timezone";
 
 interface DataPoint {
   date: Date;
@@ -16,6 +17,8 @@ interface DrawChartProps {
   styleTransform?: string;
   unit?: string;
   mode: "month" | "24hour";
+  positionLabel?: number;
+  setValue?: any;
 }
 
 const TrendGrafic: React.FC<DrawChartProps> = ({
@@ -28,10 +31,11 @@ const TrendGrafic: React.FC<DrawChartProps> = ({
   styleTransform = "",
   unit = "",
   mode,
+  positionLabel = 105,
+  setValue,
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [containerWidth, setContainerWidth] = useState(0);
-
   useEffect(() => {
     const updateWidth = () => {
       if (ref.current) {
@@ -91,7 +95,8 @@ const TrendGrafic: React.FC<DrawChartProps> = ({
 
       // Generate ticks for the x-axis based on the mode
       const xTicks =
-        mode === "month" ? d3.timeMonth.every(1) : d3.timeHour.every(6);
+        // mode === "month" ? d3.timeMonth.every(1) : d3.timeHour.every(3);
+        mode === "month" ? d3.timeMonth.every(1) : d3.timeSecond.every(30);
 
       const y = d3
         .scaleLinear()
@@ -131,12 +136,11 @@ const TrendGrafic: React.FC<DrawChartProps> = ({
               const date = domainValue as Date;
               return mode === "month"
                 ? d3.timeFormat("%d-%b")(date)
-                : d3.timeFormat("%d-%b %H:%M")(date); // Include both date and time
+                : d3.timeFormat("%H:%M")(date); // Include both date and time
             })
         );
 
       xAxis.selectAll("text").style("font-size", fontSize);
-
       // Append gridlines for y-axis
       svg
         .append("g")
@@ -144,7 +148,7 @@ const TrendGrafic: React.FC<DrawChartProps> = ({
         .call(
           d3
             .axisLeft(y)
-            .ticks(5)
+            .ticks(4)
             .tickSize(-(width - margin.left - margin.right))
         )
         .selectAll("text")
@@ -198,6 +202,10 @@ const TrendGrafic: React.FC<DrawChartProps> = ({
             Math.max(event.clientY - containerRect.top - tooltipHeight, 0),
             containerRect.height - tooltipHeight
           );
+          setValue({
+            timestamp: moment(d.date).format("DD-MM-YYYY HH:mm:ss"),
+            value: d.value,
+          });
 
           tooltip.transition().duration(200).style("opacity", 0.9);
           tooltip
@@ -211,7 +219,7 @@ const TrendGrafic: React.FC<DrawChartProps> = ({
 
       svg
         .append("text")
-        .attr("x", width - 105)
+        .attr("x", width - positionLabel)
         .attr("y", 11)
         .style("font-size", fontSize)
         .style("font-weight", "800")

@@ -21,7 +21,9 @@ export default function ListVendorNetworkIt() {
       <HeadPage title={`List Vendor Network It `} />
 
       <div
-        onClick={() => navigate(`/assets/vendor/addNetworkIt`)}
+        onClick={() =>
+          navigate(`/main/assets/datapotensi/vendor/add/networkit`)
+        }
         className={styles.addButton}
       >
         + Add New Vendor
