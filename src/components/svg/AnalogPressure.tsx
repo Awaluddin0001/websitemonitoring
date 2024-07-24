@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import "./AnalogPressure.css";
 
 function AnalogPressure({ volume, color }: { volume: number; color: string }) {

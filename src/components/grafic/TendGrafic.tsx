@@ -8,7 +8,7 @@ interface DataPoint {
 }
 
 interface DrawChartProps {
-  data: DataPoint[] | undefined;
+  data: DataPoint[];
   lineColor: string;
   pointColor: string;
   label: string;
@@ -19,6 +19,8 @@ interface DrawChartProps {
   mode: "month" | "24hour";
   positionLabel?: number;
   setValue?: any;
+  backgroundColor?: string;
+  stroke: string;
 }
 
 const TrendGrafic: React.FC<DrawChartProps> = ({
@@ -33,9 +35,36 @@ const TrendGrafic: React.FC<DrawChartProps> = ({
   mode,
   positionLabel = 105,
   setValue,
+  backgroundColor = "#333",
+  stroke = "#fff",
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const [containerWidth, setContainerWidth] = useState(0);
+
+  const processData = (rawData: DataPoint[]): DataPoint[] => {
+    const hourlyData = new Map<string, { count: number; sumValue: number }>();
+
+    rawData.forEach((entry) => {
+      const hour = moment(entry.date).startOf("hour").toISOString();
+      if (!hourlyData.has(hour)) {
+        hourlyData.set(hour, { count: 0, sumValue: 0 });
+      }
+      const hourData = hourlyData.get(hour)!;
+      hourData.count += 1;
+      hourData.sumValue += entry.value;
+    });
+
+    const averagedData: DataPoint[] = [];
+    hourlyData.forEach((value, key) => {
+      averagedData.push({
+        date: new Date(key),
+        value: value.sumValue / value.count,
+      });
+    });
+
+    return averagedData;
+  };
+
   useEffect(() => {
     const updateWidth = () => {
       if (ref.current) {
@@ -62,8 +91,11 @@ const TrendGrafic: React.FC<DrawChartProps> = ({
   useEffect(() => {
     const drawChart = async () => {
       if (!data || !data.length || !containerWidth) return;
-      const domainDate = data.map((d) => d.date);
-      const domainValue = data.map((d) => d.value);
+
+      const processedData = processData(data);
+
+      const domainDate = processedData.map((d) => d.date);
+      const domainValue = processedData.map((d) => d.value);
 
       d3.select(ref.current).select("svg").remove();
       d3.select(ref.current).select(".tooltip").remove();
@@ -95,8 +127,8 @@ const TrendGrafic: React.FC<DrawChartProps> = ({
 
       // Generate ticks for the x-axis based on the mode
       const xTicks =
-        // mode === "month" ? d3.timeMonth.every(1) : d3.timeHour.every(3);
-        mode === "month" ? d3.timeMonth.every(1) : d3.timeSecond.every(30);
+        // mode === "month" ? d3.timeMonth.every(1) : d3.timeHour.every(6);
+        mode === "month" ? d3.timeMonth.every(1) : d3.timeHour.every(2);
 
       const y = d3
         .scaleLinear()
@@ -108,7 +140,10 @@ const TrendGrafic: React.FC<DrawChartProps> = ({
         .append("svg")
         .attr("width", width)
         .attr("height", height)
-        .style("transform", styleTransform);
+        .style("transform", styleTransform)
+        .style("background", backgroundColor) // Dark background
+        .style("transform", "translateX(-10px)") // Dark background
+        .style("padding-top", "10px"); // Dark background
 
       const tooltip = d3
         .select(ref.current)
@@ -140,33 +175,61 @@ const TrendGrafic: React.FC<DrawChartProps> = ({
             })
         );
 
-      xAxis.selectAll("text").style("font-size", fontSize);
+      xAxis
+        .selectAll("text")
+        .style("font-size", fontSize)
+        .style("fill", stroke); // White text for x-axis
+      xAxis.selectAll("line").attr("stroke", "#aaa"); // White grid lines for x-axis
+
       // Append gridlines for y-axis
-      svg
+      const yAxis = svg
         .append("g")
         .attr("transform", `translate(${margin.left},0)`)
         .call(
           d3
             .axisLeft(y)
-            .ticks(4)
+            .ticks(5)
             .tickSize(-(width - margin.left - margin.right))
-        )
-        .selectAll("text")
-        .style("font-size", fontSize);
+        );
 
-      svg.selectAll("line").attr("stroke", "#ABABAB");
+      yAxis
+        .selectAll("text")
+        .style("font-size", fontSize)
+        .style("fill", stroke); // White text for y-axis
+      yAxis.selectAll("line").attr("stroke", "#aaa"); // White grid lines for y-axis
+
+      svg
+        .selectAll("path.domain")
+        .attr("stroke", stroke)
+        .attr("stroke-width", 1.5); // White axis lines
+
+      const area = d3
+        .area<DataPoint>()
+        .x((d) => x(d.date))
+        .y0(height - margin.bottom)
+        .y1((d) => y(d.value))
+        .curve(d3.curveMonotoneX); // Apply curve
+
+      svg
+        .append("path")
+        .datum(processedData)
+        .attr("fill", lineColor) // Fill color for the area
+        .attr("opacity", 0.5) // Fill color for the area
+        .attr("filter", "contrast(500%)")
+        .attr("d", area);
 
       const line = d3
         .line<DataPoint>()
         .x((d) => x(d.date))
-        .y((d) => y(d.value));
+        .y((d) => y(d.value))
+        .curve(d3.curveMonotoneX); // Apply curve
 
       svg
         .append("path")
-        .datum(data)
+        .datum(processedData)
         .attr("fill", "none")
         .attr("stroke", lineColor)
-        .attr("stroke-width", 2)
+        .attr("stroke-width", 4)
         .attr("d", line)
         .attr("stroke-dasharray", function () {
           return this.getTotalLength();
@@ -182,12 +245,12 @@ const TrendGrafic: React.FC<DrawChartProps> = ({
       // Append circles to the path
       svg
         .selectAll("circle")
-        .data(data)
+        .data(processedData)
         .enter()
         .append("circle")
         .attr("cx", (d) => x(d.date))
         .attr("cy", (d) => y(d.value))
-        .attr("r", 2) // Increase radius for better visibility
+        .attr("r", 4) // Increase radius for better visibility
         .attr("fill", pointColor)
         .on("mouseover", (event, d) => {
           const containerRect = ref.current!.getBoundingClientRect();
@@ -222,8 +285,8 @@ const TrendGrafic: React.FC<DrawChartProps> = ({
         .attr("x", width - positionLabel)
         .attr("y", 11)
         .style("font-size", fontSize)
-        .style("font-weight", "800")
-        .style("fill", "#000000")
+        // .style("font-weight", "800")
+        .style("fill", stroke) // White label text
         .text(label);
     };
 
@@ -250,6 +313,9 @@ const TrendGrafic: React.FC<DrawChartProps> = ({
         width: "100%",
         height: heightGrafic + "px",
         position: "relative",
+        borderRadius: "10px",
+        overflow: "hidden",
+        backgroundColor: backgroundColor,
       }}
     ></div>
   );

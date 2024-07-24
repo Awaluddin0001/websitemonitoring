@@ -1,5 +1,3 @@
-import React from "react";
-
 function FirePressure({ volume }: { volume: number }) {
   // volume should be a number between 0 and 100
   const fillPercentage = Math.max(0, Math.min(100, volume));

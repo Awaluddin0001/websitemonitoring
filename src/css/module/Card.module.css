@@ -17,3 +17,75 @@
   font-size: 3.5rem;
   font-weight: 500;
 }
+
+.cardExplainParameter {
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  font-size: 2rem;
+}
+
+.cardParameterHome {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  gap: 32px;
+}
+
+.parameterTemperature,
+.parameterHumidity,
+.parameterPue {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 16px;
+}
+
+.parameterTemperature h2,
+.parameterHumidity h2,
+.parameterPue h2 {
+  font-size: 2rem;
+}
+.parameterTemperature h3,
+.parameterHumidity h3,
+.parameterPue h3 {
+  font-size: 2rem;
+}
+
+.parameterCard {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1rem;
+}
+
+.color1 {
+  background-color: #0ecbc0;
+  width: 3rem;
+  height: 3rem;
+}
+
+.color2 {
+  background-color: #56cb0e;
+  width: 3rem;
+  height: 3rem;
+}
+
+.color3 {
+  background-color: #cb300e;
+  width: 3rem;
+  height: 3rem;
+}
+
+.color4 {
+  background-color: rgb(203 125 14);
+  width: 3rem;
+  height: 3rem;
+}

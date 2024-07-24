@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useRef } from "react";
 // import io from "socket.io-client";
 import styles from "@/css/module/Power.module.css";
 import listrik from "@/assets/svg/power.svg";

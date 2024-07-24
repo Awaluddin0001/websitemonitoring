@@ -58,6 +58,15 @@ import Login from "@/pages/login/Login";
 import RoomManagement from "@/pages/assets/dapot/category/RoomManagement";
 import NotFound from "@/pages/NotFound";
 import ElectricalRectifier from "@/pages/assets/dapot/category/ElectricalRectifier";
+import ElectricalBattery from "@/pages/assets/dapot/category/ElectricalBattery";
+import ElectricalPanel from "@/pages/assets/dapot/category/ElectricalPanel";
+import ElectricalUps from "@/pages/assets/dapot/category/ElectricalUps";
+import ElectricalTrafo from "@/pages/assets/dapot/category/ElectricalTrafo";
+import ElectricalGenset from "@/pages/assets/dapot/category/ElectricalGenset";
+import ElectricalPdu from "@/pages/assets/dapot/category/ElectricalPdu";
+import ElectricalCubicle from "@/pages/assets/dapot/category/ElectricalCubicle";
+import ElectricalRectifieAdd from "@/pages/assets/dapot/category/ElectricalRectifierAdd";
+import ElectricalRectifieUpdate from "@/pages/assets/dapot/category/ElectricalRectifierUpdate";
 
 export const router = createBrowserRouter([
   {
@@ -208,10 +217,43 @@ export const router = createBrowserRouter([
       },
       {
         path: "assets/datapotensi/category/electrical/rectifier/add",
+        element: <ElectricalRectifieAdd />,
+      },
+      {
+        path: "assets/datapotensi/category/electrical/rectifier/update",
+        element: <ElectricalRectifieUpdate />,
       },
       {
         path: "assets/datapotensi/category/electrical/rectifier/list",
         element: <ElectricalRectifier />,
+      },
+      {
+        path: "assets/datapotensi/category/electrical/battery/list",
+        element: <ElectricalBattery />,
+      },
+      {
+        path: "assets/datapotensi/category/electrical/panel/list",
+        element: <ElectricalPanel />,
+      },
+      {
+        path: "assets/datapotensi/category/electrical/ups/list",
+        element: <ElectricalUps />,
+      },
+      {
+        path: "assets/datapotensi/category/electrical/trafo/list",
+        element: <ElectricalTrafo />,
+      },
+      {
+        path: "assets/datapotensi/category/electrical/genset/list",
+        element: <ElectricalGenset />,
+      },
+      {
+        path: "assets/datapotensi/category/electrical/pdu/list",
+        element: <ElectricalPdu />,
+      },
+      {
+        path: "assets/datapotensi/category/electrical/cubicle/list",
+        element: <ElectricalCubicle />,
       },
       {
         path: "assets/datapotensi/category/electrical/rectifier/edit",

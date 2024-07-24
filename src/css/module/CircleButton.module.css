@@ -14,6 +14,39 @@
   font-weight: bold;
   text-align: center;
   overflow: hidden;
+
+  top: 0;
+  transform: translateX(0px);
+
+  position: absolute;
+  opacity: 1;
+  visibility: visible;
+
+  transition: all 0.3s ease-out;
+}
+
+.circleButton.hide {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-100px);
+}
+
+.buttonName {
+  position: absolute;
+  transition: all 0.2s ease-in;
+  opacity: 1;
+  top: 50%;
+  left: 50%;
+
+  font-size: 3rem;
+
+  transform: translate(-50%, -50%);
+  visibility: visible;
+}
+
+.buttonName.hide {
+  opacity: 0;
+  visibility: hidden;
 }
 
 .circleButton img {
@@ -28,7 +61,11 @@
 
 .buttonWrapper {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
-  gap: 16px;
+  width: 8rem;
+  height: 7rem;
+  overflow: hidden;
+
+  position: relative;
 }

@@ -40,3 +40,21 @@
 // };
 
 // export default App;
+
+// import React from "react";
+// import { useLocation, useNavigate, RouterProvider } from "react-router-dom";
+// import { router } from "@/routes/router";
+// import { checkTokenExpiration } from "@/utils/auth";
+
+// const App: React.FC = () => {
+//   const location = useLocation();
+//   const navigate = useNavigate();
+
+//   React.useEffect(() => {
+//     checkTokenExpiration(navigate);
+//   }, [location, navigate]);
+
+//   return <RouterProvider router={router} />;
+// };
+
+// export default App;

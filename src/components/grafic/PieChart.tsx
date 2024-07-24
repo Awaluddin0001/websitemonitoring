@@ -38,13 +38,16 @@ const PieChart: React.FC<PieChartProps> = ({
     const color = d3
       .scaleOrdinal<string, string>()
       .domain(["free", "usage"])
-      .range(["#E78A00", "#D42B35"]);
+      .range(["#fff", "#CB300E"]);
 
     const pie = d3
       .pie<{ label: string; value: number }>()
       .value((d) => d.value);
 
-    const arc = d3.arc().innerRadius(0).outerRadius(radius);
+    const arc = d3
+      .arc<d3.PieArcDatum<{ label: string; value: number }>>()
+      .innerRadius(0)
+      .outerRadius(radius);
 
     // Compute total value for percentage calculation
     const totalValue = d3.sum(data, (d) => d.value);
@@ -76,7 +79,7 @@ const PieChart: React.FC<PieChartProps> = ({
     // Clear existing legend items before appending new ones
     legend.selectAll("*").remove();
 
-    const legendData = ["free", "usage"];
+    const legendData = data.map((d) => d.label);
 
     const legendItems = legend
       .selectAll(".legend-item")
@@ -84,7 +87,7 @@ const PieChart: React.FC<PieChartProps> = ({
       .enter()
       .append("g")
       .attr("class", "legend-item")
-      .attr("transform", (_, i) => `translate(${i * 150}, 0)`);
+      .attr("transform", (_, i) => `translate(${i * 220}, 0)`);
 
     legendItems
       .append("rect")
@@ -97,32 +100,36 @@ const PieChart: React.FC<PieChartProps> = ({
       .attr("x", 24)
       .attr("y", 9)
       .attr("dy", ".35em")
-      .style("font-size", "2.4rem")
-      .text((d) => (d === "free" ? "Free" : "Usage"));
-  }, []);
+      .style("font-size", "2rem")
+      .style("fill", "#fff")
+      .text((d) => d);
+  }, [data, height]);
 
   return (
-    <svg
-      ref={svgRef}
-      width={width}
-      height={height}
-      style={{ display: "block", margin: "0 auto" }}
+    <div
+      style={{
+        width: "100%",
+        backgroundColor: "#0ECBC0",
+        padding: "10px 16px",
+        borderRadius: "15px",
+      }}
     >
-      {/* Title */}
-      <text
-        x="40%"
-        y="60"
-        textAnchor="middle"
-        style={{ fontSize: "2.4rem", fontWeight: "bold" }}
+      <p style={{ fontSize: "2.4rem", fontWeight: "600", color: "#fff" }}>
+        {`${title.slice(0, 1).toUpperCase()}${title.slice(1)}`}
+      </p>
+      <svg
+        ref={svgRef}
+        width={width}
+        height={height}
+        style={{ display: "block", margin: "0 auto" }}
       >
-        {title}
-      </text>
-      <g ref={gRef} />
-      <g
-        ref={legendRef}
-        transform={`translate(0, ${parseFloat(height) - 90})`}
-      />
-    </svg>
+        <g ref={gRef} />
+        <g
+          ref={legendRef}
+          transform={`translate(0, ${parseFloat(height) - 90})`}
+        />
+      </svg>
+    </div>
   );
 };
 

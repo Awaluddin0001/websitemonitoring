@@ -1,32 +1,65 @@
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
 import styles from "@/css/module/Asset.module.css";
 import Pen from "@/assets/svg/pen.svg";
 import Trash from "@/assets/svg/trash.svg";
-import DapotHeader from "@/components/dapotFilter/DapotHeader";
-import DapotNavbar from "@/components/dapotFilter/DapotNavbar";
+import HeadPage from "@/components/header/HeadPage";
+import DapotButtonsCategory from "@/components/dapotFilter/DapotButtonsCategory";
+import { getPanels } from "@/services/dapotPanels";
+import Lottie from "lottie-react";
+import noData from "@/assets/lottie/noData.json";
+interface Panel {
+  id: string;
+  vendor_id: string;
+  vendor_name: string;
+  name: string;
+  capacity: number;
+  function_category: string;
+  installation_date: string;
+  maintenance_id: string | null;
+  maintenance_date: string | null;
+  created_at: string;
+  user_id: string;
+  user_name: string;
+}
 
 export default function ElectricalPanel() {
-  const [selectedCategory, setSelectedCategory] = useState("electrical");
+  const [panels, setPanels] = useState<Panel[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
-  const data = [
-    {
-      no: "",
-      nama: "",
-      type: "",
-      jumlah: "",
-      satuan: "",
-      status: "",
-      lantai: "",
-      ruangan: "",
-      brand: "",
-      keterangan: "",
-    },
-  ];
+  useEffect(() => {
+    const fetchPanels = async () => {
+      try {
+        const data = await getPanels();
+        setPanels(data.data);
+      } catch (err) {
+        setError("Failed to fetch Panels");
+      }
+    };
+
+    fetchPanels();
+  }, []);
+
+  if (error) {
+    return <p>{error}</p>;
+  }
 
   return (
     <>
-      <div
+      <HeadPage title={`List Panel`} />
+      <DapotButtonsCategory
+        listpages={[
+          "rectifier",
+          "battery",
+          "panel",
+          "ups",
+          "trafo",
+          "genset",
+          "pdu",
+          "cubicle",
+        ]}
+        subCategory="electrical"
+      />
+      {/* <div
         style={{
           width: "100%",
           display: "flex",
@@ -43,86 +76,127 @@ export default function ElectricalPanel() {
         <div className={styles.headerDashboard}>
           <DapotNavbar selectedCategory={selectedCategory} />
         </div>
-      </div>
-      <div className={styles.tableDetail}>
-        <table className={styles.assetTable}>
-          <thead>
-            <tr>
-              <th
-                className={`${styles.sticky} ${styles.stickyHeader} ${styles.stickyColumn}`}
-              >
-                No
-              </th>
-              <th className={`${styles.sticky} ${styles.stickyHeader}`}>
-                Nama
-              </th>
-              <th className={`${styles.sticky} ${styles.stickyHeader}`}>
-                Type
-              </th>
-              <th className={`${styles.sticky} ${styles.stickyHeader}`}>
-                Jumlah
-              </th>
-              <th className={`${styles.sticky} ${styles.stickyHeader}`}>
-                Satuan
-              </th>
-              <th className={`${styles.sticky} ${styles.stickyHeader}`}>
-                Status
-              </th>
-              <th className={`${styles.sticky} ${styles.stickyHeader}`}>
-                Lantai
-              </th>
-              <th className={`${styles.sticky} ${styles.stickyHeader}`}>
-                Ruangan
-              </th>
-              <th className={`${styles.sticky} ${styles.stickyHeader}`}>
-                Brand
-              </th>
-              <th className={`${styles.sticky} ${styles.stickyHeader}`}>
-                Keterangan
-              </th>
-              <th className={`${styles.sticky} ${styles.stickyHeader}`}>
-                Action
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((item, index) => (
-              <tr key={index}>
-                <td className={`${styles.sticky} ${styles.stickyColumn}`}>
-                  {item.no}
-                </td>
-                <td>{item.nama}</td>
-                <td>{item.type}</td>
-                <td>{item.jumlah}</td>
-                <td>{item.satuan}</td>
-                <td>{item.status}</td>
-                <td>{item.lantai}</td>
-                <td>{item.ruangan}</td>
-                <td>{item.brand}</td>
-                <td>{item.keterangan}</td>
-                <td>
-                  <div
+      </div> */}
+      {panels.length > 0 ? (
+        <div className={styles.tableDetail}>
+          <table className={styles.assetTable}>
+            <thead>
+              <tr className={`${styles.sticky} ${styles.stickyHeader}`}>
+                <th>Id</th>
+                <th>Vendor</th>
+                <th>Name</th>
+                <th>Capacity (A)</th>
+                <th>Function Category</th>
+                <th>Installation Date</th>
+                <th>Maintenance Date</th>
+                <th>Last update</th>
+                <th>Update By</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {panels.map((item, index) => (
+                <tr key={index}>
+                  <td
                     style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      alignItems: "center",
-                      justifyContent: "flex-start",
-                      gap: "6px",
+                      background: index % 2 !== 0 ? "#a5fffa" : "",
                     }}
                   >
-                    <div className={styles.btnEdit}>
-                      <img src={Pen} alt="" />
+                    {item.id}
+                  </td>
+                  <td
+                    style={{
+                      background: index % 2 !== 0 ? "#a5fffa" : "",
+                    }}
+                  >
+                    {item.vendor_name}
+                  </td>
+                  <td
+                    style={{
+                      background: index % 2 !== 0 ? "#a5fffa" : "",
+                    }}
+                  >
+                    {item.name}
+                  </td>
+                  <td
+                    style={{
+                      background: index % 2 !== 0 ? "#a5fffa" : "",
+                    }}
+                  >
+                    {item.capacity}
+                  </td>
+                  <td
+                    style={{
+                      background: index % 2 !== 0 ? "#a5fffa" : "",
+                    }}
+                  >
+                    {item.function_category}
+                  </td>
+                  <td
+                    style={{
+                      background: index % 2 !== 0 ? "#a5fffa" : "",
+                    }}
+                  >
+                    {item.installation_date}
+                  </td>
+                  <td
+                    style={{
+                      background: index % 2 !== 0 ? "#a5fffa" : "",
+                    }}
+                  >
+                    {item.maintenance_date}
+                  </td>
+                  <td
+                    style={{
+                      background: index % 2 !== 0 ? "#a5fffa" : "",
+                    }}
+                  >
+                    {item.created_at}
+                  </td>
+                  <td
+                    style={{
+                      background: index % 2 !== 0 ? "#a5fffa" : "",
+                    }}
+                  >
+                    {item.user_name}
+                  </td>
+                  <td
+                    style={{
+                      background: index % 2 !== 0 ? "#a5fffa" : "",
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "flex-start",
+                        gap: "6px",
+                      }}
+                    >
+                      <div className={styles.btnEdit}>
+                        <img src={Pen} alt="" />
+                      </div>
+                      <div className={styles.btnDelete}>
+                        <img src={Trash} alt="" />
+                      </div>
                     </div>
-                    <div className={styles.btnDelete}>
-                      <img src={Trash} alt="" />
-                    </div>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        <div className={styles.noData}>
+          <Lottie
+            animationData={noData}
+            loop={true}
+            style={{ height: "590px" }}
+          />
+          <p>Belum Ada Data Yang Tersedia</p>
+        </div>
+      )}
     </>
   );
 }

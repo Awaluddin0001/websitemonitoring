@@ -81,7 +81,8 @@ export default function CategoryNavbar({
           onClick={() => navigate(`${link1}`)}
         >
           <img src={air} alt="fan" />
-          <h2>Air Building</h2>
+          {/* <h2>Air Building</h2> */}
+          <h2>Tata Udara Gedung</h2>
         </motion.div>
       )}
       {link2 && (
@@ -95,7 +96,8 @@ export default function CategoryNavbar({
           onClick={() => navigate(`${link2}`)}
         >
           <img src={crane} alt="conveyance" />
-          <h2>Conveyance Building</h2>
+          {/* <h2>Conveyance Building</h2> */}
+          <h2>Alat Pengankut</h2>
         </motion.div>
       )}
       {link3 && (
@@ -109,7 +111,8 @@ export default function CategoryNavbar({
           onClick={() => navigate(`${link3}`)}
         >
           <img src={electrical} alt="power" />
-          <h2>Electrical Building</h2>
+          {/* <h2>Electrical Building</h2> */}
+          <h2>Kelistrikan Gedung</h2>
         </motion.div>
       )}
       {link4 && (
@@ -123,7 +126,8 @@ export default function CategoryNavbar({
           onClick={() => navigate(`${link4}`)}
         >
           <img src={apar} alt="extinguish" />
-          <h2>Extinguish Building</h2>
+          {/* <h2>Extinguish Building</h2> */}
+          <h2>Pemadam Api gedung</h2>
         </motion.div>
       )}
       {link5 && (
@@ -137,7 +141,8 @@ export default function CategoryNavbar({
           onClick={() => navigate(`${link5}`)}
         >
           <img src={house} alt="finishing" />
-          <h2>Finishing Building</h2>
+          {/* <h2>Finishing Building</h2> */}
+          <h2>Finishing Gedung</h2>
         </motion.div>
       )}
       {link6 && (
@@ -151,7 +156,8 @@ export default function CategoryNavbar({
           onClick={() => navigate(`${link6}`)}
         >
           <img src={funiture} alt="furniture" />
-          <h2>Furniture Building</h2>
+          {/* <h2>Furniture Building</h2> */}
+          <h2>Perabotan gedung</h2>
         </motion.div>
       )}
       {link7 && (
@@ -165,7 +171,8 @@ export default function CategoryNavbar({
           onClick={() => navigate(`${link7}`)}
         >
           <img src={lamp} alt="lamp" />
-          <h2>Lighting Building</h2>
+          {/* <h2>Lighting Building</h2> */}
+          <h2>Pencahayaan Gedung</h2>
         </motion.div>
       )}
       {link8 && (
@@ -179,7 +186,8 @@ export default function CategoryNavbar({
           onClick={() => navigate(`${link8}`)}
         >
           <img src={tank} alt="tank" />
-          <h2>Liquid Building</h2>
+          {/* <h2>Liquid Building</h2> */}
+          <h2>Tangki Cairan Gedung</h2>
         </motion.div>
       )}
       {link9 && (
@@ -193,7 +201,8 @@ export default function CategoryNavbar({
           onClick={() => navigate(`${link9}`)}
         >
           <img src={server} alt="server" />
-          <h2>Network IT</h2>
+          {/* <h2>Network IT</h2> */}
+          <h2>Perangkat IT</h2>
         </motion.div>
       )}
       {link10 && (
@@ -207,7 +216,8 @@ export default function CategoryNavbar({
           onClick={() => navigate(`${link10}`)}
         >
           <img src={pump} alt="pump" />
-          <h2>Pump Building</h2>
+          {/* <h2>Pump Building</h2> */}
+          <h2>Pompa gedung</h2>
         </motion.div>
       )}
       {link11 && (
@@ -221,7 +231,8 @@ export default function CategoryNavbar({
           onClick={() => navigate(`${link11}`)}
         >
           <img src={safety} alt="safety" />
-          <h2>Safety Building</h2>
+          {/* <h2>Safety Tools</h2> */}
+          <h2>Alat Keselamatan</h2>
         </motion.div>
       )}
       {link12 && (
@@ -235,7 +246,8 @@ export default function CategoryNavbar({
           onClick={() => navigate(`${link12}`)}
         >
           <img src={security} alt="security" />
-          <h2>Security Building</h2>
+          {/* <h2>Security Building</h2> */}
+          <h2>Keamanan Gedung</h2>
         </motion.div>
       )}
     </div>

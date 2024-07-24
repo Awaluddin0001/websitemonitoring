@@ -6,6 +6,11 @@ import TrendGrafic from "@/components/grafic/TendGrafic";
 import PieChart from "@/components/grafic/PieChart";
 import useMonitoringFetchData from "@/hooks/useMonitoringFetchData";
 import moment from "moment-timezone";
+import HomeModal from "@/components/modal/HomeModal";
+import CardParameterHome from "@/components/card/CardParameterHome";
+import question from "@/assets/png/question.png";
+import LoadingPage from "@/components/loading/LoadingPage";
+import MonitoringDown from "@/components/error/MonitoringDown";
 
 type DataGrafikPower = {
   date: Date;
@@ -16,6 +21,10 @@ type ThermalRoom = {
   room: string;
   value: unknown;
 };
+type BbmTangki = {
+  name: string;
+  value: unknown;
+};
 type ThermalRoomDetail = {
   room: string;
   value: {
@@ -23,6 +32,10 @@ type ThermalRoomDetail = {
     humidity: number;
     name: string;
   };
+};
+
+const formatNumberIndonesian = (num: number): string => {
+  return new Intl.NumberFormat("id-ID").format(num);
 };
 
 // React component
@@ -48,10 +61,13 @@ export default function Home() {
   >();
 
   const [thermalData, setThermalData] = useState<ThermalRoom[] | undefined>();
+  const [bbmData, setBbmData] = useState<BbmTangki[] | undefined>();
 
   const { data, loading, error } = useMonitoringFetchData(
-    "http://localhost:2041/api/v1/monitoring/bbmthermalpower"
+    "/api/v1/monitoring/bbmthermalpower"
   );
+
+  const [modalController, setModalController] = useState(false);
 
   useEffect(() => {
     const transformObjectThermal = (obj: any) => {
@@ -60,12 +76,31 @@ export default function Home() {
         success = false;
       }
       if (success) {
-        const lastData = others.data[others.data.length - 1];
-        const { timestamp, connected, ...thermalRoom } = lastData;
-        const thermal = Object.entries(thermalRoom).map(([key, value]) => {
-          return { room: key, value: value };
+        if (others.data.length > 0) {
+          const lastData = others.data[others.data.length - 1];
+          const { timestamp, connected, ...thermalRoom } = lastData;
+          const thermal = Object.entries(thermalRoom).map(([key, value]) => {
+            return { room: key, value: value };
+          });
+          return { thermal };
+        }
+      }
+    };
+
+    const lastBbmVal = (arr: any) => {
+      const lastData = arr[arr.length - 1];
+      const insertSpace = (input: any) => {
+        const words = ["tangki", "cadangan", "harian", "bulanan", "a", "b"];
+        const regex = new RegExp(`(${words.join("|")})`, "g");
+
+        return input.replace(regex, " $1").trim();
+      };
+      if (lastData.connected) {
+        const { connected, timestamp, __v, _id, ...others } = lastData;
+        const bbm = Object.entries(others).map(([key, value]) => {
+          return { name: insertSpace(key), value: value };
         });
-        return { thermal };
+        return { bbm };
       }
     };
 
@@ -108,6 +143,11 @@ export default function Home() {
         );
         setThermalData(thermalLastUpdate?.thermal);
 
+        if (data.result.bbmData.data.length > 0) {
+          const lastBbmData = lastBbmVal(data.result.bbmData.data);
+          setBbmData(lastBbmData?.bbm);
+        }
+
         if (data.result.powerData.length > 0) {
           const powerLastUpdate = lasttValueArrPower(data.result.powerData);
           const trenPue = returnValuePue(data.result.powerData);
@@ -142,17 +182,37 @@ export default function Home() {
     }
   }, [data]);
 
-  console.log(data);
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: error</div>;
+  if (loading) return <LoadingPage />;
+  if (error) return <MonitoringDown />;
 
   return (
     <>
+      <HomeModal
+        display={modalController}
+        action={setModalController}
+        children={<CardParameterHome />}
+      />
       <HeadPage title="Dashboard Pantau Gedung Telkomsel - TTC Pengayoman" />
       <div className={styles.sectionWrapper}>
         <div className={styles.sectionHome}>
-          <h1>Thermal Building Information - Last Updated {data.lastUpdate}</h1>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-start",
+              flexDirection: "row",
+              gap: "10px",
+            }}
+          >
+            <h1>
+              Thermal Building Information - Last Updated {data.lastUpdate}
+            </h1>
+            <img
+              src={question}
+              alt="question image"
+              onClick={() => setModalController(true)}
+              style={{ cursor: "pointer", width: "20px", height: "20px" }}
+            />
+          </div>
           <div className={styles.containerValue}>
             <div className={styles.cardSectionValue}>
               {thermalData &&
@@ -170,7 +230,7 @@ export default function Home() {
                           item.value.temperature < 19
                             ? "#0ECBC0"
                             : item.value.temperature > 18 &&
-                              item.value.temperature < 28
+                              item.value.temperature < 29
                             ? "#56CB0E"
                             : "#CB300E"
                         }
@@ -194,8 +254,8 @@ export default function Home() {
                     return (
                       <CardValue
                         key={index}
-                        title={`Room ${item.value.name} Temperature`}
-                        value={`${item.value.humidity}°C`}
+                        title={`Room ${item.value.name} Humidity`}
+                        value={`${item.value.humidity}%`}
                         cardColor={
                           item.value.humidity > 60
                             ? "#0ECBC0"
@@ -224,7 +284,13 @@ export default function Home() {
                   <CardValue
                     title={`PUE - ${pueData.timestamp}`}
                     value={pueData.value.toFixed(2)}
-                    cardColor="#0ECBC0"
+                    cardColor={
+                      pueData.value < 1.5
+                        ? "#56CB0E"
+                        : pueData.value < 2.0
+                        ? "rgb(203 125 14)"
+                        : "#CB300E"
+                    }
                     valueColor="#fff"
                     width="17rem"
                     height="14rem"
@@ -235,14 +301,30 @@ export default function Home() {
               {pueDataGraf && (
                 <TrendGrafic
                   data={pueDataGraf}
-                  heightGrafic={150}
-                  lineColor="#782B1A"
-                  pointColor="#0C1234"
+                  heightGrafic={140}
+                  lineColor={
+                    pueData.value < 1.5
+                      ? "#56CB0E"
+                      : pueData.value < 2.0
+                      ? "rgb(203 125 14)"
+                      : "#CB300E"
+                  }
+                  pointColor="#000"
                   label="Data PUE - 24 Jam"
-                  fontSize="12px"
+                  fontSize="14px"
                   unit=" "
                   mode="24hour"
+                  positionLabel={116}
                   setValue={setPueData}
+                  // backgroundColor={
+                  //   pueData.value < 1.5
+                  //     ? "rgb(45 87 0)"
+                  //     : pueData.value < 2.0
+                  //     ? "rgb(87 85 0)"
+                  //     : "rgb(87 17 0)"
+                  // }
+                  backgroundColor="#fff"
+                  stroke="#000"
                 />
               )}
             </div>
@@ -268,15 +350,18 @@ export default function Home() {
               {facilityLoadGraf && (
                 <TrendGrafic
                   data={facilityLoadGraf}
-                  heightGrafic={150}
-                  lineColor="#782B1A"
-                  pointColor="#0C1234"
+                  heightGrafic={140}
+                  lineColor="#0ECBC0"
+                  pointColor="#000"
                   label="Data Facility Load - 24 Jam"
-                  fontSize="12px"
+                  fontSize="14px"
                   unit=" kVa"
                   mode="24hour"
-                  positionLabel={140}
+                  positionLabel={161}
                   setValue={setFacilityLoad}
+                  // backgroundColor="rgb(0 70 87)"
+                  backgroundColor="#fff"
+                  stroke="#000"
                 />
               )}
             </div>
@@ -297,15 +382,18 @@ export default function Home() {
               {itLoadGraf && (
                 <TrendGrafic
                   data={itLoadGraf}
-                  heightGrafic={150}
-                  lineColor="#782B1A"
-                  pointColor="#0C1234"
+                  heightGrafic={140}
+                  lineColor="#0ECBC0"
+                  pointColor="#000"
                   label="Data IT Load - 24 Jam"
-                  fontSize="12px"
+                  fontSize="14px"
                   unit=" kVa"
                   mode="24hour"
-                  positionLabel={120}
+                  positionLabel={132}
                   setValue={setItLoad}
+                  // backgroundColor="rgb(0 70 87)"
+                  backgroundColor="#fff"
+                  stroke="#000"
                 />
               )}
             </div>
@@ -318,22 +406,40 @@ export default function Home() {
                 flexDirection: "row",
                 width: "100%",
                 height: "100%",
+                gap: "21px",
               }}
             >
-              <PieChart
-                data={[
-                  { label: "Free", value: 80 },
-                  { label: "Usage", value: 20 },
-                ]}
-                title="Tangki cadangan"
-              />
-              <PieChart
-                data={[
-                  { label: "Free", value: 90 },
-                  { label: "Usage", value: 10 },
-                ]}
-                title="Tangki harian"
-              />
+              {bbmData &&
+                bbmData.map((item: any, index: number) => {
+                  if (item.value.volume !== 0 && item.value.level !== 0) {
+                    // if (
+                    //   item.name === "tangki cadangan" ||
+                    //   item.name === "tangki bulanan a"
+                    // ) {
+                    const usage = ((12000 - item.value.volume) / 12000) * 100;
+                    const free = (item.value.volume / 12000) * 100;
+                    return (
+                      <PieChart
+                        key={index}
+                        data={[
+                          {
+                            label: `Tersisa: ${formatNumberIndonesian(
+                              item.value.volume.toFixed(0)
+                            )} liter`,
+                            value: free,
+                          },
+                          {
+                            label: `Terpakai: ${formatNumberIndonesian(
+                              12000 - item.value.volume.toFixed(0)
+                            )} liter`,
+                            value: usage,
+                          },
+                        ]}
+                        title={`${item.name}`}
+                      />
+                    );
+                  }
+                })}
             </div>
           </div>
         </div>

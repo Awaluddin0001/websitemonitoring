@@ -1,5 +1,3 @@
-import React from "react";
-
 function HandSvg({ color }: { color: string }) {
   return (
     <svg

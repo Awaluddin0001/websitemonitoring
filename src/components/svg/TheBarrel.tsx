@@ -1,5 +1,3 @@
-import React from "react";
-
 function TheBarrel({ volume }: { volume: number }) {
   const fillPercentage = Math.max(0, Math.min(100, volume));
   return (

@@ -7,7 +7,7 @@ function SpacePlan() {
   const { floor } = useParams();
   console.log(floor);
   const navigate = useNavigate();
-  const [lantai, setLantai] = useState(floor ? floor : "lantai1");
+  const [lantai, _] = useState(floor ? floor : "lantai1");
 
   // URL gambar yang ingin ditampilkan
   const imageUrl1 = `http://localhost:3001/gambar/lantai1.png`;

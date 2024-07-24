@@ -50,21 +50,21 @@
 
 .assetTable th,
 .assetTable td {
-  border: 1px solid #ddd;
+  border: 1px solid #eee;
   padding: 8px;
   text-align: left;
   font-size: 1.8rem;
 }
 
 .assetTable th {
-  background-color: var(--background1-color);
+  background-color: #0ecbc0;
   color: var(--foreground1a-color);
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .sticky {
   position: sticky;
-  background: var(--background1-color);
+  background: #0ecbc0;
   color: var(--foreground1a-color);
   z-index: 1;
 }
@@ -161,11 +161,142 @@
 }
 
 .pageButton {
-  background-color: var(--background1-color);
+  background-color: #0ecbc0;
   color: var(--foreground1a-color);
   padding: 10px 16px;
   font-size: 1.8rem;
   font-weight: 600;
   border-radius: 15px;
   cursor: pointer;
+}
+
+.noData {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.noData p {
+  font-size: 3.2rem;
+  font-weight: 500;
+}
+
+.sectionInput {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+  width: 100%;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.posisiInput {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.textTitleInput {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--foreground2-color);
+}
+.textTitle {
+  font-size: 2.4rem;
+  font-weight: 600;
+  color: var(--foreground2-color);
+}
+
+.containerInput {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.inputAsset {
+  background-color: #fff;
+  outline: none;
+  border: none;
+  font-size: 2.1rem;
+  border-radius: 5px;
+  padding: 7px 10px;
+  border: 1px solid #333;
+  width: 200px;
+  color: #333;
+  font-family: "Mohave", sans-serif;
+}
+
+.inputAsset:focus {
+  border: 2px solid #0ecbc0;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.selectAsset {
+  width: 200px;
+  font-size: 4rem;
+}
+.inputDate {
+  background-color: #fff;
+  outline: none;
+  border: none;
+  font-size: 2.1rem;
+  border-radius: 5px;
+  padding: 7px 10px;
+  border: 1px solid #333;
+  width: 200px;
+  color: #333;
+  font-family: "Mohave", sans-serif;
+}
+.inputFile {
+  background-color: #fff;
+  outline: none;
+  border: none;
+  font-size: 2.1rem;
+  border-radius: 5px;
+  padding: 7px 10px;
+  border: 1px solid #333;
+  width: 270px;
+  color: #333;
+  font-family: "Mohave", sans-serif;
+}
+
+.errorMessage {
+  font-size: 2rem;
+  color: red;
+}
+
+.buttonSubmit {
+  font-size: 2rem;
+  background-color: var(--background1-color);
+  color: var(--foreground1a-color);
+}
+
+.paginationContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  font-size: 3rem;
+  margin-top: 16px;
+}
+
+.paginationContainer p {
+  cursor: pointer;
+  font-weight: 600;
 }

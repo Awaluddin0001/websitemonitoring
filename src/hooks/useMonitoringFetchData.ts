@@ -6,7 +6,7 @@ const useMonitoringFetchData = (url: string) => {
   const [data, setData] = useState<{
     success: string;
     result: {
-      bbmData: object;
+      bbmData: { data: Array<any>; success: boolean };
       powerData: [];
       thermalData: object;
     };
@@ -14,7 +14,7 @@ const useMonitoringFetchData = (url: string) => {
   }>({
     success: "",
     result: {
-      bbmData: {},
+      bbmData: { data: [], success: false },
       powerData: [],
       thermalData: {},
     },

@@ -1,32 +1,69 @@
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
 import styles from "@/css/module/Asset.module.css";
 import Pen from "@/assets/svg/pen.svg";
 import Trash from "@/assets/svg/trash.svg";
-import DapotHeader from "@/components/dapotFilter/DapotHeader";
-import DapotNavbar from "@/components/dapotFilter/DapotNavbar";
+import HeadPage from "@/components/header/HeadPage";
+import DapotButtonsCategory from "@/components/dapotFilter/DapotButtonsCategory";
+import { getTrafos } from "@/services/dapotTrafo";
+import Lottie from "lottie-react";
+import noData from "@/assets/lottie/noData.json";
+
+interface Trafo {
+  id: string;
+  vendor_id: string;
+  vendor_name: string;
+  name: string;
+  model: string;
+  manufactur: string;
+  transform_ratio: number;
+  serial_number: string;
+  load: number;
+  installation_date: string;
+  maintenance_id: string | null;
+  maintenance_date: string | null;
+  created_at: string;
+  user_id: string;
+  user_name: string;
+}
 
 export default function ElectricalTrafo() {
-  const [selectedCategory, setSelectedCategory] = useState("electrical");
+  const [trafos, setTrafos] = useState<Trafo[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
-  const data = [
-    {
-      no: "",
-      nama: "",
-      type: "",
-      jumlah: "",
-      satuan: "",
-      status: "",
-      lantai: "",
-      ruangan: "",
-      brand: "",
-      keterangan: "",
-    },
-  ];
+  useEffect(() => {
+    const fetchTrafos = async () => {
+      try {
+        const data = await getTrafos();
+        setTrafos(data.data);
+      } catch (err) {
+        setError("Failed to fetch Trafos");
+      }
+    };
+
+    fetchTrafos();
+  }, []);
+
+  if (error) {
+    return <p>{error}</p>;
+  }
 
   return (
     <>
-      <div
+      <HeadPage title={`List Trafo`} />
+      <DapotButtonsCategory
+        listpages={[
+          "rectifier",
+          "battery",
+          "panel",
+          "ups",
+          "trafo",
+          "genset",
+          "pdu",
+          "cubicle",
+        ]}
+        subCategory="electrical"
+      />
+      {/* <div
         style={{
           width: "100%",
           display: "flex",
@@ -43,86 +80,154 @@ export default function ElectricalTrafo() {
         <div className={styles.headerDashboard}>
           <DapotNavbar selectedCategory={selectedCategory} />
         </div>
-      </div>
-      <div className={styles.tableDetail}>
-        <table className={styles.assetTable}>
-          <thead>
-            <tr>
-              <th
-                className={`${styles.sticky} ${styles.stickyHeader} ${styles.stickyColumn}`}
-              >
-                No
-              </th>
-              <th className={`${styles.sticky} ${styles.stickyHeader}`}>
-                Nama
-              </th>
-              <th className={`${styles.sticky} ${styles.stickyHeader}`}>
-                Type
-              </th>
-              <th className={`${styles.sticky} ${styles.stickyHeader}`}>
-                Jumlah
-              </th>
-              <th className={`${styles.sticky} ${styles.stickyHeader}`}>
-                Satuan
-              </th>
-              <th className={`${styles.sticky} ${styles.stickyHeader}`}>
-                Status
-              </th>
-              <th className={`${styles.sticky} ${styles.stickyHeader}`}>
-                Lantai
-              </th>
-              <th className={`${styles.sticky} ${styles.stickyHeader}`}>
-                Ruangan
-              </th>
-              <th className={`${styles.sticky} ${styles.stickyHeader}`}>
-                Brand
-              </th>
-              <th className={`${styles.sticky} ${styles.stickyHeader}`}>
-                Keterangan
-              </th>
-              <th className={`${styles.sticky} ${styles.stickyHeader}`}>
-                Action
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((item, index) => (
-              <tr key={index}>
-                <td className={`${styles.sticky} ${styles.stickyColumn}`}>
-                  {item.no}
-                </td>
-                <td>{item.nama}</td>
-                <td>{item.type}</td>
-                <td>{item.jumlah}</td>
-                <td>{item.satuan}</td>
-                <td>{item.status}</td>
-                <td>{item.lantai}</td>
-                <td>{item.ruangan}</td>
-                <td>{item.brand}</td>
-                <td>{item.keterangan}</td>
-                <td>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      alignItems: "center",
-                      justifyContent: "flex-start",
-                      gap: "6px",
-                    }}
-                  >
-                    <div className={styles.btnEdit}>
-                      <img src={Pen} alt="" />
-                    </div>
-                    <div className={styles.btnDelete}>
-                      <img src={Trash} alt="" />
-                    </div>
-                  </div>
-                </td>
+      </div> */}
+      {trafos.length > 0 ? (
+        <div className={styles.tableDetail}>
+          <table className={styles.assetTable}>
+            <thead>
+              <tr className={`${styles.sticky} ${styles.stickyHeader}`}>
+                <th>Id</th>
+                <th>Vendor</th>
+                <th>Name</th>
+                <th>model</th>
+                <th>manufactur</th>
+                <th>transform_ratios</th>
+                <th>serial_number</th>
+                <th>load</th>
+                <th>Installation Date</th>
+                <th>Maintenance Date</th>
+                <th>Remark Aging</th>
+                <th>Last update</th>
+                <th>Update By</th>
+                <th>Action</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            {
+              <tbody>
+                {trafos.map((item, index) => (
+                  <tr key={index}>
+                    <td
+                      style={{
+                        background: index % 2 !== 0 ? "#a5fffa" : "",
+                      }}
+                    >
+                      {item.id}
+                    </td>
+                    <td
+                      style={{
+                        background: index % 2 !== 0 ? "#a5fffa" : "",
+                      }}
+                    >
+                      {item.vendor_name}
+                    </td>
+                    <td
+                      style={{
+                        background: index % 2 !== 0 ? "#a5fffa" : "",
+                      }}
+                    >
+                      {item.name}
+                    </td>
+                    <td
+                      style={{
+                        background: index % 2 !== 0 ? "#a5fffa" : "",
+                      }}
+                    >
+                      {item.model}
+                    </td>
+                    <td
+                      style={{
+                        background: index % 2 !== 0 ? "#a5fffa" : "",
+                      }}
+                    >
+                      {item.manufactur}
+                    </td>
+                    <td
+                      style={{
+                        background: index % 2 !== 0 ? "#a5fffa" : "",
+                      }}
+                    >
+                      {item.transform_ratio}
+                    </td>
+                    <td
+                      style={{
+                        background: index % 2 !== 0 ? "#a5fffa" : "",
+                      }}
+                    >
+                      {item.serial_number}
+                    </td>
+                    <td
+                      style={{
+                        background: index % 2 !== 0 ? "#a5fffa" : "",
+                      }}
+                    >
+                      {item.load}
+                    </td>
+                    <td
+                      style={{
+                        background: index % 2 !== 0 ? "#a5fffa" : "",
+                      }}
+                    >
+                      {item.installation_date}
+                    </td>
+                    <td
+                      style={{
+                        background: index % 2 !== 0 ? "#a5fffa" : "",
+                      }}
+                    >
+                      {item.maintenance_date}
+                    </td>
+                    <td
+                      style={{
+                        background: index % 2 !== 0 ? "#a5fffa" : "",
+                      }}
+                    >
+                      {item.created_at}
+                    </td>
+                    <td
+                      style={{
+                        background: index % 2 !== 0 ? "#a5fffa" : "",
+                      }}
+                    >
+                      {item.user_name}
+                    </td>
+                    <td
+                      style={{
+                        background: index % 2 !== 0 ? "#a5fffa" : "",
+                      }}
+                    >
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                          alignItems: "center",
+                          justifyContent: "flex-start",
+                          gap: "6px",
+                        }}
+                      >
+                        <div className={styles.btnEdit}>
+                          <img src={Pen} alt="" />
+                        </div>
+                        <div className={styles.btnDelete}>
+                          <img src={Trash} alt="" />
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            }
+          </table>
+        </div>
+      ) : (
+        <div className={styles.noData}>
+          <Lottie
+            animationData={noData}
+            loop={true}
+            style={{ height: "590px" }}
+          />
+          <p>Belum Ada Data Yang Tersedia</p>
+        </div>
+      )}
     </>
   );
 }

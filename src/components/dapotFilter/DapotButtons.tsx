@@ -1,16 +1,7 @@
 import styles from "@/css/module/Asset.module.css";
 import { useNavigate, useParams } from "react-router-dom";
-export default function DapotButtons() {
-  const pages = [
-    "rectifier",
-    "battery",
-    "panel",
-    "ups",
-    "trafo",
-    "genset",
-    "pdu",
-    "cubicle",
-  ];
+export default function DapotButtons({ listpages }: { listpages: string[] }) {
+  const pages = [...listpages];
   const { type } = useParams();
   const navigate = useNavigate();
   return (

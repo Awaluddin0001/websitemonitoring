@@ -230,6 +230,10 @@ button:focus-visible {
   cursor: pointer;
 }
 
+.react-datepicker__month-container {
+  font-size: 4rem;
+}
+
 @media (prefers-color-scheme: light) {
   /* :root {
     color: #213547;
