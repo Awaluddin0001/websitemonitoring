@@ -1,4 +1,4 @@
-import HeadPage from "@/components/header/HeadPage";
+import HeadPage from "@/components/header/HeadPageMonitoring";
 import styles from "@/css/module/Input.module.css";
 import React, { useState } from "react";
 export default function NewVendorSecurity() {

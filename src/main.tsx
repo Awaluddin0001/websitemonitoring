@@ -6,9 +6,6 @@ import { RouterProvider } from "react-router-dom";
 import { router } from "@/routes/router.tsx";
 
 import "@/css/global/index.css";
-import { checkTokenExpiration } from "./utils/auth";
-
-checkTokenExpiration();
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

@@ -4,6 +4,7 @@ type ReactSelect = { value: string; label: string };
 
 type ElectricalState = {
   // Value
+  asset_id: string;
   ne_id: string;
   site_id: ReactSelect;
   floor_id: ReactSelect;
@@ -20,11 +21,11 @@ type ElectricalState = {
   capacity_modul: string;
   load_current: string;
   occupancy: string;
-  system: string;
+  system_device: string;
   warranty: string;
   remark_aging: string;
   installation_date: string;
-  condition: string;
+  condition_asset: string;
   status: string;
   notes: string;
 
@@ -43,12 +44,73 @@ type ElectricalState = {
   isError: string | null;
 
   //   FOR FILE
-  selectedFiles: { [key: string]: File | null };
-  errorMessagesFiles: { [key: string]: string | null };
+  selectedFiles: {
+    file1: null;
+    file2: null;
+    file3: null;
+  };
+  errorMessagesFiles: {
+    file1: null;
+    file2: null;
+    file3: null;
+  };
+};
+
+type ElectricalListState = {
+  rectifiers: {
+    asset_id: string;
+    brand_id: string;
+    brand_name: string;
+    capacity: number;
+    capacity_modul: number;
+    condition_asset: string;
+    created_at: string;
+    floor_id: string;
+    floor_name: string;
+    id: string;
+    incoming: number;
+    installation_date: string;
+    link_id: string;
+    load_current: number;
+    maintenance_date: string | null;
+    modul: string;
+    name: string;
+    ne_id: string;
+    notes: string;
+    occupancy: number;
+    outgoing: string;
+    vendor_id: string;
+    remark_aging: string;
+    role: string;
+    room_id: string;
+    room_name: string;
+    site_id: string;
+    site_name: string;
+    status: string;
+    system_device: string;
+    type: string;
+    user_name: string;
+    vendor_name: string;
+    warranty: string | null;
+  }[];
+  pagination: {
+    currentPage: number;
+    pageSize: number;
+    totalPages: number;
+    totalRows: number;
+  };
+  //   FOR COMPONENT
+  isLoading: boolean;
+  isError: string | null;
+  globalFilter: string;
+
+  // FOR TABLE
+  positionColumn: boolean;
 };
 
 export const initialStateRecti: ElectricalState = {
   // Value
+  asset_id: "",
   ne_id: "",
   site_id: { value: "", label: "" },
   floor_id: { value: "", label: "" },
@@ -65,11 +127,11 @@ export const initialStateRecti: ElectricalState = {
   capacity_modul: "",
   load_current: "",
   occupancy: "",
-  system: "",
+  system_device: "",
   warranty: "",
   remark_aging: "",
   installation_date: `${new Date()}`,
-  condition: "",
+  condition_asset: "",
   status: "",
   notes: "",
   // List
@@ -126,7 +188,7 @@ export function updateRectiReducer(state: ElectricalState, action: ActionType) {
     case "SET_OCCUPANCY":
       return { ...state, occupancy: action.payload };
     case "SET_SYSTEM":
-      return { ...state, system: action.payload };
+      return { ...state, system_device: action.payload };
     case "SET_WARRANTY":
       return { ...state, warranty: action.payload };
     case "SET_REMARK_AGING":
@@ -180,7 +242,7 @@ export function updateRectiReducer(state: ElectricalState, action: ActionType) {
         ...state,
         errorMessagesFiles: {
           ...state.errorMessagesFiles,
-          [action.payload]: action.payload,
+          [action.payload.key]: action.payload.error,
         },
       };
     case "SET_SELECTED_FILES":
@@ -188,13 +250,13 @@ export function updateRectiReducer(state: ElectricalState, action: ActionType) {
         ...state,
         selectedFiles: {
           ...state.selectedFiles,
-          [action.payload]: action.payload,
+          [action.payload.key]: action.payload.file,
         },
       };
     case "SET_CONDITION":
       return {
         ...state,
-        condition: action.payload,
+        condition_asset: action.payload,
       };
     case "SET_STATUS":
       return {
@@ -206,6 +268,49 @@ export function updateRectiReducer(state: ElectricalState, action: ActionType) {
         ...state,
         notes: action.payload,
       };
+    default:
+      throw new Error(`unknown action type: ${action.type}`);
+  }
+}
+
+export const initialStateListRecti: ElectricalListState = {
+  rectifiers: [],
+  pagination: {
+    currentPage: 1,
+    pageSize: 10,
+    totalPages: 1,
+    totalRows: 0,
+  },
+
+  isLoading: false,
+  isError: null,
+  globalFilter: "",
+  positionColumn: false,
+};
+
+export function listRectiReducer(
+  state: ElectricalListState,
+  action: ActionType
+) {
+  switch (action.type) {
+    case "SET_RECTIFIERS":
+      return { ...state, rectifiers: action.payload };
+    case "SET_PAGINATION":
+      return { ...state, pagination: action.payload };
+    case "SET_IS_LOADING":
+      return { ...state, isLoading: action.payload };
+    case "SET_IS_ERROR":
+      return { ...state, isError: action.payload };
+    case "SET_LOADING_AND_ERROR":
+      return {
+        ...state,
+        isLoading: action.payload.isLoading,
+        isError: action.payload.isError,
+      };
+    case "SET_GLOBAL_FILTER":
+      return { ...state, globalFilter: action.payload };
+    case "SET_POSITIONCOLUMN":
+      return { ...state, positionColumn: action.payload };
     default:
       throw new Error(`unknown action type: ${action.type}`);
   }

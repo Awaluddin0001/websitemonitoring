@@ -1,3 +1,5 @@
+/* Asset.module.css */
+
 .headerDashboard {
   display: flex;
   justify-content: space-between;
@@ -42,10 +44,32 @@
   position: relative;
 }
 
+.tableDetail::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+.tableDetail::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.tableDetail::-webkit-scrollbar-thumb {
+  background-color: #8b0000; /* Color of the scroll thumb */
+  border-radius: 10px; /* Rounded corners */
+  border: 3px solid #f1f1f1; /* Padding around thumb */
+}
+
+.tableDetail::-webkit-scrollbar-thumb:hover {
+  background-color: #690303; /* Darker color on hover */
+}
+
+.tableDetail::-webkit-scrollbar-corner {
+  background: #f1f1f1; /* Corner background */
+}
+
 .assetTable {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 16px;
 }
 
 .assetTable th,
@@ -57,15 +81,16 @@
 }
 
 .assetTable th {
-  background-color: #0ecbc0;
-  color: var(--foreground1a-color);
+  background-color: #8b0000;
+  color: var(--foreground1b-color);
   font-weight: 600;
 }
 
 .sticky {
   position: sticky;
-  background: #0ecbc0;
-  color: var(--foreground1a-color);
+  background: #8b0000;
+  color: var(--foreground1b-color);
+  transform: translateY(-1px);
   z-index: 1;
 }
 
@@ -160,16 +185,6 @@
   cursor: pointer;
 }
 
-.pageButton {
-  background-color: #0ecbc0;
-  color: var(--foreground1a-color);
-  padding: 10px 16px;
-  font-size: 1.8rem;
-  font-weight: 600;
-  border-radius: 15px;
-  cursor: pointer;
-}
-
 .noData {
   width: 100%;
   display: flex;
@@ -191,6 +206,7 @@
   width: 100%;
   gap: 32px;
   flex-wrap: wrap;
+  margin-top: 16px;
 }
 
 .posisiInput {
@@ -291,12 +307,77 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 16px;
-  font-size: 3rem;
+  gap: 8px;
+  font-size: 2.5rem;
   margin-top: 16px;
+  width: 100%;
 }
 
 .paginationContainer p {
   cursor: pointer;
   font-weight: 600;
+  padding: 4px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.paginationContainer p:hover {
+  background-color: #fcd100;
+}
+
+.paginationContainer button {
+  cursor: pointer;
+  font-weight: 600;
+  padding: 4px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+  background: none;
+  color: #333;
+  font-size: 1.8rem;
+}
+
+.paginationContainer button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.paginationContainer button:hover:not(:disabled) {
+  background-color: #fcd100;
+}
+
+.paginationEllipsis {
+  padding: 4px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.dapotButtonsCategoryWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 10px 10px 0px 0px;
+  margin: 0px 1px;
+  margin-bottom: 1px;
+}
+
+.pageButton {
+  background-color: #fff;
+  color: var(--foreground1a-color);
+  padding: 10px 16px;
+  font-size: 2rem;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+  box-shadow: inset -0px -0px 2px 0px rgba(0, 0, 0, 0.2),
+    inset 0px 0px 2px 0px rgba(252, 159, 159, 0.5);
+}
+
+.tableWrapper {
+  width: 100%;
 }

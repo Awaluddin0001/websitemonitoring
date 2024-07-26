@@ -4,7 +4,7 @@ import togleNavbar from "@/assets/svg/toggleNavbar.svg";
 import { navbarAction } from "@/store/index";
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-export default function HeadPage({ title }: { title: string }) {
+export default function HeadPageMonitoring({ title }: { title: string }) {
   const dispatch = useDispatch();
 
   const toggleNavbar = () => {

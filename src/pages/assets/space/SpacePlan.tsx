@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
-import HeadPage from "@/components/header/HeadPage";
+import HeadPage from "@/components/header/HeadPageMonitoring";
 import styles from "@/css/module/Room.module.css";
 
 function SpacePlan() {

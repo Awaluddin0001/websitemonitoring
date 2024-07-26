@@ -1,7 +1,7 @@
 import styles from "@/css/module/Home.module.css";
 import CardValue from "@/components/card/CardValue";
 import { useEffect, useState } from "react";
-import HeadPage from "@/components/header/HeadPage";
+import HeadPage from "@/components/header/HeadPageMonitoring";
 import TrendGrafic from "@/components/grafic/TendGrafic";
 import PieChart from "@/components/grafic/PieChart";
 import useMonitoringFetchData from "@/hooks/useMonitoringFetchData";
@@ -183,16 +183,22 @@ export default function Home() {
   }, [data]);
 
   if (loading) return <LoadingPage />;
-  if (error) return <MonitoringDown />;
+  if (error)
+    return (
+      <>
+        <HeadPage title="Dashboard Pantau Gedung Telkomsel - TTC Pengayoman" />
+        <MonitoringDown />
+      </>
+    );
 
   return (
     <>
+      <HeadPage title="Dashboard Pantau Gedung Telkomsel - TTC Pengayoman" />
       <HomeModal
         display={modalController}
         action={setModalController}
         children={<CardParameterHome />}
       />
-      <HeadPage title="Dashboard Pantau Gedung Telkomsel - TTC Pengayoman" />
       <div className={styles.sectionWrapper}>
         <div className={styles.sectionHome}>
           <div

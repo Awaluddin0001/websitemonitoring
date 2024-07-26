@@ -63,10 +63,12 @@ import ElectricalPanel from "@/pages/assets/dapot/category/ElectricalPanel";
 import ElectricalUps from "@/pages/assets/dapot/category/ElectricalUps";
 import ElectricalTrafo from "@/pages/assets/dapot/category/ElectricalTrafo";
 import ElectricalGenset from "@/pages/assets/dapot/category/ElectricalGenset";
-import ElectricalPdu from "@/pages/assets/dapot/category/ElectricalPdu";
+import ElectricalLvmdp from "@/pages/assets/dapot/category/ElectricalLvmdp";
 import ElectricalCubicle from "@/pages/assets/dapot/category/ElectricalCubicle";
 import ElectricalRectifieAdd from "@/pages/assets/dapot/category/ElectricalRectifierAdd";
 import ElectricalRectifieUpdate from "@/pages/assets/dapot/category/ElectricalRectifierUpdate";
+
+import AuthWrapper from "@/utils/AuthWrapper";
 
 export const router = createBrowserRouter([
   {
@@ -79,15 +81,27 @@ export const router = createBrowserRouter([
   },
   {
     path: "/roommanagement",
-    element: <RoomManagement />,
+    element: (
+      <AuthWrapper>
+        <RoomManagement />
+      </AuthWrapper>
+    ),
   },
   {
     path: "/roommanagement/:floor",
-    element: <RoomManagement />,
+    element: (
+      <AuthWrapper>
+        <RoomManagement />
+      </AuthWrapper>
+    ),
   },
   {
     path: "/main/",
-    element: <Desktopdash />,
+    element: (
+      <AuthWrapper>
+        <Desktopdash />
+      </AuthWrapper>
+    ),
     children: [
       {
         path: "dashboard",
@@ -170,7 +184,7 @@ export const router = createBrowserRouter([
         element: <ListBrandAirConditioning />,
       },
       {
-        path: "assets/datapotensi/brand/list/electrical/:type",
+        path: "assets/datapotensi/brand/list/electrical/all",
         element: <ListBrandElectrical />,
       },
       {
@@ -216,47 +230,44 @@ export const router = createBrowserRouter([
         path: "assets/datapotensi/category/conveyance/",
       },
       {
-        path: "assets/datapotensi/category/electrical/rectifier/add",
+        path: "assets/datapotensi/category/add/electrical/rectifier",
         element: <ElectricalRectifieAdd />,
       },
       {
-        path: "assets/datapotensi/category/electrical/rectifier/update",
+        path: "assets/datapotensi/category/update/electrical/rectifier",
         element: <ElectricalRectifieUpdate />,
       },
       {
-        path: "assets/datapotensi/category/electrical/rectifier/list",
+        path: "assets/datapotensi/category/list/electrical/rectifier",
         element: <ElectricalRectifier />,
       },
       {
-        path: "assets/datapotensi/category/electrical/battery/list",
+        path: "assets/datapotensi/category/list/electrical/battery",
         element: <ElectricalBattery />,
       },
       {
-        path: "assets/datapotensi/category/electrical/panel/list",
+        path: "assets/datapotensi/category/list/electrical/panel",
         element: <ElectricalPanel />,
       },
       {
-        path: "assets/datapotensi/category/electrical/ups/list",
+        path: "assets/datapotensi/category/list/electrical/ups",
         element: <ElectricalUps />,
       },
       {
-        path: "assets/datapotensi/category/electrical/trafo/list",
+        path: "assets/datapotensi/category/list/electrical/trafo",
         element: <ElectricalTrafo />,
       },
       {
-        path: "assets/datapotensi/category/electrical/genset/list",
+        path: "assets/datapotensi/category/list/electrical/genset",
         element: <ElectricalGenset />,
       },
       {
-        path: "assets/datapotensi/category/electrical/pdu/list",
-        element: <ElectricalPdu />,
+        path: "assets/datapotensi/category/list/electrical/lvmdp",
+        element: <ElectricalLvmdp />,
       },
       {
-        path: "assets/datapotensi/category/electrical/cubicle/list",
+        path: "assets/datapotensi/category/list/electrical/cubicle",
         element: <ElectricalCubicle />,
-      },
-      {
-        path: "assets/datapotensi/category/electrical/rectifier/edit",
       },
       {
         path: "assets/datapotensi/category/extinguish/",

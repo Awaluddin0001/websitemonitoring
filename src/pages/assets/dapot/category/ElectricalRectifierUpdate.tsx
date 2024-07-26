@@ -1,4 +1,4 @@
-import HeadPage from "@/components/header/HeadPage";
+import HeadPage from "@/components/header/HeadPageMonitoring";
 import styles from "@/css/module/Asset.module.css";
 import { useEffect, useReducer } from "react";
 import {
@@ -14,7 +14,7 @@ import {
   getMaintenanceRectifiers,
   getRectifier,
   getVendorRectifiers,
-  postNewRectifier,
+  updateRectifier,
 } from "@/services/dapotRectifiers";
 import { getFloors, getRooms } from "@/services/dapotPosition";
 interface Options {
@@ -51,6 +51,7 @@ export default function ElectricalRectifieUpdate() {
   const [searchParams, _] = useSearchParams();
   const [state, dispatch] = useReducer(updateRectiReducer, initialStateRecti);
   const {
+    asset_id,
     ne_id,
     site_id,
     floor_id,
@@ -67,11 +68,11 @@ export default function ElectricalRectifieUpdate() {
     capacity_modul,
     load_current,
     occupancy,
-    system,
+    system_device,
     warranty,
     remark_aging,
     installation_date,
-    condition,
+    condition_asset,
     status,
     notes,
     listVendorElectrical,
@@ -108,35 +109,26 @@ export default function ElectricalRectifieUpdate() {
     key: string
   ) => {
     const file = event.target.files?.[0];
-    console.log(selectedFiles);
     if (file) {
       const fileType = file.type;
       const validFileTypes = ["image/jpeg", "image/jpg", "image/png"];
       if (!validFileTypes.includes(fileType)) {
         dispatch({
-          type: "SET_ERROR_FILES",
-          payload: {
-            [key]: "Only JPEG, JPG, and PNG files are allowed.",
-          },
+          type: "SET_SELECTED_ERROR_FILES",
+          payload: { key, error: "Only JPEG, JPG, and PNG files are allowed." },
         });
         dispatch({
           type: "SET_SELECTED_FILES",
-          payload: {
-            [key]: "",
-          },
+          payload: { key, file: null },
         });
       } else {
         dispatch({
-          type: "SET_ERROR_FILES",
-          payload: {
-            [key]: "",
-          },
+          type: "SET_SELECTED_ERROR_FILES",
+          payload: { key, error: null },
         });
         dispatch({
           type: "SET_SELECTED_FILES",
-          payload: {
-            [key]: "",
-          },
+          payload: { key, file },
         });
       }
     }
@@ -161,9 +153,9 @@ export default function ElectricalRectifieUpdate() {
     const jsonuserData = JSON.parse(userData);
     const user_id = jsonuserData.id;
     const formData = new FormData();
-    formData.append("images", selectedFiles.file1 as File);
-    formData.append("images", selectedFiles.file2 as File);
-    formData.append("images", selectedFiles.file3 as File);
+    formData.append("foto1", selectedFiles.file1 as File);
+    formData.append("foto2", selectedFiles.file2 as File);
+    formData.append("foto3", selectedFiles.file3 as File);
     formData.append("user_id", user_id);
     formData.append("ne_id", ne_id);
     formData.append("site_id", site_id.value || "");
@@ -181,16 +173,30 @@ export default function ElectricalRectifieUpdate() {
     formData.append("capacity_modul", capacity_modul);
     formData.append("load_current", load_current);
     formData.append("occupancy", occupancy);
-    formData.append("system", system);
+    formData.append("system_device", system_device);
     formData.append("warranty", warranty);
     formData.append("remark_aging", remark_aging);
-    formData.append("installation_date", formatDate(installation_date));
-    formData.append("condition", condition);
+    formData.append(
+      "installation_date",
+      formatDate(new Date(installation_date))
+    );
+    formData.append("condition_asset", condition_asset);
     formData.append("status", status);
     formData.append("notes", notes);
 
     const postnew = async (data: any) => {
-      await postNewRectifier(data, dispatch);
+      const result = await updateRectifier(
+        data,
+        dispatch,
+        searchParams.get("id") || "",
+        asset_id
+      );
+      console.log(result);
+      if (result.success) {
+        navigate(
+          `/main/assets/datapotensi/category/list/electrical/rectifier?page=1`
+        );
+      }
     };
 
     postnew(formData);
@@ -287,10 +293,10 @@ export default function ElectricalRectifieUpdate() {
     const getRecti = async () => {
       try {
         const data = await getRectifier(searchParams.get("id"), dispatch);
-        console.log(data);
         dispatch({
           type: "GET_RECTI",
           payload: {
+            asset_id: data.asset_id,
             ne_id: data.ne_id,
             site_id: { value: data.site_id, label: data.site_name },
             floor_id: { value: data.floor_id, label: data.floor_name },
@@ -310,10 +316,13 @@ export default function ElectricalRectifieUpdate() {
             capacity_modul: data.capacity_modul,
             load_current: data.load_current,
             occupancy: data.occupancy,
-            system: data.system,
+            system_device: data.system_device,
             warranty: data.warranty,
             remark_aging: data.remark_aging,
             installation_date: data.installation_date,
+            condition_asset: data.condition_asset,
+            status: data.status,
+            notes: data.notes,
           },
         });
       } catch (err) {
@@ -339,12 +348,12 @@ export default function ElectricalRectifieUpdate() {
         <LoadingFetch />
       ) : isError ? (
         <>
-          <HeadPage title={`Aset Baru Untuk Rectifier`} />
+          <HeadPage title={`Perbaharui Data Untuk ${searchParams.get("id")}`} />
           <ErrorFetch message={isError} />
         </>
       ) : (
         <>
-          <HeadPage title={`Aset Baru Untuk Rectifier`} />
+          <HeadPage title={`Perbaharui Data Untuk ${searchParams.get("id")}`} />
           <div className={styles.sectionInput}>
             <div className={styles.posisiInput}>
               <p className={styles.textTitle}>Posisi</p>
@@ -573,7 +582,7 @@ export default function ElectricalRectifieUpdate() {
                   <input
                     type="text"
                     className={styles.inputAsset}
-                    value={system || ""}
+                    value={system_device || ""}
                     onChange={(e) =>
                       dispatch({ type: "SET_SYSTEM", payload: e.target.value })
                     }
@@ -594,7 +603,7 @@ export default function ElectricalRectifieUpdate() {
                   <input
                     type="text"
                     className={styles.inputAsset}
-                    value={condition || ""}
+                    value={condition_asset || ""}
                     onChange={(e) =>
                       dispatch({
                         type: "SET_CONDITION",

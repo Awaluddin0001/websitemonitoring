@@ -2,18 +2,16 @@ import { useState, useEffect } from "react";
 import styles from "@/css/module/Asset.module.css";
 import Pen from "@/assets/svg/pen.svg";
 import Trash from "@/assets/svg/trash.svg";
-import HeadPage from "@/components/header/HeadPage";
+import HeadPage from "@/components/header/HeadPageMonitoring";
 import DapotButtonsCategory from "@/components/dapotFilter/DapotButtonsCategory";
 import Lottie from "lottie-react";
 import noData from "@/assets/lottie/noData.json";
 import { getPdus } from "@/services/dapotPdu";
 
-interface Pdu {
+interface Lvmdp {
   id: string;
   vendor_id: string;
   vendor_name: string;
-  brand_id: string;
-  brand_name: string;
   name: string;
   model: string;
   manufactur: string;
@@ -28,8 +26,8 @@ interface Pdu {
   user_name: string;
 }
 
-export default function ElectricalPdu() {
-  const [pdus, setPdus] = useState<Pdu[]>([]);
+export default function ElectricalLvmdp() {
+  const [pdus, setPdus] = useState<Lvmdp[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {

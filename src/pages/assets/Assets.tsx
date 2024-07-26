@@ -18,7 +18,7 @@ export default function Assets() {
             boxShadow: "10px 15px 20px 4px rgba(131, 8, 8, 0.3)",
             transition: { duration: 0.2 },
           }}
-          onClick={() => navigate("/main/assets/datapotensi/")}
+          onClick={() => navigate("/main/assets/datapotensi/category/")}
         >
           <Lottie
             animationData={dataPotensi}

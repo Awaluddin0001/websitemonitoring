@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import styles from "@/css/module/Asset.module.css";
 import Pen from "@/assets/svg/pen.svg";
 import Trash from "@/assets/svg/trash.svg";
-import HeadPage from "@/components/header/HeadPage";
+import HeadPage from "@/components/header/HeadPageMonitoring";
 import DapotButtonsCategory from "@/components/dapotFilter/DapotButtonsCategory";
 import { getTrafos } from "@/services/dapotTrafo";
 import Lottie from "lottie-react";

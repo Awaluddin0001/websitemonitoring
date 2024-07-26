@@ -7,76 +7,35 @@ export default function DapotButtonsCategory({
   listpages: string[];
   subCategory: string;
 }) {
-  const pages = [...listpages];
+  const pages = [...listpages].sort((a, b) => a.localeCompare(b, "en-US"));
   const navigate = useNavigate();
   const location = useLocation();
   const takeLastPath = location.pathname.slice(
     34,
     location.pathname.length + 1
   );
+
   const parameter = takeLastPath.split("/");
+
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        width: "100%",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          width: "100%",
-          gap: "8px",
-          justifyContent: "flex-start",
-        }}
-      >
-        {pages.map((page, index) => (
-          <div
-            onClick={() =>
-              navigate(
-                `/main/assets/datapotensi/category/${subCategory}/${page}/list`
-              )
-            }
-            className={styles.pageButton}
-            key={index}
-            style={{ color: page === parameter[1] ? "yellow" : "white" }}
-          >
-            {page}
-          </div>
-        ))}
-      </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          gap: "8px",
-          width: "100%",
-          justifyContent: "flex-end",
-        }}
-      >
+    <div className={styles.dapotButtonsCategoryWrapper}>
+      {pages.map((page, index) => (
         <div
           onClick={() =>
             navigate(
-              `/main/assets/datapotensi/category/${subCategory}/${parameter[1]}/add`
+              `/main/assets/datapotensi/category/list/${subCategory}/${page}`
             )
           }
-          className={styles.addButton}
+          className={styles.pageButton}
+          key={index}
+          style={{
+            color: page === parameter[2] ? "yellow" : "#333",
+            backgroundColor: page === parameter[2] ? "#8b0000" : "#fff",
+          }}
         >
-          + Tambah Asset
+          {page.slice(0, 1).toUpperCase() + page.slice(1)}
         </div>
-        <div
-          // onClick={() =>
-          //   navigate(`/assets/brand/addElectrical/${parameter[1]}`)
-          // }
-          className={styles.addButton}
-        >
-          Export Data
-        </div>
-      </div>
+      ))}
     </div>
   );
 }

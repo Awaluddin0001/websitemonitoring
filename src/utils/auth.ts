@@ -2,22 +2,32 @@ import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 
 // Fungsi untuk mendapatkan token dari localStorage
-const getToken = () => {
+export const getToken = () => {
   return localStorage.getItem("token");
 };
 
 // Fungsi untuk menghapus token dan melakukan logout
-const logout = () => {
+export const logout = (navigate: ReturnType<typeof useNavigate>) => {
   localStorage.removeItem("token");
   localStorage.removeItem("user");
-  const navigate = useNavigate();
   // Arahkan pengguna ke halaman login atau lakukan tindakan lain yang sesuai
   navigate("/login");
 };
 
 // Fungsi untuk memeriksa apakah token sudah kedaluwarsa
+export const isTokenExpired = (token: string): boolean => {
+  try {
+    const decodedToken: { exp: number } = jwtDecode(token);
+    const currentTime = Date.now() / 1000; // waktu saat ini dalam detik
+    return decodedToken.exp < currentTime;
+  } catch (error) {
+    // Jika token tidak valid atau ada kesalahan saat mendekode
+    return true;
+  }
+};
+
 // Fungsi untuk memeriksa apakah token sudah kedaluwarsa dan berapa lama lagi sebelum kedaluwarsa
-const getTokenExpirationDetails = (token: string) => {
+export const getTokenExpirationDetails = (token: string) => {
   try {
     const decodedToken: { exp: number } = jwtDecode(token);
     const currentTime = Date.now() / 1000; // waktu saat ini dalam detik
@@ -49,13 +59,15 @@ const getTokenExpirationDetails = (token: string) => {
 };
 
 // Fungsi utama untuk memeriksa token dan menampilkan waktu tersisa
-export const checkTokenExpiration = () => {
+export const checkTokenExpiration = (
+  navigate: ReturnType<typeof useNavigate>
+) => {
   const token = getToken();
   if (token) {
     const { isExpired, timeRemaining } = getTokenExpirationDetails(token);
     if (isExpired) {
       console.log("Token has expired. Logging out...");
-      logout();
+      logout(navigate);
     } else {
       console.log(`Token will expire in: ${timeRemaining}`);
     }

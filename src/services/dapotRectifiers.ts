@@ -1,32 +1,33 @@
 // src/services/dapotRectifiers
-import axios from "axios";
+import { apiClientDapot as apiClient } from "@/utils/apiClient";
 import {
   setLoadingAndError,
   handleError,
   handleResponse,
 } from "@/utils/LoadingAndErrorApi";
 
-const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_API_DAPOT,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
-
 export const getRectifiers = async (
   page: string | null,
-  dispatch: (dispatch: any) => void
+  dispatch: (dispatch: any) => void,
+  globalFilter: string,
+  nopage?: string | null
 ) => {
-  if (page) {
-    setLoadingAndError(dispatch);
-    try {
-      const response = await apiClient.get(
-        `/api/v1/dapot/electrical/rectifiers?page=${page}&limit=15`
-      );
-      return handleResponse(response, dispatch);
-    } catch (error) {
-      handleError(error, dispatch);
-    }
+  setLoadingAndError(dispatch);
+  try {
+    const response = await apiClient.get(
+      "/api/v1/dapot/electrical/rectifiers",
+      {
+        params: {
+          page,
+          limit: 15,
+          globalFilter,
+          nopage,
+        },
+      }
+    );
+    return handleResponse(response, dispatch);
+  } catch (error) {
+    handleError(error, dispatch);
   }
 };
 export const getRectifier = async (
@@ -108,6 +109,45 @@ export const postNewRectifier = async (
           "Content-Type": "multipart/form-data",
         },
       }
+    );
+    return handleResponse(response, dispatch);
+  } catch (error) {
+    handleError(error, dispatch);
+  }
+};
+
+export const updateRectifier = async (
+  data: any,
+  dispatch: (dispatch: any) => void,
+  deviceid: string,
+  assetid: string
+) => {
+  setLoadingAndError(dispatch);
+  try {
+    const response = await apiClient.put(
+      `/api/v1/dapot/electrical/rectifier?id=${deviceid}&assetid=${assetid}`,
+      data,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    return handleResponse(response, dispatch);
+  } catch (error) {
+    handleError(error, dispatch);
+  }
+};
+
+export const deleteRectifier = async (
+  dispatch: (dispatch: any) => void,
+  deviceid: string,
+  asset_id: string
+) => {
+  setLoadingAndError(dispatch);
+  try {
+    const response = await apiClient.delete(
+      `/api/v1/dapot/electrical/rectifier?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {

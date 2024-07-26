@@ -1,6 +1,6 @@
-import HeadPage from "@/components/header/HeadPage";
+import HeadPage from "@/components/header/HeadPageMonitoring";
 import styles from "@/css/module/Asset.module.css";
-import { useState, useEffect } from "react";
+import { useEffect, useReducer } from "react";
 import Select from "react-select";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -12,13 +12,19 @@ import {
   postNewRectifier,
 } from "@/services/dapotRectifiers";
 import { getFloors, getRooms } from "@/services/dapotPosition";
+import LoadingFetch from "@/components/loading/LoadingFetch";
+import ErrorFetch from "@/components/error/ErrorFetch";
+import { useNavigate } from "react-router-dom";
+import {
+  initialStateRecti,
+  updateRectiReducer,
+} from "src/reducers/electricalReducer";
+
 interface Options {
   value: string;
   label: string;
 }
-import LoadingFetch from "@/components/loading/LoadingFetch";
-import ErrorFetch from "@/components/error/ErrorFetch";
-import { useNavigate } from "react-router-dom";
+
 const styleSelect = {
   control: (baseStyles: any, state: any) => ({
     ...baseStyles,
@@ -41,83 +47,59 @@ const themeSelect = (theme: any) => ({
 });
 
 export default function ElectricalRectifieAdd() {
-  const [siteId, setSiteId] = useState<Options | null>(null);
-  const [floorId, setFloorId] = useState<Options | null>(null);
-  const [roomId, setRoomId] = useState<Options | null>(null);
-  const [brandId, setBrandId] = useState<Options | null>(null);
-  const [vendorId, setVendorId] = useState<Options | null>(null);
-  const [maintenanceId, setMaintenanceId] = useState<Options | null>(null);
-  const [linkId, setLinkId] = useState<Options | null>(null);
-  const [installationDate, setInstallationData] = useState<Date | null>(
-    new Date()
-  );
-  const [neId, setNeId] = useState("");
-  const [name, setName] = useState("");
-  const [role, setRole] = useState("");
-  const [type, setType] = useState("");
-  const [capacity, setCapacity] = useState("");
-  const [capacityModul, setCapacityModul] = useState("");
-  const [modul, setModul] = useState("");
-  const [loadCurrent, setLoadCurrent] = useState("");
-  const [occupancy, setOccupancy] = useState("");
-  const [system, setSystem] = useState("");
-  const [warranty, setWarranty] = useState("");
-  const [remarkAging, setRemarkAging] = useState("");
-
-  const [listBrandRectifier, setListBrandRectifier] = useState([]);
-  const [listMaintenance, setlistMaintenance] = useState([]);
-  const [listLink, setListLink] = useState([]);
-  const [ListVendorElectrical, setListVendorElectrical] = useState([]);
-  const [listRooms, setListRooms] = useState([]);
-  const [listAllRooms, setListAllRooms] = useState([]);
-  const [listFloors, setListFloors] = useState([]);
-
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState<string | null>(null);
-
-  const [selectedFiles, setSelectedFiles] = useState<{
-    [key: string]: File | null;
-  }>({
-    file1: null,
-    file2: null,
-    file3: null,
-  });
-  const [errorMessages, setErrorMessages] = useState<{
-    [key: string]: string | null;
-  }>({
-    file1: null,
-    file2: null,
-    file3: null,
-  });
-
-  const siteOptions: Options[] = [{ value: "UPD057", label: "TTC PENGAYOMAN" }];
   const navigate = useNavigate();
-  const handleSiteChange = (selectedOption: Options | null) => {
-    setSiteId(selectedOption);
-  };
+  const [state, dispatch] = useReducer(updateRectiReducer, initialStateRecti);
+  const {
+    ne_id,
+    site_id,
+    floor_id,
+    room_id,
+    brand_id,
+    vendor_id,
+    maintenance_id,
+    link_id,
+    name,
+    role,
+    type,
+    capacity,
+    modul,
+    capacity_modul,
+    load_current,
+    occupancy,
+    system_device,
+    warranty,
+    remark_aging,
+    installation_date,
+    condition_asset,
+    status,
+    notes,
+    listVendorElectrical,
+    listBrandRectifier,
+    listSite,
+    listFloors,
+    listRooms,
+    listAllRooms,
+    listMaintenance,
+    listLink,
+    isLoading,
+    isError,
+    selectedFiles,
+    errorMessagesFiles,
+  } = state;
+
   const handleFloorChange = (selectedOption: Options | null) => {
-    setFloorId(selectedOption);
     const filterRoom = listAllRooms.filter(
       (item: any) =>
         item.value.slice(2, 3) === selectedOption?.value.slice(2, 3)
     );
-    setRoomId(null);
-    setListRooms(filterRoom);
-  };
-  const handleRoomChange = (selectedOption: Options | null) => {
-    setRoomId(selectedOption);
-  };
-  const handleBrandChange = (selectedOption: Options | null) => {
-    setBrandId(selectedOption);
-  };
-  const handleVendorChange = (selectedOption: Options | null) => {
-    setVendorId(selectedOption);
-  };
-  const handleMaintenanceChange = (selectedOption: Options | null) => {
-    setMaintenanceId(selectedOption);
-  };
-  const handleLinkChange = (selectedOption: Options | null) => {
-    setLinkId(selectedOption);
+    dispatch({
+      type: "FLOOR_CHANGE",
+      payload: {
+        floor_id: selectedOption,
+        room_id: "",
+        listRooms: filterRoom,
+      },
+    });
   };
 
   const handleFileChange = (
@@ -125,19 +107,27 @@ export default function ElectricalRectifieAdd() {
     key: string
   ) => {
     const file = event.target.files?.[0];
-    console.log(selectedFiles);
     if (file) {
       const fileType = file.type;
       const validFileTypes = ["image/jpeg", "image/jpg", "image/png"];
       if (!validFileTypes.includes(fileType)) {
-        setErrorMessages((prev) => ({
-          ...prev,
-          [key]: "Only JPEG, JPG, and PNG files are allowed.",
-        }));
-        setSelectedFiles((prev) => ({ ...prev, [key]: null }));
+        dispatch({
+          type: "SET_SELECTED_ERROR_FILES",
+          payload: { key, error: "Only JPEG, JPG, and PNG files are allowed." },
+        });
+        dispatch({
+          type: "SET_SELECTED_FILES",
+          payload: { key, file: null },
+        });
       } else {
-        setErrorMessages((prev) => ({ ...prev, [key]: null }));
-        setSelectedFiles((prev) => ({ ...prev, [key]: file }));
+        dispatch({
+          type: "SET_SELECTED_ERROR_FILES",
+          payload: { key, error: null },
+        });
+        dispatch({
+          type: "SET_SELECTED_FILES",
+          payload: { key, file },
+        });
       }
     }
   };
@@ -161,35 +151,43 @@ export default function ElectricalRectifieAdd() {
     const jsonuserData = JSON.parse(userData);
     const user_id = jsonuserData.id;
     const formData = new FormData();
-    formData.append("images", selectedFiles.file1 as File);
-    formData.append("images", selectedFiles.file2 as File);
-    formData.append("images", selectedFiles.file3 as File);
+    formData.append("foto1", selectedFiles.file1 as File);
+    formData.append("foto2", selectedFiles.file2 as File);
+    formData.append("foto3", selectedFiles.file3 as File);
     formData.append("user_id", user_id);
-    formData.append("ne_id", neId);
-    formData.append("site_id", siteId?.value || "");
-    formData.append("floor_id", floorId?.value || "");
-    formData.append("room_id", roomId?.value || "");
-    formData.append("brand_id", brandId?.value || "");
-    formData.append("vendor_id", vendorId?.value || "");
-    formData.append("maintenance_id", maintenanceId?.value || "");
-    formData.append("link_id", linkId?.value || "");
+    formData.append("ne_id", ne_id);
+    formData.append("site_id", site_id.value || "");
+    formData.append("floor_id", floor_id.value || "");
+    formData.append("room_id", room_id.value || "");
+    formData.append("brand_id", brand_id.value || "");
+    formData.append("vendor_id", vendor_id.value || "");
+    formData.append("maintenance_id", maintenance_id.value || "");
+    formData.append("link_id", link_id.value || "");
     formData.append("name", name);
     formData.append("role", role);
     formData.append("type", type);
     formData.append("capacity", capacity);
     formData.append("modul", modul);
-    formData.append("capacity_modul", capacityModul);
-    formData.append("load_current", loadCurrent);
+    formData.append("capacity_modul", capacity_modul);
+    formData.append("load_current", load_current);
     formData.append("occupancy", occupancy);
-    formData.append("system", system);
+    formData.append("system_device", system_device);
     formData.append("warranty", warranty);
-    formData.append("remark_aging", remarkAging);
-    formData.append("installation_date", formatDate(installationDate));
+    formData.append("remark_aging", remark_aging);
+    formData.append(
+      "installation_date",
+      formatDate(new Date(installation_date))
+    );
+    formData.append("condition_asset", condition_asset);
+    formData.append("status", status);
+    formData.append("notes", notes);
 
     const postnew = async (data: any) => {
-      const result = await postNewRectifier(data, setIsLoading, setIsError);
-      if (result.status === 201) {
-        navigate(`/main/assets/datapotensi/category/electrical/rectifier/list`);
+      const result = await postNewRectifier(data, dispatch);
+      if (result.success) {
+        navigate(
+          `/main/assets/datapotensi/category/list/electrical/rectifier?page=1`
+        );
       }
     };
 
@@ -204,9 +202,9 @@ export default function ElectricalRectifieAdd() {
           value: item.id,
           label: item.name,
         }));
-        setListFloors(selectOptions);
+        dispatch({ type: "LIST_FLOORS", payload: selectOptions });
       } catch (err) {
-        setIsError("Failed to fetch rectifiers");
+        dispatch({ type: "SET_IS_ERROR", payload: "Failed to fetch floors" });
       }
     };
     const fetchRoom = async () => {
@@ -221,58 +219,66 @@ export default function ElectricalRectifieAdd() {
         const filterRooms = selectOptions.filter(
           (item: any) => item.value.slice(2, 3) === "1"
         );
-        setListRooms(filterRooms);
-        setListAllRooms(selectOptions);
+        dispatch({
+          type: "FETCH_ROOMS",
+          payload: {
+            listRooms: filterRooms,
+            listAllRooms: selectOptions,
+          },
+        });
       } catch (err) {
-        setIsError("Failed to fetch rectifiers");
+        dispatch({ type: "SET_IS_ERROR", payload: "Failed to fetch rooms" });
       }
     };
     const fetchBrand = async () => {
       try {
-        const data = await getBrandRectifiers(setIsLoading, setIsError);
+        const data = await getBrandRectifiers(dispatch);
         const selectOptions = data.data.map((item: any) => ({
           value: item.id,
           label: item.name,
         }));
-        setListBrandRectifier(selectOptions);
+        dispatch({ type: "LIST_BRAND_RECTIFIER", payload: selectOptions });
       } catch (err) {
-        setIsError("Failed to fetch rectifiers");
+        dispatch({ type: "SET_IS_ERROR", payload: "Failed to fetch brands" });
       }
     };
     const fetchVendor = async () => {
       try {
-        const data = await getVendorRectifiers(setIsLoading, setIsError);
+        const data = await getVendorRectifiers(dispatch);
         const selectOptions = data.data.map((item: any) => ({
           value: item.id,
           label: item.company,
         }));
-        setListVendorElectrical(selectOptions);
+        dispatch({ type: "LIST_VENDOR_ELECTRICAL", payload: selectOptions });
       } catch (err) {
-        setIsError("Failed to fetch rectifiers");
+        dispatch({ type: "SET_IS_ERROR", payload: "Failed to fetch vendors" });
       }
     };
     const fetchMaintenance = async () => {
       try {
-        const data = await getMaintenanceRectifiers(setIsLoading, setIsError);
+        const data = await getMaintenanceRectifiers(dispatch);
         const selectOptions = data.data.map((item: any) => ({
           value: item.id,
           label: item.activity,
         }));
-        setlistMaintenance(selectOptions);
+        dispatch({ type: "LIST_MAINTENANCE", payload: selectOptions });
       } catch (err) {
-        setIsError("Failed to fetch rectifiers");
+        dispatch({
+          type: "SET_IS_ERROR",
+          payload: "Failed to fetch maintenance",
+        });
       }
     };
     const fetchLink = async () => {
       try {
-        const data = await getLinkRectifiers(setIsLoading, setIsError);
+        const data = await getLinkRectifiers(dispatch);
         const selectOptions = data.data.map((item: any) => ({
           value: item.id,
           label: item.id,
         }));
-        setListLink(selectOptions);
+        dispatch({ type: "LIST_LINK", payload: selectOptions });
       } catch (err) {
-        setIsError("Failed to fetch rectifiers");
+        dispatch({ type: "SET_IS_ERROR", payload: "Failed to fetch links" });
       }
     };
 
@@ -305,16 +311,20 @@ export default function ElectricalRectifieAdd() {
                   <input
                     type="text"
                     className={styles.inputAsset}
-                    value={neId}
-                    onChange={(e) => setNeId(e.target.value)}
+                    value={ne_id || ""}
+                    onChange={(e) =>
+                      dispatch({ type: "SET_NE_ID", payload: e.target.value })
+                    }
                   />
                 </div>
                 <div className={styles.containerInput}>
                   <p className={styles.textTitleInput}>SITE ID</p>
                   <Select
-                    value={siteId}
-                    onChange={handleSiteChange}
-                    options={siteOptions}
+                    value={site_id}
+                    onChange={(e) =>
+                      dispatch({ type: "SET_SITE_ID", payload: e })
+                    }
+                    options={listSite}
                     className={styles.selectAsset}
                     styles={styleSelect}
                     theme={themeSelect}
@@ -323,7 +333,7 @@ export default function ElectricalRectifieAdd() {
                 <div className={styles.containerInput}>
                   <p className={styles.textTitleInput}>LANTAI</p>
                   <Select
-                    value={floorId}
+                    value={floor_id}
                     onChange={handleFloorChange}
                     options={listFloors}
                     className={styles.selectAsset}
@@ -334,8 +344,10 @@ export default function ElectricalRectifieAdd() {
                 <div className={styles.containerInput}>
                   <p className={styles.textTitleInput}>RUANGAN</p>
                   <Select
-                    value={roomId}
-                    onChange={handleRoomChange}
+                    value={room_id}
+                    onChange={(e) =>
+                      dispatch({ type: "SET_ROOM_ID", payload: e })
+                    }
                     options={listRooms}
                     className={styles.selectAsset}
                     styles={styleSelect}
@@ -350,9 +362,11 @@ export default function ElectricalRectifieAdd() {
                 <div className={styles.containerInput}>
                   <p className={styles.textTitleInput}>LIST VENDOR</p>
                   <Select
-                    value={vendorId}
-                    onChange={handleVendorChange}
-                    options={ListVendorElectrical}
+                    value={vendor_id}
+                    onChange={(e) =>
+                      dispatch({ type: "SET_VENDOR_ID", payload: e })
+                    }
+                    options={listVendorElectrical}
                     className={styles.selectAsset}
                     styles={styleSelect}
                     theme={themeSelect}
@@ -366,8 +380,10 @@ export default function ElectricalRectifieAdd() {
                 <div className={styles.containerInput}>
                   <p className={styles.textTitleInput}>LIST BRAND</p>
                   <Select
-                    value={brandId}
-                    onChange={handleBrandChange}
+                    value={brand_id}
+                    onChange={(e) =>
+                      dispatch({ type: "SET_BRAND_ID", payload: e })
+                    }
                     options={listBrandRectifier}
                     className={styles.selectAsset}
                     styles={styleSelect}
@@ -386,8 +402,10 @@ export default function ElectricalRectifieAdd() {
                   <input
                     type="text"
                     className={styles.inputAsset}
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    value={name || ""}
+                    onChange={(e) =>
+                      dispatch({ type: "SET_NAME", payload: e.target.value })
+                    }
                   />
                 </div>
                 <div className={styles.containerInput}>
@@ -395,8 +413,10 @@ export default function ElectricalRectifieAdd() {
                   <input
                     type="text"
                     className={styles.inputAsset}
-                    value={role}
-                    onChange={(e) => setRole(e.target.value)}
+                    value={role || ""}
+                    onChange={(e) =>
+                      dispatch({ type: "SET_ROLE", payload: e.target.value })
+                    }
                   />
                 </div>
                 <div className={styles.containerInput}>
@@ -404,8 +424,10 @@ export default function ElectricalRectifieAdd() {
                   <input
                     type="text"
                     className={styles.inputAsset}
-                    value={type}
-                    onChange={(e) => setType(e.target.value)}
+                    value={type || ""}
+                    onChange={(e) =>
+                      dispatch({ type: "SET_TYPE", payload: e.target.value })
+                    }
                   />
                 </div>
                 <div className={styles.containerInput}>
@@ -413,8 +435,13 @@ export default function ElectricalRectifieAdd() {
                   <input
                     type="number"
                     className={styles.inputAsset}
-                    value={capacity}
-                    onChange={(e) => setCapacity(e.target.value)}
+                    value={capacity || ""}
+                    onChange={(e) =>
+                      dispatch({
+                        type: "SET_CAPACITY",
+                        payload: e.target.value,
+                      })
+                    }
                   />
                 </div>
                 <div className={styles.containerInput}>
@@ -422,8 +449,10 @@ export default function ElectricalRectifieAdd() {
                   <input
                     type="text"
                     className={styles.inputAsset}
-                    value={modul}
-                    onChange={(e) => setModul(e.target.value)}
+                    value={modul || ""}
+                    onChange={(e) =>
+                      dispatch({ type: "SET_MODUL", payload: e.target.value })
+                    }
                   />
                 </div>
                 <div className={styles.containerInput}>
@@ -431,8 +460,13 @@ export default function ElectricalRectifieAdd() {
                   <input
                     type="number"
                     className={styles.inputAsset}
-                    value={capacityModul}
-                    onChange={(e) => setCapacityModul(e.target.value)}
+                    value={capacity_modul || ""}
+                    onChange={(e) =>
+                      dispatch({
+                        type: "SET_CAPACITY_MODUL",
+                        payload: e.target.value,
+                      })
+                    }
                   />
                 </div>
                 <div className={styles.containerInput}>
@@ -440,8 +474,13 @@ export default function ElectricalRectifieAdd() {
                   <input
                     type="number"
                     className={styles.inputAsset}
-                    value={loadCurrent}
-                    onChange={(e) => setLoadCurrent(e.target.value)}
+                    value={load_current || ""}
+                    onChange={(e) =>
+                      dispatch({
+                        type: "SET_LOAD_CURRENT",
+                        payload: e.target.value,
+                      })
+                    }
                   />
                 </div>
                 <div className={styles.containerInput}>
@@ -449,8 +488,13 @@ export default function ElectricalRectifieAdd() {
                   <input
                     type="number"
                     className={styles.inputAsset}
-                    value={occupancy}
-                    onChange={(e) => setOccupancy(e.target.value)}
+                    value={occupancy || ""}
+                    onChange={(e) =>
+                      dispatch({
+                        type: "SET_OCCUPANCY",
+                        payload: e.target.value,
+                      })
+                    }
                   />
                 </div>
                 <div className={styles.containerInput}>
@@ -458,8 +502,13 @@ export default function ElectricalRectifieAdd() {
                   <input
                     type="text"
                     className={styles.inputAsset}
-                    value={remarkAging}
-                    onChange={(e) => setRemarkAging(e.target.value)}
+                    value={remark_aging || ""}
+                    onChange={(e) =>
+                      dispatch({
+                        type: "SET_REMARK_AGING",
+                        payload: e.target.value,
+                      })
+                    }
                   />
                 </div>
                 <div className={styles.containerInput}>
@@ -467,8 +516,13 @@ export default function ElectricalRectifieAdd() {
                   <input
                     type="text"
                     className={styles.inputAsset}
-                    value={warranty}
-                    onChange={(e) => setWarranty(e.target.value)}
+                    value={warranty || ""}
+                    onChange={(e) =>
+                      dispatch({
+                        type: "SET_WARRANTY",
+                        payload: e.target.value,
+                      })
+                    }
                   />
                 </div>
                 <div className={styles.containerInput}>
@@ -476,16 +530,58 @@ export default function ElectricalRectifieAdd() {
                   <input
                     type="text"
                     className={styles.inputAsset}
-                    value={system}
-                    onChange={(e) => setSystem(e.target.value)}
+                    value={system_device || ""}
+                    onChange={(e) =>
+                      dispatch({ type: "SET_SYSTEM", payload: e.target.value })
+                    }
                   />
                 </div>
                 <div className={styles.containerInput}>
                   <p className={styles.textTitleInput}>Tanggal Instalasi</p>
                   <DatePicker
-                    selected={installationDate}
-                    onChange={(date) => setInstallationData(date)}
+                    selected={installation_date || ""}
+                    onChange={(date) =>
+                      dispatch({ type: "SET_INSTALLATION_DATE", payload: date })
+                    }
                     className={styles.inputDate}
+                  />
+                </div>
+                <div className={styles.containerInput}>
+                  <p className={styles.textTitleInput}>Kondisi</p>
+                  <input
+                    type="text"
+                    className={styles.inputAsset}
+                    value={condition_asset || ""}
+                    onChange={(e) =>
+                      dispatch({
+                        type: "SET_CONDITION",
+                        payload: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+                <div className={styles.containerInput}>
+                  <p className={styles.textTitleInput}>Status</p>
+                  <input
+                    type="text"
+                    className={styles.inputAsset}
+                    value={status || ""}
+                    onChange={(e) =>
+                      dispatch({
+                        type: "SET_STATUS",
+                        payload: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+                <div className={styles.containerInput}>
+                  <p className={styles.textTitleInput}>Keterangan</p>
+                  <textarea
+                    onChange={(e) => {
+                      dispatch({ type: "SET_NOTES", payload: e.target.value });
+                    }}
+                    className={styles.inputAsset}
+                    value={notes || ""}
                   />
                 </div>
               </div>
@@ -499,8 +595,10 @@ export default function ElectricalRectifieAdd() {
                 <div className={styles.containerInput}>
                   <p className={styles.textTitleInput}>MAINTENANCE ID</p>
                   <Select
-                    value={maintenanceId}
-                    onChange={handleMaintenanceChange}
+                    value={maintenance_id}
+                    onChange={(e) =>
+                      dispatch({ type: "SET_MAINTENANCE_ID", payload: e })
+                    }
                     options={listMaintenance}
                     className={styles.selectAsset}
                     styles={styleSelect}
@@ -515,8 +613,10 @@ export default function ElectricalRectifieAdd() {
                 <div className={styles.containerInput}>
                   <p className={styles.textTitleInput}>LINK ID</p>
                   <Select
-                    value={linkId}
-                    onChange={handleLinkChange}
+                    value={link_id}
+                    onChange={(e) =>
+                      dispatch({ type: "SET_LINK_ID", payload: e })
+                    }
                     options={listLink}
                     className={styles.selectAsset}
                     styles={styleSelect}
@@ -536,8 +636,10 @@ export default function ElectricalRectifieAdd() {
                     onChange={(e) => handleFileChange(e, "file1")}
                     accept=".jpeg,.jpg,.png"
                   />
-                  {errorMessages.file1 && (
-                    <p className={styles.errorMessage}>{errorMessages.file1}</p>
+                  {errorMessagesFiles.file1 && (
+                    <p className={styles.errorMessage}>
+                      {errorMessagesFiles.file1}
+                    </p>
                   )}
                 </div>
                 <div className={styles.containerInput}>
@@ -548,8 +650,10 @@ export default function ElectricalRectifieAdd() {
                     onChange={(e) => handleFileChange(e, "file2")}
                     accept=".jpeg,.jpg,.png"
                   />
-                  {errorMessages.file2 && (
-                    <p className={styles.errorMessage}>{errorMessages.file2}</p>
+                  {errorMessagesFiles.file2 && (
+                    <p className={styles.errorMessage}>
+                      {errorMessagesFiles.file2}
+                    </p>
                   )}
                 </div>
                 <div className={styles.containerInput}>
@@ -560,8 +664,10 @@ export default function ElectricalRectifieAdd() {
                     onChange={(e) => handleFileChange(e, "file3")}
                     accept=".jpeg,.jpg,.png"
                   />
-                  {errorMessages.file3 && (
-                    <p className={styles.errorMessage}>{errorMessages.file3}</p>
+                  {errorMessagesFiles.file3 && (
+                    <p className={styles.errorMessage}>
+                      {errorMessagesFiles.file3}
+                    </p>
                   )}
                 </div>
               </div>

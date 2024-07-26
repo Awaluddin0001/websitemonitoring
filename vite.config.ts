@@ -43,8 +43,8 @@ export default defineConfig(({ mode }) => {
         },
         "/api/v1/monitoring": {
           // target: apiMonitoring,
-          // target: "http://192.168.1.62:2041",
-          target: "http://77.37.44.158:2041",
+          target: "http://192.168.1.62:2041",
+          // target: "http://77.37.44.158:2041",
           changeOrigin: true,
           secure: false,
           rewrite: (path) =>
