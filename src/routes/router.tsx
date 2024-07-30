@@ -18,7 +18,7 @@ import NewBrandPump from "@/pages/assets/dapot/brand/NewBrandPump";
 import NewBrandSafety from "@/pages/assets/dapot/brand/NewBrandSafety";
 import NewBrandSecurity from "@/pages/assets/dapot/brand/NewBrandSecurity";
 import ListBrandAirConditioning from "@/pages/assets/dapot/brand/ListBrandAirConditioning";
-import ListBrandElectrical from "@/pages/assets/dapot/brand/ListBrandElectrical";
+import ListBrandElectrical from "@/pages/assets/dapot/brand/electrical/ListBrandElectrical";
 import ListBrandExtinguish from "@/pages/assets/dapot/brand/ListBrandExtinguish";
 import ListBrandFluidTank from "@/pages/assets/dapot/brand/ListBrandFluidTank";
 import ListBrandFurniture from "@/pages/assets/dapot/brand/ListBrandFurniture";
@@ -57,16 +57,16 @@ import SpacePlan from "@/pages/assets/space/SpacePlan";
 import Login from "@/pages/login/Login";
 import RoomManagement from "@/pages/assets/dapot/category/RoomManagement";
 import NotFound from "@/pages/NotFound";
-import ElectricalRectifier from "@/pages/assets/dapot/category/ElectricalRectifier";
-import ElectricalBattery from "@/pages/assets/dapot/category/ElectricalBattery";
-import ElectricalPanel from "@/pages/assets/dapot/category/ElectricalPanel";
-import ElectricalUps from "@/pages/assets/dapot/category/ElectricalUps";
-import ElectricalTrafo from "@/pages/assets/dapot/category/ElectricalTrafo";
-import ElectricalGenset from "@/pages/assets/dapot/category/ElectricalGenset";
-import ElectricalLvmdp from "@/pages/assets/dapot/category/ElectricalLvmdp";
-import ElectricalCubicle from "@/pages/assets/dapot/category/ElectricalCubicle";
-import ElectricalRectifieAdd from "@/pages/assets/dapot/category/ElectricalRectifierAdd";
-import ElectricalRectifieUpdate from "@/pages/assets/dapot/category/ElectricalRectifierUpdate";
+import ElectricalRectifier from "@/pages/assets/dapot/category/electrical/ElectricalRectifier";
+import ElectricalBattery from "@/pages/assets/dapot/category/electrical/ElectricalBattery";
+import ElectricalPanel from "@/pages/assets/dapot/category/electrical/ElectricalPanel";
+import ElectricalUps from "@/pages/assets/dapot/category/electrical/ElectricalUps";
+import ElectricalTrafo from "@/pages/assets/dapot/category/electrical/ElectricalTrafo";
+import ElectricalGenset from "@/pages/assets/dapot/category/electrical/ElectricalGenset";
+import ElectricalLvmdp from "@/pages/assets/dapot/category/electrical/ElectricalLvmdp";
+import ElectricalCubicle from "@/pages/assets/dapot/category/electrical/ElectricalCubicle";
+import ElectricalRectifieAdd from "@/pages/assets/dapot/category/electrical/ElectricalRectifierAdd";
+import ElectricalRectifieUpdate from "@/pages/assets/dapot/category/electrical/ElectricalRectifierUpdate";
 
 import AuthWrapper from "@/utils/AuthWrapper";
 
@@ -235,6 +235,10 @@ export const router = createBrowserRouter([
       },
       {
         path: "assets/datapotensi/category/update/electrical/rectifier",
+        element: <ElectricalRectifieUpdate />,
+      },
+      {
+        path: "assets/datapotensi/category/detail/electrical/:id",
         element: <ElectricalRectifieUpdate />,
       },
       {

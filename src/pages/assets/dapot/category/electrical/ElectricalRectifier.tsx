@@ -62,6 +62,7 @@ export default function ElectricalRectifier() {
     isError,
     globalFilter,
     positionColumn,
+    exportTogle,
   } = state;
   const [isShowModal, setIsShowModal] = useState(false);
   const [idOriginal, setIdOriginal] = useState("");
@@ -73,7 +74,6 @@ export default function ElectricalRectifier() {
         const page = searchParams.get("page") || "1";
         const nopage = globalFilter ? "no" : undefined;
         const data = await getRectifiers(page, dispatch, globalFilter, nopage);
-        console.log(data.data);
         dispatch({ type: "SET_PAGINATION", payload: data.pagination });
         dispatch({ type: "SET_RECTIFIERS", payload: data.data });
       } catch (err) {
@@ -368,6 +368,7 @@ export default function ElectricalRectifier() {
             setGlobalFilter={dispatch}
             subCategory="electrical"
             columnTogle={positionColumn}
+            exportTogle={exportTogle}
             setTogle={dispatch}
           />
           <ErrorFetch message={isError} />
@@ -380,6 +381,7 @@ export default function ElectricalRectifier() {
             setGlobalFilter={dispatch}
             subCategory="electrical"
             columnTogle={positionColumn}
+            exportTogle={exportTogle}
             setTogle={dispatch}
           />
           <div className={styles.tableWrapper}>

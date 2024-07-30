@@ -106,6 +106,7 @@ type ElectricalListState = {
 
   // FOR TABLE
   positionColumn: boolean;
+  exportTogle: boolean;
 };
 
 export const initialStateRecti: ElectricalState = {
@@ -286,6 +287,7 @@ export const initialStateListRecti: ElectricalListState = {
   isError: null,
   globalFilter: "",
   positionColumn: false,
+  exportTogle: false,
 };
 
 export function listRectiReducer(
@@ -311,6 +313,8 @@ export function listRectiReducer(
       return { ...state, globalFilter: action.payload };
     case "SET_POSITIONCOLUMN":
       return { ...state, positionColumn: action.payload };
+    case "SET_EXPORTTOGGLE":
+      return { ...state, exportTogle: action.payload };
     default:
       throw new Error(`unknown action type: ${action.type}`);
   }

@@ -272,6 +272,17 @@ button:focus-visible {
 
 /* react table */
 
+/* react togle */
+.columnTogle.react-toggle--checked .react-toggle-track {
+  background-color: var(--gamboge-color);
+}
+
+.columnTogle .react-toggle-track {
+  background-color: var(--background1-color);
+}
+
+/* react togle */
+
 @media (prefers-color-scheme: light) {
   /* :root {
     color: #213547;

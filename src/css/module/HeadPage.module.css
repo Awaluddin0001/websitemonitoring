@@ -168,7 +168,7 @@
 .settingGroup {
   display: flex;
   flex-direction: row;
-  gap: 8px;
+  gap: 32px;
   width: 100%;
   height: 0px;
   overflow: hidden;
@@ -185,4 +185,34 @@
   flex-direction: row;
   gap: 0px;
   align-items: center;
+}
+
+.switchGroup {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  font-size: 3rem;
+}
+
+.iconText {
+  padding: 7px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.6rem;
+  background-color: var(--background1-color);
+  color: var(--foreground1b-color);
+  height: auto;
+  box-shadow: inset -0px -0px 3px 0px rgba(0, 0, 0, 0.2),
+    inset 0px 0px 3px 0px rgba(252, 159, 159, 0.5);
+  transition: all 0.1s ease-in-out;
+  margin: 0px 0px 0px 10px;
+  transform: rotate(0deg);
+  transition: transform 0.2s ease-in-out;
+}
+
+.iconText.show {
+  background-color: var(--foreground1b-color);
+  color: var(--background1-color);
 }

@@ -17,6 +17,7 @@ export default function HeadPageDapot({
   setGlobalFilter,
   subCategory,
   columnTogle,
+  exportTogle,
   setTogle,
 }: {
   title: string;
@@ -24,7 +25,8 @@ export default function HeadPageDapot({
   setGlobalFilter: (dispatch: any) => void;
   subCategory: string;
   columnTogle?: any;
-  setTogle: any;
+  exportTogle?: any;
+  setTogle?: any;
 }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -159,28 +161,56 @@ export default function HeadPageDapot({
               : styles.settingGroup
           }
         >
-          <div>
+          <div className={styles.switchGroup}>
             <Toggle
               defaultChecked={columnTogle}
-              className="custom-classname"
+              className={"columnTogle"}
               onChange={() =>
                 setTogle({ type: "SET_POSITIONCOLUMN", payload: !columnTogle })
               }
             />
+            <h5>Full Column</h5>
           </div>
-          <div>
+          <div
+            className={styles.switchGroup}
+            style={{ borderLeft: "2px solid rgba(252, 159, 159, 1)" }}
+          >
             <div
-              onClick={() =>
-                navigate(
-                  `/main/assets/datapotensi/category/${subCategory}/${parameter[2]}/add`
-                )
+              className={
+                exportTogle
+                  ? styles.iconText + " " + styles.show
+                  : styles.iconText
               }
-              className={styles.addButton}
+              onClick={() =>
+                setTogle({ type: "SET_EXPORTTOGGLE", payload: !exportTogle })
+              }
             >
-              + Tambah Asset
+              ⌂ Export
             </div>
-
-            <div className={styles.addButton}>⌂ Export Data</div>
+            {exportTogle && (
+              <>
+                <div
+                  onClick={() =>
+                    navigate(
+                      `/main/assets/datapotensi/link/list/${subCategory}`
+                    )
+                  }
+                  className={styles.addButton}
+                >
+                  .pdf
+                </div>
+                <div
+                  onClick={() =>
+                    navigate(
+                      `/main/assets/datapotensi/link/list/${subCategory}`
+                    )
+                  }
+                  className={styles.addButton}
+                >
+                  .xlsx
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>
