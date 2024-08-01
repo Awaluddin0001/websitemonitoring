@@ -1,5 +1,8 @@
 import { useEffect, useReducer, useState } from "react";
-import { deleteRectifier, getRectifiers } from "@/services/dapotRectifiers";
+import {
+  deleteRectifier,
+  getRectifiers,
+} from "@/services/electrical/dapotRectifiers";
 import styles from "@/css/module/Asset.module.css";
 import Pen from "@/assets/svg/pen.svg";
 import Trash from "@/assets/svg/trash.svg";
@@ -62,7 +65,7 @@ export default function ElectricalRectifier() {
     isError,
     globalFilter,
     positionColumn,
-    exportTogle,
+    exportToggle,
   } = state;
   const [isShowModal, setIsShowModal] = useState(false);
   const [idOriginal, setIdOriginal] = useState("");
@@ -367,9 +370,9 @@ export default function ElectricalRectifier() {
             valueGlobalFilter={globalFilter}
             setGlobalFilter={dispatch}
             subCategory="electrical"
-            columnTogle={positionColumn}
-            exportTogle={exportTogle}
-            setTogle={dispatch}
+            columnToggle={positionColumn}
+            exportToggle={exportToggle}
+            setToggle={dispatch}
           />
           <ErrorFetch message={isError} />
         </>
@@ -380,9 +383,9 @@ export default function ElectricalRectifier() {
             valueGlobalFilter={globalFilter}
             setGlobalFilter={dispatch}
             subCategory="electrical"
-            columnTogle={positionColumn}
-            exportTogle={exportTogle}
-            setTogle={dispatch}
+            columnToggle={positionColumn}
+            exportToggle={exportToggle}
+            setToggle={dispatch}
           />
           <div className={styles.tableWrapper}>
             <DapotButtonsCategory

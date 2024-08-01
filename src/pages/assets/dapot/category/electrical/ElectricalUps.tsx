@@ -6,7 +6,7 @@ import HeadPage from "@/components/header/HeadPageMonitoring";
 import DapotButtonsCategory from "@/components/dapotFilter/DapotButtonsCategory";
 import Lottie from "lottie-react";
 import noData from "@/assets/lottie/noData.json";
-import { getUpsies } from "@/services/dapotUps";
+import { getUpsies } from "@/services/electrical/dapotUps";
 
 interface Ups {
   id: string;

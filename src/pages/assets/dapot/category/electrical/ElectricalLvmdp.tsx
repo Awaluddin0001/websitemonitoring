@@ -6,7 +6,7 @@ import HeadPage from "@/components/header/HeadPageMonitoring";
 import DapotButtonsCategory from "@/components/dapotFilter/DapotButtonsCategory";
 import Lottie from "lottie-react";
 import noData from "@/assets/lottie/noData.json";
-import { getPdus } from "@/services/dapotPdu";
+import { getPdus } from "@/services/electrical/dapotPdu";
 
 interface Lvmdp {
   id: string;

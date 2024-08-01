@@ -4,7 +4,7 @@ import Pen from "@/assets/svg/pen.svg";
 import Trash from "@/assets/svg/trash.svg";
 import HeadPage from "@/components/header/HeadPageMonitoring";
 import DapotButtonsCategory from "@/components/dapotFilter/DapotButtonsCategory";
-import { getTrafos } from "@/services/dapotTrafo";
+import { getTrafos } from "@/services/electrical/dapotTrafo";
 import Lottie from "lottie-react";
 import noData from "@/assets/lottie/noData.json";
 

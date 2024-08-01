@@ -7,26 +7,26 @@ import Thermal from "@/pages/monitoring/Thermal";
 import Fire from "@/pages/monitoring/Fire";
 import Bbm from "@/pages/monitoring/Bbm";
 import Assets from "@/pages/assets/Assets";
-import NewBrandAirConditioning from "@/pages/assets/dapot/brand/NewBrandAirConditioning";
-import NewBrandElectrical from "@/pages/assets/dapot/brand/NewBrandElectrical";
-import NewBrandExtinguish from "@/pages/assets/dapot/brand/NewBrandExtinguish";
-import NewBrandFurniture from "@/pages/assets/dapot/brand/NewBrandFurniture";
-import NewBrandFluidTank from "@/pages/assets/dapot/brand/NewBrandFluidTank";
-import NewBrandLighting from "@/pages/assets/dapot/brand/NewBrandLighting";
-import NewBrandNetworkIt from "@/pages/assets/dapot/brand/NewBrandNetworkIt";
-import NewBrandPump from "@/pages/assets/dapot/brand/NewBrandPump";
-import NewBrandSafety from "@/pages/assets/dapot/brand/NewBrandSafety";
-import NewBrandSecurity from "@/pages/assets/dapot/brand/NewBrandSecurity";
-import ListBrandAirConditioning from "@/pages/assets/dapot/brand/ListBrandAirConditioning";
+import NewBrandAirConditioning from "@/pages/assets/dapot/brand/air_conditioning/NewBrandAirConditioning";
+import NewBrandElectrical from "@/pages/assets/dapot/brand/electrical/NewBrandElectrical";
+import NewBrandExtinguish from "@/pages/assets/dapot/brand/extinguish/NewBrandExtinguish";
+import NewBrandFurniture from "@/pages/assets/dapot/brand/furniture/NewBrandFurniture";
+import NewBrandFluidTank from "@/pages/assets/dapot/brand/fluid/NewBrandFluidTank";
+import NewBrandLighting from "@/pages/assets/dapot/brand/lighting/NewBrandLighting";
+import NewBrandNetworkIt from "@/pages/assets/dapot/brand/network/NewBrandNetworkIt";
+import NewBrandPump from "@/pages/assets/dapot/brand/pump/NewBrandPump";
+import NewBrandSafety from "@/pages/assets/dapot/brand/saftey/NewBrandSafety";
+import NewBrandSecurity from "@/pages/assets/dapot/brand/security/NewBrandSecurity";
+import ListBrandAirConditioning from "@/pages/assets/dapot/brand/air_conditioning/ListBrandAirConditioning";
 import ListBrandElectrical from "@/pages/assets/dapot/brand/electrical/ListBrandElectrical";
-import ListBrandExtinguish from "@/pages/assets/dapot/brand/ListBrandExtinguish";
-import ListBrandFluidTank from "@/pages/assets/dapot/brand/ListBrandFluidTank";
-import ListBrandFurniture from "@/pages/assets/dapot/brand/ListBrandFurniture";
-import ListBrandLighting from "@/pages/assets/dapot/brand/ListBrandLighting";
-import ListBrandNetworkIt from "@/pages/assets/dapot/brand/ListBrandNetworkIt";
-import ListBrandPump from "@/pages/assets/dapot/brand/ListBrandPump";
-import ListBrandSafety from "@/pages/assets/dapot/brand/ListBrandSafety";
-import ListBrandSecurity from "@/pages/assets/dapot/brand/ListBrandSecurity";
+import ListBrandExtinguish from "@/pages/assets/dapot/brand/extinguish/ListBrandExtinguish";
+import ListBrandFluidTank from "@/pages/assets/dapot/brand/fluid/ListBrandFluidTank";
+import ListBrandFurniture from "@/pages/assets/dapot/brand/furniture/ListBrandFurniture";
+import ListBrandLighting from "@/pages/assets/dapot/brand/lighting/ListBrandLighting";
+import ListBrandNetworkIt from "@/pages/assets/dapot/brand/network/ListBrandNetworkIt";
+import ListBrandPump from "@/pages/assets/dapot/brand/pump/ListBrandPump";
+import ListBrandSafety from "@/pages/assets/dapot/brand/saftey/ListBrandSafety";
+import ListBrandSecurity from "@/pages/assets/dapot/brand/security/ListBrandSecurity";
 import NewVendorAirConditioning from "@/pages/assets/dapot/vendor/NewVendorAirConditioning";
 import NewVendorConveyance from "@/pages/assets/dapot/vendor/NewVendorConveyance";
 import NewVendorElectrical from "@/pages/assets/dapot/vendor/NewVendorElectrical";
@@ -144,7 +144,7 @@ export const router = createBrowserRouter([
         element: <NewBrandAirConditioning />,
       },
       {
-        path: "assets/datapotensi/brand/add/electrical/:type",
+        path: "assets/datapotensi/brand/add/electrical",
         element: <NewBrandElectrical />,
       },
       {
@@ -184,7 +184,7 @@ export const router = createBrowserRouter([
         element: <ListBrandAirConditioning />,
       },
       {
-        path: "assets/datapotensi/brand/list/electrical/all",
+        path: "assets/datapotensi/brand/list/electrical",
         element: <ListBrandElectrical />,
       },
       {

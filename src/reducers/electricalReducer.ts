@@ -1,113 +1,11 @@
-type ActionType = { type: string; payload?: any };
+import { ActionType } from "@/types/basicTypes";
 
-type ReactSelect = { value: string; label: string };
-
-type ElectricalState = {
-  // Value
-  asset_id: string;
-  ne_id: string;
-  site_id: ReactSelect;
-  floor_id: ReactSelect;
-  room_id: ReactSelect;
-  brand_id: ReactSelect;
-  vendor_id: ReactSelect;
-  maintenance_id: ReactSelect;
-  link_id: ReactSelect;
-  name: string;
-  role: string;
-  type: string;
-  capacity: string;
-  modul: string;
-  capacity_modul: string;
-  load_current: string;
-  occupancy: string;
-  system_device: string;
-  warranty: string;
-  remark_aging: string;
-  installation_date: string;
-  condition_asset: string;
-  status: string;
-  notes: string;
-
-  // List
-  listVendorElectrical: any[];
-  listBrandRectifier: any[];
-  listSite: any[];
-  listFloors: any[];
-  listRooms: any[];
-  listAllRooms: any[];
-  listMaintenance: any[];
-  listLink: any[];
-
-  //   FOR COMPONENT
-  isLoading: boolean;
-  isError: string | null;
-
-  //   FOR FILE
-  selectedFiles: {
-    file1: null;
-    file2: null;
-    file3: null;
-  };
-  errorMessagesFiles: {
-    file1: null;
-    file2: null;
-    file3: null;
-  };
-};
-
-type ElectricalListState = {
-  rectifiers: {
-    asset_id: string;
-    brand_id: string;
-    brand_name: string;
-    capacity: number;
-    capacity_modul: number;
-    condition_asset: string;
-    created_at: string;
-    floor_id: string;
-    floor_name: string;
-    id: string;
-    incoming: number;
-    installation_date: string;
-    link_id: string;
-    load_current: number;
-    maintenance_date: string | null;
-    modul: string;
-    name: string;
-    ne_id: string;
-    notes: string;
-    occupancy: number;
-    outgoing: string;
-    vendor_id: string;
-    remark_aging: string;
-    role: string;
-    room_id: string;
-    room_name: string;
-    site_id: string;
-    site_name: string;
-    status: string;
-    system_device: string;
-    type: string;
-    user_name: string;
-    vendor_name: string;
-    warranty: string | null;
-  }[];
-  pagination: {
-    currentPage: number;
-    pageSize: number;
-    totalPages: number;
-    totalRows: number;
-  };
-  //   FOR COMPONENT
-  isLoading: boolean;
-  isError: string | null;
-  globalFilter: string;
-
-  // FOR TABLE
-  positionColumn: boolean;
-  exportTogle: boolean;
-};
+import {
+  ElectricalState,
+  ElectricalListState,
+  ElectricalBrandListState,
+  PostElectricalBand,
+} from "@/types/categoryTypes";
 
 export const initialStateRecti: ElectricalState = {
   // Value
@@ -153,7 +51,6 @@ export const initialStateRecti: ElectricalState = {
   selectedFiles: { file1: null, file2: null, file3: null },
   errorMessagesFiles: { file1: null, file2: null, file3: null },
 };
-
 export function updateRectiReducer(state: ElectricalState, action: ActionType) {
   switch (action.type) {
     case "SET_NE_ID":
@@ -287,7 +184,7 @@ export const initialStateListRecti: ElectricalListState = {
   isError: null,
   globalFilter: "",
   positionColumn: false,
-  exportTogle: false,
+  exportToggle: false,
 };
 
 export function listRectiReducer(
@@ -311,10 +208,80 @@ export function listRectiReducer(
       };
     case "SET_GLOBAL_FILTER":
       return { ...state, globalFilter: action.payload };
-    case "SET_POSITIONCOLUMN":
+    case "SET_POSITION_COLUMN":
       return { ...state, positionColumn: action.payload };
-    case "SET_EXPORTTOGGLE":
-      return { ...state, exportTogle: action.payload };
+    case "SET_EXPORT_TOGGLE":
+      return { ...state, exportToggle: action.payload };
+    default:
+      throw new Error(`unknown action type: ${action.type}`);
+  }
+}
+
+export const initialStateListBrandElectrical: ElectricalBrandListState = {
+  brands: [],
+  pagination: {
+    currentPage: 1,
+    pageSize: 10,
+    totalPages: 1,
+    totalRows: 0,
+  },
+
+  isLoading: false,
+  isError: null,
+  globalFilter: "",
+  positionColumn: false,
+  exportToggle: false,
+};
+
+export function listBrandElectricalReducer(
+  state: ElectricalBrandListState,
+  action: ActionType
+) {
+  switch (action.type) {
+    case "SET_BRANDS":
+      return { ...state, brands: action.payload };
+    case "SET_PAGINATION":
+      return { ...state, pagination: action.payload };
+    case "SET_IS_LOADING":
+      return { ...state, isLoading: action.payload };
+    case "SET_IS_ERROR":
+      return { ...state, isError: action.payload };
+    case "SET_LOADING_AND_ERROR":
+      return {
+        ...state,
+        isLoading: action.payload.isLoading,
+        isError: action.payload.isError,
+      };
+    case "SET_GLOBAL_FILTER":
+      return { ...state, globalFilter: action.payload };
+    default:
+      throw new Error(`unknown action type: ${action.type}`);
+  }
+}
+
+export const initialStateUpdateElectricalBrand: PostElectricalBand = {
+  name: "",
+  isLoading: false,
+  isError: null,
+};
+
+export function updateElectricalBrandReducer(
+  state: PostElectricalBand,
+  action: ActionType
+) {
+  switch (action.type) {
+    case "SET_NAME":
+      return { ...state, name: action.payload };
+    case "SET_IS_LOADING":
+      return { ...state, isLoading: action.payload };
+    case "SET_IS_ERROR":
+      return { ...state, isError: action.payload };
+    case "SET_LOADING_AND_ERROR":
+      return {
+        ...state,
+        isLoading: action.payload.isLoading,
+        isError: action.payload.isError,
+      };
     default:
       throw new Error(`unknown action type: ${action.type}`);
   }

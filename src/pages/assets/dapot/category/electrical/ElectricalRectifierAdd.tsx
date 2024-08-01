@@ -4,14 +4,15 @@ import { useEffect, useReducer } from "react";
 import Select from "react-select";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { postNewRectifier } from "@/services/electrical/dapotRectifiers";
 import {
-  getBrandRectifiers,
-  getLinkRectifiers,
-  getMaintenanceRectifiers,
-  getVendorRectifiers,
-  postNewRectifier,
-} from "@/services/dapotRectifiers";
-import { getFloors, getRooms } from "@/services/dapotPosition";
+  getBrandElectrical,
+  getLinkElectrical,
+  getMaintenanceElectrical,
+  getTypeElectrical,
+  getVendorElectrical,
+} from "@/services/electrical/dapotElectrical";
+import { getFloors, getRooms } from "@/services/electrical/dapotPosition";
 import LoadingFetch from "@/components/loading/LoadingFetch";
 import ErrorFetch from "@/components/error/ErrorFetch";
 import { useNavigate } from "react-router-dom";
@@ -232,7 +233,7 @@ export default function ElectricalRectifieAdd() {
     };
     const fetchBrand = async () => {
       try {
-        const data = await getBrandRectifiers(dispatch);
+        const data = await getBrandElectrical("1", dispatch);
         const selectOptions = data.data.map((item: any) => ({
           value: item.id,
           label: item.name,
@@ -244,7 +245,7 @@ export default function ElectricalRectifieAdd() {
     };
     const fetchVendor = async () => {
       try {
-        const data = await getVendorRectifiers(dispatch);
+        const data = await getVendorElectrical(dispatch);
         const selectOptions = data.data.map((item: any) => ({
           value: item.id,
           label: item.company,
@@ -256,7 +257,7 @@ export default function ElectricalRectifieAdd() {
     };
     const fetchMaintenance = async () => {
       try {
-        const data = await getMaintenanceRectifiers(dispatch);
+        const data = await getMaintenanceElectrical(dispatch);
         const selectOptions = data.data.map((item: any) => ({
           value: item.id,
           label: item.activity,
@@ -271,7 +272,7 @@ export default function ElectricalRectifieAdd() {
     };
     const fetchLink = async () => {
       try {
-        const data = await getLinkRectifiers(dispatch);
+        const data = await getLinkElectrical(dispatch);
         const selectOptions = data.data.map((item: any) => ({
           value: item.id,
           label: item.id,

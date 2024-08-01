@@ -16,17 +16,17 @@ export default function HeadPageDapot({
   valueGlobalFilter,
   setGlobalFilter,
   subCategory,
-  columnTogle,
-  exportTogle,
-  setTogle,
+  columnToggle,
+  exportToggle,
+  setToggle,
 }: {
   title: string;
   valueGlobalFilter: string;
   setGlobalFilter: (dispatch: any) => void;
   subCategory: string;
-  columnTogle?: any;
-  exportTogle?: any;
-  setTogle?: any;
+  columnToggle?: any;
+  exportToggle?: any;
+  setToggle?: any;
 }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -116,7 +116,7 @@ export default function HeadPageDapot({
               <div
                 onClick={() =>
                   navigate(
-                    `/main/assets/datapotensi/vendor/list/${subCategory}`
+                    `/main/assets/datapotensi/vendor/list/${subCategory}?page=1`
                   )
                 }
                 className={styles.addButton}
@@ -126,7 +126,7 @@ export default function HeadPageDapot({
               <div
                 onClick={() =>
                   navigate(
-                    `/main/assets/datapotensi/brand/list/${subCategory}/all`
+                    `/main/assets/datapotensi/brand/list/${subCategory}?page=1`
                   )
                 }
                 className={styles.addButton}
@@ -135,7 +135,19 @@ export default function HeadPageDapot({
               </div>
               <div
                 onClick={() =>
-                  navigate(`/main/assets/datapotensi/link/list/${subCategory}`)
+                  navigate(
+                    `/main/assets/datapotensi/type/list/${subCategory}?page=1`
+                  )
+                }
+                className={styles.addButton}
+              >
+                ⁝ List Type
+              </div>
+              <div
+                onClick={() =>
+                  navigate(
+                    `/main/assets/datapotensi/link/list/${subCategory}?page=1`
+                  )
                 }
                 className={styles.addButton}
               >
@@ -163,10 +175,13 @@ export default function HeadPageDapot({
         >
           <div className={styles.switchGroup}>
             <Toggle
-              defaultChecked={columnTogle}
+              defaultChecked={columnToggle}
               className={"columnTogle"}
               onChange={() =>
-                setTogle({ type: "SET_POSITIONCOLUMN", payload: !columnTogle })
+                setToggle({
+                  type: "SET_POSITIONCOLUMN",
+                  payload: !columnToggle,
+                })
               }
             />
             <h5>Full Column</h5>
@@ -177,17 +192,17 @@ export default function HeadPageDapot({
           >
             <div
               className={
-                exportTogle
+                exportToggle
                   ? styles.iconText + " " + styles.show
                   : styles.iconText
               }
               onClick={() =>
-                setTogle({ type: "SET_EXPORTTOGGLE", payload: !exportTogle })
+                setToggle({ type: "SET_EXPORTTOGGLE", payload: !exportToggle })
               }
             >
               ⌂ Export
             </div>
-            {exportTogle && (
+            {exportToggle && (
               <>
                 <div
                   onClick={() =>

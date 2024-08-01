@@ -6,7 +6,7 @@ import HeadPage from "@/components/header/HeadPageMonitoring";
 import DapotButtonsCategory from "@/components/dapotFilter/DapotButtonsCategory";
 import Lottie from "lottie-react";
 import noData from "@/assets/lottie/noData.json";
-import { getCubicles } from "@/services/dapotCubicle";
+import { getCubicles } from "@/services/electrical/dapotCubicle";
 
 interface Cubicle {
   id: string;
