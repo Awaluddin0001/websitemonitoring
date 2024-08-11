@@ -47,7 +47,7 @@ const themeSelect = (theme: any) => ({
   },
 });
 
-export default function ElectricalRectifieAdd() {
+export default function ElectricalRectifierAdd() {
   const navigate = useNavigate();
   const [state, dispatch] = useReducer(updateRectiReducer, initialStateRecti);
   const {
@@ -61,7 +61,7 @@ export default function ElectricalRectifieAdd() {
     link_id,
     name,
     role,
-    type,
+    type_id,
     capacity,
     modul,
     capacity_modul,
@@ -82,6 +82,7 @@ export default function ElectricalRectifieAdd() {
     listAllRooms,
     listMaintenance,
     listLink,
+    listType,
     isLoading,
     isError,
     selectedFiles,
@@ -156,6 +157,7 @@ export default function ElectricalRectifieAdd() {
     formData.append("foto2", selectedFiles.file2 as File);
     formData.append("foto3", selectedFiles.file3 as File);
     formData.append("user_id", user_id);
+    formData.append("sub_category_id", "ESC006");
     formData.append("ne_id", ne_id);
     formData.append("site_id", site_id.value || "");
     formData.append("floor_id", floor_id.value || "");
@@ -166,7 +168,7 @@ export default function ElectricalRectifieAdd() {
     formData.append("link_id", link_id.value || "");
     formData.append("name", name);
     formData.append("role", role);
-    formData.append("type", type);
+    formData.append("type_id", type_id.value || "");
     formData.append("capacity", capacity);
     formData.append("modul", modul);
     formData.append("capacity_modul", capacity_modul);
@@ -233,7 +235,7 @@ export default function ElectricalRectifieAdd() {
     };
     const fetchBrand = async () => {
       try {
-        const data = await getBrandElectrical("1", dispatch);
+        const data = await getBrandElectrical("1", dispatch, null, "no");
         const selectOptions = data.data.map((item: any) => ({
           value: item.id,
           label: item.name,
@@ -245,7 +247,7 @@ export default function ElectricalRectifieAdd() {
     };
     const fetchVendor = async () => {
       try {
-        const data = await getVendorElectrical(dispatch);
+        const data = await getVendorElectrical("1", dispatch, null, "no");
         const selectOptions = data.data.map((item: any) => ({
           value: item.id,
           label: item.company,
@@ -257,7 +259,7 @@ export default function ElectricalRectifieAdd() {
     };
     const fetchMaintenance = async () => {
       try {
-        const data = await getMaintenanceElectrical(dispatch);
+        const data = await getMaintenanceElectrical("1", dispatch, null, "no");
         const selectOptions = data.data.map((item: any) => ({
           value: item.id,
           label: item.activity,
@@ -282,12 +284,25 @@ export default function ElectricalRectifieAdd() {
         dispatch({ type: "SET_IS_ERROR", payload: "Failed to fetch links" });
       }
     };
+    const fetchType = async () => {
+      try {
+        const data = await getTypeElectrical("1", dispatch, null, "no");
+        const selectOptions = data.data.map((item: any) => ({
+          value: item.id,
+          label: item.name,
+        }));
+        dispatch({ type: "LIST_TYPES", payload: selectOptions });
+      } catch (err) {
+        dispatch({ type: "SET_IS_ERROR", payload: "Failed to fetch links" });
+      }
+    };
 
     fetchFloor();
     fetchRoom();
     fetchBrand();
     fetchVendor();
     fetchLink();
+    fetchType();
     fetchMaintenance();
   }, []);
 
@@ -422,13 +437,15 @@ export default function ElectricalRectifieAdd() {
                 </div>
                 <div className={styles.containerInput}>
                   <p className={styles.textTitleInput}>Type</p>
-                  <input
-                    type="text"
-                    className={styles.inputAsset}
-                    value={type || ""}
+                  <Select
+                    value={type_id}
                     onChange={(e) =>
-                      dispatch({ type: "SET_TYPE", payload: e.target.value })
+                      dispatch({ type: "SET_TYPE_ID", payload: e })
                     }
+                    options={listType}
+                    className={styles.selectAsset}
+                    styles={styleSelect}
+                    theme={themeSelect}
                   />
                 </div>
                 <div className={styles.containerInput}>

@@ -9,53 +9,63 @@ export default function CardParameterHome() {
           <h2>Parameter Warna Kartu Suhu</h2>
           <div className={styles.parameterCard}>
             <div className={styles.color1}></div>
-            <h3>{"<19°C"}</h3>
+            <h3>{"Di bawah 18°C"}</h3>
             <h3>Dingin</h3>
           </div>
           <div className={styles.parameterCard}>
             <div className={styles.color2}></div>
-            <h3>{"19°C - 28°C"}</h3>
-            <h3>Sejuk</h3>
+            <h3>{"18°C - 23°C"}</h3>
+            <h3>Aman</h3>
+          </div>
+          <div className={styles.parameterCard}>
+            <div className={styles.color4}></div>
+            <h3>{"24°C - 30°C"}</h3>
+            <h3>Normal</h3>
           </div>
           <div className={styles.parameterCard}>
             <div className={styles.color3}></div>
-            <h3>{">29°C"}</h3>
+            <h3>{"Di atas 30°C"}</h3>
             <h3>Panas</h3>
           </div>
         </div>
         <div className={styles.parameterHumidity}>
           <h2>Parameter Warna Kartu Kelembaban</h2>
           <div className={styles.parameterCard}>
-            <div className={styles.color1}></div>
-            <h3>{">60%"}</h3>
-            <h3>Lembab</h3>
+            <div className={styles.color4}></div>
+            <h3>{"di bawah 45%"}</h3>
+            <h3>Dalam Perhatian</h3>
           </div>
           <div className={styles.parameterCard}>
-            <div className={styles.color2}></div>
-            <h3>{"30% - 59%"}</h3>
+            <div className={styles.color1}></div>
+            <h3>{"45% - 60%"}</h3>
             <h3>Normal</h3>
           </div>
           <div className={styles.parameterCard}>
+            <div className={styles.color2}></div>
+            <h3>{"61% - 70%"}</h3>
+            <h3>Dalam Perhatian</h3>
+          </div>
+          <div className={styles.parameterCard}>
             <div className={styles.color3}></div>
-            <h3>{"0% - 29%"}</h3>
-            <h3>Kering</h3>
+            <h3>{"Di atas 70%"}</h3>
+            <h3>Berbahaya (Lembab)</h3>
           </div>
         </div>
         <div className={styles.parameterPue}>
           <h2>Parameter Warna Kartu PUE</h2>
           <div className={styles.parameterCard}>
             <div className={styles.color2}></div>
-            <h3>{"<1.5"}</h3>
+            <h3>{"Di bawah 1.5"}</h3>
             <h3>Sangat Efisien</h3>
           </div>
           <div className={styles.parameterCard}>
             <div className={styles.color4}></div>
-            <h3>{"1.6 - 2.5"}</h3>
+            <h3>{"1.6 - 2.0"}</h3>
             <h3>Efisien</h3>
           </div>
           <div className={styles.parameterCard}>
             <div className={styles.color3}></div>
-            <h3>{">2.5"}</h3>
+            <h3>{"Di atas 2.0"}</h3>
             <h3>Kurang Efisien</h3>
           </div>
         </div>

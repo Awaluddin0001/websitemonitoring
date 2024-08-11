@@ -5,15 +5,6 @@ import styles from "@/css/module/Asset.module.css";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useReducer, useState } from "react";
 import {
-  listBrandElectricalReducer,
-  initialStateListBrandElectrical,
-} from "src/reducers/electricalReducer";
-
-import {
-  deleteElectrical,
-  getBrandElectrical,
-} from "@/services/electrical/dapotElectrical";
-import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
@@ -21,36 +12,45 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ElectricalBrand } from "@/types/categoryTypes";
 import LoadingFetch from "@/components/loading/LoadingFetch";
 import Lottie from "lottie-react";
 import noData from "@/assets/lottie/noData.json";
 import HomeModal from "@/components/modal/HomeModal";
+import {
+  initialStateListVendorElectrical,
+  listVendorElectricalReducer,
+} from "src/reducers/electricalReducer";
+import {
+  deleteVendorElectrical,
+  getVendorElectrical,
+} from "@/services/electrical/dapotElectrical";
+import { ElectricalVendor } from "@/types/categoryTypes";
 
-export default function ListBrandElectrical() {
+export default function ListVendorElectrical() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [state, dispatch] = useReducer(
-    listBrandElectricalReducer,
-    initialStateListBrandElectrical
+    listVendorElectricalReducer,
+    initialStateListVendorElectrical
   );
-  const { brands, pagination, isLoading, globalFilter } = state;
+  const { vendors, pagination, isLoading, globalFilter } = state;
   const [isShowModal, setIsShowModal] = useState(false);
   const [idOriginal, setIdOriginal] = useState("");
   const [assetIdOriginal, setAssetIdOriginal] = useState("");
+
   useEffect(() => {
-    const fetchBrands = async () => {
+    const fetchVendors = async () => {
       try {
         const page = searchParams.get("page") || "1";
         const nopage = globalFilter ? "no" : undefined;
-        const data = await getBrandElectrical(
+        const data = await getVendorElectrical(
           page,
           dispatch,
           globalFilter,
           nopage
         );
         dispatch({ type: "SET_PAGINATION", payload: data.pagination });
-        dispatch({ type: "SET_BRANDS", payload: data.data });
+        dispatch({ type: "SET_VENDORS", payload: data.data });
       } catch (error) {
         dispatch({
           type: "SET_IS_ERROR",
@@ -58,12 +58,14 @@ export default function ListBrandElectrical() {
         });
       }
     };
-    fetchBrands();
+    fetchVendors();
   }, []);
 
-  const columns: ColumnDef<ElectricalBrand>[] = [
-    { accessorKey: "id", header: "Brand Id" },
-    { accessorKey: "name", header: "Nama Brand" },
+  const columns: ColumnDef<ElectricalVendor>[] = [
+    { accessorKey: "id", header: "Vendor Id" },
+    { accessorKey: "company", header: "Nama Perusahaan" },
+    { accessorKey: "company_user_name", header: "Nama user" },
+    { accessorKey: "number_phone", header: "Nomor Telepon" },
     { accessorKey: "created_at", header: "Last Update" },
     { accessorKey: "user_name", header: "Update By" },
     {
@@ -83,7 +85,7 @@ export default function ListBrandElectrical() {
             className={styles.btnEdit}
             onClick={() =>
               navigate(
-                `/main/assets/datapotensi/brand/update/electrical?id=${row.original.id}`
+                `/main/assets/datapotensi/vendor/update/electrical?id=${row.original.id}`
               )
             }
           >
@@ -105,7 +107,7 @@ export default function ListBrandElectrical() {
   ];
 
   const table = useReactTable({
-    data: brands,
+    data: vendors,
     columns,
     columnResizeMode: "onChange",
     columnResizeDirection: "ltr",
@@ -127,7 +129,7 @@ export default function ListBrandElectrical() {
   };
 
   const deleteHandle = async (id: string, assetId: string) => {
-    const data = await deleteElectrical(dispatch, id, assetId);
+    const data = await deleteVendorElectrical(dispatch, id, assetId);
     if (data.success) {
       navigate(0);
     }
@@ -211,112 +213,107 @@ export default function ListBrandElectrical() {
       </div>
     );
   };
-
   return (
     <>
       {isLoading ? (
         <LoadingFetch />
       ) : (
         <>
-          <HeadPage title={`List Brand Electrical`} />
+          <HeadPage title={`List Vendor Electrical `} />
           <div
             onClick={() =>
-              navigate(`/main/assets/datapotensi/brand/add/electrical`)
+              navigate(`/main/assets/datapotensi/vendor/add/electrical`)
             }
             className={styles.addButton}
           >
-            + Add New Brand
+            + Add New Vendor
           </div>
-          <div className={styles.tableWrapper}>
-            {brands.length > 0 ? (
-              <div className={styles.tableDetail}>
-                <table className={styles.assetTable}>
-                  <thead>
-                    {table.getHeaderGroups().map((headerGroup) => (
-                      <tr key={headerGroup.id}>
-                        {headerGroup.headers.map((header) => {
-                          return (
-                            <th
-                              key={header.id}
-                              className={`${styles.sticky} ${styles.stickyHeader}`}
-                              colSpan={header.colSpan}
-                              style={{
-                                width:
-                                  header.getSize() !== 150
-                                    ? header.getSize()
-                                    : "auto",
+          {vendors.length > 0 ? (
+            <div className={styles.tableDetail}>
+              <table className={styles.assetTable}>
+                <thead>
+                  {table.getHeaderGroups().map((headerGroup) => (
+                    <tr key={headerGroup.id}>
+                      {headerGroup.headers.map((header) => {
+                        return (
+                          <th
+                            key={header.id}
+                            className={`${styles.sticky} ${styles.stickyHeader}`}
+                            colSpan={header.colSpan}
+                            style={{
+                              width:
+                                header.getSize() !== 150
+                                  ? header.getSize()
+                                  : "auto",
+                            }}
+                          >
+                            {flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                            <div
+                              {...{
+                                onDoubleClick: () => header.column.resetSize(),
+                                onMouseDown: header.getResizeHandler(),
+                                onTouchStart: header.getResizeHandler(),
+                                className: `resizer ${
+                                  table.options.columnResizeDirection
+                                } ${
+                                  header.column.getIsResizing()
+                                    ? "isResizing"
+                                    : ""
+                                }`,
                               }}
-                            >
-                              {flexRender(
-                                header.column.columnDef.header,
-                                header.getContext()
-                              )}
-                              <div
-                                {...{
-                                  onDoubleClick: () =>
-                                    header.column.resetSize(),
-                                  onMouseDown: header.getResizeHandler(),
-                                  onTouchStart: header.getResizeHandler(),
-                                  className: `resizer ${
-                                    table.options.columnResizeDirection
-                                  } ${
-                                    header.column.getIsResizing()
-                                      ? "isResizing"
-                                      : ""
-                                  }`,
-                                }}
-                              />
-                            </th>
-                          );
-                        })}
-                      </tr>
-                    ))}
-                  </thead>
-                  <tbody>
-                    {table.getRowModel().rows.map((row) => (
-                      <tr key={row.id}>
-                        {row.getVisibleCells().map((cell, ind) => {
-                          return (
-                            <td
-                              key={cell.id}
-                              style={{
-                                background:
-                                  row.index % 2 !== 0 ? "#ffd1d1" : "",
-                                borderBottomLeftRadius:
-                                  row.index === brands.length - 1 && ind === 0
-                                    ? "10px"
-                                    : undefined,
-                                borderBottomRightRadius:
-                                  row.index === brands.length - 1 &&
-                                  ind === row.getVisibleCells().length - 1
-                                    ? "10px"
-                                    : undefined,
-                              }}
-                            >
-                              {flexRender(
-                                cell.column.columnDef.cell,
-                                cell.getContext()
-                              )}
-                            </td>
-                          );
-                        })}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-                {renderPagination()}
-              </div>
-            ) : (
-              <div className={styles.noData}>
-                <Lottie
-                  animationData={noData}
-                  loop={true}
-                  style={{ height: "590px" }}
-                />
-                <p>Belum Ada Data Yang Tersedia</p>
-              </div>
-            )}
-          </div>
+                            />
+                          </th>
+                        );
+                      })}
+                    </tr>
+                  ))}
+                </thead>
+                <tbody>
+                  {table.getRowModel().rows.map((row) => (
+                    <tr key={row.id}>
+                      {row.getVisibleCells().map((cell, ind) => {
+                        return (
+                          <td
+                            key={cell.id}
+                            style={{
+                              background: row.index % 2 !== 0 ? "#ffd1d1" : "",
+                              borderBottomLeftRadius:
+                                row.index === vendors.length - 1 && ind === 0
+                                  ? "10px"
+                                  : undefined,
+                              borderBottomRightRadius:
+                                row.index === vendors.length - 1 &&
+                                ind === row.getVisibleCells().length - 1
+                                  ? "10px"
+                                  : undefined,
+                            }}
+                          >
+                            {flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext()
+                            )}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              {renderPagination()}
+            </div>
+          ) : (
+            <div className={styles.noData}>
+              <Lottie
+                animationData={noData}
+                loop={true}
+                style={{ height: "590px" }}
+              />
+              <p>Belum Ada Data Yang Tersedia</p>
+            </div>
+          )}
           <HomeModal display={isShowModal} action={setIsShowModal}>
             <div
               style={{

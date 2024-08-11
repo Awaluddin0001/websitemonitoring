@@ -11,7 +11,7 @@ import Lottie from "lottie-react";
 import noData from "@/assets/lottie/noData.json";
 import LoadingFetch from "@/components/loading/LoadingFetch";
 import ErrorFetch from "@/components/error/ErrorFetch";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import {
   initialStateListRecti,
   listRectiReducer,
@@ -92,7 +92,21 @@ export default function ElectricalRectifier() {
 
   const columns: ColumnDef<Rectifier>[] = positionColumn
     ? [
-        { accessorKey: "id", header: "Rectifier Id" },
+        {
+          accessorKey: "id",
+          header: "Rectifier Id",
+          cell: ({ row }) => (
+            <Link
+              to={`/main/assets/datapotensi/detail/electrical/rectifier?id=${row.original.id}`}
+              style={{
+                color: "#000",
+                fontSize: "1.8rem",
+              }}
+            >
+              {row.original.id}
+            </Link>
+          ),
+        },
         { accessorKey: "ne_id", header: "NE ID" },
         { accessorKey: "site_name", header: "Site" },
         { accessorKey: "floor_name", header: "Lantai" },
@@ -100,7 +114,7 @@ export default function ElectricalRectifier() {
         { accessorKey: "vendor_name", header: "Vendor" },
         { accessorKey: "brand_name", header: "Brand" },
         { accessorKey: "name", header: "Name" },
-        { accessorKey: "type", header: "Type" },
+        { accessorKey: "type_name", header: "Type" },
         { accessorKey: "role", header: "Role" },
         {
           accessorKey: "capacity",
@@ -173,11 +187,25 @@ export default function ElectricalRectifier() {
         },
       ]
     : [
-        { accessorKey: "id", header: "Rectifier Id" },
+        {
+          accessorKey: "id",
+          header: "Rectifier Id",
+          cell: ({ row }) => (
+            <Link
+              to={`/main/assets/datapotensi/detail/electrical/rectifier?id=${row.original.id}`}
+              style={{
+                color: "#000",
+                fontSize: "1.8rem",
+              }}
+            >
+              {row.original.id}
+            </Link>
+          ),
+        },
         { accessorKey: "vendor_name", header: "Vendor" },
         { accessorKey: "brand_name", header: "Brand" },
         { accessorKey: "name", header: "Name" },
-        { accessorKey: "type", header: "Type" },
+        { accessorKey: "type_name", header: "Type" },
         { accessorKey: "role", header: "Role" },
         {
           accessorKey: "capacity",

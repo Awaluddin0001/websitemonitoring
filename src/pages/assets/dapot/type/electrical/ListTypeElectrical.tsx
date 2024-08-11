@@ -1,12 +1,18 @@
-import { useReducer, useEffect } from "react";
+import Pen from "@/assets/svg/pen.svg";
+import Trash from "@/assets/svg/trash.svg";
+import HeadPage from "@/components/header/HeadPageMonitoring";
 import styles from "@/css/module/Asset.module.css";
-import HeadPageDapot from "@/components/header/HeadPageDapot";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useEffect, useReducer, useState } from "react";
 import {
-  initialStateElectricalAllList,
-  updateElectricalAllReducer,
+  initialStateListTypeElectrical,
+  listTypeElectricalReducer,
 } from "src/reducers/electricalReducer";
-import { useSearchParams, Link } from "react-router-dom";
-import { getElectricals } from "@/services/electrical/dapotElectrical";
+
+import {
+  deleteTypeElectrical,
+  getTypeElectrical,
+} from "@/services/electrical/dapotElectrical";
 import {
   ColumnDef,
   flexRender,
@@ -15,106 +21,92 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import { ElectricalBrand } from "@/types/categoryTypes";
+import LoadingFetch from "@/components/loading/LoadingFetch";
 import Lottie from "lottie-react";
 import noData from "@/assets/lottie/noData.json";
-import LoadingFetch from "@/components/loading/LoadingFetch";
-import ErrorFetch from "@/components/error/ErrorFetch";
-import DapotButtonsCategory from "@/components/dapotFilter/DapotButtonsCategory";
-import { electricalListButtons } from "@/routes/dapotCategory";
+import HomeModal from "@/components/modal/HomeModal";
 
-interface Electrical {
-  id: string;
-  ne_id: string;
-  site_id: string;
-  site_name: string;
-  floor_name: string;
-  floor_id: string;
-  room_name: string;
-  room_id: string;
-  device_id: string;
-  sub_category_id: string;
-  sub_category_name: string;
-  link_id: string;
-  status: string;
-  condition_asset: string;
-  notes: string;
-  installation_date: string;
-  maintenance_id: string;
-  created_at: string;
-  user_id: string;
-  user_name: string;
-}
-
-export default function ElectricalAll() {
+export default function ListTypeElectrical() {
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [state, dispatch] = useReducer(
-    updateElectricalAllReducer,
-    initialStateElectricalAllList
+    listTypeElectricalReducer,
+    initialStateListTypeElectrical
   );
-  const {
-    electricals,
-    pagination,
-    isLoading,
-    isError,
-    globalFilter,
-    positionColumn,
-    exportToggle,
-  } = state;
-
+  const { types, pagination, isLoading, globalFilter } = state;
+  const [isShowModal, setIsShowModal] = useState(false);
+  const [idOriginal, setIdOriginal] = useState("");
+  const [assetIdOriginal, setAssetIdOriginal] = useState("");
   useEffect(() => {
-    const fetchElectricals = async () => {
+    const fetchTypes = async () => {
       try {
         const page = searchParams.get("page") || "1";
         const nopage = globalFilter ? "no" : undefined;
-        const data = await getElectricals(page, dispatch, globalFilter, nopage);
-        console.log(data.data);
+        const data = await getTypeElectrical(
+          page,
+          dispatch,
+          globalFilter,
+          nopage
+        );
         dispatch({ type: "SET_PAGINATION", payload: data.pagination });
-        dispatch({ type: "SET_ELECTRICALS", payload: data.data });
-      } catch (err) {
+        dispatch({ type: "SET_TYPES", payload: data.data });
+      } catch (error) {
         dispatch({
           type: "SET_IS_ERROR",
-          payload: "Failed to fetch rectifiers",
+          payload: "Failed to fetch types",
         });
       }
     };
+    fetchTypes();
+  }, []);
 
-    fetchElectricals();
-  }, [searchParams, globalFilter]);
-
-  const columns: ColumnDef<Electrical>[] = [
-    { accessorKey: "asset_id", header: "Electrical ID" },
-    { accessorKey: "ne_id", header: "NE ID" },
-    { accessorKey: "site_name", header: "Site" },
-    { accessorKey: "floor_name", header: "Lantai" },
-    { accessorKey: "room_name", header: "Ruangan" },
-    {
-      accessorKey: "device_id",
-      header: "Device ID",
-      cell: ({ row }) => (
-        <Link
-          to={`/main/assets/datapotensi/detail/electrical/rectifier?id=${row.original.device_id}`}
-          style={{
-            color: "#000",
-            fontSize: "1.8rem",
-          }}
-        >
-          {row.original.device_id}
-        </Link>
-      ),
-    },
-    { accessorKey: "type_name", header: "Category" },
-    { accessorKey: "condition_asset", header: "Kondisi" },
-    { accessorKey: "status", header: "Status" },
-    { accessorKey: "maintenance_id", header: "Maintenance ID" },
-    { accessorKey: "link_id", header: "Link ID" },
-    { accessorKey: "notes", header: "Keterangan" },
-    { accessorKey: "installation_date", header: "Tanggal Instalasi" },
+  const columns: ColumnDef<ElectricalBrand>[] = [
+    { accessorKey: "id", header: "Type Id" },
+    { accessorKey: "name", header: "Nama Type" },
+    { accessorKey: "category_name", header: "Nama Kategori" },
     { accessorKey: "created_at", header: "Last Update" },
     { accessorKey: "user_name", header: "Update By" },
+    {
+      id: "actions",
+      header: "Action",
+      cell: ({ row }) => (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "flex-start",
+            gap: "6px",
+          }}
+        >
+          <div
+            className={styles.btnEdit}
+            onClick={() =>
+              navigate(
+                `/main/assets/datapotensi/type/update/electrical?id=${row.original.id}`
+              )
+            }
+          >
+            <img src={Pen} alt="Edit" />
+          </div>
+          <div
+            className={styles.btnDelete}
+            onClick={() => {
+              setIdOriginal(row.original.id);
+              setAssetIdOriginal(row.original.id);
+              setIsShowModal(true);
+            }}
+          >
+            <img src={Trash} alt="Delete" />
+          </div>
+        </div>
+      ),
+    },
   ];
 
   const table = useReactTable({
-    data: electricals,
+    data: types,
     columns,
     columnResizeMode: "onChange",
     columnResizeDirection: "ltr",
@@ -133,6 +125,13 @@ export default function ElectricalAll() {
 
   const pageHandle = (page: number) => {
     setSearchParams({ page: String(page) });
+  };
+
+  const deleteHandle = async (id: string, assetId: string) => {
+    const data = await deleteTypeElectrical(dispatch, id, assetId);
+    if (data.success) {
+      navigate(0);
+    }
   };
 
   const renderPagination = () => {
@@ -218,36 +217,19 @@ export default function ElectricalAll() {
     <>
       {isLoading ? (
         <LoadingFetch />
-      ) : isError ? (
-        <>
-          <HeadPageDapot
-            title={`List Rectifier`}
-            valueGlobalFilter={globalFilter}
-            setGlobalFilter={dispatch}
-            subCategory="electrical"
-            columnToggle={positionColumn}
-            exportToggle={exportToggle}
-            setToggle={dispatch}
-          />
-          <ErrorFetch message={isError} />
-        </>
       ) : (
         <>
-          <HeadPageDapot
-            title={`List Semua Electrical`}
-            valueGlobalFilter={globalFilter}
-            setGlobalFilter={dispatch}
-            subCategory="electrical"
-            columnToggle={positionColumn}
-            exportToggle={exportToggle}
-            setToggle={dispatch}
-          />
+          <HeadPage title={`List Type Electrical`} />
+          <div
+            onClick={() =>
+              navigate(`/main/assets/datapotensi/type/add/electrical`)
+            }
+            className={styles.addButton}
+          >
+            + Add New Type
+          </div>
           <div className={styles.tableWrapper}>
-            <DapotButtonsCategory
-              listpages={electricalListButtons}
-              subCategory="electrical"
-            />
-            {electricals.length > 0 ? (
+            {types.length > 0 ? (
               <div className={styles.tableDetail}>
                 <table className={styles.assetTable}>
                   <thead>
@@ -302,12 +284,11 @@ export default function ElectricalAll() {
                                 background:
                                   row.index % 2 !== 0 ? "#ffd1d1" : "",
                                 borderBottomLeftRadius:
-                                  row.index === electricals.length - 1 &&
-                                  ind === 0
+                                  row.index === types.length - 1 && ind === 0
                                     ? "10px"
                                     : undefined,
                                 borderBottomRightRadius:
-                                  row.index === electricals.length - 1 &&
+                                  row.index === types.length - 1 &&
                                   ind === row.getVisibleCells().length - 1
                                     ? "10px"
                                     : undefined,
@@ -337,6 +318,58 @@ export default function ElectricalAll() {
               </div>
             )}
           </div>
+          <HomeModal display={isShowModal} action={setIsShowModal}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                flexDirection: "column",
+                gap: "10px",
+              }}
+            >
+              <h4 style={{ textAlign: "center", fontSize: "4rem" }}>
+                Apakah Anda Yakin
+              </h4>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-around",
+                  flexDirection: "row",
+                }}
+              >
+                <div
+                  style={{
+                    cursor: "pointer",
+                    fontSize: "3rem",
+                    fontWeight: "bold",
+                    backgroundColor: "#0ECBC0",
+                    width: "100px",
+                    textAlign: "center",
+                    borderRadius: "5px",
+                    color: "#fff",
+                  }}
+                  onClick={() => deleteHandle(idOriginal, assetIdOriginal)}
+                >
+                  Ya
+                </div>
+                <div
+                  style={{
+                    cursor: "pointer",
+                    fontSize: "3rem",
+                    fontWeight: "bold",
+                    backgroundColor: "#8b0000",
+                    width: "100px",
+                    textAlign: "center",
+                    borderRadius: "5px",
+                    color: "#fff",
+                  }}
+                  onClick={() => setIsShowModal(false)}
+                >
+                  Tidak
+                </div>
+              </div>
+            </div>
+          </HomeModal>
         </>
       )}
     </>

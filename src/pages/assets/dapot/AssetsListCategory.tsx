@@ -22,7 +22,7 @@ export default function AssetListCategory() {
       <CategoryNavbar
         link1="/main/assets/datapotensi/category/list/air/air?page=1"
         link2="/main/assets/datapotensi/category/list/conveyance/lift?page=1"
-        link3="/main/assets/datapotensi/category/list/electrical/rectifier?page=1"
+        link3="/main/assets/datapotensi/category/list/electrical/all?page=1"
         link4="/main/assets/datapotensi/category/list/extinguish/apar?page=1"
         link5="/main/assets/datapotensi/category/list/finishing/ceramic?page=1"
         link6="/main/assets/datapotensi/category/list/comfort/sofa?page=1"

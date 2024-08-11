@@ -80,89 +80,103 @@ export default function HeadPageDapot({
               <SearchSvg color="#8b0000" width="20" height="26" />
             </div>
           </div>
-          <div className={styles.actionAdd}>
-            <div
-              className={
-                actionShow
-                  ? styles.iconPlus + " " + styles.show
-                  : styles.iconPlus
-              }
-              onClick={() => setActionShow(!actionShow)}
-            >
-              {actionShow ? (
-                <MinusSvg color="#8b0000" width="20" height="26" />
-              ) : (
-                <PlusSvg color="#8b0000" width="20" height="26" />
-              )}
-            </div>
-            <div
-              className={
-                actionShow
-                  ? styles.actionGroup + " " + styles.show
-                  : styles.actionGroup
-              }
-            >
-              <div
-                onClick={() =>
-                  navigate(
-                    `/main/assets/datapotensi/category/add/${subCategory}/${parameter[2]}`
-                  )
-                }
-                className={styles.addButton}
-                style={{ marginLeft: "10px" }}
-              >
-                + Tambah Asset
+          {parameter[2] !== "all" && (
+            <>
+              <div className={styles.actionAdd}>
+                <div
+                  className={
+                    actionShow
+                      ? styles.iconPlus + " " + styles.show
+                      : styles.iconPlus
+                  }
+                  onClick={() => setActionShow(!actionShow)}
+                >
+                  {actionShow ? (
+                    <MinusSvg color="#8b0000" width="20" height="26" />
+                  ) : (
+                    <PlusSvg color="#8b0000" width="20" height="26" />
+                  )}
+                </div>
+                <div
+                  className={
+                    actionShow
+                      ? styles.actionGroup + " " + styles.show
+                      : styles.actionGroup
+                  }
+                >
+                  <div
+                    onClick={() =>
+                      navigate(
+                        `/main/assets/datapotensi/category/add/${subCategory}/${parameter[2]}`
+                      )
+                    }
+                    className={styles.addButton}
+                    style={{ marginLeft: "10px" }}
+                  >
+                    + Tambah Asset
+                  </div>
+                  <div
+                    onClick={() =>
+                      navigate(
+                        `/main/assets/datapotensi/vendor/list/${subCategory}?page=1`
+                      )
+                    }
+                    className={styles.addButton}
+                  >
+                    ⁝ List Vendor
+                  </div>
+                  <div
+                    onClick={() =>
+                      navigate(
+                        `/main/assets/datapotensi/brand/list/${subCategory}?page=1`
+                      )
+                    }
+                    className={styles.addButton}
+                  >
+                    ⁝ List Brand
+                  </div>
+                  <div
+                    onClick={() =>
+                      navigate(
+                        `/main/assets/datapotensi/type/list/${subCategory}?page=1`
+                      )
+                    }
+                    className={styles.addButton}
+                  >
+                    ⁝ List Type
+                  </div>
+                  <div
+                    onClick={() =>
+                      navigate(
+                        `/main/assets/datapotensi/maintenance/list/${subCategory}?page=1`
+                      )
+                    }
+                    className={styles.addButton}
+                  >
+                    ⁝ List Maintenance
+                  </div>
+                  <div
+                    onClick={() =>
+                      navigate(
+                        `/main/assets/datapotensi/link/list/${subCategory}?page=1`
+                      )
+                    }
+                    className={styles.addButton}
+                  >
+                    ⁝ List Link
+                  </div>
+                </div>
               </div>
-              <div
-                onClick={() =>
-                  navigate(
-                    `/main/assets/datapotensi/vendor/list/${subCategory}?page=1`
-                  )
-                }
-                className={styles.addButton}
-              >
-                ⁝ List Vendor
+              <div className={styles.actionAdd}>
+                <div
+                  className={styles.iconPlus}
+                  onClick={() => setSettingShow(!settingShow)}
+                >
+                  <SettingSvg color="#8b0000" width="20" height="26" />
+                </div>
               </div>
-              <div
-                onClick={() =>
-                  navigate(
-                    `/main/assets/datapotensi/brand/list/${subCategory}?page=1`
-                  )
-                }
-                className={styles.addButton}
-              >
-                ⁝ List Brand
-              </div>
-              <div
-                onClick={() =>
-                  navigate(
-                    `/main/assets/datapotensi/type/list/${subCategory}?page=1`
-                  )
-                }
-                className={styles.addButton}
-              >
-                ⁝ List Type
-              </div>
-              <div
-                onClick={() =>
-                  navigate(
-                    `/main/assets/datapotensi/link/list/${subCategory}?page=1`
-                  )
-                }
-                className={styles.addButton}
-              >
-                ⁝ List Link
-              </div>
-            </div>
-          </div>
-          <div className={styles.actionAdd}>
-            <div
-              className={styles.iconPlus}
-              onClick={() => setSettingShow(!settingShow)}
-            >
-              <SettingSvg color="#8b0000" width="20" height="26" />
-            </div>
-          </div>
+            </>
+          )}
         </div>
       </div>
       <div className={styles.sectionGroupDapotBottom}>
@@ -179,7 +193,7 @@ export default function HeadPageDapot({
               className={"columnTogle"}
               onChange={() =>
                 setToggle({
-                  type: "SET_POSITIONCOLUMN",
+                  type: "SET_POSITION_COLUMN",
                   payload: !columnToggle,
                 })
               }
@@ -197,7 +211,7 @@ export default function HeadPageDapot({
                   : styles.iconText
               }
               onClick={() =>
-                setToggle({ type: "SET_EXPORTTOGGLE", payload: !exportToggle })
+                setToggle({ type: "SET_EXPORT_TOGGLE", payload: !exportToggle })
               }
             >
               ⌂ Export

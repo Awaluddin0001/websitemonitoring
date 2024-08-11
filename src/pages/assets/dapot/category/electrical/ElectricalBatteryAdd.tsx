@@ -1,17 +1,9 @@
 import HeadPage from "@/components/header/HeadPageMonitoring";
 import styles from "@/css/module/Asset.module.css";
 import { useEffect, useReducer } from "react";
-import {
-  initialStateRecti,
-  updateRectiReducer,
-} from "src/reducers/electricalReducer";
 import Select from "react-select";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import {
-  getRectifier,
-  updateRectifier,
-} from "@/services/electrical/dapotRectifiers";
 import {
   getBrandElectrical,
   getLinkElectrical,
@@ -20,13 +12,19 @@ import {
   getVendorElectrical,
 } from "@/services/electrical/dapotElectrical";
 import { getFloors, getRooms } from "@/services/electrical/dapotPosition";
+import LoadingFetch from "@/components/loading/LoadingFetch";
+import ErrorFetch from "@/components/error/ErrorFetch";
+import { useNavigate } from "react-router-dom";
+import {
+  initialBatteryState,
+  updateBatteryReducer,
+} from "src/reducers/electricalReducer";
+import { postNewBattery } from "@/services/electrical/dapotBattery";
+
 interface Options {
   value: string;
   label: string;
 }
-import LoadingFetch from "@/components/loading/LoadingFetch";
-import ErrorFetch from "@/components/error/ErrorFetch";
-import { useNavigate, useSearchParams } from "react-router-dom";
 
 const styleSelect = {
   control: (baseStyles: any, state: any) => ({
@@ -49,12 +47,13 @@ const themeSelect = (theme: any) => ({
   },
 });
 
-export default function ElectricalRectifierUpdate() {
+export default function ElectricalBatteryAdd() {
   const navigate = useNavigate();
-  const [searchParams, _] = useSearchParams();
-  const [state, dispatch] = useReducer(updateRectiReducer, initialStateRecti);
+  const [state, dispatch] = useReducer(
+    updateBatteryReducer,
+    initialBatteryState
+  );
   const {
-    asset_id,
     ne_id,
     site_id,
     floor_id,
@@ -64,13 +63,11 @@ export default function ElectricalRectifierUpdate() {
     maintenance_id,
     link_id,
     name,
-    role,
     type_id,
     capacity,
-    modul,
-    capacity_modul,
-    load_current,
-    occupancy,
+    capacity_bank,
+    amount,
+    bank_amount,
     system_device,
     warranty,
     remark_aging,
@@ -161,6 +158,7 @@ export default function ElectricalRectifierUpdate() {
     formData.append("foto2", selectedFiles.file2 as File);
     formData.append("foto3", selectedFiles.file3 as File);
     formData.append("user_id", user_id);
+    formData.append("sub_category_id", "ESC001");
     formData.append("ne_id", ne_id);
     formData.append("site_id", site_id.value || "");
     formData.append("floor_id", floor_id.value || "");
@@ -170,13 +168,11 @@ export default function ElectricalRectifierUpdate() {
     formData.append("maintenance_id", maintenance_id.value || "");
     formData.append("link_id", link_id.value || "");
     formData.append("name", name);
-    formData.append("role", role);
     formData.append("type_id", type_id.value || "");
     formData.append("capacity", capacity);
-    formData.append("modul", modul);
-    formData.append("capacity_modul", capacity_modul);
-    formData.append("load_current", load_current);
-    formData.append("occupancy", occupancy);
+    formData.append("capacity_bank", capacity_bank);
+    formData.append("amount", amount);
+    formData.append("bank_amount", bank_amount);
     formData.append("system_device", system_device);
     formData.append("warranty", warranty);
     formData.append("remark_aging", remark_aging);
@@ -189,16 +185,10 @@ export default function ElectricalRectifierUpdate() {
     formData.append("notes", notes);
 
     const postnew = async (data: any) => {
-      const result = await updateRectifier(
-        data,
-        dispatch,
-        searchParams.get("id") || "",
-        asset_id
-      );
-      console.log(result);
+      const result = await postNewBattery(data, dispatch);
       if (result.success) {
         navigate(
-          `/main/assets/datapotensi/category/list/electrical/rectifier?page=1`
+          `/main/assets/datapotensi/category/list/electrical/battery?page=1`
         );
       }
     };
@@ -244,7 +234,7 @@ export default function ElectricalRectifierUpdate() {
     };
     const fetchBrand = async () => {
       try {
-        const data = await getBrandElectrical("1", dispatch);
+        const data = await getBrandElectrical("1", dispatch, null, "no");
         const selectOptions = data.data.map((item: any) => ({
           value: item.id,
           label: item.name,
@@ -293,50 +283,6 @@ export default function ElectricalRectifierUpdate() {
         dispatch({ type: "SET_IS_ERROR", payload: "Failed to fetch links" });
       }
     };
-
-    const getRecti = async () => {
-      try {
-        const data = await getRectifier(searchParams.get("id"), dispatch);
-        dispatch({
-          type: "GET_RECTI",
-          payload: {
-            asset_id: data.asset_id,
-            ne_id: data.ne_id,
-            site_id: { value: data.site_id, label: data.site_name },
-            floor_id: { value: data.floor_id, label: data.floor_name },
-            room_id: { value: data.room_id, label: data.room_name },
-            brand_id: { value: data.brand_id, label: data.brand_name },
-            vendor_id: { value: data.vendor_id, label: data.vendor_name },
-            maintenance_id: {
-              value: data.maintenance_id,
-              label: data.maintenance_date,
-            },
-            link_id: { value: data.link_id, label: data.link_id },
-            name: data.name,
-            role: data.role,
-            type_id: { value: data.type_id, label: data.type_name },
-            capacity: data.capacity,
-            modul: data.modul,
-            capacity_modul: data.capacity_modul,
-            load_current: data.load_current,
-            occupancy: data.occupancy,
-            system_device: data.system_device,
-            warranty: data.warranty,
-            remark_aging: data.remark_aging,
-            installation_date: data.installation_date,
-            condition_asset: data.condition_asset,
-            status: data.status,
-            notes: data.notes,
-          },
-        });
-      } catch (err) {
-        dispatch({
-          type: "SET_IS_ERROR",
-          payload: "Failed to fetch rectifier",
-        });
-      }
-    };
-
     const fetchType = async () => {
       try {
         const data = await getTypeElectrical("1", dispatch, null, "no");
@@ -350,7 +296,6 @@ export default function ElectricalRectifierUpdate() {
       }
     };
 
-    getRecti();
     fetchFloor();
     fetchRoom();
     fetchBrand();
@@ -366,12 +311,12 @@ export default function ElectricalRectifierUpdate() {
         <LoadingFetch />
       ) : isError ? (
         <>
-          <HeadPage title={`Perbaharui Data Untuk ${searchParams.get("id")}`} />
+          <HeadPage title={`Aset Baru Untuk Battery`} />
           <ErrorFetch message={isError} />
         </>
       ) : (
         <>
-          <HeadPage title={`Perbaharui Data Untuk ${searchParams.get("id")}`} />
+          <HeadPage title={`Aset Baru Untuk Battery`} />
           <div className={styles.sectionInput}>
             <div className={styles.posisiInput}>
               <p className={styles.textTitle}>Posisi</p>
@@ -479,17 +424,6 @@ export default function ElectricalRectifierUpdate() {
                   />
                 </div>
                 <div className={styles.containerInput}>
-                  <p className={styles.textTitleInput}>Role</p>
-                  <input
-                    type="text"
-                    className={styles.inputAsset}
-                    value={role || ""}
-                    onChange={(e) =>
-                      dispatch({ type: "SET_ROLE", payload: e.target.value })
-                    }
-                  />
-                </div>
-                <div className={styles.containerInput}>
                   <p className={styles.textTitleInput}>Type</p>
                   <Select
                     value={type_id}
@@ -517,53 +451,42 @@ export default function ElectricalRectifierUpdate() {
                   />
                 </div>
                 <div className={styles.containerInput}>
-                  <p className={styles.textTitleInput}>Modul</p>
-                  <input
-                    type="text"
-                    className={styles.inputAsset}
-                    value={modul || ""}
-                    onChange={(e) =>
-                      dispatch({ type: "SET_MODUL", payload: e.target.value })
-                    }
-                  />
-                </div>
-                <div className={styles.containerInput}>
-                  <p className={styles.textTitleInput}>Capacity Modul</p>
+                  <p className={styles.textTitleInput}>Capacity Bank</p>
                   <input
                     type="number"
                     className={styles.inputAsset}
-                    value={capacity_modul || ""}
+                    value={capacity_bank || ""}
                     onChange={(e) =>
                       dispatch({
-                        type: "SET_CAPACITY_MODUL",
+                        type: "SET_CAPACITY_BANK",
                         payload: e.target.value,
                       })
                     }
                   />
                 </div>
                 <div className={styles.containerInput}>
-                  <p className={styles.textTitleInput}>Load Current</p>
+                  <p className={styles.textTitleInput}>Amount</p>
                   <input
                     type="number"
                     className={styles.inputAsset}
-                    value={load_current || ""}
+                    value={amount || ""}
                     onChange={(e) =>
                       dispatch({
-                        type: "SET_LOAD_CURRENT",
+                        type: "SET_AMOUNT",
                         payload: e.target.value,
                       })
                     }
                   />
                 </div>
                 <div className={styles.containerInput}>
-                  <p className={styles.textTitleInput}>Occupancy</p>
+                  <p className={styles.textTitleInput}>Bank Amount</p>
                   <input
                     type="number"
                     className={styles.inputAsset}
-                    value={occupancy || ""}
+                    value={bank_amount || ""}
                     onChange={(e) =>
                       dispatch({
-                        type: "SET_OCCUPANCY",
+                        type: "SET_BANK_AMOUNT",
                         payload: e.target.value,
                       })
                     }
@@ -650,7 +573,6 @@ export default function ElectricalRectifierUpdate() {
                   <p className={styles.textTitleInput}>Keterangan</p>
                   <textarea
                     onChange={(e) => {
-                      console.log(e.target.value);
                       dispatch({ type: "SET_NOTES", payload: e.target.value });
                     }}
                     className={styles.inputAsset}

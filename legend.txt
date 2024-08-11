@@ -1,0 +1,19 @@
+ruang perangkat suhu
+<18 = biru 
+17 > n > 24 = hijau
+23 > n > 30 = kuning
+>30  = merah
+
+ruang perangkat humidity
+<45 = orange
+45 > n > 61 = biru
+60 > n > 70 = hijau
+> 70 = merah
+
+pue 
+
+
+level tangki
+<50 = merah
+50 - 70 = orange
+>70 = hijau

@@ -3,7 +3,8 @@ import CardValue from "@/components/card/CardValue";
 import { useEffect, useState } from "react";
 import HeadPage from "@/components/header/HeadPageMonitoring";
 import TrendGrafic from "@/components/grafic/TendGrafic";
-import PieChart from "@/components/grafic/PieChart";
+// import PieChart from "@/components/grafic/PieChart";
+import DonutChart from "@/components/grafic/DonutChart";
 import useMonitoringFetchData from "@/hooks/useMonitoringFetchData";
 import moment from "moment-timezone";
 import HomeModal from "@/components/modal/HomeModal";
@@ -233,11 +234,14 @@ export default function Home() {
                         title={`Room ${item.value.name} Temperature`}
                         value={`${item.value.temperature}°C`}
                         cardColor={
-                          item.value.temperature < 19
+                          item.value.temperature < 18
                             ? "#0ECBC0"
-                            : item.value.temperature > 18 &&
-                              item.value.temperature < 29
+                            : item.value.temperature > 17 &&
+                              item.value.temperature < 24
                             ? "#56CB0E"
+                            : item.value.temperature > 23 &&
+                              item.value.temperature < 30
+                            ? "rgb(203 125 14)"
                             : "#CB300E"
                         }
                         valueColor="#fff"
@@ -263,10 +267,13 @@ export default function Home() {
                         title={`Room ${item.value.name} Humidity`}
                         value={`${item.value.humidity}%`}
                         cardColor={
-                          item.value.humidity > 60
+                          item.value.humidity < 45
+                            ? "rgb(203 125 14)"
+                            : item.value.humidity > 44 &&
+                              item.value.humidity < 60
                             ? "#0ECBC0"
-                            : item.value.humidity > 29 &&
-                              item.value.humidity < 61
+                            : item.value.humidity > 59 &&
+                              item.value.humidity < 70
                             ? "#56CB0E"
                             : "#CB300E"
                         }
@@ -425,7 +432,7 @@ export default function Home() {
                     const usage = ((12000 - item.value.volume) / 12000) * 100;
                     const free = (item.value.volume / 12000) * 100;
                     return (
-                      <PieChart
+                      <DonutChart
                         key={index}
                         data={[
                           {
