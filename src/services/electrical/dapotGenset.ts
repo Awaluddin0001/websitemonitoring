@@ -1,19 +1,109 @@
 // src/services/apiService.ts
-import axios from "axios";
+import { apiClientDapot as apiClient } from "@/utils/apiClient";
+import {
+  setLoadingAndError,
+  handleError,
+  handleResponse,
+} from "@/utils/LoadingAndErrorApi";
 
-const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_API_DAPOT,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
-
-export const getGensets = async () => {
+export const getGensets = async (
+  page: string | null,
+  dispatch: (dispatch: any) => void,
+  globalFilter: string,
+  nopage?: string | null
+) => {
+  setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/electrical/gensets");
-    return response.data;
+    const response = await apiClient.get("/api/v1/dapot/electrical/gensets", {
+      params: {
+        page,
+        limit: 15,
+        globalFilter,
+        nopage,
+      },
+    });
+    return handleResponse(response, dispatch);
   } catch (error) {
-    console.error("Error fetching rectifiers:", error);
-    throw error;
+    handleError(error, dispatch);
+  }
+};
+
+export const postNewGenset = async (
+  data: any,
+  dispatch: (dispatch: any) => void
+) => {
+  setLoadingAndError(dispatch);
+  try {
+    const response = await apiClient.post(
+      "/api/v1/dapot/electrical/genset",
+      data,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    return handleResponse(response, dispatch);
+  } catch (error) {
+    handleError(error, dispatch);
+  }
+};
+
+export const getGenset = async (
+  id: string | null,
+  dispatch: (dispatch: any) => void
+) => {
+  if (id) {
+    setLoadingAndError(dispatch);
+    try {
+      const response = await apiClient.get(
+        `/api/v1/dapot/electrical/genset?id=${id}`
+      );
+      return handleResponse(response, dispatch);
+    } catch (error) {
+      handleError(error, dispatch);
+    }
+  }
+};
+
+export const updateGenset = async (
+  data: any,
+  dispatch: (dispatch: any) => void,
+  deviceid: string,
+  assetid: string
+) => {
+  setLoadingAndError(dispatch);
+  try {
+    const response = await apiClient.put(
+      `/api/v1/dapot/electrical/genset?id=${deviceid}&assetid=${assetid}`,
+      data,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    return handleResponse(response, dispatch);
+  } catch (error) {
+    handleError(error, dispatch);
+  }
+};
+
+export const deleteGenset = async (
+  dispatch: (dispatch: any) => void,
+  deviceid: string,
+  asset_id: string
+) => {
+  setLoadingAndError(dispatch);
+  const userData: any = localStorage.getItem("user");
+  const jsonuserData = JSON.parse(userData);
+  const user_id = jsonuserData.id;
+  try {
+    const response = await apiClient.delete(
+      `/api/v1/dapot/electrical/genset?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
+    );
+    return handleResponse(response, dispatch);
+  } catch (error) {
+    handleError(error, dispatch);
   }
 };

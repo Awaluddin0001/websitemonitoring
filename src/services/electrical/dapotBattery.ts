@@ -95,9 +95,12 @@ export const deleteBattery = async (
   asset_id: string
 ) => {
   setLoadingAndError(dispatch);
+  const userData: any = localStorage.getItem("user");
+  const jsonuserData = JSON.parse(userData);
+  const user_id = jsonuserData.id;
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/electrical/battery?id=${deviceid}&assetid=${asset_id}`
+      `/api/v1/dapot/electrical/battery?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {

@@ -6,7 +6,7 @@ import HeadPage from "@/components/header/HeadPageMonitoring";
 import DapotButtonsCategory from "@/components/dapotFilter/DapotButtonsCategory";
 import Lottie from "lottie-react";
 import noData from "@/assets/lottie/noData.json";
-import { getUpsies } from "@/services/electrical/dapotUps";
+import { getUpses } from "@/services/electrical/dapotUps";
 
 interface Ups {
   id: string;
@@ -38,7 +38,7 @@ export default function ElectricalUps() {
   useEffect(() => {
     const fetchUpss = async () => {
       try {
-        const data = await getUpsies();
+        const data = await getUpses();
         setUpss(data.data);
       } catch (err) {
         setError("Failed to fetch Upss");

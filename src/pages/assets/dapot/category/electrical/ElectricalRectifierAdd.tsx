@@ -20,6 +20,15 @@ import {
   initialStateRecti,
   updateRectiReducer,
 } from "src/reducers/electricalReducer";
+import {
+  fetchBrand,
+  fetchFloor,
+  fetchLink,
+  fetchMaintenance,
+  fetchRoom,
+  fetchType,
+  fetchVendor,
+} from "@/utils/fetchData";
 
 interface Options {
   value: string;
@@ -74,8 +83,8 @@ export default function ElectricalRectifierAdd() {
     condition_asset,
     status,
     notes,
-    listVendorElectrical,
-    listBrandRectifier,
+    listVendor,
+    listBrand,
     listSite,
     listFloors,
     listRooms,
@@ -198,112 +207,13 @@ export default function ElectricalRectifierAdd() {
   };
 
   useEffect(() => {
-    const fetchFloor = async () => {
-      try {
-        const data = await getFloors();
-        const selectOptions = data.data.map((item: any) => ({
-          value: item.id,
-          label: item.name,
-        }));
-        dispatch({ type: "LIST_FLOORS", payload: selectOptions });
-      } catch (err) {
-        dispatch({ type: "SET_IS_ERROR", payload: "Failed to fetch floors" });
-      }
-    };
-    const fetchRoom = async () => {
-      try {
-        const data = await getRooms();
-        const selectOptions = data.data.map((item: any) => {
-          return {
-            value: item.id,
-            label: item.name,
-          };
-        });
-        const filterRooms = selectOptions.filter(
-          (item: any) => item.value.slice(2, 3) === "1"
-        );
-        dispatch({
-          type: "FETCH_ROOMS",
-          payload: {
-            listRooms: filterRooms,
-            listAllRooms: selectOptions,
-          },
-        });
-      } catch (err) {
-        dispatch({ type: "SET_IS_ERROR", payload: "Failed to fetch rooms" });
-      }
-    };
-    const fetchBrand = async () => {
-      try {
-        const data = await getBrandElectrical("1", dispatch, null, "no");
-        const selectOptions = data.data.map((item: any) => ({
-          value: item.id,
-          label: item.name,
-        }));
-        dispatch({ type: "LIST_BRAND_RECTIFIER", payload: selectOptions });
-      } catch (err) {
-        dispatch({ type: "SET_IS_ERROR", payload: "Failed to fetch brands" });
-      }
-    };
-    const fetchVendor = async () => {
-      try {
-        const data = await getVendorElectrical("1", dispatch, null, "no");
-        const selectOptions = data.data.map((item: any) => ({
-          value: item.id,
-          label: item.company,
-        }));
-        dispatch({ type: "LIST_VENDOR_ELECTRICAL", payload: selectOptions });
-      } catch (err) {
-        dispatch({ type: "SET_IS_ERROR", payload: "Failed to fetch vendors" });
-      }
-    };
-    const fetchMaintenance = async () => {
-      try {
-        const data = await getMaintenanceElectrical("1", dispatch, null, "no");
-        const selectOptions = data.data.map((item: any) => ({
-          value: item.id,
-          label: item.activity,
-        }));
-        dispatch({ type: "LIST_MAINTENANCE", payload: selectOptions });
-      } catch (err) {
-        dispatch({
-          type: "SET_IS_ERROR",
-          payload: "Failed to fetch maintenance",
-        });
-      }
-    };
-    const fetchLink = async () => {
-      try {
-        const data = await getLinkElectrical(dispatch);
-        const selectOptions = data.data.map((item: any) => ({
-          value: item.id,
-          label: item.id,
-        }));
-        dispatch({ type: "LIST_LINK", payload: selectOptions });
-      } catch (err) {
-        dispatch({ type: "SET_IS_ERROR", payload: "Failed to fetch links" });
-      }
-    };
-    const fetchType = async () => {
-      try {
-        const data = await getTypeElectrical("1", dispatch, null, "no");
-        const selectOptions = data.data.map((item: any) => ({
-          value: item.id,
-          label: item.name,
-        }));
-        dispatch({ type: "LIST_TYPES", payload: selectOptions });
-      } catch (err) {
-        dispatch({ type: "SET_IS_ERROR", payload: "Failed to fetch links" });
-      }
-    };
-
-    fetchFloor();
-    fetchRoom();
-    fetchBrand();
-    fetchVendor();
-    fetchLink();
-    fetchType();
-    fetchMaintenance();
+    fetchFloor(getFloors, dispatch);
+    fetchRoom(getRooms, dispatch);
+    fetchBrand(getBrandElectrical, dispatch);
+    fetchVendor(getVendorElectrical, dispatch);
+    fetchLink(getLinkElectrical, dispatch);
+    fetchType(getTypeElectrical, dispatch);
+    fetchMaintenance(getMaintenanceElectrical, dispatch);
   }, []);
 
   return (
@@ -382,7 +292,7 @@ export default function ElectricalRectifierAdd() {
                     onChange={(e) =>
                       dispatch({ type: "SET_VENDOR_ID", payload: e })
                     }
-                    options={listVendorElectrical}
+                    options={listVendor}
                     className={styles.selectAsset}
                     styles={styleSelect}
                     theme={themeSelect}
@@ -400,7 +310,7 @@ export default function ElectricalRectifierAdd() {
                     onChange={(e) =>
                       dispatch({ type: "SET_BRAND_ID", payload: e })
                     }
-                    options={listBrandRectifier}
+                    options={listBrand}
                     className={styles.selectAsset}
                     styles={styleSelect}
                     theme={themeSelect}

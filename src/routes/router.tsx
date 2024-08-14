@@ -82,6 +82,9 @@ import ElectricalRectifierDetail from "@/pages/assets/dapot/detail/electrical/El
 import ElectricalBatteryAdd from "@/pages/assets/dapot/category/electrical/ElectricalBatteryAdd";
 import ElectricalBatteryUpdate from "@/pages/assets/dapot/category/electrical/ElectricalBatteryUpdate";
 import ElectricalBatteryDetail from "@/pages/assets/dapot/detail/electrical/ElectricalBatteryDetail";
+import ElectricalCubicleAdd from "@/pages/assets/dapot/category/electrical/ElectricalCubicleAdd";
+import ElectricalCubicleUpdate from "@/pages/assets/dapot/category/electrical/ElectricalCubicleUpdate";
+import ElectricalCubicleDetail from "@/pages/assets/dapot/detail/electrical/ElectricalCubicleDetail";
 
 export const router = createBrowserRouter([
   {
@@ -255,12 +258,20 @@ export const router = createBrowserRouter([
         element: <ElectricalBatteryAdd />,
       },
       {
+        path: "assets/datapotensi/category/add/electrical/cubicle",
+        element: <ElectricalCubicleAdd />,
+      },
+      {
         path: "assets/datapotensi/category/update/electrical/rectifier",
         element: <ElectricalRectifierUpdate />,
       },
       {
         path: "assets/datapotensi/category/update/electrical/battery",
         element: <ElectricalBatteryUpdate />,
+      },
+      {
+        path: "assets/datapotensi/category/update/electrical/cubicle",
+        element: <ElectricalCubicleUpdate />,
       },
       {
         path: "assets/datapotensi/category/list/electrical/all",
@@ -441,6 +452,10 @@ export const router = createBrowserRouter([
       {
         path: "assets/datapotensi/detail/electrical/battery",
         element: <ElectricalBatteryDetail />,
+      },
+      {
+        path: "assets/datapotensi/detail/electrical/cubicle",
+        element: <ElectricalCubicleDetail />,
       },
       {
         path: "assets/datapotensi/room/",

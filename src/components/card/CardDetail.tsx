@@ -125,7 +125,7 @@ export default function CardDetail({
           </div>
           <div className={styles.cardDetailContentRow}>
             <img src={detailBrand} alt="Pin For Title Card" />
-            <p className={styles.subtitle}>{brandName || ""}</p>
+            <p className={styles.subtitle}>{brandName || "Tidak Ada"}</p>
           </div>
         </div>
       ) : type === "maintenance" ? (

@@ -6,7 +6,7 @@ import {
   handleResponse,
 } from "@/utils/LoadingAndErrorApi";
 
-export const getCubicles = async (
+export const getLvmdps = async (
   page: string | null,
   dispatch: (dispatch: any) => void,
   globalFilter: string,
@@ -14,7 +14,7 @@ export const getCubicles = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/electrical/cubicles", {
+    const response = await apiClient.get("/api/v1/dapot/electrical/lvmdps", {
       params: {
         page,
         limit: 15,
@@ -28,14 +28,14 @@ export const getCubicles = async (
   }
 };
 
-export const postNewCubicle = async (
+export const postNewLvmdp = async (
   data: any,
   dispatch: (dispatch: any) => void
 ) => {
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.post(
-      "/api/v1/dapot/electrical/cubicle",
+      "/api/v1/dapot/electrical/lvmdp",
       data,
       {
         headers: {
@@ -49,7 +49,7 @@ export const postNewCubicle = async (
   }
 };
 
-export const getCubicle = async (
+export const getLvmdp = async (
   id: string | null,
   dispatch: (dispatch: any) => void
 ) => {
@@ -57,7 +57,7 @@ export const getCubicle = async (
     setLoadingAndError(dispatch);
     try {
       const response = await apiClient.get(
-        `/api/v1/dapot/electrical/cubicle?id=${id}`
+        `/api/v1/dapot/electrical/lvmdp?id=${id}`
       );
       return handleResponse(response, dispatch);
     } catch (error) {
@@ -66,7 +66,7 @@ export const getCubicle = async (
   }
 };
 
-export const updateCubicle = async (
+export const updateLvmdp = async (
   data: any,
   dispatch: (dispatch: any) => void,
   deviceid: string,
@@ -75,7 +75,7 @@ export const updateCubicle = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.put(
-      `/api/v1/dapot/electrical/cubicle?id=${deviceid}&assetid=${assetid}`,
+      `/api/v1/dapot/electrical/lvmdp?id=${deviceid}&assetid=${assetid}`,
       data,
       {
         headers: {
@@ -89,18 +89,18 @@ export const updateCubicle = async (
   }
 };
 
-export const deleteCubicle = async (
+export const deleteLvmdp = async (
   dispatch: (dispatch: any) => void,
   deviceid: string,
   asset_id: string
 ) => {
   setLoadingAndError(dispatch);
+  const userData: any = localStorage.getItem("user");
+  const jsonuserData = JSON.parse(userData);
+  const user_id = jsonuserData.id;
   try {
-    const userData: any = localStorage.getItem("user");
-    const jsonuserData = JSON.parse(userData);
-    const user_id = jsonuserData.id;
     const response = await apiClient.delete(
-      `/api/v1/dapot/electrical/cubicle?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
+      `/api/v1/dapot/electrical/lvmdp?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {

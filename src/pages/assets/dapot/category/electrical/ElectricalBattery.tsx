@@ -1,5 +1,4 @@
 import { useEffect, useReducer, useState } from "react";
-import { deleteRectifier } from "@/services/electrical/dapotRectifiers";
 import styles from "@/css/module/Asset.module.css";
 import Pen from "@/assets/svg/pen.svg";
 import Trash from "@/assets/svg/trash.svg";
@@ -28,31 +27,7 @@ import {
   deleteBattery,
   getBatteries,
 } from "@/services/electrical/dapotBattery";
-
-interface Battery {
-  asset_id: string;
-  id: string;
-  vendor_id: string;
-  vendor_name: string;
-  brand_id: string;
-  brand_name: string;
-  name: string;
-  role: string;
-  type: string;
-  capacity: number;
-  capacity_bank: number;
-  amount: number;
-  bank_amount: number;
-  system_device: string;
-  remark_aging: string;
-  warranty: string | null;
-  installation_date: string;
-  maintenance_id: string | null;
-  maintenance_date: string | null;
-  created_at: string;
-  user_id: string;
-  user_name: string;
-}
+import { Battery } from "@/types/categoryTypes";
 
 export default function ElectricalBattery() {
   const navigate = useNavigate();
@@ -95,7 +70,7 @@ export default function ElectricalBattery() {
     ? [
         {
           accessorKey: "id",
-          header: "Rectifier Id",
+          header: "Battery Id",
           cell: ({ row }) => (
             <Link
               to={`/main/assets/datapotensi/detail/electrical/battery?id=${row.original.id}`}
@@ -115,7 +90,7 @@ export default function ElectricalBattery() {
         { accessorKey: "vendor_name", header: "Vendor" },
         { accessorKey: "brand_name", header: "Brand" },
         { accessorKey: "name", header: "Name" },
-        { accessorKey: "type", header: "Type" },
+        { accessorKey: "type_name", header: "Type" },
         {
           accessorKey: "capacity",
           header: "Capacity",
@@ -189,7 +164,7 @@ export default function ElectricalBattery() {
     : [
         {
           accessorKey: "id",
-          header: "Rectifier Id",
+          header: "Battery Id",
           cell: ({ row }) => (
             <Link
               to={`/main/assets/datapotensi/detail/electrical/battery?id=${row.original.id}`}

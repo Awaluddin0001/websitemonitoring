@@ -27,33 +27,7 @@ import {
 } from "@tanstack/react-table";
 import HomeModal from "@/components/modal/HomeModal";
 import { electricalListButtons } from "@/routes/dapotCategory";
-
-interface Rectifier {
-  asset_id: string;
-  id: string;
-  vendor_id: string;
-  vendor_name: string;
-  brand_id: string;
-  brand_name: string;
-  name: string;
-  role: string;
-  type: string;
-  capacity: number;
-  modul: string;
-  capacity_modul: number;
-  load_current: number;
-  occupancy: number;
-  system_device: string;
-  remark_aging: string;
-  warranty: string | null;
-  installation_date: string;
-  maintenance_id: string | null;
-  maintenance_date: string | null;
-  created_at: string;
-  user_id: string;
-  user_name: string;
-}
-
+import { Rectifier } from "@/types/categoryTypes";
 export default function ElectricalRectifier() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
