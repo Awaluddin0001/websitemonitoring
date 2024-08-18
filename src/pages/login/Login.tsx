@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 export default function Login() {
   const animationRef = useRef<LottieRefCurrentProps>(null);
   const [animationFrame, setAnimationFrame] = useState<number | undefined>(0);
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   setInterval(() => {
     if (animationRef.current?.animationItem?.currentFrame) {
@@ -32,7 +33,6 @@ export default function Login() {
   const handleLogin = async () => {
     try {
       const response = await axios.post(
-        // `http://localhost:2061/api/v1/user/login`,
         `/api/v1/user/login`,
         {
           username,
@@ -49,10 +49,8 @@ export default function Login() {
       localStorage.setItem("user", JSON.stringify(user));
 
       navigate("/main/dashboard");
-
-      // Optionally redirect to another page
-      // window.location.href = '/dashboard';
-    } catch (error) {
+    } catch (error: any) {
+      setErrorMessage(error.response.data.message);
       console.error("Error logging in:", error);
     }
   };
@@ -118,6 +116,15 @@ export default function Login() {
               value={captchaText}
               onChange={(e) => setCaptchaText(e.target.value)}
             />
+            <h3 style={{ color: "red", fontSize: "18px", marginTop: "10px" }}>
+              {errorMessage === "Invalid credentials"
+                ? "Password Salah"
+                : errorMessage === "Invalid credentials"
+                ? "Captcha Salah"
+                : errorMessage === "User Not Found"
+                ? "User Tidak Terdaftar"
+                : ""}
+            </h3>
           </div>
         </div>
 

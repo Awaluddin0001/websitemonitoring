@@ -97,7 +97,7 @@ export default function CategoryNavbar({
         >
           <img src={crane} alt="conveyance" />
           {/* <h2>Conveyance Building</h2> */}
-          <h2>Alat Pengankut</h2>
+          <h2>Alat Pengangkut</h2>
         </motion.div>
       )}
       {link3 && (

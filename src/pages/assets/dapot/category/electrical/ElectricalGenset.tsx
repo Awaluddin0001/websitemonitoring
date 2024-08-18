@@ -23,9 +23,14 @@ import {
 } from "@tanstack/react-table";
 import HomeModal from "@/components/modal/HomeModal";
 import { electricalListButtons } from "@/routes/dapotCategory";
-import { deleteBattery } from "@/services/electrical/dapotBattery";
-import { Battery } from "@/types/categoryTypes";
-import { getGensets } from "@/services/electrical/dapotGenset";
+import { Genset } from "@/types/electricalTypes";
+import {
+  deleteGenset,
+  exportGensetsCsv,
+  exportGensetsXlsx,
+  getGensets,
+} from "@/services/electrical/dapotGenset";
+import { renderPagination } from "@/components/table/RenderPagination";
 
 export default function ElectricalGenset() {
   const navigate = useNavigate();
@@ -67,14 +72,14 @@ export default function ElectricalGenset() {
     fetchRectifiers();
   }, [searchParams, globalFilter]);
 
-  const columns: ColumnDef<Battery>[] = positionColumn
+  const columns: ColumnDef<Genset>[] = positionColumn
     ? [
         {
           accessorKey: "id",
           header: "Genset Id",
           cell: ({ row }) => (
             <Link
-              to={`/main/assets/datapotensi/detail/electrical/battery?id=${row.original.id}`}
+              to={`/main/assets/datapotensi/detail/electrical/genset?id=${row.original.id}`}
               style={{
                 color: "#000",
                 fontSize: "1.8rem",
@@ -92,32 +97,14 @@ export default function ElectricalGenset() {
         { accessorKey: "brand_name", header: "Brand" },
         { accessorKey: "name", header: "Name" },
         { accessorKey: "type_name", header: "Type" },
-        {
-          accessorKey: "capacity",
-          header: "Capacity",
-          cell: (info) => `${info.getValue()} A`,
-        },
-        {
-          accessorKey: "capacity_bank",
-          header: "Capacity Bank",
-        },
-        {
-          accessorKey: "amount",
-          header: "Jumlah",
-        },
-        {
-          accessorKey: "bank_amount",
-          header: "Jumlah Bank",
-        },
-        {
-          accessorKey: "system_device",
-          header: "System",
-          cell: (info) => `${info.getValue()} System`,
-        },
+        { accessorKey: "manufactur", header: "Manufactur" },
+        { accessorKey: "serial_number", header: "Serial Number" },
+        { accessorKey: "load_current", header: "Load Current" },
+        { accessorKey: "fuel", header: "Fuel" },
+        { accessorKey: "fuel_capacity", header: "Fuel Capacity" },
+        { accessorKey: "runtime", header: "Runtime" },
         { accessorKey: "installation_date", header: "Installation Date" },
         { accessorKey: "maintenance_date", header: "Maintenance Date" },
-        { accessorKey: "remark_aging", header: "Remark Aging" },
-        { accessorKey: "warranty", header: "Garansi" },
         { accessorKey: "incoming", header: "Incoming" },
         { accessorKey: "outgoing", header: "Outgoing" },
         { accessorKey: "condition_asset", header: "Kondisi" },
@@ -142,7 +129,7 @@ export default function ElectricalGenset() {
                 className={styles.btnEdit}
                 onClick={() =>
                   navigate(
-                    `/main/assets/datapotensi/category/update/electrical/battery?id=${row.original.id}`
+                    `/main/assets/datapotensi/category/update/electrical/genset?id=${row.original.id}`
                   )
                 }
               >
@@ -168,7 +155,7 @@ export default function ElectricalGenset() {
           header: "Rectifier Id",
           cell: ({ row }) => (
             <Link
-              to={`/main/assets/datapotensi/detail/electrical/battery?id=${row.original.id}`}
+              to={`/main/assets/datapotensi/detail/electrical/genset?id=${row.original.id}`}
               style={{
                 color: "#000",
                 fontSize: "1.8rem",
@@ -182,31 +169,14 @@ export default function ElectricalGenset() {
         { accessorKey: "brand_name", header: "Brand" },
         { accessorKey: "name", header: "Name" },
         { accessorKey: "type_name", header: "Type" },
-        {
-          accessorKey: "capacity",
-          header: "Capacity",
-          cell: (info) => `${info.getValue()} A`,
-        },
-        {
-          accessorKey: "capacity_bank",
-          header: "Capacity Bank",
-        },
-        {
-          accessorKey: "amount",
-          header: "Jumlah",
-        },
-        {
-          accessorKey: "bank_amount",
-          header: "Jumlah Bank",
-        },
-        {
-          accessorKey: "system_device",
-          header: "System",
-          cell: (info) => `${info.getValue()} System`,
-        },
+        { accessorKey: "manufactur", header: "Manufactur" },
+        { accessorKey: "serial_number", header: "Serial Number" },
+        { accessorKey: "load_current", header: "Load Current" },
+        { accessorKey: "fuel", header: "Fuel" },
+        { accessorKey: "fuel_capacity", header: "Fuel Capacity" },
+        { accessorKey: "runtime", header: "Runtime" },
         { accessorKey: "installation_date", header: "Installation Date" },
         { accessorKey: "maintenance_date", header: "Maintenance Date" },
-        { accessorKey: "remark_aging", header: "Remark Aging" },
         { accessorKey: "created_at", header: "Last Update" },
         { accessorKey: "user_name", header: "Update By" },
         {
@@ -226,7 +196,7 @@ export default function ElectricalGenset() {
                 className={styles.btnEdit}
                 onClick={() =>
                   navigate(
-                    `/main/assets/datapotensi/category/update/electrical/battery?id=${row.original.id}`
+                    `/main/assets/datapotensi/category/update/electrical/genset?id=${row.original.id}`
                   )
                 }
               >
@@ -270,96 +240,10 @@ export default function ElectricalGenset() {
   };
 
   const deleteHandle = async (id: string, assetId: string) => {
-    const data = await deleteBattery(dispatch, id, assetId);
+    const data = await deleteGenset(dispatch, id, assetId);
     if (data.success) {
       navigate(0);
     }
-  };
-
-  const renderPagination = () => {
-    if (!pagination) return null;
-
-    const { totalPages, currentPage } = pagination;
-    const maxPagesToShow = 3;
-    const pages = [];
-
-    if (totalPages <= 5) {
-      for (let i = 1; i <= totalPages; i++) {
-        pages.push(i);
-      }
-    } else {
-      if (currentPage <= maxPagesToShow) {
-        for (let i = 1; i <= maxPagesToShow; i++) {
-          pages.push(i);
-        }
-        pages.push("...");
-        pages.push(totalPages);
-      } else if (currentPage > totalPages - maxPagesToShow) {
-        pages.push(1);
-        pages.push("...");
-        for (let i = totalPages - maxPagesToShow + 1; i <= totalPages; i++) {
-          pages.push(i);
-        }
-      } else {
-        pages.push(1);
-        pages.push("...");
-        for (let i = currentPage - 1; i <= currentPage + 1; i++) {
-          pages.push(i);
-        }
-        pages.push("...");
-        pages.push(totalPages);
-      }
-    }
-
-    return (
-      <div
-        className={styles.paginationContainer}
-        {...{
-          style: {
-            width: positionColumn && table.getCenterTotalSize() / 1.5,
-          },
-        }}
-      >
-        <button onClick={() => pageHandle(1)} disabled={currentPage === 1}>
-          «
-        </button>
-        <button
-          onClick={() => pageHandle(currentPage - 1)}
-          disabled={currentPage === 1}
-        >
-          ‹
-        </button>
-        {pages.map((page, index) =>
-          page === "..." ? (
-            <span key={index} className={styles.paginationEllipsis}>
-              {page}
-            </span>
-          ) : (
-            <p
-              key={index}
-              style={{
-                color: currentPage === page ? "#fcd100" : "#333",
-              }}
-              onClick={() => pageHandle(page as number)}
-            >
-              {page}
-            </p>
-          )
-        )}
-        <button
-          onClick={() => pageHandle(currentPage + 1)}
-          disabled={currentPage === totalPages}
-        >
-          ›
-        </button>
-        <button
-          onClick={() => pageHandle(totalPages)}
-          disabled={currentPage === totalPages}
-        >
-          »
-        </button>
-      </div>
-    );
   };
 
   return (
@@ -369,7 +253,7 @@ export default function ElectricalGenset() {
       ) : isError ? (
         <>
           <HeadPageDapot
-            title={`List Battery`}
+            title={`List Genset`}
             valueGlobalFilter={globalFilter}
             setGlobalFilter={dispatch}
             subCategory="electrical"
@@ -382,13 +266,15 @@ export default function ElectricalGenset() {
       ) : (
         <>
           <HeadPageDapot
-            title={`List Battery`}
+            title={`List Genset`}
             valueGlobalFilter={globalFilter}
             setGlobalFilter={dispatch}
             subCategory="electrical"
             columnToggle={positionColumn}
             exportToggle={exportToggle}
             setToggle={dispatch}
+            exportCsv={exportGensetsCsv}
+            exportXlsx={exportGensetsXlsx}
           />
           <div className={styles.tableWrapper}>
             <DapotButtonsCategory
@@ -478,7 +364,7 @@ export default function ElectricalGenset() {
                     ))}
                   </tbody>
                 </table>
-                {renderPagination()}
+                {renderPagination(pagination, pageHandle, styles)}
               </div>
             ) : (
               <div className={styles.noData}>

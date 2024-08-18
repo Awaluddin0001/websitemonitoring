@@ -1,5 +1,8 @@
 // src/services/apiService.ts
-import { apiClientDapot as apiClient } from "@/utils/apiClient";
+import {
+  apiClientDapot as apiClient,
+  exportClientDapot,
+} from "@/utils/apiClient";
 import {
   setLoadingAndError,
   handleError,
@@ -101,6 +104,55 @@ export const deleteLvmdp = async (
   try {
     const response = await apiClient.delete(
       `/api/v1/dapot/electrical/lvmdp?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
+    );
+    return handleResponse(response, dispatch);
+  } catch (error) {
+    handleError(error, dispatch);
+  }
+};
+
+export const exportLvmdpsCsv = async (
+  page: string | null,
+  dispatch: (dispatch: any) => void,
+  globalFilter: string,
+  nopage?: string | null
+) => {
+  setLoadingAndError(dispatch);
+  try {
+    const response = await exportClientDapot.get(
+      "/api/v1/dapot/electrical/lvmdp-export-csv",
+      {
+        params: {
+          page,
+          limit: 15,
+          globalFilter,
+          nopage,
+        },
+      }
+    );
+    return handleResponse(response, dispatch);
+  } catch (error) {
+    handleError(error, dispatch);
+  }
+};
+export const exportLvmdpsXlsx = async (
+  page: string | null,
+  dispatch: (dispatch: any) => void,
+  globalFilter: string,
+  nopage?: string | null
+) => {
+  setLoadingAndError(dispatch);
+  try {
+    const response = await exportClientDapot.get(
+      "/api/v1/dapot/electrical/lvmdp-export-xlsx",
+      {
+        params: {
+          page,
+          limit: 15,
+          globalFilter,
+          nopage,
+        },
+      }
     );
     return handleResponse(response, dispatch);
   } catch (error) {

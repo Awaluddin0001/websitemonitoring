@@ -68,6 +68,7 @@ export default function Home() {
     "/api/v1/monitoring/bbmthermalpower"
   );
 
+  console.log(data);
   const [modalController, setModalController] = useState(false);
 
   useEffect(() => {
@@ -241,7 +242,7 @@ export default function Home() {
                             ? "#56CB0E"
                             : item.value.temperature > 23 &&
                               item.value.temperature < 30
-                            ? "rgb(203 125 14)"
+                            ? "rgb(14 170 203)"
                             : "#CB300E"
                         }
                         valueColor="#fff"
@@ -268,7 +269,7 @@ export default function Home() {
                         value={`${item.value.humidity}%`}
                         cardColor={
                           item.value.humidity < 45
-                            ? "rgb(203 125 14)"
+                            ? "rgb(14 170 203)"
                             : item.value.humidity > 44 &&
                               item.value.humidity < 60
                             ? "#0ECBC0"
@@ -301,7 +302,7 @@ export default function Home() {
                       pueData.value < 1.5
                         ? "#56CB0E"
                         : pueData.value < 2.0
-                        ? "rgb(203 125 14)"
+                        ? "rgb(14 170 203)"
                         : "#CB300E"
                     }
                     valueColor="#fff"
@@ -319,7 +320,8 @@ export default function Home() {
                     pueData.value < 1.5
                       ? "#56CB0E"
                       : pueData.value < 2.0
-                      ? "rgb(203 125 14)"
+                      ? // ? "rgb(203 125 14)"
+                        "rgb(14 170 203)"
                       : "#CB300E"
                   }
                   pointColor="#000"

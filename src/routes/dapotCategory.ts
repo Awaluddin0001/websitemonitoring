@@ -9,3 +9,13 @@ export const electricalListButtons = [
   "lvmdp",
   "cubicle",
 ];
+export const networkListButtons = [
+  "all",
+  "rack_server",
+  "storage",
+  "network_switches",
+  "routers",
+  "firewalls",
+  "patch_panels",
+  "computer",
+];

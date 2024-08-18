@@ -1,5 +1,29 @@
 import { ReactSelect } from "@/types/basicTypes";
 
+export interface Electrical {
+  id: string;
+  ne_id: string;
+  site_id: string;
+  site_name: string;
+  floor_name: string;
+  type_name: string;
+  floor_id: string;
+  room_name: string;
+  room_id: string;
+  device_id: string;
+  sub_category_id: string;
+  sub_category_name: string;
+  link_id: string;
+  status: string;
+  condition_asset: string;
+  notes: string;
+  installation_date: string;
+  maintenance_id: string;
+  created_at: string;
+  user_id: string;
+  user_name: string;
+}
+
 // subcategory
 // rectifier
 export interface Rectifier {
@@ -398,6 +422,7 @@ interface ElectricalGenset {
   load_current: string;
   fuel: string;
   fuel_capacity: string;
+  runtime: string;
   installation_date: string;
   condition_asset: string;
   status: string;
@@ -1039,4 +1064,39 @@ export type ElectricalAllListState = {
   // FOR TABLE
   positionColumn: boolean;
   exportToggle: boolean;
+};
+
+// link
+export type ElectricalLink = {
+  id: string;
+  incoming: string;
+  outgoing: string;
+  created_at: string;
+  user_name: string;
+};
+
+export type ElectricalLinkListState = {
+  links: ElectricalType[];
+  pagination: {
+    currentPage: number;
+    pageSize: number;
+    totalPages: number;
+    totalRows: number;
+  };
+
+  //   FOR COMPONENT
+  isLoading: boolean;
+  isError: string | null;
+  globalFilter: string;
+
+  positionColumn: boolean;
+  exportToggle: boolean;
+};
+
+export type PostElectricalLink = {
+  incoming: ReactSelect;
+  outgoing: ReactSelect[];
+  list_electrical: any[];
+  isLoading: boolean;
+  isError: string | null;
 };

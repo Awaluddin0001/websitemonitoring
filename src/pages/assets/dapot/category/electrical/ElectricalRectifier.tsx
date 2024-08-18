@@ -1,6 +1,8 @@
 import { useEffect, useReducer, useState } from "react";
 import {
   deleteRectifier,
+  exportRectifiersCsv,
+  exportRectifiersXlsx,
   getRectifiers,
 } from "@/services/electrical/dapotRectifiers";
 import styles from "@/css/module/Asset.module.css";
@@ -27,7 +29,8 @@ import {
 } from "@tanstack/react-table";
 import HomeModal from "@/components/modal/HomeModal";
 import { electricalListButtons } from "@/routes/dapotCategory";
-import { Rectifier } from "@/types/categoryTypes";
+import { Rectifier } from "@/types/electricalTypes";
+import { renderPagination } from "@/components/table/RenderPagination";
 export default function ElectricalRectifier() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -275,92 +278,6 @@ export default function ElectricalRectifier() {
     }
   };
 
-  const renderPagination = () => {
-    if (!pagination) return null;
-
-    const { totalPages, currentPage } = pagination;
-    const maxPagesToShow = 3;
-    const pages = [];
-
-    if (totalPages <= 5) {
-      for (let i = 1; i <= totalPages; i++) {
-        pages.push(i);
-      }
-    } else {
-      if (currentPage <= maxPagesToShow) {
-        for (let i = 1; i <= maxPagesToShow; i++) {
-          pages.push(i);
-        }
-        pages.push("...");
-        pages.push(totalPages);
-      } else if (currentPage > totalPages - maxPagesToShow) {
-        pages.push(1);
-        pages.push("...");
-        for (let i = totalPages - maxPagesToShow + 1; i <= totalPages; i++) {
-          pages.push(i);
-        }
-      } else {
-        pages.push(1);
-        pages.push("...");
-        for (let i = currentPage - 1; i <= currentPage + 1; i++) {
-          pages.push(i);
-        }
-        pages.push("...");
-        pages.push(totalPages);
-      }
-    }
-
-    return (
-      <div
-        className={styles.paginationContainer}
-        {...{
-          style: {
-            width: positionColumn && table.getCenterTotalSize() / 1.5,
-          },
-        }}
-      >
-        <button onClick={() => pageHandle(1)} disabled={currentPage === 1}>
-          «
-        </button>
-        <button
-          onClick={() => pageHandle(currentPage - 1)}
-          disabled={currentPage === 1}
-        >
-          ‹
-        </button>
-        {pages.map((page, index) =>
-          page === "..." ? (
-            <span key={index} className={styles.paginationEllipsis}>
-              {page}
-            </span>
-          ) : (
-            <p
-              key={index}
-              style={{
-                color: currentPage === page ? "#fcd100" : "#333",
-              }}
-              onClick={() => pageHandle(page as number)}
-            >
-              {page}
-            </p>
-          )
-        )}
-        <button
-          onClick={() => pageHandle(currentPage + 1)}
-          disabled={currentPage === totalPages}
-        >
-          ›
-        </button>
-        <button
-          onClick={() => pageHandle(totalPages)}
-          disabled={currentPage === totalPages}
-        >
-          »
-        </button>
-      </div>
-    );
-  };
-
   return (
     <>
       {isLoading ? (
@@ -388,6 +305,8 @@ export default function ElectricalRectifier() {
             columnToggle={positionColumn}
             exportToggle={exportToggle}
             setToggle={dispatch}
+            exportCsv={exportRectifiersCsv}
+            exportXlsx={exportRectifiersXlsx}
           />
           <div className={styles.tableWrapper}>
             <DapotButtonsCategory
@@ -478,7 +397,7 @@ export default function ElectricalRectifier() {
                     ))}
                   </tbody>
                 </table>
-                {renderPagination()}
+                {renderPagination(pagination, pageHandle, styles)}
               </div>
             ) : (
               <div className={styles.noData}>

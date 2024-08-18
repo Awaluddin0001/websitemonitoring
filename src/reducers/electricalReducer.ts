@@ -25,7 +25,9 @@ import {
   ElectricalListTrafoState,
   ElectricalListUpsState,
   ElectricalUpsState,
-} from "@/types/categoryTypes";
+  PostElectricalLink,
+  ElectricalLinkListState,
+} from "@/types/electricalTypes";
 
 export const initialStateRecti: ElectricalState = {
   // Value
@@ -1085,6 +1087,7 @@ export const initialGensetState: ElectricalGensetState = {
   load_current: "",
   fuel: "",
   fuel_capacity: "",
+  runtime: "",
   installation_date: "",
   condition_asset: "",
   status: "",
@@ -1151,6 +1154,8 @@ export function updateGensetReducer(
       return { ...state, fuel: action.payload };
     case "SET_FUEL_CAPACITY":
       return { ...state, fuel_capacity: action.payload };
+    case "SET_RUNTIME":
+      return { ...state, runtime: action.payload };
     case "SET_SYSTEM":
       return { ...state, system_device: action.payload };
     case "SET_WARRANTY":
@@ -1190,7 +1195,7 @@ export function updateGensetReducer(
       return { ...state, listMaintenance: action.payload };
     case "LIST_LINK":
       return { ...state, listLink: action.payload };
-    case "GET_CUBICLE":
+    case "GET_GENSET":
       return { ...state, ...action.payload };
     case "SET_IS_LOADING":
       return { ...state, isLoading: action.payload };
@@ -1401,7 +1406,7 @@ export function updateLvmdpReducer(
       return { ...state, listMaintenance: action.payload };
     case "LIST_LINK":
       return { ...state, listLink: action.payload };
-    case "GET_CUBICLE":
+    case "GET_LVMDP":
       return { ...state, ...action.payload };
     case "SET_IS_LOADING":
       return { ...state, isLoading: action.payload };
@@ -1603,7 +1608,7 @@ export function updatePanelReducer(
       return { ...state, listMaintenance: action.payload };
     case "LIST_LINK":
       return { ...state, listLink: action.payload };
-    case "GET_CUBICLE":
+    case "GET_PANEL":
       return { ...state, ...action.payload };
     case "SET_IS_LOADING":
       return { ...state, isLoading: action.payload };
@@ -1811,7 +1816,7 @@ export function updateTrafoReducer(
       return { ...state, listMaintenance: action.payload };
     case "LIST_LINK":
       return { ...state, listLink: action.payload };
-    case "GET_CUBICLE":
+    case "GET_TRAFO":
       return { ...state, ...action.payload };
     case "SET_IS_LOADING":
       return { ...state, isLoading: action.payload };
@@ -1882,8 +1887,8 @@ export function listUpsReducer(
   action: ActionType
 ) {
   switch (action.type) {
-    case "SET_UPSS":
-      return { ...state, upss: action.payload };
+    case "SET_UPSES":
+      return { ...state, upses: action.payload };
     case "SET_PAGINATION":
       return { ...state, pagination: action.payload };
     case "SET_IS_LOADING":
@@ -2032,7 +2037,7 @@ export function updateUpsReducer(
       return { ...state, listMaintenance: action.payload };
     case "LIST_LINK":
       return { ...state, listLink: action.payload };
-    case "GET_CUBICLE":
+    case "GET_UPS":
       return { ...state, ...action.payload };
     case "SET_IS_LOADING":
       return { ...state, isLoading: action.payload };
@@ -2075,6 +2080,94 @@ export function updateUpsReducer(
       return {
         ...state,
         notes: action.payload,
+      };
+    default:
+      throw new Error(`unknown action type: ${action.type}`);
+  }
+}
+
+// Link
+export const initialStateListLinkElectrical: ElectricalLinkListState = {
+  links: [],
+  pagination: {
+    currentPage: 1,
+    pageSize: 10,
+    totalPages: 1,
+    totalRows: 0,
+  },
+
+  isLoading: false,
+  isError: null,
+  globalFilter: "",
+  positionColumn: false,
+  exportToggle: false,
+};
+
+export function listLinkElectricalReducer(
+  state: ElectricalLinkListState,
+  action: ActionType
+) {
+  switch (action.type) {
+    case "SET_LINKS":
+      return { ...state, links: action.payload };
+    case "SET_PAGINATION":
+      return { ...state, pagination: action.payload };
+    case "SET_IS_LOADING":
+      return { ...state, isLoading: action.payload };
+    case "SET_IS_ERROR":
+      return { ...state, isError: action.payload };
+    case "SET_LOADING_AND_ERROR":
+      return {
+        ...state,
+        isLoading: action.payload.isLoading,
+        isError: action.payload.isError,
+      };
+    case "SET_GLOBAL_FILTER":
+      return { ...state, globalFilter: action.payload };
+    default:
+      throw new Error(`unknown action type: ${action.type}`);
+  }
+}
+
+export const initialStateUpdateElectricalLink: PostElectricalLink = {
+  incoming: { value: "", label: "" },
+  outgoing: [],
+  list_electrical: [],
+  isLoading: false,
+  isError: null,
+};
+
+export function updateElectricalLinkReducer(
+  state: PostElectricalLink,
+  action: ActionType
+) {
+  switch (action.type) {
+    case "SET_LINK":
+      return {
+        ...state,
+        incoming: action.payload.incoming,
+        outgoing: action.payload.sub_category_id,
+      };
+    case "SET_INCOMING":
+      return { ...state, incoming: action.payload };
+    case "SET_OUTGOING":
+      return { ...state, outgoing: action.payload };
+    case "SET_IS_LOADING":
+      return { ...state, isLoading: action.payload };
+    case "SET_IS_ERROR":
+      return { ...state, isError: action.payload };
+    case "LIST_ELECTRICAL":
+      return { ...state, list_electrical: action.payload };
+    case "SET_LOADING_AND_ERROR":
+      return {
+        ...state,
+        isLoading: action.payload.isLoading,
+        isError: action.payload.isError,
+      };
+    case "SET_OUTGOING_CHANGE":
+      return {
+        ...state,
+        outgoing: action.payload.outgoing,
       };
     default:
       throw new Error(`unknown action type: ${action.type}`);

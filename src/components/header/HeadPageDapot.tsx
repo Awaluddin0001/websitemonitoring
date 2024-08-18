@@ -11,6 +11,8 @@ import { useState, KeyboardEvent } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Toggle from "react-toggle";
 import "react-toggle/style.css"; // for ES6 modules
+import { useSearchParams } from "react-router-dom";
+import fileDownload from "js-file-download";
 export default function HeadPageDapot({
   title,
   valueGlobalFilter,
@@ -19,6 +21,8 @@ export default function HeadPageDapot({
   columnToggle,
   exportToggle,
   setToggle,
+  exportCsv,
+  exportXlsx,
 }: {
   title: string;
   valueGlobalFilter: string;
@@ -27,9 +31,17 @@ export default function HeadPageDapot({
   columnToggle?: any;
   exportToggle?: any;
   setToggle?: any;
+  exportCsv?: (page: any, dispatch: any, globalFilter: any, nopage: any) => any;
+  exportXlsx?: (
+    page: any,
+    dispatch: any,
+    globalFilter: any,
+    nopage: any
+  ) => any;
 }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [searchParams, _] = useSearchParams();
   const [actionShow, setActionShow] = useState<boolean>(false);
   const [settingShow, setSettingShow] = useState<boolean>(false);
   const [searchValue, setSearchValue] = useState<string>(valueGlobalFilter);
@@ -52,6 +64,40 @@ export default function HeadPageDapot({
 
   const handleSearchClick = () => {
     setGlobalFilter({ type: "SET_GLOBAL_FILTER", payload: searchValue });
+  };
+
+  const exportCsvHandle = () => {
+    const exportDataCsv = async (exportCsv: any) => {
+      try {
+        const page = searchParams.get("page") || "1";
+        const nopage = valueGlobalFilter ? "no" : undefined;
+        const data = await exportCsv(page, dispatch, valueGlobalFilter, nopage);
+        fileDownload(data, `${parameter[2]}.csv`);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    exportDataCsv(exportCsv);
+  };
+  const exportXlsxHandle = () => {
+    const exportDataXlsx = async (exportXlsx: any) => {
+      try {
+        const page = searchParams.get("page") || "1";
+        const nopage = valueGlobalFilter ? "no" : undefined;
+        const data = await exportXlsx(
+          page,
+          dispatch,
+          valueGlobalFilter,
+          nopage
+        );
+        fileDownload(data, `${parameter[2]}.xlsx`);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    exportDataXlsx(exportXlsx);
   };
 
   return (
@@ -218,24 +264,10 @@ export default function HeadPageDapot({
             </div>
             {exportToggle && (
               <>
-                <div
-                  onClick={() =>
-                    navigate(
-                      `/main/assets/datapotensi/link/list/${subCategory}`
-                    )
-                  }
-                  className={styles.addButton}
-                >
-                  .pdf
+                <div onClick={exportCsvHandle} className={styles.addButton}>
+                  .csv
                 </div>
-                <div
-                  onClick={() =>
-                    navigate(
-                      `/main/assets/datapotensi/link/list/${subCategory}`
-                    )
-                  }
-                  className={styles.addButton}
-                >
+                <div onClick={exportXlsxHandle} className={styles.addButton}>
                   .xlsx
                 </div>
               </>

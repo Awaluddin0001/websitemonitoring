@@ -85,6 +85,27 @@ import ElectricalBatteryDetail from "@/pages/assets/dapot/detail/electrical/Elec
 import ElectricalCubicleAdd from "@/pages/assets/dapot/category/electrical/ElectricalCubicleAdd";
 import ElectricalCubicleUpdate from "@/pages/assets/dapot/category/electrical/ElectricalCubicleUpdate";
 import ElectricalCubicleDetail from "@/pages/assets/dapot/detail/electrical/ElectricalCubicleDetail";
+import RectifierManualInput from "@/pages/monitoring/RectifierManualInput";
+import ElectricalGensetAdd from "@/pages/assets/dapot/category/electrical/ElectricalGensetAdd";
+import ElectricalGensetUpdate from "@/pages/assets/dapot/category/electrical/ElectricalGensetUpdate";
+import ElectricalGensetDetail from "@/pages/assets/dapot/detail/electrical/ElectricalGensetDetail";
+import ElectricalLvmdpAdd from "@/pages/assets/dapot/category/electrical/ElectricalLvmdpAdd";
+import ElectricalLvmdpUpdate from "@/pages/assets/dapot/category/electrical/ElectricalLvmdpUpdate";
+import ElectricalLvmdpDetail from "@/pages/assets/dapot/detail/electrical/ElectricalLvmdpDetail";
+import ElectricalPanelAdd from "@/pages/assets/dapot/category/electrical/ElectricalPanelAdd";
+import ElectricalPanelUpdate from "@/pages/assets/dapot/category/electrical/ElectricalPanelUpdate";
+import ElectricalPanelDetail from "@/pages/assets/dapot/detail/electrical/ElectricalPanelDetail";
+import ElectricalTrafoDetail from "@/pages/assets/dapot/detail/electrical/ElectricalTrafoDetail";
+import ElectricalUpsDetail from "@/pages/assets/dapot/detail/electrical/ElectricalUpsDetail";
+import ElectricalTrafoUpdate from "@/pages/assets/dapot/category/electrical/ElectricalTrafoUpdate";
+import ElectricalUpsUpdate from "@/pages/assets/dapot/category/electrical/ElectricalUpsUpdate";
+import ElectricalTrafoAdd from "@/pages/assets/dapot/category/electrical/ElectricalTrafoAdd";
+import ElectricalUpsAdd from "@/pages/assets/dapot/category/electrical/ElectricalUpsAdd";
+import ListLinkElectrical from "@/pages/assets/dapot/link/electrical/ListLinkElectrical";
+import NewLinkElectrical from "@/pages/assets/dapot/link/electrical/NewLinkElectrical";
+import UpdateLinkElectrical from "@/pages/assets/dapot/link/electrical/UpdateLinkElectrical";
+import NetworkAll from "@/pages/assets/dapot/category/network/NetworkAll";
+import NetworkComputer from "@/pages/assets/dapot/category/network/NetworkComputer";
 
 export const router = createBrowserRouter([
   {
@@ -126,6 +147,10 @@ export const router = createBrowserRouter([
       {
         path: "monitoring/",
         element: <Monitoring />,
+      },
+      {
+        path: "monitoring/manual/add/rectifier",
+        element: <RectifierManualInput />,
       },
       {
         path: "monitoring/thermal",
@@ -200,7 +225,7 @@ export const router = createBrowserRouter([
         element: <NewBrandSecurity />,
       },
       {
-        path: "assets/datapotensi/brand/list/airconditioning/:type",
+        path: "assets/datapotensi/brand/list/airconditioning",
         element: <ListBrandAirConditioning />,
       },
       {
@@ -208,46 +233,40 @@ export const router = createBrowserRouter([
         element: <ListBrandElectrical />,
       },
       {
-        path: "assets/datapotensi/brand/list/extinguish/:type",
+        path: "assets/datapotensi/brand/list/extinguish",
         element: <ListBrandExtinguish />,
       },
       {
-        path: "assets/datapotensi/brand/list/fluidtank/:type",
+        path: "assets/datapotensi/brand/list/fluidtank",
         element: <ListBrandFluidTank />,
       },
       {
-        path: "assets/datapotensi/brand/list/furniture/:type",
+        path: "assets/datapotensi/brand/list/furniture",
         element: <ListBrandFurniture />,
       },
       {
-        path: "assets/datapotensi/brand/list/lighting/:type",
+        path: "assets/datapotensi/brand/list/lighting",
         element: <ListBrandLighting />,
       },
       {
-        path: "assets/datapotensi/brand/list/networkit/:type",
+        path: "assets/datapotensi/brand/list/networkit",
         element: <ListBrandNetworkIt />,
       },
       {
-        path: "assets/datapotensi/brand/list/pump/:type",
+        path: "assets/datapotensi/brand/list/pump",
         element: <ListBrandPump />,
       },
       {
-        path: "assets/datapotensi/brand/list/safety/:type",
+        path: "assets/datapotensi/brand/list/safety",
         element: <ListBrandSafety />,
       },
       {
-        path: "assets/datapotensi/brand/list/security/:type",
+        path: "assets/datapotensi/brand/list/security",
         element: <ListBrandSecurity />,
       },
       {
         path: "assets/datapotensi/category/",
         element: <AssetListCategory />,
-      },
-      {
-        path: "assets/datapotensi/category/air/",
-      },
-      {
-        path: "assets/datapotensi/category/conveyance/",
       },
       {
         path: "assets/datapotensi/category/add/electrical/rectifier",
@@ -262,6 +281,26 @@ export const router = createBrowserRouter([
         element: <ElectricalCubicleAdd />,
       },
       {
+        path: "assets/datapotensi/category/add/electrical/genset",
+        element: <ElectricalGensetAdd />,
+      },
+      {
+        path: "assets/datapotensi/category/add/electrical/lvmdp",
+        element: <ElectricalLvmdpAdd />,
+      },
+      {
+        path: "assets/datapotensi/category/add/electrical/panel",
+        element: <ElectricalPanelAdd />,
+      },
+      {
+        path: "assets/datapotensi/category/add/electrical/trafo",
+        element: <ElectricalTrafoAdd />,
+      },
+      {
+        path: "assets/datapotensi/category/add/electrical/ups",
+        element: <ElectricalUpsAdd />,
+      },
+      {
         path: "assets/datapotensi/category/update/electrical/rectifier",
         element: <ElectricalRectifierUpdate />,
       },
@@ -272,6 +311,26 @@ export const router = createBrowserRouter([
       {
         path: "assets/datapotensi/category/update/electrical/cubicle",
         element: <ElectricalCubicleUpdate />,
+      },
+      {
+        path: "assets/datapotensi/category/update/electrical/genset",
+        element: <ElectricalGensetUpdate />,
+      },
+      {
+        path: "assets/datapotensi/category/update/electrical/lvmdp",
+        element: <ElectricalLvmdpUpdate />,
+      },
+      {
+        path: "assets/datapotensi/category/update/electrical/panel",
+        element: <ElectricalPanelUpdate />,
+      },
+      {
+        path: "assets/datapotensi/category/update/electrical/trafo",
+        element: <ElectricalTrafoUpdate />,
+      },
+      {
+        path: "assets/datapotensi/category/update/electrical/ups",
+        element: <ElectricalUpsUpdate />,
       },
       {
         path: "assets/datapotensi/category/list/electrical/all",
@@ -310,76 +369,12 @@ export const router = createBrowserRouter([
         element: <ElectricalCubicle />,
       },
       {
-        path: "assets/datapotensi/category/extinguish/",
+        path: "assets/datapotensi/category/list/network/all",
+        element: <NetworkAll />,
       },
       {
-        path: "assets/datapotensi/category/finishing/",
-      },
-      {
-        path: "assets/datapotensi/category/fluidtank/",
-      },
-      {
-        path: "assets/datapotensi/category/finishing/",
-      },
-      {
-        path: "assets/datapotensi/category/networkit/",
-      },
-      {
-        path: "assets/datapotensi/category/pump/",
-      },
-      {
-        path: "assets/datapotensi/category/safety/",
-      },
-      {
-        path: "assets/datapotensi/category/security/",
-      },
-      {
-        path: "assets/datapotensi/vendor/",
-        element: <AssetListVendor />,
-      },
-      {
-        path: "assets/datapotensi/vendor/add/airconditioning",
-        element: <NewVendorAirConditioning />,
-      },
-      {
-        path: "assets/datapotensi/vendor/add/conveyance",
-        element: <NewVendorConveyance />,
-      },
-      {
-        path: "assets/datapotensi/vendor/add/extinguish",
-        element: <NewVendorExtinguish />,
-      },
-      {
-        path: "assets/datapotensi/vendor/add/finishing",
-        element: <NewVendorFinishing />,
-      },
-      {
-        path: "assets/datapotensi/vendor/add/fluidtank",
-        element: <NewVendorFluidTank />,
-      },
-      {
-        path: "assets/datapotensi/vendor/add/networkit",
-        element: <NewVendorNetworkIt />,
-      },
-      {
-        path: "assets/datapotensi/vendor/add/pump",
-        element: <NewVendorPump />,
-      },
-      {
-        path: "assets/datapotensi/vendor/add/safety",
-        element: <NewVendorSafety />,
-      },
-      {
-        path: "assets/datapotensi/vendor/add/security",
-        element: <NewVendorSecurity />,
-      },
-      {
-        path: "assets/datapotensi/vendor/list/airconditioning",
-        element: <ListVendorAirConditioning />,
-      },
-      {
-        path: "assets/datapotensi/vendor/list/conveyance",
-        element: <ListVendorConveyance />,
+        path: "assets/datapotensi/category/list/network/computer",
+        element: <NetworkComputer />,
       },
       {
         path: "assets/datapotensi/vendor/list/electrical",
@@ -392,34 +387,6 @@ export const router = createBrowserRouter([
       {
         path: "assets/datapotensi/vendor/update/electrical",
         element: <UpdateVendorElectrical />,
-      },
-      {
-        path: "assets/datapotensi/vendor/list/extinguish",
-        element: <ListVendorExtinguish />,
-      },
-      {
-        path: "assets/datapotensi/vendor/list/finishing",
-        element: <ListVendorFinishing />,
-      },
-      {
-        path: "assets/datapotensi/vendor/list/fluidtank",
-        element: <ListVendorFluidTank />,
-      },
-      {
-        path: "assets/datapotensi/vendor/list/networkit",
-        element: <ListVendorNetworkIt />,
-      },
-      {
-        path: "assets/datapotensi/vendor/list/pump",
-        element: <ListVendorPump />,
-      },
-      {
-        path: "assets/datapotensi/vendor/list/safety",
-        element: <ListVendorSafety />,
-      },
-      {
-        path: "assets/datapotensi/vendor/list/security",
-        element: <ListVendorSecurity />,
       },
       {
         path: "assets/datapotensi/type/list/electrical",
@@ -458,7 +425,36 @@ export const router = createBrowserRouter([
         element: <ElectricalCubicleDetail />,
       },
       {
-        path: "assets/datapotensi/room/",
+        path: "assets/datapotensi/detail/electrical/genset",
+        element: <ElectricalGensetDetail />,
+      },
+      {
+        path: "assets/datapotensi/detail/electrical/lvmdp",
+        element: <ElectricalLvmdpDetail />,
+      },
+      {
+        path: "assets/datapotensi/detail/electrical/panel",
+        element: <ElectricalPanelDetail />,
+      },
+      {
+        path: "assets/datapotensi/detail/electrical/trafo",
+        element: <ElectricalTrafoDetail />,
+      },
+      {
+        path: "assets/datapotensi/detail/electrical/ups",
+        element: <ElectricalUpsDetail />,
+      },
+      {
+        path: "assets/datapotensi/link/list/electrical",
+        element: <ListLinkElectrical />,
+      },
+      {
+        path: "assets/datapotensi/link/add/electrical",
+        element: <NewLinkElectrical />,
+      },
+      {
+        path: "assets/datapotensi/link/update/electrical",
+        element: <UpdateLinkElectrical />,
       },
       {
         path: "assets/space/",
@@ -473,6 +469,7 @@ export const router = createBrowserRouter([
   {
     path: "/v1/",
   },
+
   {
     path: "*",
     element: (
