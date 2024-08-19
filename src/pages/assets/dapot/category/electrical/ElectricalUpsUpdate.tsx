@@ -257,7 +257,7 @@ export default function ElectricalUpsUpdate() {
     fetchBrand(getBrandElectrical, dispatch);
     fetchVendor(getVendorElectrical, dispatch);
     fetchLink(getLinkElectrical, dispatch);
-    fetchType(getTypeElectrical, dispatch);
+    fetchType(getTypeElectrical, dispatch, "ESC008");
     fetchMaintenance(getMaintenanceElectrical, dispatch);
   }, []);
 

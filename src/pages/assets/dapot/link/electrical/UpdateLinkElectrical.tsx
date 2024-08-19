@@ -3,17 +3,16 @@ import ErrorFetch from "@/components/error/ErrorFetch";
 import LoadingFetch from "@/components/loading/LoadingFetch";
 import styles from "@/css/module/Asset.module.css";
 import {
-  getOneTypeElectrical,
-  getSubCategoriesElectrical,
-  updateTypeElectrical,
+  getElectricalsLink,
+  updateLinkElectrical,
 } from "@/services/electrical/dapotElectrical";
 import React, { useEffect, useReducer } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import {
-  initialStateUpdateElectricalType,
-  updateElectricalTypeReducer,
+  initialStateUpdateElectricalLink,
+  updateElectricalLinkReducer,
 } from "src/reducers/electricalReducer";
-import Select from "react-select";
+import Select, { MultiValue } from "react-select";
 
 interface Options {
   value: string;
@@ -44,108 +43,98 @@ const themeSelect = (theme: any) => ({
 export default function UpdateLinkElectrical() {
   const navigate = useNavigate();
   const [state, dispatch] = useReducer(
-    updateElectricalTypeReducer,
-    initialStateUpdateElectricalType
+    updateElectricalLinkReducer,
+    initialStateUpdateElectricalLink
   );
 
-  const { name, sub_category_id, list_sub_category, isLoading, isError } =
-    state;
+  const { incoming, outgoing, list_electrical, isLoading, isError } = state;
   const [searchParams, _] = useSearchParams();
-  const handleSubCategoryHandler = (selectedOption: Options | null) => {
+  const handleIncoming = (selectedOption: Options | null) => {
     dispatch({
-      type: "SET_SUB_CATEGORY_CHANGE",
-      payload: {
-        sub_category_id: selectedOption,
-      },
+      type: "SET_INCOMING",
+      payload: selectedOption,
+    });
+  };
+  const handleOutgoing = (selectedOption: MultiValue<Options> | null) => {
+    dispatch({
+      type: "SET_OUTGOING",
+      payload: selectedOption,
     });
   };
 
   useEffect(() => {
     const fetchSubCategories = async () => {
       try {
-        const data = await getSubCategoriesElectrical();
+        const data = await getElectricalsLink();
         const selectOptions = data.data.map((item: any) => ({
-          value: item.id,
-          label: item.name,
+          value: item.device_id,
+          label: item.device_id,
         }));
-        dispatch({ type: "LIST_SUB_CATEGORY", payload: selectOptions });
+        dispatch({ type: "LIST_ELECTRICAL", payload: selectOptions });
       } catch (err) {
         dispatch({ type: "SET_IS_ERROR", payload: "Failed to fetch floors" });
       }
     };
     fetchSubCategories();
-    const getdata = async () => {
-      if (searchParams.get("id")) {
-        const result = await getOneTypeElectrical(
-          dispatch,
-          searchParams.get("id")
-        );
-        console.log(result);
-        if (result) {
-          dispatch({
-            type: "SET_TYPE",
-            payload: result.data,
-          });
-        }
-      }
-    };
-    getdata();
   }, []);
 
   const submitHandler = async (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    const stringOutgoing = outgoing.map((item: any) => item.value).join(", ");
     const postnew = async (
-      name: string,
-      sub_category_id: { value: string; label: string }
+      incoming: { value: string; label: string },
+      outgoing: string
     ) => {
-      const result = await updateTypeElectrical(
-        name,
-        sub_category_id.value!,
+      const result = await updateLinkElectrical(
+        incoming.value!,
+        outgoing,
         searchParams.get("id")!,
         dispatch
       );
       if (result.success) {
-        navigate(`/main/assets/datapotensi/type/list/electrical?page=1`);
+        navigate(`/main/assets/datapotensi/link/list/electrical?page=1`);
       }
     };
 
-    postnew(name, sub_category_id);
+    postnew(incoming, stringOutgoing);
   };
+
   return (
     <>
       {isLoading ? (
         <LoadingFetch />
       ) : isError ? (
         <>
-          <HeadPage title={`Update Data Type Electrical`} />
+          <HeadPage title={`Input Data Type Electrical`} />
           <ErrorFetch message={isError} />
         </>
       ) : (
         <>
-          <HeadPage title={`Update Data Type Untuk Electrical`} />
+          <HeadPage title={`Input Data Type Untuk Electrical`} />
           <div className={styles.sectionInput}>
             <div className={styles.posisiInput}>
               <div className={styles.inputGroup}>
                 <div className={styles.containerInput}>
-                  <p className={styles.textTitleInput}>Nama Type</p>
-                  <input
-                    type="text"
-                    className={styles.inputAsset}
-                    value={name || ""}
-                    onChange={(e) =>
-                      dispatch({ type: "SET_NAME", payload: e.target.value })
-                    }
-                  />
-                </div>
-                <div className={styles.containerInput}>
-                  <p className={styles.textTitleInput}>SUB CATEGORY</p>
+                  <p className={styles.textTitleInput}>Incoming</p>
                   <Select
-                    value={sub_category_id}
-                    onChange={handleSubCategoryHandler}
-                    options={list_sub_category}
+                    value={incoming}
+                    onChange={handleIncoming}
+                    options={list_electrical}
                     className={styles.selectAsset}
                     styles={styleSelect}
                     theme={themeSelect}
+                  />
+                </div>
+                <div className={styles.containerInput}>
+                  <p className={styles.textTitleInput}>Outgoing</p>
+                  <Select
+                    value={outgoing}
+                    onChange={handleOutgoing}
+                    options={list_electrical}
+                    className={styles.selectAsset}
+                    styles={styleSelect}
+                    theme={themeSelect}
+                    isMulti={true}
                   />
                 </div>
                 <button

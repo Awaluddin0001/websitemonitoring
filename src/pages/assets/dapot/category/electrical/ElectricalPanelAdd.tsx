@@ -191,7 +191,7 @@ export default function ElectricalPanelAdd() {
     fetchRoom(getRooms, dispatch);
     fetchVendor(getVendorElectrical, dispatch);
     fetchLink(getLinkElectrical, dispatch);
-    fetchType(getTypeElectrical, dispatch);
+    fetchType(getTypeElectrical, dispatch, "ESC005");
     fetchMaintenance(getMaintenanceElectrical, dispatch);
   }, []);
 

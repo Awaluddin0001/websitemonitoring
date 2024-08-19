@@ -205,7 +205,7 @@ export default function ElectricalCubicleAdd() {
     fetchBrand(getBrandElectrical, dispatch);
     fetchVendor(getVendorElectrical, dispatch);
     fetchLink(getLinkElectrical, dispatch);
-    fetchType(getTypeElectrical, dispatch);
+    fetchType(getTypeElectrical, dispatch, "ESC002");
     fetchMaintenance(getMaintenanceElectrical, dispatch);
   }, []);
 

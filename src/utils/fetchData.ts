@@ -77,7 +77,7 @@ export const fetchMaintenance = async (
 };
 export const fetchLink = async (getLink: any, dispatch: any) => {
   try {
-    const data = await getLink(dispatch);
+    const data = await getLink("1", dispatch, null, "no");
     const selectOptions = data.data.map((item: any) => ({
       value: item.id,
       label: item.id,
@@ -87,15 +87,18 @@ export const fetchLink = async (getLink: any, dispatch: any) => {
     dispatch({ type: "SET_IS_ERROR", payload: "Failed to fetch links" });
   }
 };
-export const fetchType = async (getType: any, dispatch: any) => {
+export const fetchType = async (getType: any, dispatch: any, id: any) => {
   try {
     const data = await getType("1", dispatch, null, "no");
-    const selectOptions = data.data.map((item: any) => ({
+    const filterData = data.data.filter(
+      (item: any) => item.sub_category_id === id
+    );
+    const selectOptions = filterData.map((item: any) => ({
       value: item.id,
       label: item.name,
     }));
     dispatch({ type: "LIST_TYPES", payload: selectOptions });
   } catch (err) {
-    dispatch({ type: "SET_IS_ERROR", payload: "Failed to fetch links" });
+    dispatch({ type: "SET_IS_ERROR", payload: "Failed to fetch Types" });
   }
 };

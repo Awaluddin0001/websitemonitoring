@@ -28,10 +28,7 @@ import {
   getFilteredRowModel,
 } from "@tanstack/react-table";
 import HomeModal from "@/components/modal/HomeModal";
-import {
-  electricalListButtons,
-  networkListButtons,
-} from "@/routes/dapotCategory";
+import { networkListButtons } from "@/routes/dapotCategory";
 import { Rectifier } from "@/types/electricalTypes";
 import { renderPagination } from "@/components/table/RenderPagination";
 export default function NetworkComputer() {

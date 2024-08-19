@@ -212,7 +212,7 @@ export default function ElectricalRectifierAdd() {
     fetchBrand(getBrandElectrical, dispatch);
     fetchVendor(getVendorElectrical, dispatch);
     fetchLink(getLinkElectrical, dispatch);
-    fetchType(getTypeElectrical, dispatch);
+    fetchType(getTypeElectrical, dispatch, "ESC006");
     fetchMaintenance(getMaintenanceElectrical, dispatch);
   }, []);
 

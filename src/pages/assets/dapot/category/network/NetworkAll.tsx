@@ -15,10 +15,7 @@ import noData from "@/assets/lottie/noData.json";
 import LoadingFetch from "@/components/loading/LoadingFetch";
 import ErrorFetch from "@/components/error/ErrorFetch";
 import DapotButtonsCategory from "@/components/dapotFilter/DapotButtonsCategory";
-import {
-  electricalListButtons,
-  networkListButtons,
-} from "@/routes/dapotCategory";
+import { networkListButtons } from "@/routes/dapotCategory";
 import { renderPagination } from "@/components/table/RenderPagination";
 import { Network } from "@/types/networkTypes";
 import { getNetworks } from "@/services/network/dapotNetwork";

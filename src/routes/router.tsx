@@ -7,48 +7,14 @@ import Thermal from "@/pages/monitoring/Thermal";
 import Fire from "@/pages/monitoring/Fire";
 import Bbm from "@/pages/monitoring/Bbm";
 import Assets from "@/pages/assets/Assets";
-import NewBrandAirConditioning from "@/pages/assets/dapot/brand/air_conditioning/NewBrandAirConditioning";
+
 import NewBrandElectrical from "@/pages/assets/dapot/brand/electrical/NewBrandElectrical";
-import NewBrandExtinguish from "@/pages/assets/dapot/brand/extinguish/NewBrandExtinguish";
-import NewBrandFurniture from "@/pages/assets/dapot/brand/furniture/NewBrandFurniture";
-import NewBrandFluidTank from "@/pages/assets/dapot/brand/fluid/NewBrandFluidTank";
-import NewBrandLighting from "@/pages/assets/dapot/brand/lighting/NewBrandLighting";
-import NewBrandNetworkIt from "@/pages/assets/dapot/brand/network/NewBrandNetworkIt";
-import NewBrandPump from "@/pages/assets/dapot/brand/pump/NewBrandPump";
-import NewBrandSafety from "@/pages/assets/dapot/brand/safety/NewBrandSafety";
-import NewBrandSecurity from "@/pages/assets/dapot/brand/security/NewBrandSecurity";
-import ListBrandAirConditioning from "@/pages/assets/dapot/brand/air_conditioning/ListBrandAirConditioning";
 import ListBrandElectrical from "@/pages/assets/dapot/brand/electrical/ListBrandElectrical";
-import ListBrandExtinguish from "@/pages/assets/dapot/brand/extinguish/ListBrandExtinguish";
-import ListBrandFluidTank from "@/pages/assets/dapot/brand/fluid/ListBrandFluidTank";
-import ListBrandFurniture from "@/pages/assets/dapot/brand/furniture/ListBrandFurniture";
-import ListBrandLighting from "@/pages/assets/dapot/brand/lighting/ListBrandLighting";
-import ListBrandNetworkIt from "@/pages/assets/dapot/brand/network/ListBrandNetworkIt";
-import ListBrandPump from "@/pages/assets/dapot/brand/pump/ListBrandPump";
-import ListBrandSafety from "@/pages/assets/dapot/brand/safety/ListBrandSafety";
-import ListBrandSecurity from "@/pages/assets/dapot/brand/security/ListBrandSecurity";
-import NewVendorAirConditioning from "@/pages/assets/dapot/vendor/air_conditioning/NewVendorAirConditioning";
-import NewVendorConveyance from "@/pages/assets/dapot/vendor/conveyance/NewVendorConveyance";
 import NewVendorElectrical from "@/pages/assets/dapot/vendor/electrical/NewVendorElectrical";
-import NewVendorExtinguish from "@/pages/assets/dapot/vendor/extinguish/NewVendorExtinguish";
-import NewVendorFinishing from "@/pages/assets/dapot/vendor/finishing_building/NewVendorFinishing";
-import NewVendorFluidTank from "@/pages/assets/dapot/vendor/fluid/NewVendorFluidTank";
-import NewVendorNetworkIt from "@/pages/assets/dapot/vendor/network/NewVendorNetworkIt";
-import NewVendorPump from "@/pages/assets/dapot/vendor/pump/NewVendorPump";
-import NewVendorSafety from "@/pages/assets/dapot/vendor/safety/NewVendorSafety";
-import NewVendorSecurity from "@/pages/assets/dapot/vendor/security/NewVendorSecurity";
-import ListVendorAirConditioning from "@/pages/assets/dapot/vendor/air_conditioning/ListVendorAirConditioning";
-import ListVendorConveyance from "@/pages/assets/dapot/vendor/conveyance/ListVendorConveyance";
+
 import ListVendorElectrical from "@/pages/assets/dapot/vendor/electrical/ListVendorElectrical";
-import ListVendorExtinguish from "@/pages/assets/dapot/vendor/extinguish/ListVendorExtinguish";
-import ListVendorFinishing from "@/pages/assets/dapot/vendor/finishing_building/ListVendorFinishing";
-import ListVendorFluidTank from "@/pages/assets/dapot/vendor/fluid/ListVendorFluidTank";
-import ListVendorNetworkIt from "@/pages/assets/dapot/vendor/network/ListVendorNetworkIt";
-import ListVendorPump from "@/pages/assets/dapot/vendor/pump/ListVendorPump";
-import ListVendorSafety from "@/pages/assets/dapot/vendor/safety/ListVendorSafety";
-import ListVendorSecurity from "@/pages/assets/dapot/vendor/security/ListVendorSecurity";
+
 import AssetListBrand from "@/pages/assets/dapot/AssetsListBrand";
-import AssetListVendor from "@/pages/assets/dapot/AssetsListVendor";
 import AssetsList from "@/pages/assets/AssetsList";
 import AssetListCategory from "@/pages/assets/dapot/AssetsListCategory";
 import SpaceList from "@/pages/assets/space/SpaceList";
@@ -181,10 +147,6 @@ export const router = createBrowserRouter([
         element: <AssetListBrand />,
       },
       {
-        path: "assets/datapotensi/brand/add/airconditioning/:type",
-        element: <NewBrandAirConditioning />,
-      },
-      {
         path: "assets/datapotensi/brand/add/electrical",
         element: <NewBrandElectrical />,
       },
@@ -192,77 +154,10 @@ export const router = createBrowserRouter([
         path: "assets/datapotensi/brand/update/electrical",
         element: <UpdateBrandElectrical />,
       },
-      {
-        path: "assets/datapotensi/brand/add/extinguish/:type",
-        element: <NewBrandExtinguish />,
-      },
-      {
-        path: "assets/datapotensi/brand/add/furniture/:type",
-        element: <NewBrandFurniture />,
-      },
-      {
-        path: "assets/datapotensi/brand/add/fluidtank/:type",
-        element: <NewBrandFluidTank />,
-      },
-      {
-        path: "assets/datapotensi/brand/add/lighting/:type",
-        element: <NewBrandLighting />,
-      },
-      {
-        path: "assets/datapotensi/brand/add/networkit/:type",
-        element: <NewBrandNetworkIt />,
-      },
-      {
-        path: "assets/datapotensi/brand/add/pump/:type",
-        element: <NewBrandPump />,
-      },
-      {
-        path: "assets/datapotensi/brand/add/safety/:type",
-        element: <NewBrandSafety />,
-      },
-      {
-        path: "assets/datapotensi/brand/add/security/:type",
-        element: <NewBrandSecurity />,
-      },
-      {
-        path: "assets/datapotensi/brand/list/airconditioning",
-        element: <ListBrandAirConditioning />,
-      },
+
       {
         path: "assets/datapotensi/brand/list/electrical",
         element: <ListBrandElectrical />,
-      },
-      {
-        path: "assets/datapotensi/brand/list/extinguish",
-        element: <ListBrandExtinguish />,
-      },
-      {
-        path: "assets/datapotensi/brand/list/fluidtank",
-        element: <ListBrandFluidTank />,
-      },
-      {
-        path: "assets/datapotensi/brand/list/furniture",
-        element: <ListBrandFurniture />,
-      },
-      {
-        path: "assets/datapotensi/brand/list/lighting",
-        element: <ListBrandLighting />,
-      },
-      {
-        path: "assets/datapotensi/brand/list/networkit",
-        element: <ListBrandNetworkIt />,
-      },
-      {
-        path: "assets/datapotensi/brand/list/pump",
-        element: <ListBrandPump />,
-      },
-      {
-        path: "assets/datapotensi/brand/list/safety",
-        element: <ListBrandSafety />,
-      },
-      {
-        path: "assets/datapotensi/brand/list/security",
-        element: <ListBrandSecurity />,
       },
       {
         path: "assets/datapotensi/category/",

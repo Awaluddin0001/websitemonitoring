@@ -13,6 +13,7 @@ export const getFloors = async () => {
     const response = await apiClient.get(
       "/api/v1/dapot/position/floors?nopage=yes"
     );
+    console.log("floor", response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching brand floors:", error);
@@ -24,6 +25,7 @@ export const getRooms = async () => {
     const response = await apiClient.get(
       "/api/v1/dapot/position/rooms?nopage=yes"
     );
+    console.log("rooms", response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching brand rooms:", error);

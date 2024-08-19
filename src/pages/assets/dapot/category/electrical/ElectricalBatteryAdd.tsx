@@ -210,7 +210,7 @@ export default function ElectricalBatteryAdd() {
     fetchBrand(getBrandElectrical, dispatch);
     fetchVendor(getVendorElectrical, dispatch);
     fetchLink(getLinkElectrical, dispatch);
-    fetchType(getTypeElectrical, dispatch);
+    fetchType(getTypeElectrical, dispatch, "ESC001");
     fetchMaintenance(getMaintenanceElectrical, dispatch);
   }, []);
 

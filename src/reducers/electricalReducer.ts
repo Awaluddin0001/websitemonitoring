@@ -201,6 +201,13 @@ export function updateRectiReducer(state: ElectricalState, action: ActionType) {
         ...state,
         notes: action.payload,
       };
+    case "FILTER_TYPE":
+      return {
+        ...state,
+        listType: state.listType.filter((item: any) => {
+          return item.sub_category_id === action.payload;
+        }),
+      };
     default:
       throw new Error(`unknown action type: ${action.type}`);
   }

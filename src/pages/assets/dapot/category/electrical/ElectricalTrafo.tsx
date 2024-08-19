@@ -100,8 +100,6 @@ export default function ElectricalTrafo() {
         { accessorKey: "load_current", header: "Load Current" },
         { accessorKey: "installation_date", header: "Installation Date" },
         { accessorKey: "maintenance_date", header: "Maintenance Date" },
-        { accessorKey: "remark_aging", header: "Remark Aging" },
-        { accessorKey: "warranty", header: "Garansi" },
         { accessorKey: "incoming", header: "Incoming" },
         { accessorKey: "outgoing", header: "Outgoing" },
         { accessorKey: "condition_asset", header: "Kondisi" },
@@ -172,7 +170,6 @@ export default function ElectricalTrafo() {
         { accessorKey: "load_current", header: "Load Current" },
         { accessorKey: "installation_date", header: "Installation Date" },
         { accessorKey: "maintenance_date", header: "Maintenance Date" },
-        { accessorKey: "remark_aging", header: "Remark Aging" },
         { accessorKey: "created_at", header: "Last Update" },
         { accessorKey: "user_name", header: "Update By" },
         {

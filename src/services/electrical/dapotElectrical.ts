@@ -71,7 +71,6 @@ export const getOneBrandElectrical = async (
         id,
       },
     });
-    console.log(response);
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -168,7 +167,6 @@ export const getOneVendorElectrical = async (
         id,
       },
     });
-    console.log(response);
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -348,7 +346,6 @@ export const getSubCategoriesElectrical = async () => {
     const response = await apiClient.get(
       "/api/v1/dapot/electrical/subcategories?nopage=yes"
     );
-    console.log(response);
     return response.data;
   } catch (error) {
     console.error("Error fetching brand floors:", error);
@@ -395,7 +392,6 @@ export const getOneMaintenanceElectrical = async (
         },
       }
     );
-    console.log(response);
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -407,7 +403,6 @@ export const postMaintenanceElectrical = async (
   dispatch: (dispatch: any) => void
 ) => {
   setLoadingAndError(dispatch);
-  console.log(data.get("activity"));
   try {
     const response = await apiClient.post(
       "/api/v1/dapot/electrical/maintenance",
@@ -428,7 +423,6 @@ export const updateMaintenanceElectrical = async (
   dispatch: (dispatch: any) => void
 ) => {
   setLoadingAndError(dispatch);
-  console.log(data.get("id"));
   try {
     const response = await apiClient.put(
       "/api/v1/dapot/electrical/maintenance?id=" + data.get("id"),
@@ -477,6 +471,7 @@ export const getLinkElectrical = async (
         nopage,
       },
     });
+
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -498,6 +493,47 @@ export const postLinkElectrical = async (
       outgoing,
       user_id,
     });
+    return handleResponse(response, dispatch);
+  } catch (error) {
+    handleError(error, dispatch);
+  }
+};
+
+export const updateLinkElectrical = async (
+  incoming: string,
+  outgoing: string,
+  id: string,
+  dispatch: (dispatch: any) => void
+) => {
+  setLoadingAndError(dispatch);
+  const userData: any = localStorage.getItem("user");
+  const jsonuserData = JSON.parse(userData);
+  const user_id = jsonuserData.id;
+  try {
+    const response = await apiClient.put(
+      "/api/v1/dapot/electrical/link?id=" + id,
+      {
+        incoming,
+        outgoing,
+        user_id,
+      }
+    );
+    return handleResponse(response, dispatch);
+  } catch (error) {
+    handleError(error, dispatch);
+  }
+};
+
+export const deleteLinkElectrical = async (
+  dispatch: (dispatch: any) => void,
+  deviceid: string,
+  asset_id: string
+) => {
+  setLoadingAndError(dispatch);
+  try {
+    const response = await apiClient.delete(
+      `/api/v1/dapot/electrical/link?id=${deviceid}&assetid=${asset_id}`
+    );
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);

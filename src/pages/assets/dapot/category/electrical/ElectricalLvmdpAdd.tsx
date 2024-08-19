@@ -197,7 +197,7 @@ export default function ElectricalLvmdpAdd() {
     fetchRoom(getRooms, dispatch);
     fetchVendor(getVendorElectrical, dispatch);
     fetchLink(getLinkElectrical, dispatch);
-    fetchType(getTypeElectrical, dispatch);
+    fetchType(getTypeElectrical, dispatch, "ESC004");
     fetchMaintenance(getMaintenanceElectrical, dispatch);
   }, []);
 

@@ -243,7 +243,7 @@ export default function ElectricalTrafoUpdate() {
     fetchRoom(getRooms, dispatch);
     fetchVendor(getVendorElectrical, dispatch);
     fetchLink(getLinkElectrical, dispatch);
-    fetchType(getTypeElectrical, dispatch);
+    fetchType(getTypeElectrical, dispatch, "ESC007");
     fetchMaintenance(getMaintenanceElectrical, dispatch);
   }, []);
 
