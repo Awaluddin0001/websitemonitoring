@@ -91,7 +91,6 @@ export default function ElectricalLvmdp() {
         { accessorKey: "floor_name", header: "Lantai" },
         { accessorKey: "room_name", header: "Ruangan" },
         { accessorKey: "vendor_name", header: "Vendor" },
-        { accessorKey: "brand_name", header: "Brand" },
         { accessorKey: "name", header: "Name" },
         { accessorKey: "type_name", header: "Type" },
         { accessorKey: "voltage_level", header: "Voltage Level" },
@@ -162,7 +161,6 @@ export default function ElectricalLvmdp() {
           ),
         },
         { accessorKey: "vendor_name", header: "Vendor" },
-        { accessorKey: "brand_name", header: "Brand" },
         { accessorKey: "name", header: "Name" },
         { accessorKey: "type_name", header: "Type" },
         { accessorKey: "voltage_level", header: "Voltage Level" },
@@ -271,107 +269,110 @@ export default function ElectricalLvmdp() {
             exportCsv={exportLvmdpsCsv}
             exportXlsx={exportLvmdpsXlsx}
           />
-          <div className={styles.tableWrapper}>
-            <DapotButtonsCategory
-              listpages={electricalListButtons}
-              subCategory="electrical"
-            />
-            {lvmdps.length > 0 ? (
-              <div className={styles.tableDetail}>
-                <table
-                  className={styles.assetTable}
-                  {...{
-                    style: {
-                      width: positionColumn && table.getCenterTotalSize() / 1.5,
-                    },
-                  }}
-                >
-                  <thead>
-                    {table.getHeaderGroups().map((headerGroup) => (
-                      <tr key={headerGroup.id}>
-                        {headerGroup.headers.map((header) => {
-                          return (
-                            <th
-                              key={header.id}
-                              className={`${styles.sticky} ${styles.stickyHeader}`}
-                              colSpan={header.colSpan}
-                              style={{
-                                width:
-                                  header.getSize() !== 150
-                                    ? header.getSize()
-                                    : "auto",
-                              }}
-                            >
-                              {flexRender(
-                                header.column.columnDef.header,
-                                header.getContext()
-                              )}
-                              <div
-                                {...{
-                                  onDoubleClick: () =>
-                                    header.column.resetSize(),
-                                  onMouseDown: header.getResizeHandler(),
-                                  onTouchStart: header.getResizeHandler(),
-                                  className: `resizer ${
-                                    table.options.columnResizeDirection
-                                  } ${
-                                    header.column.getIsResizing()
-                                      ? "isResizing"
-                                      : ""
-                                  }`,
+          <div className={styles.tableSeal}>
+            <div className={styles.tableWrapper}>
+              <DapotButtonsCategory
+                listpages={electricalListButtons}
+                subCategory="electrical"
+              />
+              {lvmdps.length > 0 ? (
+                <div className={styles.tableDetail}>
+                  <table
+                    className={styles.assetTable}
+                    {...{
+                      style: {
+                        width:
+                          positionColumn && table.getCenterTotalSize() / 1.5,
+                      },
+                    }}
+                  >
+                    <thead>
+                      {table.getHeaderGroups().map((headerGroup) => (
+                        <tr key={headerGroup.id}>
+                          {headerGroup.headers.map((header) => {
+                            return (
+                              <th
+                                key={header.id}
+                                className={`${styles.sticky} ${styles.stickyHeader}`}
+                                colSpan={header.colSpan}
+                                style={{
+                                  width:
+                                    header.getSize() !== 150
+                                      ? header.getSize()
+                                      : "auto",
                                 }}
-                              />
-                            </th>
-                          );
-                        })}
-                      </tr>
-                    ))}
-                  </thead>
-                  <tbody>
-                    {table.getRowModel().rows.map((row) => (
-                      <tr key={row.id}>
-                        {row.getVisibleCells().map((cell, ind) => {
-                          return (
-                            <td
-                              key={cell.id}
-                              style={{
-                                background:
-                                  row.index % 2 !== 0 ? "#ffd1d1" : "",
-                                borderBottomLeftRadius:
-                                  row.index === lvmdps.length - 1 && ind === 0
-                                    ? "10px"
-                                    : undefined,
-                                borderBottomRightRadius:
-                                  row.index === lvmdps.length - 1 &&
-                                  ind === row.getVisibleCells().length - 1
-                                    ? "10px"
-                                    : undefined,
-                              }}
-                            >
-                              {flexRender(
-                                cell.column.columnDef.cell,
-                                cell.getContext()
-                              )}
-                            </td>
-                          );
-                        })}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-                {renderPagination(pagination, pageHandle, styles)}
-              </div>
-            ) : (
-              <div className={styles.noData}>
-                <Lottie
-                  animationData={noData}
-                  loop={true}
-                  style={{ height: "590px" }}
-                />
-                <p>Belum Ada Data Yang Tersedia</p>
-              </div>
-            )}
+                              >
+                                {flexRender(
+                                  header.column.columnDef.header,
+                                  header.getContext()
+                                )}
+                                <div
+                                  {...{
+                                    onDoubleClick: () =>
+                                      header.column.resetSize(),
+                                    onMouseDown: header.getResizeHandler(),
+                                    onTouchStart: header.getResizeHandler(),
+                                    className: `resizer ${
+                                      table.options.columnResizeDirection
+                                    } ${
+                                      header.column.getIsResizing()
+                                        ? "isResizing"
+                                        : ""
+                                    }`,
+                                  }}
+                                />
+                              </th>
+                            );
+                          })}
+                        </tr>
+                      ))}
+                    </thead>
+                    <tbody>
+                      {table.getRowModel().rows.map((row) => (
+                        <tr key={row.id}>
+                          {row.getVisibleCells().map((cell, ind) => {
+                            return (
+                              <td
+                                key={cell.id}
+                                style={{
+                                  background:
+                                    row.index % 2 !== 0 ? "#ffd1d1" : "",
+                                  borderBottomLeftRadius:
+                                    row.index === lvmdps.length - 1 && ind === 0
+                                      ? "10px"
+                                      : undefined,
+                                  borderBottomRightRadius:
+                                    row.index === lvmdps.length - 1 &&
+                                    ind === row.getVisibleCells().length - 1
+                                      ? "10px"
+                                      : undefined,
+                                }}
+                              >
+                                {flexRender(
+                                  cell.column.columnDef.cell,
+                                  cell.getContext()
+                                )}
+                              </td>
+                            );
+                          })}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              ) : (
+                <div className={styles.noData}>
+                  <Lottie
+                    animationData={noData}
+                    loop={true}
+                    style={{ height: "590px" }}
+                  />
+                  <p>Belum Ada Data Yang Tersedia</p>
+                </div>
+              )}
+            </div>
           </div>
+          {renderPagination(pagination, pageHandle, styles)}
           <HomeModal display={isShowModal} action={setIsShowModal}>
             <div
               style={{

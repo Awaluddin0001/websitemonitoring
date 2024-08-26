@@ -1,28 +1,26 @@
 import { ActionType } from "@/types/basicTypes";
 import {
-  NetworkAllListState,
-  NetworkBrandListState,
-  NetworkComputerListState,
-  NetWorkComputerState,
-  NetworkLinkListState,
-  NetworkMaintenanceListState,
-  NetworkOtherScListState,
-  NetWorkOtherScState,
-  NetworkRackServerListState,
-  NetWorkRackServerState,
-  NetworkStorageListState,
-  NetWorkStorageState,
-  NetworkTypeListState,
-  NetworkVendorListState,
-  PostNetworkBand,
-  PostNetworkLink,
-  PostNetworkMaintenance,
-  PostNetworkType,
-  PostNetworkVendor,
-} from "@/types/networkTypes";
+  PostSecurityBand,
+  PostSecurityLink,
+  PostSecurityMaintenance,
+  PostSecurityType,
+  PostSecurityVendor,
+  SecurityAllListState,
+  SecurityBrandListState,
+  SecurityCctvListState,
+  SecurityCctvState,
+  SecurityLinkListState,
+  SecurityMaintenanceListState,
+  SecurityOtherScListState,
+  SecurityOtherScState,
+  SecurityTypeListState,
+  SecurityVendorListState,
+  SecurityVideoRecordingListState,
+  SecurityVideoRecordingState,
+} from "@/types/securityTypes";
 
-export const initialStateNetworkAllList: NetworkAllListState = {
-  networks: [],
+export const initialStateSecurityAllList: SecurityAllListState = {
+  securitys: [],
   pagination: {
     currentPage: 1,
     pageSize: 10,
@@ -37,13 +35,13 @@ export const initialStateNetworkAllList: NetworkAllListState = {
   exportToggle: false,
 };
 
-export const updateNetworkAllReducer = (
-  state: NetworkAllListState,
+export const updateSecurityAllReducer = (
+  state: SecurityAllListState,
   action: ActionType
 ) => {
   switch (action.type) {
-    case "SET_NETWORKS":
-      return { ...state, networks: action.payload };
+    case "SET_SECURITYS":
+      return { ...state, securitys: action.payload };
     case "SET_PAGINATION":
       return { ...state, pagination: action.payload };
     case "SET_IS_LOADING":
@@ -63,9 +61,9 @@ export const updateNetworkAllReducer = (
   }
 };
 
-// computer
+// cctv
 
-export const initialStateComputer: NetWorkComputerState = {
+export const initialStateCctv: SecurityCctvState = {
   // Value
   asset_id: "",
   ne_id: "",
@@ -77,17 +75,8 @@ export const initialStateComputer: NetWorkComputerState = {
   vendor_phone: "",
   maintenance_id: { value: "", label: "" },
   link_id: { value: "", label: "" },
-  display: "",
-  keyboard: "",
-  mouse: "",
-  motherboard: "",
-  case: "",
-  processor: "",
-  vga: "",
-  hardisk: "",
-  ram: "",
-  cooling: "",
-  power_supply: "",
+  manufactur: "",
+  ip: "",
   installation_date: `${new Date()}`,
   condition_asset: "",
   status: "",
@@ -118,8 +107,8 @@ export const initialStateComputer: NetWorkComputerState = {
   photo3: "",
 };
 
-export function updateComputerReducer(
-  state: NetWorkComputerState,
+export function updateCctvReducer(
+  state: SecurityCctvState,
   action: ActionType
 ) {
   switch (action.type) {
@@ -139,28 +128,10 @@ export function updateComputerReducer(
       return { ...state, maintenance_id: action.payload };
     case "SET_LINK_ID":
       return { ...state, link_id: action.payload };
-    case "SET_DISPLAY":
-      return { ...state, display: action.payload };
-    case "SET_KEYBOARD":
-      return { ...state, keyboard: action.payload };
-    case "SET_MOUSE":
-      return { ...state, mouse: action.payload };
-    case "SET_MOTHERBOARD":
-      return { ...state, motherboard: action.payload };
-    case "SET_CASE":
-      return { ...state, case: action.payload };
-    case "SET_PROCESSOR":
-      return { ...state, processor: action.payload };
-    case "SET_VGA":
-      return { ...state, vga: action.payload };
-    case "SET_HARDISK":
-      return { ...state, hardisk: action.payload };
-    case "SET_RAM":
-      return { ...state, ram: action.payload };
-    case "SET_COOLING":
-      return { ...state, cooling: action.payload };
-    case "SET_POWER_SUPPLY":
-      return { ...state, power_supply: action.payload };
+    case "SET_MANUFACTUR":
+      return { ...state, manufactur: action.payload };
+    case "SET_IP":
+      return { ...state, ip: action.payload };
     case "SET_INSTALLATION_DATE":
       return { ...state, installation_date: action.payload };
     case "LIST_VENDOR":
@@ -194,7 +165,7 @@ export function updateComputerReducer(
       return { ...state, listMaintenance: action.payload };
     case "LIST_LINK":
       return { ...state, listLink: action.payload };
-    case "GET_COMPUTER":
+    case "GET_CCTV":
       return { ...state, ...action.payload };
     case "SET_IS_LOADING":
       return { ...state, isLoading: action.payload };
@@ -243,8 +214,8 @@ export function updateComputerReducer(
   }
 }
 
-export const initialStateListComputer: NetworkComputerListState = {
-  computers: [],
+export const initialStateListCctv: SecurityCctvListState = {
+  cctvs: [],
   pagination: {
     currentPage: 1,
     pageSize: 10,
@@ -259,13 +230,13 @@ export const initialStateListComputer: NetworkComputerListState = {
   exportToggle: false,
 };
 
-export function listComputerReducer(
-  state: NetworkComputerListState,
+export function listCctvReducer(
+  state: SecurityCctvListState,
   action: ActionType
 ) {
   switch (action.type) {
-    case "SET_COMPUTERS":
-      return { ...state, computers: action.payload };
+    case "SET_CCTVS":
+      return { ...state, cctvs: action.payload };
     case "SET_PAGINATION":
       return { ...state, pagination: action.payload };
     case "SET_IS_LOADING":
@@ -289,43 +260,33 @@ export function listComputerReducer(
   }
 }
 
-// Rack Server
+// Video Recording
 
-export const initialStateRackServer: NetWorkRackServerState = {
+export const initialStateVideorecording: SecurityVideoRecordingState = {
   // Value
   asset_id: "",
   ne_id: "",
   site_id: { value: "", label: "" },
   floor_id: { value: "", label: "" },
   room_id: { value: "", label: "" },
-  brand_id: { value: "", label: "" },
   vendor_id: { value: "", label: "" },
   vendor_user_name: "",
   vendor_phone: "",
   maintenance_id: { value: "", label: "" },
   link_id: { value: "", label: "" },
-  manufactur: "",
-  capacity: "",
-  port: "",
-  case_pc: "",
-  rack_sn: "",
-  kvm_id: "",
-  power: "",
+  ip: "",
   installation_date: `${new Date()}`,
   condition_asset: "",
   status: "",
   notes: "",
-
   // List
   listVendor: [],
-  listBrand: [],
   listSite: [{ value: "UPD057", label: "TTC PENGAYOMAN" }],
   listFloors: [],
   listRooms: [],
   listAllRooms: [],
   listMaintenance: [],
   listLink: [],
-  listType: [],
 
   //   FOR COMPONENT
   isLoading: false,
@@ -344,8 +305,8 @@ export const initialStateRackServer: NetWorkRackServerState = {
   photo3: "",
 };
 
-export function updateRackServerReducer(
-  state: NetWorkRackServerState,
+export function updateVideorecordingReducer(
+  state: SecurityVideoRecordingState,
   action: ActionType
 ) {
   switch (action.type) {
@@ -365,20 +326,9 @@ export function updateRackServerReducer(
       return { ...state, maintenance_id: action.payload };
     case "SET_LINK_ID":
       return { ...state, link_id: action.payload };
-    case "SET_MANUFACTUR":
-      return { ...state, manufactur: action.payload };
-    case "SET_CAPACITY":
-      return { ...state, capacity: action.payload };
-    case "SET_PORT":
-      return { ...state, port: action.payload };
-    case "SET_CASE_PC":
-      return { ...state, case_pc: action.payload };
-    case "SET_RACK_SN":
-      return { ...state, rack_sn: action.payload };
-    case "SET_KVM_ID":
-      return { ...state, kvm_id: action.payload };
-    case "SET_POWER":
-      return { ...state, power: action.payload };
+
+    case "SET_IP":
+      return { ...state, ip: action.payload };
     case "SET_INSTALLATION_DATE":
       return { ...state, installation_date: action.payload };
     case "LIST_VENDOR":
@@ -412,7 +362,7 @@ export function updateRackServerReducer(
       return { ...state, listMaintenance: action.payload };
     case "LIST_LINK":
       return { ...state, listLink: action.payload };
-    case "GET_RACKSERVER":
+    case "GET_VIDEORECORDING":
       return { ...state, ...action.payload };
     case "SET_IS_LOADING":
       return { ...state, isLoading: action.payload };
@@ -461,8 +411,8 @@ export function updateRackServerReducer(
   }
 }
 
-export const initialStateListRackServer: NetworkRackServerListState = {
-  rackservers: [],
+export const initialStateListVideorecording: SecurityVideoRecordingListState = {
+  videorecordings: [],
   pagination: {
     currentPage: 1,
     pageSize: 10,
@@ -477,234 +427,13 @@ export const initialStateListRackServer: NetworkRackServerListState = {
   exportToggle: false,
 };
 
-export function listRackServerReducer(
-  state: NetworkRackServerListState,
+export function listVideorecordingReducer(
+  state: SecurityVideoRecordingListState,
   action: ActionType
 ) {
   switch (action.type) {
-    case "SET_RACKSERVERS":
-      return { ...state, rackservers: action.payload };
-    case "SET_PAGINATION":
-      return { ...state, pagination: action.payload };
-    case "SET_IS_LOADING":
-      return { ...state, isLoading: action.payload };
-    case "SET_IS_ERROR":
-      return { ...state, isError: action.payload };
-    case "SET_LOADING_AND_ERROR":
-      return {
-        ...state,
-        isLoading: action.payload.isLoading,
-        isError: action.payload.isError,
-      };
-    case "SET_GLOBAL_FILTER":
-      return { ...state, globalFilter: action.payload };
-    case "SET_POSITION_COLUMN":
-      return { ...state, positionColumn: action.payload };
-    case "SET_EXPORT_TOGGLE":
-      return { ...state, exportToggle: action.payload };
-    default:
-      throw new Error(`unknown action type: ${action.type}`);
-  }
-}
-
-// Storage
-
-export const initialStateStorage: NetWorkStorageState = {
-  // Value
-  asset_id: "",
-  ne_id: "",
-  site_id: { value: "", label: "" },
-  floor_id: { value: "", label: "" },
-  room_id: { value: "", label: "" },
-  brand_id: { value: "", label: "" },
-  vendor_id: { value: "", label: "" },
-  vendor_user_name: "",
-  vendor_phone: "",
-  maintenance_id: { value: "", label: "" },
-  link_id: { value: "", label: "" },
-  rack_server_id: { value: "", label: "" },
-  name: "",
-  manufactur: "",
-  capacity: "",
-  port: "",
-  power: "",
-  position_unit: "",
-  installation_date: `${new Date()}`,
-  condition_asset: "",
-  status: "",
-  notes: "",
-
-  // List
-  listVendor: [],
-  listBrand: [],
-  listSite: [{ value: "UPD057", label: "TTC PENGAYOMAN" }],
-  listFloors: [],
-  listRooms: [],
-  listAllRooms: [],
-  listMaintenance: [],
-  listLink: [],
-  listType: [],
-  listRackServer: [],
-
-  //   FOR COMPONENT
-  isLoading: false,
-  isError: "",
-
-  //   FOR FILE
-  selectedFiles: { file1: null, file2: null, file3: null },
-  errorMessagesFiles: { file1: null, file2: null, file3: null },
-  maintenance_date: "",
-  maintenance_activity: "",
-  link_in: "",
-  link_out: [""],
-  document_name: "",
-  photo1: "",
-  photo2: "",
-  photo3: "",
-};
-
-export function updateStorageReducer(
-  state: NetWorkStorageState,
-  action: ActionType
-) {
-  switch (action.type) {
-    case "SET_NE_ID":
-      return { ...state, ne_id: action.payload };
-    case "SET_SITE_ID":
-      return { ...state, site_id: action.payload };
-    case "SET_FLOOR_ID":
-      return { ...state, floor_id: action.payload };
-    case "SET_ROOM_ID":
-      return { ...state, room_id: action.payload };
-    case "SET_BRAND_ID":
-      return { ...state, brand_id: action.payload };
-    case "SET_VENDOR_ID":
-      return { ...state, vendor_id: action.payload };
-    case "SET_MAINTENANCE_ID":
-      return { ...state, maintenance_id: action.payload };
-    case "SET_LINK_ID":
-      return { ...state, link_id: action.payload };
-    case "SET_RACK_SERVER_ID":
-      return { ...state, rack_server_id: action.payload };
-    case "SET_NAME":
-      return { ...state, name: action.payload };
-    case "SET_MANUFACTUR":
-      return { ...state, manufactur: action.payload };
-    case "SET_CAPACITY":
-      return { ...state, capacity: action.payload };
-    case "SET_PORT":
-      return { ...state, port: action.payload };
-    case "SET_POSITION_UNIT":
-      return { ...state, position_unit: action.payload };
-    case "SET_POWER":
-      return { ...state, power: action.payload };
-    case "SET_INSTALLATION_DATE":
-      return { ...state, installation_date: action.payload };
-    case "LIST_VENDOR":
-      return { ...state, listVendor: action.payload };
-    case "LIST_BRAND":
-      return { ...state, listBrand: action.payload };
-    case "LIST_SITE":
-      return { ...state, listSite: action.payload };
-    case "LIST_FLOORS":
-      return { ...state, listFloors: action.payload };
-    case "FETCH_ROOMS":
-      return {
-        ...state,
-        listRooms: action.payload.listRooms,
-        listAllRooms: action.payload.listAllRooms,
-      };
-    case "LIST_ROOMS":
-      return { ...state, listRooms: action.payload };
-    case "LIST_TYPES":
-      return { ...state, listType: action.payload };
-    case "LIST_RACK_SERVER":
-      return { ...state, listRackServer: action.payload };
-    case "LIST_ALL_ROOMS":
-      return { ...state, listAllRooms: action.payload };
-    case "FLOOR_CHANGE":
-      return {
-        ...state,
-        floor_id: action.payload.floor_id,
-        room_id: action.payload.room_id,
-        listRooms: action.payload.listRooms,
-      };
-    case "LIST_MAINTENANCE":
-      return { ...state, listMaintenance: action.payload };
-    case "LIST_LINK":
-      return { ...state, listLink: action.payload };
-    case "GET_STORAGE":
-      return { ...state, ...action.payload };
-    case "SET_IS_LOADING":
-      return { ...state, isLoading: action.payload };
-    case "SET_IS_ERROR":
-      return { ...state, isError: action.payload };
-    case "SET_LOADING_AND_ERROR":
-      return {
-        ...state,
-        isLoading: action.payload.isLoading,
-        isError: action.payload.isError,
-      };
-
-    case "SET_SELECTED_ERROR_FILES":
-      return {
-        ...state,
-        errorMessagesFiles: {
-          ...state.errorMessagesFiles,
-          [action.payload.key]: action.payload.error,
-        },
-      };
-    case "SET_SELECTED_FILES":
-      return {
-        ...state,
-        selectedFiles: {
-          ...state.selectedFiles,
-          [action.payload.key]: action.payload.file,
-        },
-      };
-    case "SET_CONDITION":
-      return {
-        ...state,
-        condition_asset: action.payload,
-      };
-    case "SET_STATUS":
-      return {
-        ...state,
-        status: action.payload,
-      };
-    case "SET_NOTES":
-      return {
-        ...state,
-        notes: action.payload,
-      };
-    default:
-      throw new Error(`unknown action type: ${action.type}`);
-  }
-}
-
-export const initialStateListStorage: NetworkStorageListState = {
-  storages: [],
-  pagination: {
-    currentPage: 1,
-    pageSize: 10,
-    totalPages: 1,
-    totalRows: 0,
-  },
-
-  isLoading: false,
-  isError: null,
-  globalFilter: "",
-  positionColumn: false,
-  exportToggle: false,
-};
-
-export function listStorageReducer(
-  state: NetworkRackServerListState,
-  action: ActionType
-) {
-  switch (action.type) {
-    case "SET_STORAGES":
-      return { ...state, storages: action.payload };
+    case "SET_VIDEORECORDINGS":
+      return { ...state, videorecordings: action.payload };
     case "SET_PAGINATION":
       return { ...state, pagination: action.payload };
     case "SET_IS_LOADING":
@@ -730,42 +459,30 @@ export function listStorageReducer(
 
 // other sc
 
-export const initialStateOtherSc: NetWorkOtherScState = {
+export const initialStateOsc: SecurityOtherScState = {
   // Value
   asset_id: "",
   ne_id: "",
   site_id: { value: "", label: "" },
   floor_id: { value: "", label: "" },
   room_id: { value: "", label: "" },
-  brand_id: { value: "", label: "" },
   vendor_id: { value: "", label: "" },
   vendor_user_name: "",
   vendor_phone: "",
   maintenance_id: { value: "", label: "" },
   link_id: { value: "", label: "" },
-  rack_server_id: { value: "", label: "" },
-  name: "",
-  manufactur: "",
-  position_unit: "",
-  capacity_port: "",
-  port: "",
-  power: "",
   installation_date: `${new Date()}`,
   condition_asset: "",
   status: "",
   notes: "",
-
   // List
   listVendor: [],
-  listBrand: [],
   listSite: [{ value: "UPD057", label: "TTC PENGAYOMAN" }],
   listFloors: [],
   listRooms: [],
   listAllRooms: [],
   listMaintenance: [],
   listLink: [],
-  listType: [],
-  listRackServer: [],
 
   //   FOR COMPONENT
   isLoading: false,
@@ -783,8 +500,9 @@ export const initialStateOtherSc: NetWorkOtherScState = {
   photo2: "",
   photo3: "",
 };
-export function updateOtherScReducer(
-  state: NetWorkOtherScState,
+
+export function updateOscReducer(
+  state: SecurityOtherScState,
   action: ActionType
 ) {
   switch (action.type) {
@@ -804,20 +522,9 @@ export function updateOtherScReducer(
       return { ...state, maintenance_id: action.payload };
     case "SET_LINK_ID":
       return { ...state, link_id: action.payload };
-    case "SET_RACK_SERVER_ID":
-      return { ...state, rack_server_id: action.payload };
-    case "SET_NAME":
-      return { ...state, name: action.payload };
-    case "SET_MANUFACTUR":
-      return { ...state, manufactur: action.payload };
-    case "SET_CAPACITY":
-      return { ...state, capacity: action.payload };
-    case "SET_PORT":
-      return { ...state, port: action.payload };
-    case "SET_POSITION_UNIT":
-      return { ...state, position_unit: action.payload };
-    case "SET_POWER":
-      return { ...state, power: action.payload };
+
+    case "SET_IP":
+      return { ...state, ip: action.payload };
     case "SET_INSTALLATION_DATE":
       return { ...state, installation_date: action.payload };
     case "LIST_VENDOR":
@@ -838,8 +545,6 @@ export function updateOtherScReducer(
       return { ...state, listRooms: action.payload };
     case "LIST_TYPES":
       return { ...state, listType: action.payload };
-    case "LIST_RACK_SERVER":
-      return { ...state, listRackServer: action.payload };
     case "LIST_ALL_ROOMS":
       return { ...state, listAllRooms: action.payload };
     case "FLOOR_CHANGE":
@@ -853,7 +558,7 @@ export function updateOtherScReducer(
       return { ...state, listMaintenance: action.payload };
     case "LIST_LINK":
       return { ...state, listLink: action.payload };
-    case "GET_OTHERSC":
+    case "GET_OSC":
       return { ...state, ...action.payload };
     case "SET_IS_LOADING":
       return { ...state, isLoading: action.payload };
@@ -902,7 +607,7 @@ export function updateOtherScReducer(
   }
 }
 
-export const initialStateListOtherSc: NetworkOtherScListState = {
+export const initialStateListOsc: SecurityOtherScListState = {
   oscs: [],
   pagination: {
     currentPage: 1,
@@ -918,12 +623,12 @@ export const initialStateListOtherSc: NetworkOtherScListState = {
   exportToggle: false,
 };
 
-export function listOtherScReducer(
-  state: NetworkRackServerListState,
+export function listOscReducer(
+  state: SecurityOtherScListState,
   action: ActionType
 ) {
   switch (action.type) {
-    case "SET_OTHERSCS":
+    case "SET_OSCS":
       return { ...state, oscs: action.payload };
     case "SET_PAGINATION":
       return { ...state, pagination: action.payload };
@@ -949,24 +654,25 @@ export function listOtherScReducer(
 }
 
 // maintenance
-export const initialStateListMaintenanceNetwork: NetworkMaintenanceListState = {
-  maintenances: [],
-  pagination: {
-    currentPage: 1,
-    pageSize: 10,
-    totalPages: 1,
-    totalRows: 0,
-  },
+export const initialStateListMaintenanceSecurity: SecurityMaintenanceListState =
+  {
+    maintenances: [],
+    pagination: {
+      currentPage: 1,
+      pageSize: 10,
+      totalPages: 1,
+      totalRows: 0,
+    },
 
-  isLoading: false,
-  isError: null,
-  globalFilter: "",
-  positionColumn: false,
-  exportToggle: false,
-};
+    isLoading: false,
+    isError: null,
+    globalFilter: "",
+    positionColumn: false,
+    exportToggle: false,
+  };
 
-export function listMaintenanceNetworkReducer(
-  state: NetworkMaintenanceListState,
+export function listMaintenanceSecurityReducer(
+  state: SecurityMaintenanceListState,
   action: ActionType
 ) {
   switch (action.type) {
@@ -991,7 +697,7 @@ export function listMaintenanceNetworkReducer(
   }
 }
 
-export const initialStateUpdateNetworkMaintenance: PostNetworkMaintenance = {
+export const initialStateUpdateSecurityMaintenance: PostSecurityMaintenance = {
   activity: "",
   isLoading: false,
   isError: null,
@@ -1001,8 +707,8 @@ export const initialStateUpdateNetworkMaintenance: PostNetworkMaintenance = {
   },
 };
 
-export function updateNetworkMaintenanceReducer(
-  state: PostNetworkMaintenance,
+export function updateSecurityMaintenanceReducer(
+  state: PostSecurityMaintenance,
   action: ActionType
 ) {
   switch (action.type) {
@@ -1037,7 +743,7 @@ export function updateNetworkMaintenanceReducer(
 }
 
 // Link
-export const initialStateListLinkNetwork: NetworkLinkListState = {
+export const initialStateListLinkSecurity: SecurityLinkListState = {
   links: [],
   pagination: {
     currentPage: 1,
@@ -1053,8 +759,8 @@ export const initialStateListLinkNetwork: NetworkLinkListState = {
   exportToggle: false,
 };
 
-export function listLinkNetworkReducer(
-  state: NetworkLinkListState,
+export function listLinkSecurityReducer(
+  state: SecurityLinkListState,
   action: ActionType
 ) {
   switch (action.type) {
@@ -1079,16 +785,16 @@ export function listLinkNetworkReducer(
   }
 }
 
-export const initialStateUpdateNetworkLink: PostNetworkLink = {
+export const initialStateUpdateSecurityLink: PostSecurityLink = {
   incoming: { value: "", label: "" },
   outgoing: [],
-  list_network: [],
+  list_security: [],
   isLoading: false,
   isError: null,
 };
 
-export function updateNetworkLinkReducer(
-  state: PostNetworkLink,
+export function updateSecurityLinkReducer(
+  state: PostSecurityLink,
   action: ActionType
 ) {
   switch (action.type) {
@@ -1106,8 +812,8 @@ export function updateNetworkLinkReducer(
       return { ...state, isLoading: action.payload };
     case "SET_IS_ERROR":
       return { ...state, isError: action.payload };
-    case "LIST_NETWORK":
-      return { ...state, list_network: action.payload };
+    case "LIST_SECURITY":
+      return { ...state, list_security: action.payload };
     case "SET_LOADING_AND_ERROR":
       return {
         ...state,
@@ -1126,7 +832,7 @@ export function updateNetworkLinkReducer(
 
 // brand
 
-export const initialStateListBrandNetwork: NetworkBrandListState = {
+export const initialStateListBrandSecurity: SecurityBrandListState = {
   brands: [],
   pagination: {
     currentPage: 1,
@@ -1142,8 +848,8 @@ export const initialStateListBrandNetwork: NetworkBrandListState = {
   exportToggle: false,
 };
 
-export function listBrandNetworkReducer(
-  state: NetworkBrandListState,
+export function listBrandSecurityReducer(
+  state: SecurityBrandListState,
   action: ActionType
 ) {
   switch (action.type) {
@@ -1168,14 +874,14 @@ export function listBrandNetworkReducer(
   }
 }
 
-export const initialStateUpdateNetworkBrand: PostNetworkBand = {
+export const initialStateUpdateSecurityBrand: PostSecurityBand = {
   name: "",
   isLoading: false,
   isError: null,
 };
 
-export function updateNetworkBrandReducer(
-  state: PostNetworkBand,
+export function updateSecurityBrandReducer(
+  state: PostSecurityBand,
   action: ActionType
 ) {
   switch (action.type) {
@@ -1198,7 +904,7 @@ export function updateNetworkBrandReducer(
 
 // vendor
 
-export const initialStateListVendorNetwork: NetworkVendorListState = {
+export const initialStateListVendorSecurity: SecurityVendorListState = {
   vendors: [],
   pagination: {
     currentPage: 1,
@@ -1214,8 +920,8 @@ export const initialStateListVendorNetwork: NetworkVendorListState = {
   exportToggle: false,
 };
 
-export function listVendorNetworkReducer(
-  state: NetworkVendorListState,
+export function listVendorSecurityReducer(
+  state: SecurityVendorListState,
   action: ActionType
 ) {
   switch (action.type) {
@@ -1240,7 +946,7 @@ export function listVendorNetworkReducer(
   }
 }
 
-export const initialStateUpdateNetworkVendor: PostNetworkVendor = {
+export const initialStateUpdateSecurityVendor: PostSecurityVendor = {
   company: "",
   company_user_name: "",
   number_phone: "",
@@ -1248,8 +954,8 @@ export const initialStateUpdateNetworkVendor: PostNetworkVendor = {
   isError: null,
 };
 
-export function updateNetworkVendorReducer(
-  state: PostNetworkVendor,
+export function updateSecurityVendorReducer(
+  state: PostSecurityVendor,
   action: ActionType
 ) {
   switch (action.type) {
@@ -1282,7 +988,7 @@ export function updateNetworkVendorReducer(
 }
 
 // type
-export const initialStateListTypeNetwork: NetworkTypeListState = {
+export const initialStateListTypeSecurity: SecurityTypeListState = {
   types: [],
   pagination: {
     currentPage: 1,
@@ -1298,8 +1004,8 @@ export const initialStateListTypeNetwork: NetworkTypeListState = {
   exportToggle: false,
 };
 
-export function listTypeNetworkReducer(
-  state: NetworkTypeListState,
+export function listTypeSecurityReducer(
+  state: SecurityTypeListState,
   action: ActionType
 ) {
   switch (action.type) {
@@ -1324,7 +1030,7 @@ export function listTypeNetworkReducer(
   }
 }
 
-export const initialStateUpdateNetworkType: PostNetworkType = {
+export const initialStateUpdateSecurityType: PostSecurityType = {
   name: "",
   sub_category_id: { value: "", label: "" },
   list_sub_category: [],
@@ -1332,8 +1038,8 @@ export const initialStateUpdateNetworkType: PostNetworkType = {
   isError: null,
 };
 
-export function updateNetworkTypeReducer(
-  state: PostNetworkType,
+export function updateSecurityTypeReducer(
+  state: PostSecurityType,
   action: ActionType
 ) {
   switch (action.type) {

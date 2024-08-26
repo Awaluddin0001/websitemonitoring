@@ -164,7 +164,7 @@ export default function ElectricalGensetUpdate() {
     formData.append("foto2", selectedFiles.file2 as File);
     formData.append("foto3", selectedFiles.file3 as File);
     formData.append("user_id", user_id);
-    formData.append("sub_category_id", "ESC001");
+    formData.append("sub_category_id", "ESC003");
     formData.append("ne_id", ne_id);
     formData.append("site_id", site_id.value || "");
     formData.append("floor_id", floor_id.value || "");

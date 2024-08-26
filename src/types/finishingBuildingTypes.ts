@@ -1,5 +1,5 @@
 import { ReactSelect } from "@/types/basicTypes";
-export interface Network {
+export interface FinishingBuilding {
   id: string;
   ne_id: string;
   site_id: string;
@@ -12,9 +12,6 @@ export interface Network {
   device_id: string;
   sub_category_id: string;
   sub_category_name: string;
-  link_id: string;
-  status: string;
-  condition_asset: string;
   notes: string;
   installation_date: string;
   maintenance_id: string;
@@ -23,8 +20,8 @@ export interface Network {
   user_name: string;
 }
 
-export type NetworkAllListState = {
-  networks: Network[];
+export type FinishingBuildingAllListState = {
+  finishingbuildings: FinishingBuilding[];
   pagination: {
     currentPage: number;
     pageSize: number;
@@ -41,24 +38,16 @@ export type NetworkAllListState = {
   exportToggle: boolean;
 };
 
-// computer
+// Building Finishes
 
-export interface Computer {
+export interface Cat1 {
   asset_id: string;
   id: string;
   vendor_id: string;
   vendor_name: string;
-  display: string;
-  keyboard: string;
-  mouse: string;
-  motherboard: string;
-  case: string;
-  processor: string;
-  vga: string;
-  hardisk: string;
-  ram: string;
-  cooling: string;
-  power_supply: string;
+  good: number;
+  broke: number;
+  amount: number;
   installation_date: string;
   maintenance_id: string | null;
   maintenance_date: string | null;
@@ -67,7 +56,7 @@ export interface Computer {
   user_name: string;
 }
 
-interface NetworkComputer {
+interface FinishingBuildingCat1 {
   asset_id: string;
   ne_id: string;
   site_id: ReactSelect;
@@ -75,25 +64,16 @@ interface NetworkComputer {
   room_id: ReactSelect;
   vendor_id: ReactSelect;
   maintenance_id: ReactSelect;
-  link_id: ReactSelect;
-  display: string;
-  keyboard: string;
-  mouse: string;
-  motherboard: string;
-  case: string;
-  processor: string;
-  vga: string;
-  hardisk: string;
-  ram: string;
-  cooling: string;
-  power_supply: string;
+  good: number;
+  broke: number;
+  amount: number;
   installation_date: string;
   condition_asset: string;
   status: string;
   notes: string;
 }
 
-export interface NetWorkComputerState extends NetworkComputer {
+export interface FinishingBuildingCat1State extends FinishingBuildingCat1 {
   // List
   listVendor: any[];
   listSite: any[];
@@ -101,7 +81,6 @@ export interface NetWorkComputerState extends NetworkComputer {
   listRooms: any[];
   listAllRooms: any[];
   listMaintenance: any[];
-  listLink: any[];
 
   //   FOR COMPONENT
   isLoading: boolean;
@@ -122,16 +101,14 @@ export interface NetWorkComputerState extends NetworkComputer {
   vendor_user_name?: string;
   maintenance_date?: string;
   maintenance_activity?: string;
-  link_in?: string;
-  link_out?: string[];
   document_name?: string;
   photo1?: string;
   photo2?: string;
   photo3?: string;
 }
 
-export type NetworkComputerListState = {
-  computers: NetworkComputer[];
+export type FinishingBuildingCat1ListState = {
+  finishingbuildingcat1s: FinishingBuildingCat1[];
   pagination: {
     currentPage: number;
     pageSize: number;
@@ -148,21 +125,15 @@ export type NetworkComputerListState = {
   exportToggle: boolean;
 };
 
-// Rack Server
-export interface RackServer {
+export interface Ceramic {
   asset_id: string;
   id: string;
   vendor_id: string;
   vendor_name: string;
-  brand_id: string;
-  brand_name: string;
-  manufactur: string;
-  capacity: string;
-  port: string;
-  case_pc: string;
-  rack_sn: string;
-  kvm_id: string;
-  power: string;
+  rise: number;
+  good: number;
+  broke: number;
+  amount: number;
   installation_date: string;
   maintenance_id: string | null;
   maintenance_date: string | null;
@@ -171,40 +142,33 @@ export interface RackServer {
   user_name: string;
 }
 
-interface NetworkRackServer {
+interface FinishingBuildingCeramic {
   asset_id: string;
   ne_id: string;
   site_id: ReactSelect;
   floor_id: ReactSelect;
   room_id: ReactSelect;
-  brand_id: ReactSelect;
   vendor_id: ReactSelect;
   maintenance_id: ReactSelect;
-  link_id: ReactSelect;
-  manufactur: string;
-  capacity: string;
-  port: string;
-  case_pc: string;
-  rack_sn: string;
-  kvm_id: string;
-  power: string;
+  rise: number;
+  good: number;
+  broke: number;
+  amount: number;
   installation_date: string;
   condition_asset: string;
   status: string;
   notes: string;
 }
 
-export interface NetWorkRackServerState extends NetworkRackServer {
+export interface FinishingBuildingCeramicState
+  extends FinishingBuildingCeramic {
   // List
   listVendor: any[];
-  listBrand: any[];
   listSite: any[];
   listFloors: any[];
   listRooms: any[];
   listAllRooms: any[];
   listMaintenance: any[];
-  listLink: any[];
-  listType: any[];
 
   //   FOR COMPONENT
   isLoading: boolean;
@@ -225,16 +189,14 @@ export interface NetWorkRackServerState extends NetworkRackServer {
   vendor_user_name?: string;
   maintenance_date?: string;
   maintenance_activity?: string;
-  link_in?: string;
-  link_out?: string[];
   document_name?: string;
   photo1?: string;
   photo2?: string;
   photo3?: string;
 }
 
-export type NetworkRackServerListState = {
-  rackservers: NetworkRackServer[];
+export type FinishingBuildingCeramicListState = {
+  finishingbuildingceramics: FinishingBuildingCeramic[];
   pagination: {
     currentPage: number;
     pageSize: number;
@@ -251,21 +213,12 @@ export type NetworkRackServerListState = {
   exportToggle: boolean;
 };
 
-// storage
-export interface Storage {
+export interface Cat2 {
   asset_id: string;
   id: string;
   vendor_id: string;
   vendor_name: string;
-  brand_id: string;
-  brand_name: string;
-  rack_server_id: string;
-  name: string;
-  manufactur: string;
-  position_unit: string;
-  capacity: string;
-  port: string;
-  power: string;
+  color: string;
   installation_date: string;
   maintenance_id: string | null;
   maintenance_date: string | null;
@@ -274,41 +227,29 @@ export interface Storage {
   user_name: string;
 }
 
-interface NetworkStorage {
+interface FinishingBuildingCat2 {
   asset_id: string;
   ne_id: string;
   site_id: ReactSelect;
   floor_id: ReactSelect;
   room_id: ReactSelect;
-  brand_id: ReactSelect;
   vendor_id: ReactSelect;
   maintenance_id: ReactSelect;
-  link_id: ReactSelect;
-  rack_server_id: ReactSelect;
-  name: string;
-  manufactur: string;
-  position_unit: string;
-  capacity: string;
-  port: string;
-  power: string;
+  color: string;
   installation_date: string;
   condition_asset: string;
   status: string;
   notes: string;
 }
 
-export interface NetWorkStorageState extends NetworkStorage {
+export interface FinishingBuildingCat2State extends FinishingBuildingCat2 {
   // List
   listVendor: any[];
-  listBrand: any[];
   listSite: any[];
   listFloors: any[];
   listRooms: any[];
   listAllRooms: any[];
   listMaintenance: any[];
-  listLink: any[];
-  listType: any[];
-  listRackServer: any[];
 
   //   FOR COMPONENT
   isLoading: boolean;
@@ -329,119 +270,14 @@ export interface NetWorkStorageState extends NetworkStorage {
   vendor_user_name?: string;
   maintenance_date?: string;
   maintenance_activity?: string;
-  link_in?: string;
-  link_out?: string[];
   document_name?: string;
   photo1?: string;
   photo2?: string;
   photo3?: string;
 }
 
-export type NetworkStorageListState = {
-  storages: NetworkStorage[];
-  pagination: {
-    currentPage: number;
-    pageSize: number;
-    totalPages: number;
-    totalRows: number;
-  };
-  //   FOR COMPONENT
-  isLoading: boolean;
-  isError: string | null;
-  globalFilter: string;
-
-  // FOR TABLE
-  positionColumn: boolean;
-  exportToggle: boolean;
-};
-
-export interface OtherSCNetwork {
-  asset_id: string;
-  id: string;
-  vendor_id: string;
-  vendor_name: string;
-  brand_id: string;
-  brand_name: string;
-  rack_server_id: string;
-  name: string;
-  manufactur: string;
-  position_unit: string;
-  capacity_port: string;
-  port: string;
-  power: string;
-  installation_date: string;
-  maintenance_id: string | null;
-  maintenance_date: string | null;
-  created_at: string;
-  user_id: string;
-  user_name: string;
-}
-
-interface NetworkOtherSc {
-  asset_id: string;
-  ne_id: string;
-  site_id: ReactSelect;
-  floor_id: ReactSelect;
-  room_id: ReactSelect;
-  brand_id: ReactSelect;
-  vendor_id: ReactSelect;
-  maintenance_id: ReactSelect;
-  link_id: ReactSelect;
-  rack_server_id: ReactSelect;
-  name: string;
-  manufactur: string;
-  position_unit: string;
-  capacity_port: string;
-  port: string;
-  power: string;
-  installation_date: string;
-  condition_asset: string;
-  status: string;
-  notes: string;
-}
-
-export interface NetWorkOtherScState extends NetworkOtherSc {
-  // List
-  listVendor: any[];
-  listBrand: any[];
-  listSite: any[];
-  listFloors: any[];
-  listRooms: any[];
-  listAllRooms: any[];
-  listMaintenance: any[];
-  listLink: any[];
-  listType: any[];
-  listRackServer: any[];
-
-  //   FOR COMPONENT
-  isLoading: boolean;
-  isError: string | null;
-
-  //   FOR FILE
-  selectedFiles: {
-    file1: File | null;
-    file2: File | null;
-    file3: File | null;
-  };
-  errorMessagesFiles: {
-    file1: null;
-    file2: null;
-    file3: null;
-  };
-  vendor_phone?: string;
-  vendor_user_name?: string;
-  maintenance_date?: string;
-  maintenance_activity?: string;
-  link_in?: string;
-  link_out?: string[];
-  document_name?: string;
-  photo1?: string;
-  photo2?: string;
-  photo3?: string;
-}
-
-export type NetworkOtherScListState = {
-  oscs: NetworkOtherSc[];
+export type FinishingBuildingCat2ListState = {
+  finishingbuildingcat2s: FinishingBuildingCat2[];
   pagination: {
     currentPage: number;
     pageSize: number;
@@ -460,21 +296,21 @@ export type NetworkOtherScListState = {
 
 // brand
 
-export type NetworkBrand = {
+export type FinishingBuildingBrand = {
   id: string;
   name: string;
   created_at: string;
   user_name: string;
 };
 
-export type PostNetworkBand = {
+export type PostFinishingBuildingBrand = {
   name: string;
   isLoading: boolean;
   isError: string | null;
 };
 
-export type NetworkBrandListState = {
-  brands: NetworkBrand[];
+export type FinishingBuildingBrandListState = {
+  brands: FinishingBuildingBrand[];
   pagination: {
     currentPage: number;
     pageSize: number;
@@ -493,7 +329,7 @@ export type NetworkBrandListState = {
 
 // vendor
 
-export type NetworkVendor = {
+export type FinishingBuildingVendor = {
   id: string;
   company: string;
   company_user_name: string;
@@ -502,8 +338,8 @@ export type NetworkVendor = {
   user_name: string;
 };
 
-export type NetworkVendorListState = {
-  vendors: NetworkVendor[];
+export type FinishingBuildingVendorListState = {
+  vendors: FinishingBuildingVendor[];
   pagination: {
     currentPage: number;
     pageSize: number;
@@ -520,7 +356,7 @@ export type NetworkVendorListState = {
   exportToggle: boolean;
 };
 
-export type PostNetworkVendor = {
+export type PostFinishingBuildingVendor = {
   company: string;
   company_user_name: string;
   number_phone: string;
@@ -529,7 +365,7 @@ export type PostNetworkVendor = {
 };
 
 // type
-export type NetworkType = {
+export type FinishingBuildingType = {
   id: string;
   name: string;
   sub_category_id: string;
@@ -537,8 +373,8 @@ export type NetworkType = {
   user_name: string;
 };
 
-export type NetworkTypeListState = {
-  types: NetworkType[];
+export type FinishingBuildingTypeListState = {
+  types: FinishingBuildingType[];
   pagination: {
     currentPage: number;
     pageSize: number;
@@ -555,7 +391,7 @@ export type NetworkTypeListState = {
   exportToggle: boolean;
 };
 
-export type PostNetworkType = {
+export type PostFinishingBuildingType = {
   name: string;
   sub_category_id: ReactSelect;
   isLoading: boolean;
@@ -564,7 +400,7 @@ export type PostNetworkType = {
 };
 
 // Maintenance
-export type NetworkMaintenance = {
+export type FinishingBuildingMaintenance = {
   id: string;
   activity: string;
   document_name: string;
@@ -572,8 +408,8 @@ export type NetworkMaintenance = {
   user_name: string;
 };
 
-export type NetworkMaintenanceListState = {
-  maintenances: NetworkMaintenance[];
+export type FinishingBuildingMaintenanceListState = {
+  maintenances: FinishingBuildingMaintenance[];
   pagination: {
     currentPage: number;
     pageSize: number;
@@ -590,7 +426,7 @@ export type NetworkMaintenanceListState = {
   exportToggle: boolean;
 };
 
-export type PostNetworkMaintenance = {
+export type PostFinishingBuildingMaintenance = {
   activity: string;
   isLoading: boolean;
   isError: string | null;
@@ -599,39 +435,4 @@ export type PostNetworkMaintenance = {
   selectedFiles: {
     file1: File | null;
   };
-};
-
-// link
-export type NetworkLink = {
-  id: string;
-  incoming: string;
-  outgoing: string;
-  created_at: string;
-  user_name: string;
-};
-
-export type NetworkLinkListState = {
-  links: NetworkType[];
-  pagination: {
-    currentPage: number;
-    pageSize: number;
-    totalPages: number;
-    totalRows: number;
-  };
-
-  //   FOR COMPONENT
-  isLoading: boolean;
-  isError: string | null;
-  globalFilter: string;
-
-  positionColumn: boolean;
-  exportToggle: boolean;
-};
-
-export type PostNetworkLink = {
-  incoming: ReactSelect;
-  outgoing: ReactSelect[];
-  list_network: any[];
-  isLoading: boolean;
-  isError: string | null;
 };

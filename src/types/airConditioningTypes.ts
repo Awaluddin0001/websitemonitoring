@@ -1,5 +1,5 @@
 import { ReactSelect } from "@/types/basicTypes";
-export interface Network {
+export interface Airconditioning {
   id: string;
   ne_id: string;
   site_id: string;
@@ -12,8 +12,9 @@ export interface Network {
   device_id: string;
   sub_category_id: string;
   sub_category_name: string;
-  link_id: string;
   status: string;
+  amount: number;
+  warranty: string;
   condition_asset: string;
   notes: string;
   installation_date: string;
@@ -23,8 +24,8 @@ export interface Network {
   user_name: string;
 }
 
-export type NetworkAllListState = {
-  networks: Network[];
+export type AirconditioningAllListState = {
+  airconditionings: Airconditioning[];
   pagination: {
     currentPage: number;
     pageSize: number;
@@ -41,127 +42,19 @@ export type NetworkAllListState = {
   exportToggle: boolean;
 };
 
-// computer
+// Air Device
 
-export interface Computer {
+export interface AirDevice {
   asset_id: string;
   id: string;
   vendor_id: string;
+  type_id: string;
   vendor_name: string;
-  display: string;
-  keyboard: string;
-  mouse: string;
-  motherboard: string;
-  case: string;
-  processor: string;
-  vga: string;
-  hardisk: string;
-  ram: string;
-  cooling: string;
-  power_supply: string;
-  installation_date: string;
-  maintenance_id: string | null;
-  maintenance_date: string | null;
-  created_at: string;
-  user_id: string;
-  user_name: string;
-}
-
-interface NetworkComputer {
-  asset_id: string;
-  ne_id: string;
-  site_id: ReactSelect;
-  floor_id: ReactSelect;
-  room_id: ReactSelect;
-  vendor_id: ReactSelect;
-  maintenance_id: ReactSelect;
-  link_id: ReactSelect;
-  display: string;
-  keyboard: string;
-  mouse: string;
-  motherboard: string;
-  case: string;
-  processor: string;
-  vga: string;
-  hardisk: string;
-  ram: string;
-  cooling: string;
-  power_supply: string;
-  installation_date: string;
-  condition_asset: string;
-  status: string;
-  notes: string;
-}
-
-export interface NetWorkComputerState extends NetworkComputer {
-  // List
-  listVendor: any[];
-  listSite: any[];
-  listFloors: any[];
-  listRooms: any[];
-  listAllRooms: any[];
-  listMaintenance: any[];
-  listLink: any[];
-
-  //   FOR COMPONENT
-  isLoading: boolean;
-  isError: string | null;
-
-  //   FOR FILE
-  selectedFiles: {
-    file1: File | null;
-    file2: File | null;
-    file3: File | null;
-  };
-  errorMessagesFiles: {
-    file1: null;
-    file2: null;
-    file3: null;
-  };
-  vendor_phone?: string;
-  vendor_user_name?: string;
-  maintenance_date?: string;
-  maintenance_activity?: string;
-  link_in?: string;
-  link_out?: string[];
-  document_name?: string;
-  photo1?: string;
-  photo2?: string;
-  photo3?: string;
-}
-
-export type NetworkComputerListState = {
-  computers: NetworkComputer[];
-  pagination: {
-    currentPage: number;
-    pageSize: number;
-    totalPages: number;
-    totalRows: number;
-  };
-  //   FOR COMPONENT
-  isLoading: boolean;
-  isError: string | null;
-  globalFilter: string;
-
-  // FOR TABLE
-  positionColumn: boolean;
-  exportToggle: boolean;
-};
-
-// Rack Server
-export interface RackServer {
-  asset_id: string;
-  id: string;
-  vendor_id: string;
-  vendor_name: string;
-  brand_id: string;
-  brand_name: string;
-  manufactur: string;
-  capacity: string;
-  port: string;
-  case_pc: string;
-  rack_sn: string;
-  kvm_id: string;
+  amount: number;
+  warranty: string;
+  name: string;
+  air_flow: string;
+  speed: string;
   power: string;
   installation_date: string;
   maintenance_id: string | null;
@@ -171,22 +64,20 @@ export interface RackServer {
   user_name: string;
 }
 
-interface NetworkRackServer {
+interface AirConditioningAirDevice {
   asset_id: string;
   ne_id: string;
   site_id: ReactSelect;
   floor_id: ReactSelect;
   room_id: ReactSelect;
-  brand_id: ReactSelect;
   vendor_id: ReactSelect;
   maintenance_id: ReactSelect;
-  link_id: ReactSelect;
-  manufactur: string;
-  capacity: string;
-  port: string;
-  case_pc: string;
-  rack_sn: string;
-  kvm_id: string;
+  type_id: ReactSelect;
+  amount: number;
+  warranty: string;
+  name: string;
+  air_flow: string;
+  speed: string;
   power: string;
   installation_date: string;
   condition_asset: string;
@@ -194,16 +85,15 @@ interface NetworkRackServer {
   notes: string;
 }
 
-export interface NetWorkRackServerState extends NetworkRackServer {
+export interface AirConditioningAirDeviceState
+  extends AirConditioningAirDevice {
   // List
   listVendor: any[];
-  listBrand: any[];
   listSite: any[];
   listFloors: any[];
   listRooms: any[];
   listAllRooms: any[];
   listMaintenance: any[];
-  listLink: any[];
   listType: any[];
 
   //   FOR COMPONENT
@@ -225,16 +115,14 @@ export interface NetWorkRackServerState extends NetworkRackServer {
   vendor_user_name?: string;
   maintenance_date?: string;
   maintenance_activity?: string;
-  link_in?: string;
-  link_out?: string[];
   document_name?: string;
   photo1?: string;
   photo2?: string;
   photo3?: string;
 }
 
-export type NetworkRackServerListState = {
-  rackservers: NetworkRackServer[];
+export type AirConditioningAirDeviceListState = {
+  airdevices: AirConditioningAirDevice[];
   pagination: {
     currentPage: number;
     pageSize: number;
@@ -251,20 +139,19 @@ export type NetworkRackServerListState = {
   exportToggle: boolean;
 };
 
-// storage
-export interface Storage {
+// Cooling Device
+
+export interface CoolingDevice {
   asset_id: string;
   id: string;
   vendor_id: string;
   vendor_name: string;
-  brand_id: string;
-  brand_name: string;
-  rack_server_id: string;
+  type_id: string;
+  amount: number;
+  warranty: string;
   name: string;
-  manufactur: string;
-  position_unit: string;
-  capacity: string;
-  port: string;
+  air_flow: string;
+  speed: string;
   power: string;
   installation_date: string;
   maintenance_id: string | null;
@@ -274,41 +161,43 @@ export interface Storage {
   user_name: string;
 }
 
-interface NetworkStorage {
+interface AirConditioningCoolingDevice {
   asset_id: string;
   ne_id: string;
   site_id: ReactSelect;
   floor_id: ReactSelect;
   room_id: ReactSelect;
-  brand_id: ReactSelect;
   vendor_id: ReactSelect;
   maintenance_id: ReactSelect;
-  link_id: ReactSelect;
-  rack_server_id: ReactSelect;
+  type_id: ReactSelect;
+  amount: number;
+  warranty: string;
   name: string;
   manufactur: string;
-  position_unit: string;
-  capacity: string;
-  port: string;
+  indoor_sn: string;
+  type_indoor: string;
+  outdoor_sn: string;
+  type_outdoor: string;
   power: string;
+  paard_kracht: string;
+  btu_hour: string;
+  refrigerant: string;
   installation_date: string;
   condition_asset: string;
   status: string;
   notes: string;
 }
 
-export interface NetWorkStorageState extends NetworkStorage {
+export interface AirConditioningCoolingDeviceState
+  extends AirConditioningCoolingDevice {
   // List
   listVendor: any[];
-  listBrand: any[];
   listSite: any[];
   listFloors: any[];
   listRooms: any[];
   listAllRooms: any[];
   listMaintenance: any[];
-  listLink: any[];
   listType: any[];
-  listRackServer: any[];
 
   //   FOR COMPONENT
   isLoading: boolean;
@@ -329,16 +218,14 @@ export interface NetWorkStorageState extends NetworkStorage {
   vendor_user_name?: string;
   maintenance_date?: string;
   maintenance_activity?: string;
-  link_in?: string;
-  link_out?: string[];
   document_name?: string;
   photo1?: string;
   photo2?: string;
   photo3?: string;
 }
 
-export type NetworkStorageListState = {
-  storages: NetworkStorage[];
+export type AirConditioningCoolingDeviceListState = {
+  coolingdevices: AirConditioningCoolingDevice[];
   pagination: {
     currentPage: number;
     pageSize: number;
@@ -355,19 +242,18 @@ export type NetworkStorageListState = {
   exportToggle: boolean;
 };
 
-export interface OtherSCNetwork {
+// Heating Device
+
+export interface HeatingDevice {
   asset_id: string;
   id: string;
   vendor_id: string;
   vendor_name: string;
-  brand_id: string;
-  brand_name: string;
-  rack_server_id: string;
+  amount: number;
+  warranty: string;
   name: string;
-  manufactur: string;
-  position_unit: string;
-  capacity_port: string;
-  port: string;
+  air_flow: string;
+  speed: string;
   power: string;
   installation_date: string;
   maintenance_id: string | null;
@@ -377,22 +263,17 @@ export interface OtherSCNetwork {
   user_name: string;
 }
 
-interface NetworkOtherSc {
+interface AirConditioningHeatingDevice {
   asset_id: string;
   ne_id: string;
   site_id: ReactSelect;
   floor_id: ReactSelect;
   room_id: ReactSelect;
-  brand_id: ReactSelect;
   vendor_id: ReactSelect;
-  maintenance_id: ReactSelect;
-  link_id: ReactSelect;
-  rack_server_id: ReactSelect;
+  amount: number;
+  warranty: string;
   name: string;
-  manufactur: string;
-  position_unit: string;
-  capacity_port: string;
-  port: string;
+  temperature_max: string;
   power: string;
   installation_date: string;
   condition_asset: string;
@@ -400,18 +281,14 @@ interface NetworkOtherSc {
   notes: string;
 }
 
-export interface NetWorkOtherScState extends NetworkOtherSc {
+export interface AirConditioningHeatingDeviceState
+  extends AirConditioningHeatingDevice {
   // List
   listVendor: any[];
-  listBrand: any[];
   listSite: any[];
   listFloors: any[];
   listRooms: any[];
   listAllRooms: any[];
-  listMaintenance: any[];
-  listLink: any[];
-  listType: any[];
-  listRackServer: any[];
 
   //   FOR COMPONENT
   isLoading: boolean;
@@ -432,16 +309,14 @@ export interface NetWorkOtherScState extends NetworkOtherSc {
   vendor_user_name?: string;
   maintenance_date?: string;
   maintenance_activity?: string;
-  link_in?: string;
-  link_out?: string[];
   document_name?: string;
   photo1?: string;
   photo2?: string;
   photo3?: string;
 }
 
-export type NetworkOtherScListState = {
-  oscs: NetworkOtherSc[];
+export type AirConditioningHeatingDeviceListState = {
+  heatingdevices: AirConditioningHeatingDevice[];
   pagination: {
     currentPage: number;
     pageSize: number;
@@ -460,21 +335,21 @@ export type NetworkOtherScListState = {
 
 // brand
 
-export type NetworkBrand = {
+export type AirconditioningBrand = {
   id: string;
   name: string;
   created_at: string;
   user_name: string;
 };
 
-export type PostNetworkBand = {
+export type PostAirconditioningBand = {
   name: string;
   isLoading: boolean;
   isError: string | null;
 };
 
-export type NetworkBrandListState = {
-  brands: NetworkBrand[];
+export type AirconditioningBrandListState = {
+  brands: AirconditioningBrand[];
   pagination: {
     currentPage: number;
     pageSize: number;
@@ -492,8 +367,7 @@ export type NetworkBrandListState = {
 };
 
 // vendor
-
-export type NetworkVendor = {
+export type AirconditioningVendor = {
   id: string;
   company: string;
   company_user_name: string;
@@ -502,8 +376,8 @@ export type NetworkVendor = {
   user_name: string;
 };
 
-export type NetworkVendorListState = {
-  vendors: NetworkVendor[];
+export type AirconditioningVendorListState = {
+  vendors: AirconditioningVendor[];
   pagination: {
     currentPage: number;
     pageSize: number;
@@ -520,7 +394,7 @@ export type NetworkVendorListState = {
   exportToggle: boolean;
 };
 
-export type PostNetworkVendor = {
+export type PostAirconditioningVendor = {
   company: string;
   company_user_name: string;
   number_phone: string;
@@ -529,7 +403,7 @@ export type PostNetworkVendor = {
 };
 
 // type
-export type NetworkType = {
+export type AirconditioningType = {
   id: string;
   name: string;
   sub_category_id: string;
@@ -537,8 +411,8 @@ export type NetworkType = {
   user_name: string;
 };
 
-export type NetworkTypeListState = {
-  types: NetworkType[];
+export type AirconditioningTypeListState = {
+  types: AirconditioningType[];
   pagination: {
     currentPage: number;
     pageSize: number;
@@ -555,7 +429,7 @@ export type NetworkTypeListState = {
   exportToggle: boolean;
 };
 
-export type PostNetworkType = {
+export type PostAirconditioningType = {
   name: string;
   sub_category_id: ReactSelect;
   isLoading: boolean;
@@ -564,7 +438,7 @@ export type PostNetworkType = {
 };
 
 // Maintenance
-export type NetworkMaintenance = {
+export type AirconditioningMaintenance = {
   id: string;
   activity: string;
   document_name: string;
@@ -572,8 +446,8 @@ export type NetworkMaintenance = {
   user_name: string;
 };
 
-export type NetworkMaintenanceListState = {
-  maintenances: NetworkMaintenance[];
+export type AirconditioningMaintenanceListState = {
+  maintenances: AirconditioningMaintenance[];
   pagination: {
     currentPage: number;
     pageSize: number;
@@ -590,7 +464,7 @@ export type NetworkMaintenanceListState = {
   exportToggle: boolean;
 };
 
-export type PostNetworkMaintenance = {
+export type PostAirconditioningMaintenance = {
   activity: string;
   isLoading: boolean;
   isError: string | null;
@@ -599,39 +473,4 @@ export type PostNetworkMaintenance = {
   selectedFiles: {
     file1: File | null;
   };
-};
-
-// link
-export type NetworkLink = {
-  id: string;
-  incoming: string;
-  outgoing: string;
-  created_at: string;
-  user_name: string;
-};
-
-export type NetworkLinkListState = {
-  links: NetworkType[];
-  pagination: {
-    currentPage: number;
-    pageSize: number;
-    totalPages: number;
-    totalRows: number;
-  };
-
-  //   FOR COMPONENT
-  isLoading: boolean;
-  isError: string | null;
-  globalFilter: string;
-
-  positionColumn: boolean;
-  exportToggle: boolean;
-};
-
-export type PostNetworkLink = {
-  incoming: ReactSelect;
-  outgoing: ReactSelect[];
-  list_network: any[];
-  isLoading: boolean;
-  isError: string | null;
 };

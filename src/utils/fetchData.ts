@@ -90,6 +90,7 @@ export const fetchLink = async (getLink: any, dispatch: any) => {
 export const fetchType = async (getType: any, dispatch: any, id: any) => {
   try {
     const data = await getType("1", dispatch, null, "no");
+    console.log("types", data);
     const filterData = data.data.filter(
       (item: any) => item.sub_category_id === id
     );

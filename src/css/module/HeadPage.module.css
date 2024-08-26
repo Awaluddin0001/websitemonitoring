@@ -6,7 +6,7 @@
 }
 
 .header h1 {
-  font-size: 2.4rem;
+  font-size: 2.2rem;
   font-weight: 600;
 }
 
@@ -27,7 +27,6 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-
   width: 40%;
   gap: 16px;
 }
@@ -40,10 +39,9 @@
   width: 100%;
   color: var(--background1-color);
   border-radius: 10px;
-  padding: 10px 20px 10px 20px;
+  padding: 5px 10px 5px 10px;
   box-shadow: 2px 2px 3px 0px rgba(0, 0, 0, 0.2),
     -2px -2px 3px 0px rgba(252, 159, 159, 0.5);
-  gap: 5px;
 }
 
 .sectionGroupDapot {
@@ -154,7 +152,7 @@
 .actionGroup {
   display: flex;
   flex-direction: row;
-  gap: 8px;
+  gap: 4px 6px;
   width: 0px;
   overflow: hidden;
   justify-content: flex-end;
