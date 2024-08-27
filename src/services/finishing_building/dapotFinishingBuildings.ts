@@ -5,7 +5,7 @@ import {
   setLoadingAndError,
 } from "@/utils/LoadingAndErrorApi";
 
-export const getNetworks = async (
+export const getFinishingbuildings = async (
   page: string | null,
   dispatch: (dispatch: any) => void,
   globalFilter?: string | null,
@@ -13,23 +13,26 @@ export const getNetworks = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/network/all", {
-      params: {
-        page,
-        limit: 15,
-        globalFilter,
-        nopage,
-      },
-    });
+    const response = await apiClient.get(
+      "/api/v1/dapot/finishingbuilding/all",
+      {
+        params: {
+          page,
+          limit: 15,
+          globalFilter,
+          nopage,
+        },
+      }
+    );
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
   }
 };
-export const getNetworksLink = async () => {
+export const getFinishingbuildingsLink = async () => {
   try {
     const response = await apiClient.get(
-      "/api/v1/dapot/network/all?nopage=yes"
+      "/api/v1/dapot/finishingbuilding/all?nopage=yes"
     );
     return response.data;
   } catch (error) {
@@ -38,7 +41,7 @@ export const getNetworksLink = async () => {
   }
 };
 
-export const getBrandNetwork = async (
+export const getBrandFinishingbuilding = async (
   page: string | null,
   dispatch: (dispatch: any) => void,
   globalFilter?: string | null,
@@ -46,31 +49,37 @@ export const getBrandNetwork = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/network/brands", {
-      params: {
-        page,
-        limit: 15,
-        globalFilter,
-        nopage,
-      },
-    });
+    const response = await apiClient.get(
+      "/api/v1/dapot/finishingbuilding/brands",
+      {
+        params: {
+          page,
+          limit: 15,
+          globalFilter,
+          nopage,
+        },
+      }
+    );
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
   }
 };
 
-export const getOneBrandNetwork = async (
+export const getOneBrandFinishingbuilding = async (
   dispatch: (dispatch: any) => void,
   id?: string | null
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/network/brand", {
-      params: {
-        id,
-      },
-    });
+    const response = await apiClient.get(
+      "/api/v1/dapot/finishingbuilding/brand",
+      {
+        params: {
+          id,
+        },
+      }
+    );
     console.log(response);
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -78,7 +87,7 @@ export const getOneBrandNetwork = async (
   }
 };
 
-export const postBrandNetwork = async (
+export const postBrandFinishingbuilding = async (
   name: string,
   dispatch: (dispatch: any) => void
 ) => {
@@ -87,16 +96,19 @@ export const postBrandNetwork = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.post("/api/v1/dapot/network/brand", {
-      name: name,
-      user_id,
-    });
+    const response = await apiClient.post(
+      "/api/v1/dapot/finishingbuilding/brand",
+      {
+        name: name,
+        user_id,
+      }
+    );
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
   }
 };
-export const updateBrandNetwork = async (
+export const updateBrandFinishingbuilding = async (
   name: string,
   id: string,
   dispatch: (dispatch: any) => void
@@ -107,7 +119,7 @@ export const updateBrandNetwork = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.put(
-      "/api/v1/dapot/network/brand?id=" + id,
+      "/api/v1/dapot/finishingbuilding/brand?id=" + id,
       {
         name: name,
         user_id,
@@ -119,7 +131,7 @@ export const updateBrandNetwork = async (
   }
 };
 
-export const deleteNetwork = async (
+export const deleteFinishingbuilding = async (
   dispatch: (dispatch: any) => void,
   deviceid: string,
   asset_id: string
@@ -127,7 +139,7 @@ export const deleteNetwork = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/network/brand?id=${deviceid}&assetid=${asset_id}`
+      `/api/v1/dapot/finishingbuilding/brand?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -135,7 +147,7 @@ export const deleteNetwork = async (
   }
 };
 
-export const getVendorNetwork = async (
+export const getVendorFinishingbuilding = async (
   page: string | null,
   dispatch: (dispatch: any) => void,
   globalFilter?: string | null,
@@ -143,31 +155,37 @@ export const getVendorNetwork = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/network/vendors", {
-      params: {
-        page,
-        limit: 15,
-        globalFilter,
-        nopage,
-      },
-    });
+    const response = await apiClient.get(
+      "/api/v1/dapot/finishingbuilding/vendors",
+      {
+        params: {
+          page,
+          limit: 15,
+          globalFilter,
+          nopage,
+        },
+      }
+    );
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
   }
 };
 
-export const getOneVendorNetwork = async (
+export const getOneVendorFinishingbuilding = async (
   dispatch: (dispatch: any) => void,
   id?: string | null
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/network/vendor", {
-      params: {
-        id,
-      },
-    });
+    const response = await apiClient.get(
+      "/api/v1/dapot/finishingbuilding/vendor",
+      {
+        params: {
+          id,
+        },
+      }
+    );
     console.log(response);
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -175,7 +193,7 @@ export const getOneVendorNetwork = async (
   }
 };
 
-export const postVendorNetwork = async (
+export const postVendorFinishingbuilding = async (
   company: string,
   company_user_name: string,
   number_phone: string,
@@ -186,27 +204,14 @@ export const postVendorNetwork = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.post("/api/v1/dapot/network/vendor", {
-      company,
-      company_user_name,
-      number_phone,
-      user_id,
-    });
-    return handleResponse(response, dispatch);
-  } catch (error) {
-    handleError(error, dispatch);
-  }
-};
-
-export const deleteVendorNetwork = async (
-  dispatch: (dispatch: any) => void,
-  deviceid: string,
-  asset_id: string
-) => {
-  setLoadingAndError(dispatch);
-  try {
-    const response = await apiClient.delete(
-      `/api/v1/dapot/network/vendor?id=${deviceid}&assetid=${asset_id}`
+    const response = await apiClient.post(
+      "/api/v1/dapot/finishingbuilding/vendor",
+      {
+        company,
+        company_user_name,
+        number_phone,
+        user_id,
+      }
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -214,7 +219,23 @@ export const deleteVendorNetwork = async (
   }
 };
 
-export const updateVendorNetwork = async (
+export const deleteVendorFinishingbuilding = async (
+  dispatch: (dispatch: any) => void,
+  deviceid: string,
+  asset_id: string
+) => {
+  setLoadingAndError(dispatch);
+  try {
+    const response = await apiClient.delete(
+      `/api/v1/dapot/finishingbuilding/vendor?id=${deviceid}&assetid=${asset_id}`
+    );
+    return handleResponse(response, dispatch);
+  } catch (error) {
+    handleError(error, dispatch);
+  }
+};
+
+export const updateVendorFinishingbuilding = async (
   company: string,
   company_user_name: string,
   number_phone: string,
@@ -227,7 +248,7 @@ export const updateVendorNetwork = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.put(
-      "/api/v1/dapot/network/vendor?id=" + id,
+      "/api/v1/dapot/finishingbuilding/vendor?id=" + id,
       {
         company,
         company_user_name,
@@ -242,7 +263,7 @@ export const updateVendorNetwork = async (
 };
 
 // type
-export const getTypeNetwork = async (
+export const getTypeFinishingbuilding = async (
   page: string | null,
   dispatch: (dispatch: any) => void,
   globalFilter?: string | null,
@@ -250,38 +271,44 @@ export const getTypeNetwork = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/network/types", {
-      params: {
-        page,
-        limit: 15,
-        globalFilter,
-        nopage,
-      },
-    });
+    const response = await apiClient.get(
+      "/api/v1/dapot/finishingbuilding/types",
+      {
+        params: {
+          page,
+          limit: 15,
+          globalFilter,
+          nopage,
+        },
+      }
+    );
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
   }
 };
 
-export const getOneTypeNetwork = async (
+export const getOneTypeFinishingbuilding = async (
   dispatch: (dispatch: any) => void,
   id?: string | null
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/network/type", {
-      params: {
-        id,
-      },
-    });
+    const response = await apiClient.get(
+      "/api/v1/dapot/finishingbuilding/type",
+      {
+        params: {
+          id,
+        },
+      }
+    );
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
   }
 };
 
-export const postTypeNetwork = async (
+export const postTypeFinishingbuilding = async (
   name: string,
   sub_category_id: string,
   dispatch: (dispatch: any) => void
@@ -291,30 +318,8 @@ export const postTypeNetwork = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.post("/api/v1/dapot/network/type", {
-      name,
-      sub_category_id,
-      user_id,
-    });
-    return handleResponse(response, dispatch);
-  } catch (error) {
-    handleError(error, dispatch);
-  }
-};
-
-export const updateTypeNetwork = async (
-  name: string,
-  sub_category_id: string,
-  id: string,
-  dispatch: (dispatch: any) => void
-) => {
-  setLoadingAndError(dispatch);
-  const userData: any = localStorage.getItem("user");
-  const jsonuserData = JSON.parse(userData);
-  const user_id = jsonuserData.id;
-  try {
-    const response = await apiClient.put(
-      "/api/v1/dapot/network/type?id=" + id,
+    const response = await apiClient.post(
+      "/api/v1/dapot/finishingbuilding/type",
       {
         name,
         sub_category_id,
@@ -327,159 +332,10 @@ export const updateTypeNetwork = async (
   }
 };
 
-export const deleteTypeNetwork = async (
-  dispatch: (dispatch: any) => void,
-  deviceid: string,
-  asset_id: string
-) => {
-  setLoadingAndError(dispatch);
-  try {
-    const response = await apiClient.delete(
-      `/api/v1/dapot/network/type?id=${deviceid}&assetid=${asset_id}`
-    );
-    return handleResponse(response, dispatch);
-  } catch (error) {
-    handleError(error, dispatch);
-  }
-};
-
-export const getSubCategoriesNetwork = async () => {
-  try {
-    const response = await apiClient.get(
-      "/api/v1/dapot/network/subcategories?nopage=yes"
-    );
-    console.log(response);
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching brand floors:", error);
-    throw error;
-  }
-};
-
-export const getMaintenanceNetwork = async (
-  page: string | null,
-  dispatch: (dispatch: any) => void,
-  globalFilter?: string | null,
-  nopage?: string | null
-) => {
-  setLoadingAndError(dispatch);
-  try {
-    const response = await apiClient.get("/api/v1/dapot/network/maintenances", {
-      params: {
-        page,
-        limit: 15,
-        globalFilter,
-        nopage,
-      },
-    });
-    return handleResponse(response, dispatch);
-  } catch (error) {
-    handleError(error, dispatch);
-  }
-};
-
-export const getOneMaintenanceNetwork = async (
-  dispatch: (dispatch: any) => void,
-  id?: string | null
-) => {
-  setLoadingAndError(dispatch);
-  try {
-    const response = await apiClient.get("/api/v1/dapot/network/maintenance", {
-      params: {
-        id,
-      },
-    });
-    console.log(response);
-    return handleResponse(response, dispatch);
-  } catch (error) {
-    handleError(error, dispatch);
-  }
-};
-
-export const postMaintenanceNetwork = async (
-  data: any,
-  dispatch: (dispatch: any) => void
-) => {
-  setLoadingAndError(dispatch);
-  console.log(data.get("activity"));
-  try {
-    const response = await apiClient.post(
-      "/api/v1/dapot/network/maintenance",
-      data,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
-    return handleResponse(response, dispatch);
-  } catch (error) {
-    handleError(error, dispatch);
-  }
-};
-export const updateMaintenanceNetwork = async (
-  data: any,
-  dispatch: (dispatch: any) => void
-) => {
-  setLoadingAndError(dispatch);
-  console.log(data.get("id"));
-  try {
-    const response = await apiClient.put(
-      "/api/v1/dapot/network/maintenance?id=" + data.get("id"),
-      data,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
-    return handleResponse(response, dispatch);
-  } catch (error) {
-    handleError(error, dispatch);
-  }
-};
-
-export const deleteMaintenanceNetwork = async (
-  dispatch: (dispatch: any) => void,
-  deviceid: string,
-  asset_id: string
-) => {
-  setLoadingAndError(dispatch);
-  try {
-    const response = await apiClient.delete(
-      `/api/v1/dapot/network/maintenance?id=${deviceid}&assetid=${asset_id}`
-    );
-    return handleResponse(response, dispatch);
-  } catch (error) {
-    handleError(error, dispatch);
-  }
-};
-
-export const getLinkNetwork = async (
-  page: string | null,
-  dispatch: (dispatch: any) => void,
-  globalFilter?: string | null,
-  nopage?: string | null
-) => {
-  setLoadingAndError(dispatch);
-  try {
-    const response = await apiClient.get("/api/v1/dapot/network/links", {
-      params: {
-        page,
-        limit: 15,
-        globalFilter,
-        nopage,
-      },
-    });
-    return handleResponse(response, dispatch);
-  } catch (error) {
-    handleError(error, dispatch);
-  }
-};
-
-export const postLinkNetwork = async (
-  incoming: string,
-  outgoing: string,
+export const updateTypeFinishingbuilding = async (
+  name: string,
+  sub_category_id: string,
+  id: string,
   dispatch: (dispatch: any) => void
 ) => {
   setLoadingAndError(dispatch);
@@ -487,33 +343,11 @@ export const postLinkNetwork = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.post("/api/v1/dapot/network/link", {
-      incoming,
-      outgoing,
-      user_id,
-    });
-    return handleResponse(response, dispatch);
-  } catch (error) {
-    handleError(error, dispatch);
-  }
-};
-
-export const updateLinkNetwork = async (
-  incoming: string,
-  outgoing: string,
-  dispatch: (dispatch: any) => void,
-  id: string
-) => {
-  setLoadingAndError(dispatch);
-  const userData: any = localStorage.getItem("user");
-  const jsonuserData = JSON.parse(userData);
-  const user_id = jsonuserData.id;
-  try {
     const response = await apiClient.put(
-      "/api/v1/dapot/network/link?id=" + id,
+      "/api/v1/dapot/finishingbuilding/type?id=" + id,
       {
-        incoming,
-        outgoing,
+        name,
+        sub_category_id,
         user_id,
       }
     );
@@ -523,7 +357,7 @@ export const updateLinkNetwork = async (
   }
 };
 
-export const deleteLinkNetwork = async (
+export const deleteTypeFinishingbuilding = async (
   dispatch: (dispatch: any) => void,
   deviceid: string,
   asset_id: string
@@ -531,7 +365,174 @@ export const deleteLinkNetwork = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/network/link?id=${deviceid}&assetid=${asset_id}`
+      `/api/v1/dapot/finishingbuilding/type?id=${deviceid}&assetid=${asset_id}`
+    );
+    return handleResponse(response, dispatch);
+  } catch (error) {
+    handleError(error, dispatch);
+  }
+};
+
+export const getSubCategoriesFinishingbuilding = async () => {
+  try {
+    const response = await apiClient.get(
+      "/api/v1/dapot/finishingbuilding/subcategories?nopage=yes"
+    );
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching brand floors:", error);
+    throw error;
+  }
+};
+
+export const getMaintenanceFinishingbuilding = async (
+  page: string | null,
+  dispatch: (dispatch: any) => void,
+  globalFilter?: string | null,
+  nopage?: string | null
+) => {
+  setLoadingAndError(dispatch);
+  try {
+    const response = await apiClient.get(
+      "/api/v1/dapot/finishingbuilding/maintenances",
+      {
+        params: {
+          page,
+          limit: 15,
+          globalFilter,
+          nopage,
+        },
+      }
+    );
+    return handleResponse(response, dispatch);
+  } catch (error) {
+    handleError(error, dispatch);
+  }
+};
+
+export const getOneMaintenanceFinishingbuilding = async (
+  dispatch: (dispatch: any) => void,
+  id?: string | null
+) => {
+  setLoadingAndError(dispatch);
+  try {
+    const response = await apiClient.get(
+      "/api/v1/dapot/finishingbuilding/maintenance",
+      {
+        params: {
+          id,
+        },
+      }
+    );
+    console.log(response);
+    return handleResponse(response, dispatch);
+  } catch (error) {
+    handleError(error, dispatch);
+  }
+};
+
+export const postMaintenanceFinishingbuilding = async (
+  data: any,
+  dispatch: (dispatch: any) => void
+) => {
+  setLoadingAndError(dispatch);
+  console.log(data.get("activity"));
+  try {
+    const response = await apiClient.post(
+      "/api/v1/dapot/finishingbuilding/maintenance",
+      data,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    return handleResponse(response, dispatch);
+  } catch (error) {
+    handleError(error, dispatch);
+  }
+};
+export const updateMaintenanceFinishingbuilding = async (
+  data: any,
+  dispatch: (dispatch: any) => void
+) => {
+  setLoadingAndError(dispatch);
+  console.log(data.get("id"));
+  try {
+    const response = await apiClient.put(
+      "/api/v1/dapot/finishingbuilding/maintenance?id=" + data.get("id"),
+      data,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    return handleResponse(response, dispatch);
+  } catch (error) {
+    handleError(error, dispatch);
+  }
+};
+
+export const deleteMaintenanceFinishingbuilding = async (
+  dispatch: (dispatch: any) => void,
+  deviceid: string,
+  asset_id: string
+) => {
+  setLoadingAndError(dispatch);
+  try {
+    const response = await apiClient.delete(
+      `/api/v1/dapot/finishingbuilding/maintenance?id=${deviceid}&assetid=${asset_id}`
+    );
+    return handleResponse(response, dispatch);
+  } catch (error) {
+    handleError(error, dispatch);
+  }
+};
+
+export const getLinkFinishingbuilding = async (
+  page: string | null,
+  dispatch: (dispatch: any) => void,
+  globalFilter?: string | null,
+  nopage?: string | null
+) => {
+  setLoadingAndError(dispatch);
+  try {
+    const response = await apiClient.get(
+      "/api/v1/dapot/finishingbuilding/links",
+      {
+        params: {
+          page,
+          limit: 15,
+          globalFilter,
+          nopage,
+        },
+      }
+    );
+    return handleResponse(response, dispatch);
+  } catch (error) {
+    handleError(error, dispatch);
+  }
+};
+
+export const postLinkFinishingbuilding = async (
+  incoming: string,
+  outgoing: string,
+  dispatch: (dispatch: any) => void
+) => {
+  setLoadingAndError(dispatch);
+  const userData: any = localStorage.getItem("user");
+  const jsonuserData = JSON.parse(userData);
+  const user_id = jsonuserData.id;
+  try {
+    const response = await apiClient.post(
+      "/api/v1/dapot/finishingbuilding/link",
+      {
+        incoming,
+        outgoing,
+        user_id,
+      }
     );
     return handleResponse(response, dispatch);
   } catch (error) {

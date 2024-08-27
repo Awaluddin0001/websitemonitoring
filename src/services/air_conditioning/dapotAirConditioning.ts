@@ -5,7 +5,7 @@ import {
   setLoadingAndError,
 } from "@/utils/LoadingAndErrorApi";
 
-export const getNetworks = async (
+export const getAirconditionings = async (
   page: string | null,
   dispatch: (dispatch: any) => void,
   globalFilter?: string | null,
@@ -13,7 +13,7 @@ export const getNetworks = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/network/all", {
+    const response = await apiClient.get("/api/v1/dapot/airconditioning/all", {
       params: {
         page,
         limit: 15,
@@ -26,10 +26,10 @@ export const getNetworks = async (
     handleError(error, dispatch);
   }
 };
-export const getNetworksLink = async () => {
+export const getAirconditioningsLink = async () => {
   try {
     const response = await apiClient.get(
-      "/api/v1/dapot/network/all?nopage=yes"
+      "/api/v1/dapot/airconditioning/all?nopage=yes"
     );
     return response.data;
   } catch (error) {
@@ -38,7 +38,7 @@ export const getNetworksLink = async () => {
   }
 };
 
-export const getBrandNetwork = async (
+export const getBrandAirconditioning = async (
   page: string | null,
   dispatch: (dispatch: any) => void,
   globalFilter?: string | null,
@@ -46,31 +46,37 @@ export const getBrandNetwork = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/network/brands", {
-      params: {
-        page,
-        limit: 15,
-        globalFilter,
-        nopage,
-      },
-    });
+    const response = await apiClient.get(
+      "/api/v1/dapot/airconditioning/brands",
+      {
+        params: {
+          page,
+          limit: 15,
+          globalFilter,
+          nopage,
+        },
+      }
+    );
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
   }
 };
 
-export const getOneBrandNetwork = async (
+export const getOneBrandAirconditioning = async (
   dispatch: (dispatch: any) => void,
   id?: string | null
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/network/brand", {
-      params: {
-        id,
-      },
-    });
+    const response = await apiClient.get(
+      "/api/v1/dapot/airconditioning/brand",
+      {
+        params: {
+          id,
+        },
+      }
+    );
     console.log(response);
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -78,7 +84,7 @@ export const getOneBrandNetwork = async (
   }
 };
 
-export const postBrandNetwork = async (
+export const postBrandAirconditioning = async (
   name: string,
   dispatch: (dispatch: any) => void
 ) => {
@@ -87,16 +93,19 @@ export const postBrandNetwork = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.post("/api/v1/dapot/network/brand", {
-      name: name,
-      user_id,
-    });
+    const response = await apiClient.post(
+      "/api/v1/dapot/airconditioning/brand",
+      {
+        name: name,
+        user_id,
+      }
+    );
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
   }
 };
-export const updateBrandNetwork = async (
+export const updateBrandAirconditioning = async (
   name: string,
   id: string,
   dispatch: (dispatch: any) => void
@@ -107,7 +116,7 @@ export const updateBrandNetwork = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.put(
-      "/api/v1/dapot/network/brand?id=" + id,
+      "/api/v1/dapot/airconditioning/brand?id=" + id,
       {
         name: name,
         user_id,
@@ -119,7 +128,7 @@ export const updateBrandNetwork = async (
   }
 };
 
-export const deleteNetwork = async (
+export const deleteAirconditioning = async (
   dispatch: (dispatch: any) => void,
   deviceid: string,
   asset_id: string
@@ -127,7 +136,7 @@ export const deleteNetwork = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/network/brand?id=${deviceid}&assetid=${asset_id}`
+      `/api/v1/dapot/airconditioning/brand?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -135,7 +144,7 @@ export const deleteNetwork = async (
   }
 };
 
-export const getVendorNetwork = async (
+export const getVendorAirconditioning = async (
   page: string | null,
   dispatch: (dispatch: any) => void,
   globalFilter?: string | null,
@@ -143,31 +152,37 @@ export const getVendorNetwork = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/network/vendors", {
-      params: {
-        page,
-        limit: 15,
-        globalFilter,
-        nopage,
-      },
-    });
+    const response = await apiClient.get(
+      "/api/v1/dapot/airconditioning/vendors",
+      {
+        params: {
+          page,
+          limit: 15,
+          globalFilter,
+          nopage,
+        },
+      }
+    );
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
   }
 };
 
-export const getOneVendorNetwork = async (
+export const getOneVendorAirconditioning = async (
   dispatch: (dispatch: any) => void,
   id?: string | null
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/network/vendor", {
-      params: {
-        id,
-      },
-    });
+    const response = await apiClient.get(
+      "/api/v1/dapot/airconditioning/vendor",
+      {
+        params: {
+          id,
+        },
+      }
+    );
     console.log(response);
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -175,7 +190,7 @@ export const getOneVendorNetwork = async (
   }
 };
 
-export const postVendorNetwork = async (
+export const postVendorAirconditioning = async (
   company: string,
   company_user_name: string,
   number_phone: string,
@@ -186,27 +201,14 @@ export const postVendorNetwork = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.post("/api/v1/dapot/network/vendor", {
-      company,
-      company_user_name,
-      number_phone,
-      user_id,
-    });
-    return handleResponse(response, dispatch);
-  } catch (error) {
-    handleError(error, dispatch);
-  }
-};
-
-export const deleteVendorNetwork = async (
-  dispatch: (dispatch: any) => void,
-  deviceid: string,
-  asset_id: string
-) => {
-  setLoadingAndError(dispatch);
-  try {
-    const response = await apiClient.delete(
-      `/api/v1/dapot/network/vendor?id=${deviceid}&assetid=${asset_id}`
+    const response = await apiClient.post(
+      "/api/v1/dapot/airconditioning/vendor",
+      {
+        company,
+        company_user_name,
+        number_phone,
+        user_id,
+      }
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -214,7 +216,23 @@ export const deleteVendorNetwork = async (
   }
 };
 
-export const updateVendorNetwork = async (
+export const deleteVendorAirconditioning = async (
+  dispatch: (dispatch: any) => void,
+  deviceid: string,
+  asset_id: string
+) => {
+  setLoadingAndError(dispatch);
+  try {
+    const response = await apiClient.delete(
+      `/api/v1/dapot/airconditioning/vendor?id=${deviceid}&assetid=${asset_id}`
+    );
+    return handleResponse(response, dispatch);
+  } catch (error) {
+    handleError(error, dispatch);
+  }
+};
+
+export const updateVendorAirconditioning = async (
   company: string,
   company_user_name: string,
   number_phone: string,
@@ -227,7 +245,7 @@ export const updateVendorNetwork = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.put(
-      "/api/v1/dapot/network/vendor?id=" + id,
+      "/api/v1/dapot/airconditioning/vendor?id=" + id,
       {
         company,
         company_user_name,
@@ -242,7 +260,7 @@ export const updateVendorNetwork = async (
 };
 
 // type
-export const getTypeNetwork = async (
+export const getTypeAirconditioning = async (
   page: string | null,
   dispatch: (dispatch: any) => void,
   globalFilter?: string | null,
@@ -250,27 +268,30 @@ export const getTypeNetwork = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/network/types", {
-      params: {
-        page,
-        limit: 15,
-        globalFilter,
-        nopage,
-      },
-    });
+    const response = await apiClient.get(
+      "/api/v1/dapot/airconditioning/types",
+      {
+        params: {
+          page,
+          limit: 15,
+          globalFilter,
+          nopage,
+        },
+      }
+    );
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
   }
 };
 
-export const getOneTypeNetwork = async (
+export const getOneTypeAirconditioning = async (
   dispatch: (dispatch: any) => void,
   id?: string | null
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/network/type", {
+    const response = await apiClient.get("/api/v1/dapot/airconditioning/type", {
       params: {
         id,
       },
@@ -281,7 +302,7 @@ export const getOneTypeNetwork = async (
   }
 };
 
-export const postTypeNetwork = async (
+export const postTypeAirconditioning = async (
   name: string,
   sub_category_id: string,
   dispatch: (dispatch: any) => void
@@ -291,30 +312,8 @@ export const postTypeNetwork = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.post("/api/v1/dapot/network/type", {
-      name,
-      sub_category_id,
-      user_id,
-    });
-    return handleResponse(response, dispatch);
-  } catch (error) {
-    handleError(error, dispatch);
-  }
-};
-
-export const updateTypeNetwork = async (
-  name: string,
-  sub_category_id: string,
-  id: string,
-  dispatch: (dispatch: any) => void
-) => {
-  setLoadingAndError(dispatch);
-  const userData: any = localStorage.getItem("user");
-  const jsonuserData = JSON.parse(userData);
-  const user_id = jsonuserData.id;
-  try {
-    const response = await apiClient.put(
-      "/api/v1/dapot/network/type?id=" + id,
+    const response = await apiClient.post(
+      "/api/v1/dapot/airconditioning/type",
       {
         name,
         sub_category_id,
@@ -327,159 +326,10 @@ export const updateTypeNetwork = async (
   }
 };
 
-export const deleteTypeNetwork = async (
-  dispatch: (dispatch: any) => void,
-  deviceid: string,
-  asset_id: string
-) => {
-  setLoadingAndError(dispatch);
-  try {
-    const response = await apiClient.delete(
-      `/api/v1/dapot/network/type?id=${deviceid}&assetid=${asset_id}`
-    );
-    return handleResponse(response, dispatch);
-  } catch (error) {
-    handleError(error, dispatch);
-  }
-};
-
-export const getSubCategoriesNetwork = async () => {
-  try {
-    const response = await apiClient.get(
-      "/api/v1/dapot/network/subcategories?nopage=yes"
-    );
-    console.log(response);
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching brand floors:", error);
-    throw error;
-  }
-};
-
-export const getMaintenanceNetwork = async (
-  page: string | null,
-  dispatch: (dispatch: any) => void,
-  globalFilter?: string | null,
-  nopage?: string | null
-) => {
-  setLoadingAndError(dispatch);
-  try {
-    const response = await apiClient.get("/api/v1/dapot/network/maintenances", {
-      params: {
-        page,
-        limit: 15,
-        globalFilter,
-        nopage,
-      },
-    });
-    return handleResponse(response, dispatch);
-  } catch (error) {
-    handleError(error, dispatch);
-  }
-};
-
-export const getOneMaintenanceNetwork = async (
-  dispatch: (dispatch: any) => void,
-  id?: string | null
-) => {
-  setLoadingAndError(dispatch);
-  try {
-    const response = await apiClient.get("/api/v1/dapot/network/maintenance", {
-      params: {
-        id,
-      },
-    });
-    console.log(response);
-    return handleResponse(response, dispatch);
-  } catch (error) {
-    handleError(error, dispatch);
-  }
-};
-
-export const postMaintenanceNetwork = async (
-  data: any,
-  dispatch: (dispatch: any) => void
-) => {
-  setLoadingAndError(dispatch);
-  console.log(data.get("activity"));
-  try {
-    const response = await apiClient.post(
-      "/api/v1/dapot/network/maintenance",
-      data,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
-    return handleResponse(response, dispatch);
-  } catch (error) {
-    handleError(error, dispatch);
-  }
-};
-export const updateMaintenanceNetwork = async (
-  data: any,
-  dispatch: (dispatch: any) => void
-) => {
-  setLoadingAndError(dispatch);
-  console.log(data.get("id"));
-  try {
-    const response = await apiClient.put(
-      "/api/v1/dapot/network/maintenance?id=" + data.get("id"),
-      data,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
-    return handleResponse(response, dispatch);
-  } catch (error) {
-    handleError(error, dispatch);
-  }
-};
-
-export const deleteMaintenanceNetwork = async (
-  dispatch: (dispatch: any) => void,
-  deviceid: string,
-  asset_id: string
-) => {
-  setLoadingAndError(dispatch);
-  try {
-    const response = await apiClient.delete(
-      `/api/v1/dapot/network/maintenance?id=${deviceid}&assetid=${asset_id}`
-    );
-    return handleResponse(response, dispatch);
-  } catch (error) {
-    handleError(error, dispatch);
-  }
-};
-
-export const getLinkNetwork = async (
-  page: string | null,
-  dispatch: (dispatch: any) => void,
-  globalFilter?: string | null,
-  nopage?: string | null
-) => {
-  setLoadingAndError(dispatch);
-  try {
-    const response = await apiClient.get("/api/v1/dapot/network/links", {
-      params: {
-        page,
-        limit: 15,
-        globalFilter,
-        nopage,
-      },
-    });
-    return handleResponse(response, dispatch);
-  } catch (error) {
-    handleError(error, dispatch);
-  }
-};
-
-export const postLinkNetwork = async (
-  incoming: string,
-  outgoing: string,
+export const updateTypeAirconditioning = async (
+  name: string,
+  sub_category_id: string,
+  id: string,
   dispatch: (dispatch: any) => void
 ) => {
   setLoadingAndError(dispatch);
@@ -487,33 +337,11 @@ export const postLinkNetwork = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.post("/api/v1/dapot/network/link", {
-      incoming,
-      outgoing,
-      user_id,
-    });
-    return handleResponse(response, dispatch);
-  } catch (error) {
-    handleError(error, dispatch);
-  }
-};
-
-export const updateLinkNetwork = async (
-  incoming: string,
-  outgoing: string,
-  dispatch: (dispatch: any) => void,
-  id: string
-) => {
-  setLoadingAndError(dispatch);
-  const userData: any = localStorage.getItem("user");
-  const jsonuserData = JSON.parse(userData);
-  const user_id = jsonuserData.id;
-  try {
     const response = await apiClient.put(
-      "/api/v1/dapot/network/link?id=" + id,
+      "/api/v1/dapot/airconditioning/type?id=" + id,
       {
-        incoming,
-        outgoing,
+        name,
+        sub_category_id,
         user_id,
       }
     );
@@ -523,7 +351,7 @@ export const updateLinkNetwork = async (
   }
 };
 
-export const deleteLinkNetwork = async (
+export const deleteTypeAirconditioning = async (
   dispatch: (dispatch: any) => void,
   deviceid: string,
   asset_id: string
@@ -531,7 +359,174 @@ export const deleteLinkNetwork = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/network/link?id=${deviceid}&assetid=${asset_id}`
+      `/api/v1/dapot/airconditioning/type?id=${deviceid}&assetid=${asset_id}`
+    );
+    return handleResponse(response, dispatch);
+  } catch (error) {
+    handleError(error, dispatch);
+  }
+};
+
+export const getSubCategoriesAirconditioning = async () => {
+  try {
+    const response = await apiClient.get(
+      "/api/v1/dapot/airconditioning/subcategories?nopage=yes"
+    );
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching brand floors:", error);
+    throw error;
+  }
+};
+
+export const getMaintenanceAirconditioning = async (
+  page: string | null,
+  dispatch: (dispatch: any) => void,
+  globalFilter?: string | null,
+  nopage?: string | null
+) => {
+  setLoadingAndError(dispatch);
+  try {
+    const response = await apiClient.get(
+      "/api/v1/dapot/airconditioning/maintenances",
+      {
+        params: {
+          page,
+          limit: 15,
+          globalFilter,
+          nopage,
+        },
+      }
+    );
+    return handleResponse(response, dispatch);
+  } catch (error) {
+    handleError(error, dispatch);
+  }
+};
+
+export const getOneMaintenanceAirconditioning = async (
+  dispatch: (dispatch: any) => void,
+  id?: string | null
+) => {
+  setLoadingAndError(dispatch);
+  try {
+    const response = await apiClient.get(
+      "/api/v1/dapot/airconditioning/maintenance",
+      {
+        params: {
+          id,
+        },
+      }
+    );
+    console.log(response);
+    return handleResponse(response, dispatch);
+  } catch (error) {
+    handleError(error, dispatch);
+  }
+};
+
+export const postMaintenanceAirconditioning = async (
+  data: any,
+  dispatch: (dispatch: any) => void
+) => {
+  setLoadingAndError(dispatch);
+  console.log(data.get("activity"));
+  try {
+    const response = await apiClient.post(
+      "/api/v1/dapot/airconditioning/maintenance",
+      data,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    return handleResponse(response, dispatch);
+  } catch (error) {
+    handleError(error, dispatch);
+  }
+};
+export const updateMaintenanceAirconditioning = async (
+  data: any,
+  dispatch: (dispatch: any) => void
+) => {
+  setLoadingAndError(dispatch);
+  console.log(data.get("id"));
+  try {
+    const response = await apiClient.put(
+      "/api/v1/dapot/airconditioning/maintenance?id=" + data.get("id"),
+      data,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    return handleResponse(response, dispatch);
+  } catch (error) {
+    handleError(error, dispatch);
+  }
+};
+
+export const deleteMaintenanceAirconditioning = async (
+  dispatch: (dispatch: any) => void,
+  deviceid: string,
+  asset_id: string
+) => {
+  setLoadingAndError(dispatch);
+  try {
+    const response = await apiClient.delete(
+      `/api/v1/dapot/airconditioning/maintenance?id=${deviceid}&assetid=${asset_id}`
+    );
+    return handleResponse(response, dispatch);
+  } catch (error) {
+    handleError(error, dispatch);
+  }
+};
+
+export const getLinkAirconditioning = async (
+  page: string | null,
+  dispatch: (dispatch: any) => void,
+  globalFilter?: string | null,
+  nopage?: string | null
+) => {
+  setLoadingAndError(dispatch);
+  try {
+    const response = await apiClient.get(
+      "/api/v1/dapot/airconditioning/links",
+      {
+        params: {
+          page,
+          limit: 15,
+          globalFilter,
+          nopage,
+        },
+      }
+    );
+    return handleResponse(response, dispatch);
+  } catch (error) {
+    handleError(error, dispatch);
+  }
+};
+
+export const postLinkAirconditioning = async (
+  incoming: string,
+  outgoing: string,
+  dispatch: (dispatch: any) => void
+) => {
+  setLoadingAndError(dispatch);
+  const userData: any = localStorage.getItem("user");
+  const jsonuserData = JSON.parse(userData);
+  const user_id = jsonuserData.id;
+  try {
+    const response = await apiClient.post(
+      "/api/v1/dapot/airconditioning/link",
+      {
+        incoming,
+        outgoing,
+        user_id,
+      }
     );
     return handleResponse(response, dispatch);
   } catch (error) {

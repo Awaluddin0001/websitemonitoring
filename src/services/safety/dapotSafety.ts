@@ -5,7 +5,7 @@ import {
   setLoadingAndError,
 } from "@/utils/LoadingAndErrorApi";
 
-export const getNetworks = async (
+export const getSafetys = async (
   page: string | null,
   dispatch: (dispatch: any) => void,
   globalFilter?: string | null,
@@ -13,7 +13,7 @@ export const getNetworks = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/network/all", {
+    const response = await apiClient.get("/api/v1/dapot/safety/all", {
       params: {
         page,
         limit: 15,
@@ -26,11 +26,9 @@ export const getNetworks = async (
     handleError(error, dispatch);
   }
 };
-export const getNetworksLink = async () => {
+export const getSafetysLink = async () => {
   try {
-    const response = await apiClient.get(
-      "/api/v1/dapot/network/all?nopage=yes"
-    );
+    const response = await apiClient.get("/api/v1/dapot/safety/all?nopage=yes");
     return response.data;
   } catch (error) {
     console.error("Error fetching Link floors:", error);
@@ -38,7 +36,7 @@ export const getNetworksLink = async () => {
   }
 };
 
-export const getBrandNetwork = async (
+export const getBrandSafety = async (
   page: string | null,
   dispatch: (dispatch: any) => void,
   globalFilter?: string | null,
@@ -46,7 +44,7 @@ export const getBrandNetwork = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/network/brands", {
+    const response = await apiClient.get("/api/v1/dapot/safety/brands", {
       params: {
         page,
         limit: 15,
@@ -60,13 +58,13 @@ export const getBrandNetwork = async (
   }
 };
 
-export const getOneBrandNetwork = async (
+export const getOneBrandSafety = async (
   dispatch: (dispatch: any) => void,
   id?: string | null
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/network/brand", {
+    const response = await apiClient.get("/api/v1/dapot/safety/brand", {
       params: {
         id,
       },
@@ -78,7 +76,7 @@ export const getOneBrandNetwork = async (
   }
 };
 
-export const postBrandNetwork = async (
+export const postBrandSafety = async (
   name: string,
   dispatch: (dispatch: any) => void
 ) => {
@@ -87,7 +85,7 @@ export const postBrandNetwork = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.post("/api/v1/dapot/network/brand", {
+    const response = await apiClient.post("/api/v1/dapot/safety/brand", {
       name: name,
       user_id,
     });
@@ -96,7 +94,7 @@ export const postBrandNetwork = async (
     handleError(error, dispatch);
   }
 };
-export const updateBrandNetwork = async (
+export const updateBrandSafety = async (
   name: string,
   id: string,
   dispatch: (dispatch: any) => void
@@ -107,7 +105,7 @@ export const updateBrandNetwork = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.put(
-      "/api/v1/dapot/network/brand?id=" + id,
+      "/api/v1/dapot/safety/brand?id=" + id,
       {
         name: name,
         user_id,
@@ -119,7 +117,7 @@ export const updateBrandNetwork = async (
   }
 };
 
-export const deleteNetwork = async (
+export const deleteSafety = async (
   dispatch: (dispatch: any) => void,
   deviceid: string,
   asset_id: string
@@ -127,7 +125,7 @@ export const deleteNetwork = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/network/brand?id=${deviceid}&assetid=${asset_id}`
+      `/api/v1/dapot/safety/brand?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -135,7 +133,7 @@ export const deleteNetwork = async (
   }
 };
 
-export const getVendorNetwork = async (
+export const getVendorSafety = async (
   page: string | null,
   dispatch: (dispatch: any) => void,
   globalFilter?: string | null,
@@ -143,7 +141,7 @@ export const getVendorNetwork = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/network/vendors", {
+    const response = await apiClient.get("/api/v1/dapot/safety/vendors", {
       params: {
         page,
         limit: 15,
@@ -157,13 +155,13 @@ export const getVendorNetwork = async (
   }
 };
 
-export const getOneVendorNetwork = async (
+export const getOneVendorSafety = async (
   dispatch: (dispatch: any) => void,
   id?: string | null
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/network/vendor", {
+    const response = await apiClient.get("/api/v1/dapot/safety/vendor", {
       params: {
         id,
       },
@@ -175,7 +173,7 @@ export const getOneVendorNetwork = async (
   }
 };
 
-export const postVendorNetwork = async (
+export const postVendorSafety = async (
   company: string,
   company_user_name: string,
   number_phone: string,
@@ -186,7 +184,7 @@ export const postVendorNetwork = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.post("/api/v1/dapot/network/vendor", {
+    const response = await apiClient.post("/api/v1/dapot/safety/vendor", {
       company,
       company_user_name,
       number_phone,
@@ -198,7 +196,7 @@ export const postVendorNetwork = async (
   }
 };
 
-export const deleteVendorNetwork = async (
+export const deleteVendorSafety = async (
   dispatch: (dispatch: any) => void,
   deviceid: string,
   asset_id: string
@@ -206,7 +204,7 @@ export const deleteVendorNetwork = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/network/vendor?id=${deviceid}&assetid=${asset_id}`
+      `/api/v1/dapot/safety/vendor?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -214,7 +212,7 @@ export const deleteVendorNetwork = async (
   }
 };
 
-export const updateVendorNetwork = async (
+export const updateVendorSafety = async (
   company: string,
   company_user_name: string,
   number_phone: string,
@@ -227,7 +225,7 @@ export const updateVendorNetwork = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.put(
-      "/api/v1/dapot/network/vendor?id=" + id,
+      "/api/v1/dapot/safety/vendor?id=" + id,
       {
         company,
         company_user_name,
@@ -242,7 +240,7 @@ export const updateVendorNetwork = async (
 };
 
 // type
-export const getTypeNetwork = async (
+export const getTypeSafety = async (
   page: string | null,
   dispatch: (dispatch: any) => void,
   globalFilter?: string | null,
@@ -250,7 +248,7 @@ export const getTypeNetwork = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/network/types", {
+    const response = await apiClient.get("/api/v1/dapot/safety/types", {
       params: {
         page,
         limit: 15,
@@ -264,13 +262,13 @@ export const getTypeNetwork = async (
   }
 };
 
-export const getOneTypeNetwork = async (
+export const getOneTypeSafety = async (
   dispatch: (dispatch: any) => void,
   id?: string | null
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/network/type", {
+    const response = await apiClient.get("/api/v1/dapot/safety/type", {
       params: {
         id,
       },
@@ -281,7 +279,7 @@ export const getOneTypeNetwork = async (
   }
 };
 
-export const postTypeNetwork = async (
+export const postTypeSafety = async (
   name: string,
   sub_category_id: string,
   dispatch: (dispatch: any) => void
@@ -291,7 +289,7 @@ export const postTypeNetwork = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.post("/api/v1/dapot/network/type", {
+    const response = await apiClient.post("/api/v1/dapot/safety/type", {
       name,
       sub_category_id,
       user_id,
@@ -302,7 +300,7 @@ export const postTypeNetwork = async (
   }
 };
 
-export const updateTypeNetwork = async (
+export const updateTypeSafety = async (
   name: string,
   sub_category_id: string,
   id: string,
@@ -313,21 +311,18 @@ export const updateTypeNetwork = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.put(
-      "/api/v1/dapot/network/type?id=" + id,
-      {
-        name,
-        sub_category_id,
-        user_id,
-      }
-    );
+    const response = await apiClient.put("/api/v1/dapot/safety/type?id=" + id, {
+      name,
+      sub_category_id,
+      user_id,
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
   }
 };
 
-export const deleteTypeNetwork = async (
+export const deleteTypeSafety = async (
   dispatch: (dispatch: any) => void,
   deviceid: string,
   asset_id: string
@@ -335,7 +330,7 @@ export const deleteTypeNetwork = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/network/type?id=${deviceid}&assetid=${asset_id}`
+      `/api/v1/dapot/safety/type?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -343,10 +338,10 @@ export const deleteTypeNetwork = async (
   }
 };
 
-export const getSubCategoriesNetwork = async () => {
+export const getSubCategoriesSafety = async () => {
   try {
     const response = await apiClient.get(
-      "/api/v1/dapot/network/subcategories?nopage=yes"
+      "/api/v1/dapot/safety/subcategories?nopage=yes"
     );
     console.log(response);
     return response.data;
@@ -356,7 +351,7 @@ export const getSubCategoriesNetwork = async () => {
   }
 };
 
-export const getMaintenanceNetwork = async (
+export const getMaintenanceSafety = async (
   page: string | null,
   dispatch: (dispatch: any) => void,
   globalFilter?: string | null,
@@ -364,7 +359,7 @@ export const getMaintenanceNetwork = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/network/maintenances", {
+    const response = await apiClient.get("/api/v1/dapot/safety/maintenances", {
       params: {
         page,
         limit: 15,
@@ -378,13 +373,13 @@ export const getMaintenanceNetwork = async (
   }
 };
 
-export const getOneMaintenanceNetwork = async (
+export const getOneMaintenanceSafety = async (
   dispatch: (dispatch: any) => void,
   id?: string | null
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/network/maintenance", {
+    const response = await apiClient.get("/api/v1/dapot/safety/maintenance", {
       params: {
         id,
       },
@@ -396,7 +391,7 @@ export const getOneMaintenanceNetwork = async (
   }
 };
 
-export const postMaintenanceNetwork = async (
+export const postMaintenanceSafety = async (
   data: any,
   dispatch: (dispatch: any) => void
 ) => {
@@ -404,7 +399,7 @@ export const postMaintenanceNetwork = async (
   console.log(data.get("activity"));
   try {
     const response = await apiClient.post(
-      "/api/v1/dapot/network/maintenance",
+      "/api/v1/dapot/safety/maintenance",
       data,
       {
         headers: {
@@ -417,7 +412,7 @@ export const postMaintenanceNetwork = async (
     handleError(error, dispatch);
   }
 };
-export const updateMaintenanceNetwork = async (
+export const updateMaintenanceSafety = async (
   data: any,
   dispatch: (dispatch: any) => void
 ) => {
@@ -425,7 +420,7 @@ export const updateMaintenanceNetwork = async (
   console.log(data.get("id"));
   try {
     const response = await apiClient.put(
-      "/api/v1/dapot/network/maintenance?id=" + data.get("id"),
+      "/api/v1/dapot/safety/maintenance?id=" + data.get("id"),
       data,
       {
         headers: {
@@ -439,7 +434,7 @@ export const updateMaintenanceNetwork = async (
   }
 };
 
-export const deleteMaintenanceNetwork = async (
+export const deleteMaintenanceSafety = async (
   dispatch: (dispatch: any) => void,
   deviceid: string,
   asset_id: string
@@ -447,7 +442,7 @@ export const deleteMaintenanceNetwork = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/network/maintenance?id=${deviceid}&assetid=${asset_id}`
+      `/api/v1/dapot/safety/maintenance?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -455,7 +450,7 @@ export const deleteMaintenanceNetwork = async (
   }
 };
 
-export const getLinkNetwork = async (
+export const getLinkSafety = async (
   page: string | null,
   dispatch: (dispatch: any) => void,
   globalFilter?: string | null,
@@ -463,7 +458,7 @@ export const getLinkNetwork = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/network/links", {
+    const response = await apiClient.get("/api/v1/dapot/safety/links", {
       params: {
         page,
         limit: 15,
@@ -477,7 +472,7 @@ export const getLinkNetwork = async (
   }
 };
 
-export const postLinkNetwork = async (
+export const postLinkSafety = async (
   incoming: string,
   outgoing: string,
   dispatch: (dispatch: any) => void
@@ -487,52 +482,11 @@ export const postLinkNetwork = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.post("/api/v1/dapot/network/link", {
+    const response = await apiClient.post("/api/v1/dapot/safety/link", {
       incoming,
       outgoing,
       user_id,
     });
-    return handleResponse(response, dispatch);
-  } catch (error) {
-    handleError(error, dispatch);
-  }
-};
-
-export const updateLinkNetwork = async (
-  incoming: string,
-  outgoing: string,
-  dispatch: (dispatch: any) => void,
-  id: string
-) => {
-  setLoadingAndError(dispatch);
-  const userData: any = localStorage.getItem("user");
-  const jsonuserData = JSON.parse(userData);
-  const user_id = jsonuserData.id;
-  try {
-    const response = await apiClient.put(
-      "/api/v1/dapot/network/link?id=" + id,
-      {
-        incoming,
-        outgoing,
-        user_id,
-      }
-    );
-    return handleResponse(response, dispatch);
-  } catch (error) {
-    handleError(error, dispatch);
-  }
-};
-
-export const deleteLinkNetwork = async (
-  dispatch: (dispatch: any) => void,
-  deviceid: string,
-  asset_id: string
-) => {
-  setLoadingAndError(dispatch);
-  try {
-    const response = await apiClient.delete(
-      `/api/v1/dapot/network/link?id=${deviceid}&assetid=${asset_id}`
-    );
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);

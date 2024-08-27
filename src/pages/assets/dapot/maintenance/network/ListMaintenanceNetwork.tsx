@@ -5,6 +5,15 @@ import styles from "@/css/module/Asset.module.css";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useReducer, useState } from "react";
 import {
+  listMaintenanceNetworkReducer,
+  initialStateListMaintenanceNetwork,
+} from "src/reducers/networkReducer";
+
+import {
+  deleteMaintenanceNetwork,
+  getMaintenanceNetwork,
+} from "@/services/network/dapotNetwork";
+import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
@@ -12,47 +21,38 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import { NetworkMaintenance } from "@/types/networkTypes";
 import LoadingFetch from "@/components/loading/LoadingFetch";
 import Lottie from "lottie-react";
 import noData from "@/assets/lottie/noData.json";
 import HomeModal from "@/components/modal/HomeModal";
-
-import {
-  deleteVendorNetwork,
-  getVendorNetwork,
-} from "@/services/network/dapotNetwork";
-import { NetworkVendor } from "@/types/networkTypes";
 import { renderPagination } from "@/components/table/RenderPagination";
-import {
-  initialStateListVendorNetwork,
-  listVendorNetworkReducer,
-} from "src/reducers/networkReducer";
 
-export default function ListVendorNetwork() {
+export default function ListMaintenanceNetwork() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [state, dispatch] = useReducer(
-    listVendorNetworkReducer,
-    initialStateListVendorNetwork
+    listMaintenanceNetworkReducer,
+    initialStateListMaintenanceNetwork
   );
-  const { vendors, pagination, isLoading, globalFilter } = state;
+  const { maintenances, pagination, isLoading, globalFilter } = state;
   const [isShowModal, setIsShowModal] = useState(false);
   const [idOriginal, setIdOriginal] = useState("");
   const [assetIdOriginal, setAssetIdOriginal] = useState("");
-
   useEffect(() => {
-    const fetchVendors = async () => {
+    const fetchBrands = async () => {
       try {
         const page = searchParams.get("page") || "1";
         const nopage = globalFilter ? "no" : undefined;
-        const data = await getVendorNetwork(
+        const data = await getMaintenanceNetwork(
           page,
           dispatch,
           globalFilter,
           nopage
         );
+        console.log(maintenances);
         dispatch({ type: "SET_PAGINATION", payload: data.pagination });
-        dispatch({ type: "SET_VENDORS", payload: data.data });
+        dispatch({ type: "SET_MAINTENANCES", payload: data.data });
       } catch (error) {
         dispatch({
           type: "SET_IS_ERROR",
@@ -60,15 +60,14 @@ export default function ListVendorNetwork() {
         });
       }
     };
-    fetchVendors();
+    fetchBrands();
   }, []);
 
-  const columns: ColumnDef<NetworkVendor>[] = [
-    { accessorKey: "id", header: "Vendor Id" },
-    { accessorKey: "company", header: "Nama Perusahaan" },
-    { accessorKey: "company_user_name", header: "Nama user" },
-    { accessorKey: "number_phone", header: "Nomor Telepon" },
-    { accessorKey: "created_at", header: "Last Update" },
+  const columns: ColumnDef<NetworkMaintenance>[] = [
+    { accessorKey: "id", header: "Brand Id" },
+    { accessorKey: "activity", header: "Aktifitas" },
+    { accessorKey: "document_name", header: "Nama Dokumen" },
+    { accessorKey: "maintenance_date", header: "Tanggal Maintenance" },
     { accessorKey: "user_name", header: "Update By" },
     {
       id: "actions",
@@ -87,7 +86,7 @@ export default function ListVendorNetwork() {
             className={styles.btnEdit}
             onClick={() =>
               navigate(
-                `/main/assets/datapotensi/vendor/update/network?id=${row.original.id}`
+                `/main/assets/datapotensi/maintenance/update/network?id=${row.original.id}`
               )
             }
           >
@@ -109,7 +108,7 @@ export default function ListVendorNetwork() {
   ];
 
   const table = useReactTable({
-    data: vendors,
+    data: maintenances,
     columns,
     columnResizeMode: "onChange",
     columnResizeDirection: "ltr",
@@ -131,7 +130,7 @@ export default function ListVendorNetwork() {
   };
 
   const deleteHandle = async (id: string, assetId: string) => {
-    const data = await deleteVendorNetwork(dispatch, id, assetId);
+    const data = await deleteMaintenanceNetwork(dispatch, id, assetId);
     if (data.success) {
       navigate(0);
     }
@@ -143,18 +142,18 @@ export default function ListVendorNetwork() {
         <LoadingFetch />
       ) : (
         <>
-          <HeadPage title={`List Vendor Network `} />
+          <HeadPage title={`List Maintenance Network`} />
           <div
             onClick={() =>
-              navigate(`/main/assets/datapotensi/vendor/add/network`)
+              navigate(`/main/assets/datapotensi/maintenance/add/network`)
             }
             className={styles.addButton}
           >
-            + Add New Vendor
+            + Add New Maintenance
           </div>
           <div className={styles.tableSeal}>
             <div className={styles.tableWrapper}>
-              {vendors.length > 0 ? (
+              {maintenances.length > 0 ? (
                 <div className={styles.tableDetail}>
                   <table className={styles.assetTable}>
                     <thead>
@@ -209,12 +208,12 @@ export default function ListVendorNetwork() {
                                   background:
                                     row.index % 2 !== 0 ? "#ffd1d1" : "",
                                   borderBottomLeftRadius:
-                                    row.index === vendors.length - 1 &&
+                                    row.index === maintenances.length - 1 &&
                                     ind === 0
                                       ? "10px"
                                       : undefined,
                                   borderBottomRightRadius:
-                                    row.index === vendors.length - 1 &&
+                                    row.index === maintenances.length - 1 &&
                                     ind === row.getVisibleCells().length - 1
                                       ? "10px"
                                       : undefined,

@@ -1,10 +1,4 @@
 import { useEffect, useReducer, useState } from "react";
-import {
-  deleteRectifier,
-  exportRectifiersCsv,
-  exportRectifiersXlsx,
-  getRectifiers,
-} from "@/services/electrical/dapotRectifiers";
 import styles from "@/css/module/Asset.module.css";
 import Pen from "@/assets/svg/pen.svg";
 import Trash from "@/assets/svg/trash.svg";
@@ -15,9 +9,9 @@ import LoadingFetch from "@/components/loading/LoadingFetch";
 import ErrorFetch from "@/components/error/ErrorFetch";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import {
-  initialStateListRecti,
-  listRectiReducer,
-} from "src/reducers/electricalReducer";
+  initialStateListComputer,
+  listComputerReducer,
+} from "src/reducers/networkReducer";
 import HeadPageDapot from "@/components/header/HeadPageDapot";
 import {
   useReactTable,
@@ -29,14 +23,23 @@ import {
 } from "@tanstack/react-table";
 import HomeModal from "@/components/modal/HomeModal";
 import { networkListButtons } from "@/routes/dapotCategory";
-import { Rectifier } from "@/types/electricalTypes";
 import { renderPagination } from "@/components/table/RenderPagination";
+import {
+  deleteComputer,
+  exportComputersCsv,
+  exportComputersXlsx,
+  getComputers,
+} from "@/services/network/dapotComputer";
+import { Computer } from "@/types/networkTypes";
 export default function NetworkComputer() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-  const [state, dispatch] = useReducer(listRectiReducer, initialStateListRecti);
+  const [state, dispatch] = useReducer(
+    listComputerReducer,
+    initialStateListComputer
+  );
   const {
-    rectifiers,
+    computers,
     pagination,
     isLoading,
     isError,
@@ -49,32 +52,32 @@ export default function NetworkComputer() {
   const [assetIdOriginal, setAssetIdOriginal] = useState("");
 
   useEffect(() => {
-    const fetchRectifiers = async () => {
+    const fetchComputers = async () => {
       try {
         const page = searchParams.get("page") || "1";
         const nopage = globalFilter ? "no" : undefined;
-        const data = await getRectifiers(page, dispatch, globalFilter, nopage);
+        const data = await getComputers(page, dispatch, globalFilter, nopage);
         dispatch({ type: "SET_PAGINATION", payload: data.pagination });
-        dispatch({ type: "SET_RECTIFIERS", payload: data.data });
+        dispatch({ type: "SET_COMPUTERS", payload: data.data });
       } catch (err) {
         dispatch({
           type: "SET_IS_ERROR",
-          payload: "Failed to fetch rectifiers",
+          payload: "Failed to fetch computers",
         });
       }
     };
 
-    fetchRectifiers();
+    fetchComputers();
   }, [searchParams, globalFilter]);
 
-  const columns: ColumnDef<Rectifier>[] = positionColumn
+  const columns: ColumnDef<Computer>[] = positionColumn
     ? [
         {
           accessorKey: "id",
-          header: "Rectifier Id",
+          header: "Computer Id",
           cell: ({ row }) => (
             <Link
-              to={`/main/assets/datapotensi/detail/electrical/rectifier?id=${row.original.id}`}
+              to={`/main/assets/datapotensi/detail/network/computer?id=${row.original.id}`}
               style={{
                 color: "#000",
                 fontSize: "1.8rem",
@@ -90,31 +93,20 @@ export default function NetworkComputer() {
         { accessorKey: "room_name", header: "Ruangan" },
         { accessorKey: "vendor_name", header: "Vendor" },
         { accessorKey: "brand_name", header: "Brand" },
-        { accessorKey: "name", header: "Name" },
         { accessorKey: "type_name", header: "Type" },
         { accessorKey: "role", header: "Role" },
-        {
-          accessorKey: "capacity",
-          header: "Capacity",
-          cell: (info) => `${info.getValue()} A`,
-        },
-        { accessorKey: "modul", header: "Modul" },
-        {
-          accessorKey: "capacity_modul",
-          header: "Modul Capacity",
-          cell: (info) => `${info.getValue()} A`,
-        },
-        { accessorKey: "load_current", header: "Load Current" },
-        {
-          accessorKey: "occupancy",
-          header: "Occupancy",
-          cell: (info) => `${info.getValue() ? info.getValue() : 0}%`,
-        },
-        {
-          accessorKey: "system_device",
-          header: "System",
-          cell: (info) => `${info.getValue()} System`,
-        },
+        { accessorKey: "display", header: "Display" },
+        { accessorKey: "keyboard", header: "Keyboard" },
+        { accessorKey: "mouse", header: "Mouse" },
+        { accessorKey: "motherboard", header: "Motherboard" },
+        { accessorKey: "processor", header: "Processor" },
+        { accessorKey: "vga", header: "VGA" },
+        { accessorKey: "ram", header: "RAM" },
+        { accessorKey: "case", header: "Case" },
+        { accessorKey: "power_supply", header: "Power Supply" },
+        { accessorKey: "cooling", header: "Cooling" },
+        { accessorKey: "hardisk", header: "Hardisk" },
+
         { accessorKey: "installation_date", header: "Installation Date" },
         { accessorKey: "maintenance_date", header: "Maintenance Date" },
         { accessorKey: "remark_aging", header: "Remark Aging" },
@@ -143,7 +135,7 @@ export default function NetworkComputer() {
                 className={styles.btnEdit}
                 onClick={() =>
                   navigate(
-                    `/main/assets/datapotensi/category/update/electrical/rectifier?id=${row.original.id}`
+                    `/main/assets/datapotensi/category/update/network/computer?id=${row.original.id}`
                   )
                 }
               >
@@ -166,10 +158,10 @@ export default function NetworkComputer() {
     : [
         {
           accessorKey: "id",
-          header: "Rectifier Id",
+          header: "Computer Id",
           cell: ({ row }) => (
             <Link
-              to={`/main/assets/datapotensi/detail/electrical/rectifier?id=${row.original.id}`}
+              to={`/main/assets/datapotensi/detail/network/computer?id=${row.original.id}`}
               style={{
                 color: "#000",
                 fontSize: "1.8rem",
@@ -181,31 +173,18 @@ export default function NetworkComputer() {
         },
         { accessorKey: "vendor_name", header: "Vendor" },
         { accessorKey: "brand_name", header: "Brand" },
-        { accessorKey: "name", header: "Name" },
         { accessorKey: "type_name", header: "Type" },
-        { accessorKey: "role", header: "Role" },
-        {
-          accessorKey: "capacity",
-          header: "Capacity",
-          cell: (info) => `${info.getValue()} A`,
-        },
-        { accessorKey: "modul", header: "Modul" },
-        {
-          accessorKey: "capacity_modul",
-          header: "Modul Capacity",
-          cell: (info) => `${info.getValue()} A`,
-        },
-        { accessorKey: "load_current", header: "Load Current" },
-        {
-          accessorKey: "occupancy",
-          header: "Occupancy",
-          cell: (info) => `${info.getValue() ? info.getValue() : 0}%`,
-        },
-        {
-          accessorKey: "system_device",
-          header: "System",
-          cell: (info) => `${info.getValue()} System`,
-        },
+        { accessorKey: "display", header: "Display" },
+        { accessorKey: "keyboard", header: "Keyboard" },
+        { accessorKey: "mouse", header: "Mouse" },
+        { accessorKey: "motherboard", header: "Motherboard" },
+        { accessorKey: "processor", header: "Processor" },
+        { accessorKey: "vga", header: "VGA" },
+        { accessorKey: "ram", header: "RAM" },
+        { accessorKey: "case", header: "Case" },
+        { accessorKey: "power_supply", header: "Power Supply" },
+        { accessorKey: "cooling", header: "Cooling" },
+        { accessorKey: "hardisk", header: "Hardisk" },
         { accessorKey: "installation_date", header: "Installation Date" },
         { accessorKey: "maintenance_date", header: "Maintenance Date" },
         { accessorKey: "remark_aging", header: "Remark Aging" },
@@ -228,7 +207,7 @@ export default function NetworkComputer() {
                 className={styles.btnEdit}
                 onClick={() =>
                   navigate(
-                    `/main/assets/datapotensi/category/update/electrical/rectifier?id=${row.original.id}`
+                    `/main/assets/datapotensi/category/update/network/computer?id=${row.original.id}`
                   )
                 }
               >
@@ -250,7 +229,7 @@ export default function NetworkComputer() {
       ];
 
   const table = useReactTable({
-    data: rectifiers,
+    data: computers,
     columns,
     columnResizeMode: "onChange",
     columnResizeDirection: "ltr",
@@ -272,7 +251,7 @@ export default function NetworkComputer() {
   };
 
   const deleteHandle = async (id: string, assetId: string) => {
-    const data = await deleteRectifier(dispatch, id, assetId);
+    const data = await deleteComputer(dispatch, id, assetId);
     if (data.success) {
       navigate(0);
     }
@@ -285,10 +264,10 @@ export default function NetworkComputer() {
       ) : isError ? (
         <>
           <HeadPageDapot
-            title={`List Rectifier`}
+            title={`List Computer`}
             valueGlobalFilter={globalFilter}
             setGlobalFilter={dispatch}
-            subCategory="electrical"
+            subCategory="network"
             columnToggle={positionColumn}
             exportToggle={exportToggle}
             setToggle={dispatch}
@@ -298,118 +277,121 @@ export default function NetworkComputer() {
       ) : (
         <>
           <HeadPageDapot
-            title={`List Rectifier`}
+            title={`List Computer`}
             valueGlobalFilter={globalFilter}
             setGlobalFilter={dispatch}
-            subCategory="electrical"
+            subCategory="network"
             columnToggle={positionColumn}
             exportToggle={exportToggle}
             setToggle={dispatch}
-            exportCsv={exportRectifiersCsv}
-            exportXlsx={exportRectifiersXlsx}
+            exportCsv={exportComputersCsv}
+            exportXlsx={exportComputersXlsx}
           />
-          <div className={styles.tableWrapper}>
-            <DapotButtonsCategory
-              listpages={networkListButtons}
-              subCategory="network"
-            />
-            {rectifiers.length > 0 ? (
-              <div className={styles.tableDetail}>
-                <table
-                  className={styles.assetTable}
-                  {...{
-                    style: {
-                      width: positionColumn && table.getCenterTotalSize() / 1.5,
-                    },
-                  }}
-                >
-                  <thead>
-                    {table.getHeaderGroups().map((headerGroup) => (
-                      <tr key={headerGroup.id}>
-                        {headerGroup.headers.map((header) => {
-                          return (
-                            <th
-                              key={header.id}
-                              className={`${styles.sticky} ${styles.stickyHeader}`}
-                              colSpan={header.colSpan}
-                              style={{
-                                width:
-                                  header.getSize() !== 150
-                                    ? header.getSize()
-                                    : "auto",
-                              }}
-                            >
-                              {flexRender(
-                                header.column.columnDef.header,
-                                header.getContext()
-                              )}
-                              <div
-                                {...{
-                                  onDoubleClick: () =>
-                                    header.column.resetSize(),
-                                  onMouseDown: header.getResizeHandler(),
-                                  onTouchStart: header.getResizeHandler(),
-                                  className: `resizer ${
-                                    table.options.columnResizeDirection
-                                  } ${
-                                    header.column.getIsResizing()
-                                      ? "isResizing"
-                                      : ""
-                                  }`,
+          <div className={styles.tableSeal}>
+            <div className={styles.tableWrapper}>
+              <DapotButtonsCategory
+                listpages={networkListButtons}
+                subCategory="network"
+              />
+              {computers.length > 0 ? (
+                <div className={styles.tableDetail}>
+                  <table
+                    className={styles.assetTable}
+                    {...{
+                      style: {
+                        width:
+                          positionColumn && table.getCenterTotalSize() / 1.5,
+                      },
+                    }}
+                  >
+                    <thead>
+                      {table.getHeaderGroups().map((headerGroup) => (
+                        <tr key={headerGroup.id}>
+                          {headerGroup.headers.map((header) => {
+                            return (
+                              <th
+                                key={header.id}
+                                className={`${styles.sticky} ${styles.stickyHeader}`}
+                                colSpan={header.colSpan}
+                                style={{
+                                  width:
+                                    header.getSize() !== 150
+                                      ? header.getSize()
+                                      : "auto",
                                 }}
-                              />
-                            </th>
-                          );
-                        })}
-                      </tr>
-                    ))}
-                  </thead>
-                  <tbody>
-                    {table.getRowModel().rows.map((row) => (
-                      <tr key={row.id}>
-                        {row.getVisibleCells().map((cell, ind) => {
-                          return (
-                            <td
-                              key={cell.id}
-                              style={{
-                                background:
-                                  row.index % 2 !== 0 ? "#ffd1d1" : "",
-                                borderBottomLeftRadius:
-                                  row.index === rectifiers.length - 1 &&
-                                  ind === 0
-                                    ? "10px"
-                                    : undefined,
-                                borderBottomRightRadius:
-                                  row.index === rectifiers.length - 1 &&
-                                  ind === row.getVisibleCells().length - 1
-                                    ? "10px"
-                                    : undefined,
-                              }}
-                            >
-                              {flexRender(
-                                cell.column.columnDef.cell,
-                                cell.getContext()
-                              )}
-                            </td>
-                          );
-                        })}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-                {renderPagination(pagination, pageHandle, styles)}
-              </div>
-            ) : (
-              <div className={styles.noData}>
-                <Lottie
-                  animationData={noData}
-                  loop={true}
-                  style={{ height: "590px" }}
-                />
-                <p>Belum Ada Data Yang Tersedia</p>
-              </div>
-            )}
+                              >
+                                {flexRender(
+                                  header.column.columnDef.header,
+                                  header.getContext()
+                                )}
+                                <div
+                                  {...{
+                                    onDoubleClick: () =>
+                                      header.column.resetSize(),
+                                    onMouseDown: header.getResizeHandler(),
+                                    onTouchStart: header.getResizeHandler(),
+                                    className: `resizer ${
+                                      table.options.columnResizeDirection
+                                    } ${
+                                      header.column.getIsResizing()
+                                        ? "isResizing"
+                                        : ""
+                                    }`,
+                                  }}
+                                />
+                              </th>
+                            );
+                          })}
+                        </tr>
+                      ))}
+                    </thead>
+                    <tbody>
+                      {table.getRowModel().rows.map((row) => (
+                        <tr key={row.id}>
+                          {row.getVisibleCells().map((cell, ind) => {
+                            return (
+                              <td
+                                key={cell.id}
+                                style={{
+                                  background:
+                                    row.index % 2 !== 0 ? "#ffd1d1" : "",
+                                  borderBottomLeftRadius:
+                                    row.index === computers.length - 1 &&
+                                    ind === 0
+                                      ? "10px"
+                                      : undefined,
+                                  borderBottomRightRadius:
+                                    row.index === computers.length - 1 &&
+                                    ind === row.getVisibleCells().length - 1
+                                      ? "10px"
+                                      : undefined,
+                                }}
+                              >
+                                {flexRender(
+                                  cell.column.columnDef.cell,
+                                  cell.getContext()
+                                )}
+                              </td>
+                            );
+                          })}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              ) : (
+                <div className={styles.noData}>
+                  <Lottie
+                    animationData={noData}
+                    loop={true}
+                    style={{ height: "590px" }}
+                  />
+                  <p>Belum Ada Data Yang Tersedia</p>
+                </div>
+              )}
+            </div>
           </div>
+          {renderPagination(pagination, pageHandle, styles)}
           <HomeModal display={isShowModal} action={setIsShowModal}>
             <div
               style={{

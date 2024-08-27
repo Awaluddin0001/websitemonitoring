@@ -5,6 +5,15 @@ import styles from "@/css/module/Asset.module.css";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useReducer, useState } from "react";
 import {
+  initialStateListLinkNetwork,
+  listLinkNetworkReducer,
+} from "src/reducers/networkReducer";
+
+import {
+  deleteLinkNetwork,
+  getLinkNetwork,
+} from "@/services/network/dapotNetwork";
+import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
@@ -12,62 +21,47 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import { NetworkBrand } from "@/types/networkTypes";
 import LoadingFetch from "@/components/loading/LoadingFetch";
 import Lottie from "lottie-react";
 import noData from "@/assets/lottie/noData.json";
 import HomeModal from "@/components/modal/HomeModal";
-
-import {
-  deleteVendorNetwork,
-  getVendorNetwork,
-} from "@/services/network/dapotNetwork";
-import { NetworkVendor } from "@/types/networkTypes";
 import { renderPagination } from "@/components/table/RenderPagination";
-import {
-  initialStateListVendorNetwork,
-  listVendorNetworkReducer,
-} from "src/reducers/networkReducer";
 
-export default function ListVendorNetwork() {
+export default function ListLinkNetwork() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [state, dispatch] = useReducer(
-    listVendorNetworkReducer,
-    initialStateListVendorNetwork
+    listLinkNetworkReducer,
+    initialStateListLinkNetwork
   );
-  const { vendors, pagination, isLoading, globalFilter } = state;
+  const { links, pagination, isLoading, globalFilter } = state;
   const [isShowModal, setIsShowModal] = useState(false);
   const [idOriginal, setIdOriginal] = useState("");
   const [assetIdOriginal, setAssetIdOriginal] = useState("");
-
   useEffect(() => {
-    const fetchVendors = async () => {
+    const fetchTypes = async () => {
       try {
         const page = searchParams.get("page") || "1";
         const nopage = globalFilter ? "no" : undefined;
-        const data = await getVendorNetwork(
-          page,
-          dispatch,
-          globalFilter,
-          nopage
-        );
+        const data = await getLinkNetwork(page, dispatch, globalFilter, nopage);
+        console.log(data);
         dispatch({ type: "SET_PAGINATION", payload: data.pagination });
-        dispatch({ type: "SET_VENDORS", payload: data.data });
+        dispatch({ type: "SET_LINKS", payload: data.data });
       } catch (error) {
         dispatch({
           type: "SET_IS_ERROR",
-          payload: "Failed to fetch brands",
+          payload: "Failed to fetch types",
         });
       }
     };
-    fetchVendors();
+    fetchTypes();
   }, []);
 
-  const columns: ColumnDef<NetworkVendor>[] = [
-    { accessorKey: "id", header: "Vendor Id" },
-    { accessorKey: "company", header: "Nama Perusahaan" },
-    { accessorKey: "company_user_name", header: "Nama user" },
-    { accessorKey: "number_phone", header: "Nomor Telepon" },
+  const columns: ColumnDef<NetworkBrand>[] = [
+    { accessorKey: "id", header: "Type Id" },
+    { accessorKey: "incoming", header: "Input" },
+    { accessorKey: "outgoing", header: "output" },
     { accessorKey: "created_at", header: "Last Update" },
     { accessorKey: "user_name", header: "Update By" },
     {
@@ -87,7 +81,7 @@ export default function ListVendorNetwork() {
             className={styles.btnEdit}
             onClick={() =>
               navigate(
-                `/main/assets/datapotensi/vendor/update/network?id=${row.original.id}`
+                `/main/assets/datapotensi/link/update/network?id=${row.original.id}`
               )
             }
           >
@@ -109,7 +103,7 @@ export default function ListVendorNetwork() {
   ];
 
   const table = useReactTable({
-    data: vendors,
+    data: links,
     columns,
     columnResizeMode: "onChange",
     columnResizeDirection: "ltr",
@@ -131,7 +125,7 @@ export default function ListVendorNetwork() {
   };
 
   const deleteHandle = async (id: string, assetId: string) => {
-    const data = await deleteVendorNetwork(dispatch, id, assetId);
+    const data = await deleteLinkNetwork(dispatch, id, assetId);
     if (data.success) {
       navigate(0);
     }
@@ -143,18 +137,18 @@ export default function ListVendorNetwork() {
         <LoadingFetch />
       ) : (
         <>
-          <HeadPage title={`List Vendor Network `} />
+          <HeadPage title={`List Link Network`} />
           <div
             onClick={() =>
-              navigate(`/main/assets/datapotensi/vendor/add/network`)
+              navigate(`/main/assets/datapotensi/link/add/network`)
             }
             className={styles.addButton}
           >
-            + Add New Vendor
+            + Add New Link
           </div>
           <div className={styles.tableSeal}>
             <div className={styles.tableWrapper}>
-              {vendors.length > 0 ? (
+              {links.length > 0 ? (
                 <div className={styles.tableDetail}>
                   <table className={styles.assetTable}>
                     <thead>
@@ -209,12 +203,11 @@ export default function ListVendorNetwork() {
                                   background:
                                     row.index % 2 !== 0 ? "#ffd1d1" : "",
                                   borderBottomLeftRadius:
-                                    row.index === vendors.length - 1 &&
-                                    ind === 0
+                                    row.index === links.length - 1 && ind === 0
                                       ? "10px"
                                       : undefined,
                                   borderBottomRightRadius:
-                                    row.index === vendors.length - 1 &&
+                                    row.index === links.length - 1 &&
                                     ind === row.getVisibleCells().length - 1
                                       ? "10px"
                                       : undefined,

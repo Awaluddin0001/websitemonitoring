@@ -3,21 +3,21 @@ import ErrorFetch from "@/components/error/ErrorFetch";
 import LoadingFetch from "@/components/loading/LoadingFetch";
 import styles from "@/css/module/Input.module.css";
 import {
-  getOneVendorElectrical,
-  updateVendorElectrical,
-} from "@/services/electrical/dapotElectrical";
+  getOneVendorNetwork,
+  updateVendorNetwork,
+} from "@/services/network/dapotNetwork";
 import React, { useEffect, useReducer } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import {
-  initialStateUpdateElectricalVendor,
-  updateElectricalVendorReducer,
-} from "src/reducers/electricalReducer";
+  initialStateUpdateNetworkVendor,
+  updateNetworkVendorReducer,
+} from "src/reducers/networkReducer";
 export default function UpdateVendorNetwork() {
   const navigate = useNavigate();
   const [searchParams, _] = useSearchParams();
   const [state, dispatch] = useReducer(
-    updateElectricalVendorReducer,
-    initialStateUpdateElectricalVendor
+    updateNetworkVendorReducer,
+    initialStateUpdateNetworkVendor
   );
 
   const { company, company_user_name, number_phone, isLoading, isError } =
@@ -29,7 +29,7 @@ export default function UpdateVendorNetwork() {
       company_user_name: string,
       number_phone: string
     ) => {
-      const result = await updateVendorElectrical(
+      const result = await updateVendorNetwork(
         company,
         company_user_name,
         number_phone,
@@ -37,7 +37,7 @@ export default function UpdateVendorNetwork() {
         dispatch
       );
       if (result.success) {
-        navigate(`/main/assets/datapotensi/vendor/list/electrical?page=1`);
+        navigate(`/main/assets/datapotensi/vendor/list/network?page=1`);
       }
     };
 
@@ -47,7 +47,7 @@ export default function UpdateVendorNetwork() {
   useEffect(() => {
     const getdata = async () => {
       if (searchParams.get("id")) {
-        const result = await getOneVendorElectrical(
+        const result = await getOneVendorNetwork(
           dispatch,
           searchParams.get("id")
         );
@@ -67,12 +67,12 @@ export default function UpdateVendorNetwork() {
         <LoadingFetch />
       ) : isError ? (
         <>
-          <HeadPage title={`Input Data Brand Electrical`} />
+          <HeadPage title={`Input Data Brand Network`} />
           <ErrorFetch message={isError} />
         </>
       ) : (
         <>
-          <HeadPage title={`Input Data Vendor Untuk Electrical`} />
+          <HeadPage title={`Input Data Vendor Untuk Network`} />
           <div className={styles.inputContainer}>
             <div className={styles.inputGrouping}>
               <h2 className={styles.titleInput}>Nama Perusahaan</h2>

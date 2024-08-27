@@ -2,18 +2,18 @@ import HeadPage from "@/components/header/HeadPageMonitoring";
 import ErrorFetch from "@/components/error/ErrorFetch";
 import LoadingFetch from "@/components/loading/LoadingFetch";
 import styles from "@/css/module/Input.module.css";
-import { postVendorElectrical } from "@/services/electrical/dapotElectrical";
+import { postVendorNetwork } from "@/services/network/dapotNetwork";
 import React, { useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  initialStateUpdateElectricalVendor,
-  updateElectricalVendorReducer,
-} from "src/reducers/electricalReducer";
+  initialStateUpdateNetworkVendor,
+  updateNetworkVendorReducer,
+} from "src/reducers/networkReducer";
 export default function NewVendorNetwork() {
   const navigate = useNavigate();
   const [state, dispatch] = useReducer(
-    updateElectricalVendorReducer,
-    initialStateUpdateElectricalVendor
+    updateNetworkVendorReducer,
+    initialStateUpdateNetworkVendor
   );
 
   const { company, company_user_name, number_phone, isLoading, isError } =
@@ -25,14 +25,14 @@ export default function NewVendorNetwork() {
       company_user_name: string,
       number_phone: string
     ) => {
-      const result = await postVendorElectrical(
+      const result = await postVendorNetwork(
         company,
         company_user_name,
         number_phone,
         dispatch
       );
       if (result.success) {
-        navigate(`/main/assets/datapotensi/vendor/list/electrical?page=1`);
+        navigate(`/main/assets/datapotensi/vendor/list/network?page=1`);
       }
     };
 
@@ -44,12 +44,12 @@ export default function NewVendorNetwork() {
         <LoadingFetch />
       ) : isError ? (
         <>
-          <HeadPage title={`Input Data Vendor Electrical`} />
+          <HeadPage title={`Input Data Vendor Network`} />
           <ErrorFetch message={isError} />
         </>
       ) : (
         <>
-          <HeadPage title={`Input Data Vendor Untuk Electrical`} />
+          <HeadPage title={`Input Data Vendor Untuk Network`} />
           <div className={styles.inputContainer}>
             <div className={styles.inputGrouping}>
               <h2 className={styles.titleInput}>Nama Perusahaan</h2>

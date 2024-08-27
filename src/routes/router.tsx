@@ -13,8 +13,6 @@ import ListBrandElectrical from "@/pages/assets/dapot/brand/electrical/ListBrand
 import NewVendorElectrical from "@/pages/assets/dapot/vendor/electrical/NewVendorElectrical";
 
 import ListVendorElectrical from "@/pages/assets/dapot/vendor/electrical/ListVendorElectrical";
-
-import AssetListBrand from "@/pages/assets/dapot/AssetsListBrand";
 import AssetsList from "@/pages/assets/AssetsList";
 import AssetListCategory from "@/pages/assets/dapot/AssetsListCategory";
 import SpaceList from "@/pages/assets/space/SpaceList";
@@ -72,6 +70,21 @@ import NewLinkElectrical from "@/pages/assets/dapot/link/electrical/NewLinkElect
 import UpdateLinkElectrical from "@/pages/assets/dapot/link/electrical/UpdateLinkElectrical";
 import NetworkAll from "@/pages/assets/dapot/category/network/NetworkAll";
 import NetworkComputer from "@/pages/assets/dapot/category/network/NetworkComputer";
+import ListVendorNetwork from "@/pages/assets/dapot/vendor/network/ListVendorNetwork";
+import NewVendorNetwork from "@/pages/assets/dapot/vendor/network/NewVendorNetwork";
+import UpdateVendorNetwork from "@/pages/assets/dapot/vendor/network/UpdateVendorNetwork";
+import NewBrandNetwork from "@/pages/assets/dapot/brand/network/NewBrandNetwork";
+import UpdateBrandNetwork from "@/pages/assets/dapot/brand/network/UpdateBrandNetwork";
+import ListBrandNetwork from "@/pages/assets/dapot/brand/network/ListBrandNetwork";
+import ListTypeNetwork from "@/pages/assets/dapot/type/network/ListTypeNetwork";
+import NewTypeNetwork from "@/pages/assets/dapot/type/network/NewTypeNetwork";
+import UpdateTypeNetwork from "@/pages/assets/dapot/type/network/UpdateTypeNetwork";
+import ListMaintenanceNetwork from "@/pages/assets/dapot/maintenance/network/ListMaintenanceNetwork";
+import NewMaintenanceNetwork from "@/pages/assets/dapot/maintenance/network/NewMaintenanceNetwork";
+import UpdateMaintenanceNetwork from "@/pages/assets/dapot/maintenance/network/UpdateMaintenanceNetwork";
+import ListLinkNetwork from "@/pages/assets/dapot/link/network/ListLinkNetwork";
+import NewLinkNetwork from "@/pages/assets/dapot/link/network/NewLinkNetwork";
+import UpdateLinkNetwork from "@/pages/assets/dapot/link/network/UpdateLinkNetwork";
 
 export const router = createBrowserRouter([
   {
@@ -143,10 +156,6 @@ export const router = createBrowserRouter([
         element: <AssetsList />,
       },
       {
-        path: "assets/datapotensi/brand/",
-        element: <AssetListBrand />,
-      },
-      {
         path: "assets/datapotensi/brand/add/electrical",
         element: <NewBrandElectrical />,
       },
@@ -158,6 +167,19 @@ export const router = createBrowserRouter([
       {
         path: "assets/datapotensi/brand/list/electrical",
         element: <ListBrandElectrical />,
+      },
+      {
+        path: "assets/datapotensi/brand/add/network",
+        element: <NewBrandNetwork />,
+      },
+      {
+        path: "assets/datapotensi/brand/update/network",
+        element: <UpdateBrandNetwork />,
+      },
+
+      {
+        path: "assets/datapotensi/brand/list/network",
+        element: <ListBrandNetwork />,
       },
       {
         path: "assets/datapotensi/category/",
@@ -284,6 +306,18 @@ export const router = createBrowserRouter([
         element: <UpdateVendorElectrical />,
       },
       {
+        path: "assets/datapotensi/vendor/list/network",
+        element: <ListVendorNetwork />,
+      },
+      {
+        path: "assets/datapotensi/vendor/add/network",
+        element: <NewVendorNetwork />,
+      },
+      {
+        path: "assets/datapotensi/vendor/update/network",
+        element: <UpdateVendorNetwork />,
+      },
+      {
         path: "assets/datapotensi/type/list/electrical",
         element: <ListTypeElectrical />,
       },
@@ -296,6 +330,18 @@ export const router = createBrowserRouter([
         element: <UpdateTypeElectrical />,
       },
       {
+        path: "assets/datapotensi/type/list/network",
+        element: <ListTypeNetwork />,
+      },
+      {
+        path: "assets/datapotensi/type/add/network",
+        element: <NewTypeNetwork />,
+      },
+      {
+        path: "assets/datapotensi/type/update/network",
+        element: <UpdateTypeNetwork />,
+      },
+      {
         path: "assets/datapotensi/maintenance/list/electrical",
         element: <ListMaintenanceElectrical />,
       },
@@ -306,6 +352,18 @@ export const router = createBrowserRouter([
       {
         path: "assets/datapotensi/maintenance/update/electrical",
         element: <UpdateMaintenanceElectrical />,
+      },
+      {
+        path: "assets/datapotensi/maintenance/list/network",
+        element: <ListMaintenanceNetwork />,
+      },
+      {
+        path: "assets/datapotensi/maintenance/add/network",
+        element: <NewMaintenanceNetwork />,
+      },
+      {
+        path: "assets/datapotensi/maintenance/update/network",
+        element: <UpdateMaintenanceNetwork />,
       },
       {
         path: "assets/datapotensi/detail/electrical/rectifier",
@@ -350,6 +408,18 @@ export const router = createBrowserRouter([
       {
         path: "assets/datapotensi/link/update/electrical",
         element: <UpdateLinkElectrical />,
+      },
+      {
+        path: "assets/datapotensi/link/list/network",
+        element: <ListLinkNetwork />,
+      },
+      {
+        path: "assets/datapotensi/link/add/network",
+        element: <NewLinkNetwork />,
+      },
+      {
+        path: "assets/datapotensi/link/update/network",
+        element: <UpdateLinkNetwork />,
       },
       {
         path: "assets/space/",
