@@ -17,7 +17,7 @@ export const getCctvs = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/electrical/cctvs", {
+    const response = await apiClient.get("/api/v1/dapot/security/cctvs", {
       params: {
         page,
         limit: 15,
@@ -39,7 +39,7 @@ export const exportCctvsCsv = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/electrical/cctv-export-csv",
+      "/api/v1/dapot/security/cctv-export-csv",
       {
         params: {
           page,
@@ -63,7 +63,7 @@ export const exportCctvsXlsx = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/electrical/cctv-export-xlsx",
+      "/api/v1/dapot/security/cctv-export-xlsx",
       {
         params: {
           page,
@@ -85,15 +85,11 @@ export const postNewCctv = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.post(
-      "/api/v1/dapot/electrical/cctv",
-      data,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = await apiClient.post("/api/v1/dapot/security/cctv", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -108,7 +104,7 @@ export const getCctv = async (
     setLoadingAndError(dispatch);
     try {
       const response = await apiClient.get(
-        `/api/v1/dapot/electrical/cctv?id=${id}`
+        `/api/v1/dapot/security/cctv?id=${id}`
       );
       return handleResponse(response, dispatch);
     } catch (error) {
@@ -126,7 +122,7 @@ export const updateCctv = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.put(
-      `/api/v1/dapot/electrical/cctv?id=${deviceid}&assetid=${assetid}`,
+      `/api/v1/dapot/security/cctv?id=${deviceid}&assetid=${assetid}`,
       data,
       {
         headers: {
@@ -151,7 +147,7 @@ export const deleteCctv = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/electrical/cctv?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
+      `/api/v1/dapot/security/cctv?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {

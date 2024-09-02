@@ -9,8 +9,8 @@ import LoadingFetch from "@/components/loading/LoadingFetch";
 import ErrorFetch from "@/components/error/ErrorFetch";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import {
-  initialStateListComputer,
-  listComputerReducer,
+  initialStateListOtherSc,
+  listOtherScReducer,
 } from "src/reducers/networkReducer";
 import HeadPageDapot from "@/components/header/HeadPageDapot";
 import {
@@ -24,22 +24,23 @@ import {
 import HomeModal from "@/components/modal/HomeModal";
 import { networkListButtons } from "@/routes/dapotCategory";
 import { renderPagination } from "@/components/table/RenderPagination";
+import { OtherSCNetwork } from "@/types/networkTypes";
 import {
-  deleteComputer,
-  exportComputersCsv,
-  exportComputersXlsx,
-  getComputers,
-} from "@/services/network/dapotComputer";
-import { Computer } from "@/types/networkTypes";
-export default function NetworkComputer() {
+  deleteRouter,
+  exportRoutersCsv,
+  exportRoutersXlsx,
+  getRouters,
+} from "@/services/network/dapotRouters";
+
+export default function NetworkRouters() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [state, dispatch] = useReducer(
-    listComputerReducer,
-    initialStateListComputer
+    listOtherScReducer,
+    initialStateListOtherSc
   );
   const {
-    computers,
+    oscs,
     pagination,
     isLoading,
     isError,
@@ -52,32 +53,32 @@ export default function NetworkComputer() {
   const [assetIdOriginal, setAssetIdOriginal] = useState("");
 
   useEffect(() => {
-    const fetchComputers = async () => {
+    const fetchStorages = async () => {
       try {
         const page = searchParams.get("page") || "1";
         const nopage = globalFilter ? "no" : undefined;
-        const data = await getComputers(page, dispatch, globalFilter, nopage);
+        const data = await getRouters(page, dispatch, globalFilter, nopage);
         dispatch({ type: "SET_PAGINATION", payload: data.pagination });
-        dispatch({ type: "SET_COMPUTERS", payload: data.data });
+        dispatch({ type: "SET_OTHERSCS", payload: data.data });
       } catch (err) {
         dispatch({
           type: "SET_IS_ERROR",
-          payload: "Failed to fetch computers",
+          payload: "Failed to fetch routers",
         });
       }
     };
 
-    fetchComputers();
+    fetchStorages();
   }, [searchParams, globalFilter]);
 
-  const columns: ColumnDef<Computer>[] = positionColumn
+  const columns: ColumnDef<OtherSCNetwork>[] = positionColumn
     ? [
         {
           accessorKey: "id",
-          header: "Computer Id",
+          header: "Firewall Id",
           cell: ({ row }) => (
             <Link
-              to={`/main/assets/datapotensi/detail/network/computer?id=${row.original.id}`}
+              to={`/main/assets/datapotensi/detail/network/routers?id=${row.original.id}`}
               style={{
                 color: "#000",
                 fontSize: "1.8rem",
@@ -92,18 +93,15 @@ export default function NetworkComputer() {
         { accessorKey: "floor_name", header: "Lantai" },
         { accessorKey: "room_name", header: "Ruangan" },
         { accessorKey: "vendor_name", header: "Vendor" },
-        { accessorKey: "display", header: "Display" },
-        { accessorKey: "keyboard", header: "Keyboard" },
-        { accessorKey: "mouse", header: "Mouse" },
-        { accessorKey: "motherboard", header: "Motherboard" },
-        { accessorKey: "processor", header: "Processor" },
-        { accessorKey: "vga", header: "VGA" },
-        { accessorKey: "ram", header: "RAM" },
-        { accessorKey: "casing", header: "Casing" },
-        { accessorKey: "power_supply", header: "Power Supply" },
-        { accessorKey: "cooling", header: "Cooling" },
-        { accessorKey: "hardisk", header: "Hardisk" },
-
+        { accessorKey: "brand_name", header: "Brand" },
+        { accessorKey: "type_name", header: "Type" },
+        { accessorKey: "rack_server_id", header: "Rack Server ID" },
+        { accessorKey: "name", header: "Nama" },
+        { accessorKey: "manufactur", header: "Manufactur" },
+        { accessorKey: "position_unit", header: "Position unit" },
+        { accessorKey: "capacity_port", header: "Capacity Port" },
+        { accessorKey: "port", header: "Port" },
+        { accessorKey: "power", header: "Power" },
         { accessorKey: "installation_date", header: "Installation Date" },
         { accessorKey: "maintenance_date", header: "Maintenance Date" },
         { accessorKey: "warranty", header: "Garansi" },
@@ -131,7 +129,7 @@ export default function NetworkComputer() {
                 className={styles.btnEdit}
                 onClick={() =>
                   navigate(
-                    `/main/assets/datapotensi/category/update/network/computer?id=${row.original.id}`
+                    `/main/assets/datapotensi/category/update/network/routers?id=${row.original.id}`
                   )
                 }
               >
@@ -154,10 +152,10 @@ export default function NetworkComputer() {
     : [
         {
           accessorKey: "id",
-          header: "Computer Id",
+          header: "Firewall Id",
           cell: ({ row }) => (
             <Link
-              to={`/main/assets/datapotensi/detail/network/computer?id=${row.original.id}`}
+              to={`/main/assets/datapotensi/detail/network/routers?id=${row.original.id}`}
               style={{
                 color: "#000",
                 fontSize: "1.8rem",
@@ -168,17 +166,15 @@ export default function NetworkComputer() {
           ),
         },
         { accessorKey: "vendor_name", header: "Vendor" },
-        { accessorKey: "display", header: "Display" },
-        { accessorKey: "keyboard", header: "Keyboard" },
-        { accessorKey: "mouse", header: "Mouse" },
-        { accessorKey: "motherboard", header: "Motherboard" },
-        { accessorKey: "processor", header: "Processor" },
-        { accessorKey: "vga", header: "VGA" },
-        { accessorKey: "ram", header: "RAM" },
-        { accessorKey: "casing", header: "Casing" },
-        { accessorKey: "power_supply", header: "Power Supply" },
-        { accessorKey: "cooling", header: "Cooling" },
-        { accessorKey: "hardisk", header: "Hardisk" },
+        { accessorKey: "brand_name", header: "Brand" },
+        { accessorKey: "type_name", header: "Type" },
+        { accessorKey: "rack_server_id", header: "Rack Server ID" },
+        { accessorKey: "name", header: "Nama" },
+        { accessorKey: "manufactur", header: "Manufactur" },
+        { accessorKey: "position_unit", header: "Position unit" },
+        { accessorKey: "capacity_port", header: "Capacity Port" },
+        { accessorKey: "port", header: "Port" },
+        { accessorKey: "power", header: "Power" },
         { accessorKey: "installation_date", header: "Installation Date" },
         { accessorKey: "maintenance_date", header: "Maintenance Date" },
         { accessorKey: "created_at", header: "Last Update" },
@@ -200,7 +196,7 @@ export default function NetworkComputer() {
                 className={styles.btnEdit}
                 onClick={() =>
                   navigate(
-                    `/main/assets/datapotensi/category/update/network/computer?id=${row.original.id}`
+                    `/main/assets/datapotensi/category/update/network/routers?id=${row.original.id}`
                   )
                 }
               >
@@ -222,7 +218,7 @@ export default function NetworkComputer() {
       ];
 
   const table = useReactTable({
-    data: computers,
+    data: oscs,
     columns,
     columnResizeMode: "onChange",
     columnResizeDirection: "ltr",
@@ -244,7 +240,7 @@ export default function NetworkComputer() {
   };
 
   const deleteHandle = async (id: string, assetId: string) => {
-    const data = await deleteComputer(dispatch, id, assetId);
+    const data = await deleteRouter(dispatch, id, assetId);
     if (data.success) {
       navigate(0);
     }
@@ -257,7 +253,7 @@ export default function NetworkComputer() {
       ) : isError ? (
         <>
           <HeadPageDapot
-            title={`List Computer`}
+            title={`List Routers`}
             valueGlobalFilter={globalFilter}
             setGlobalFilter={dispatch}
             subCategory="network"
@@ -270,15 +266,15 @@ export default function NetworkComputer() {
       ) : (
         <>
           <HeadPageDapot
-            title={`List Computer`}
+            title={`List Routers`}
             valueGlobalFilter={globalFilter}
             setGlobalFilter={dispatch}
             subCategory="network"
             columnToggle={positionColumn}
             exportToggle={exportToggle}
             setToggle={dispatch}
-            exportCsv={exportComputersCsv}
-            exportXlsx={exportComputersXlsx}
+            exportCsv={exportRoutersCsv}
+            exportXlsx={exportRoutersXlsx}
           />
           <div className={styles.tableSeal}>
             <div className={styles.tableWrapper}>
@@ -286,7 +282,7 @@ export default function NetworkComputer() {
                 listpages={networkListButtons}
                 subCategory="network"
               />
-              {computers.length > 0 ? (
+              {oscs.length > 0 ? (
                 <div className={styles.tableDetail}>
                   <table
                     className={styles.assetTable}
@@ -349,12 +345,11 @@ export default function NetworkComputer() {
                                   background:
                                     row.index % 2 !== 0 ? "#ffd1d1" : "",
                                   borderBottomLeftRadius:
-                                    row.index === computers.length - 1 &&
-                                    ind === 0
+                                    row.index === oscs.length - 1 && ind === 0
                                       ? "10px"
                                       : undefined,
                                   borderBottomRightRadius:
-                                    row.index === computers.length - 1 &&
+                                    row.index === oscs.length - 1 &&
                                     ind === row.getVisibleCells().length - 1
                                       ? "10px"
                                       : undefined,

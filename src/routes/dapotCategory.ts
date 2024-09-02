@@ -19,3 +19,13 @@ export const networkListButtons = [
   "patch_panels",
   "computer",
 ];
+export const securityListButtons = [
+  "all",
+  "cctv",
+  "video_recording",
+  "access_control",
+  "alarm",
+  "button",
+  "detector",
+  "sound",
+];

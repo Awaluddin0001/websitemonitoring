@@ -8,10 +8,6 @@ import noData from "@/assets/lottie/noData.json";
 import LoadingFetch from "@/components/loading/LoadingFetch";
 import ErrorFetch from "@/components/error/ErrorFetch";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import {
-  initialStateListComputer,
-  listComputerReducer,
-} from "src/reducers/networkReducer";
 import HeadPageDapot from "@/components/header/HeadPageDapot";
 import {
   useReactTable,
@@ -22,24 +18,25 @@ import {
   getFilteredRowModel,
 } from "@tanstack/react-table";
 import HomeModal from "@/components/modal/HomeModal";
-import { networkListButtons } from "@/routes/dapotCategory";
+import { securityListButtons } from "@/routes/dapotCategory";
 import { renderPagination } from "@/components/table/RenderPagination";
 import {
-  deleteComputer,
-  exportComputersCsv,
-  exportComputersXlsx,
-  getComputers,
-} from "@/services/network/dapotComputer";
-import { Computer } from "@/types/networkTypes";
-export default function NetworkComputer() {
+  initialStateListCctv,
+  listCctvReducer,
+} from "src/reducers/securityReducer";
+import { Cctv } from "@/types/securityTypes";
+import {
+  deleteCctv,
+  exportCctvsCsv,
+  exportCctvsXlsx,
+  getCctvs,
+} from "@/services/security/dapotCctv";
+export default function SecurityCctv() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-  const [state, dispatch] = useReducer(
-    listComputerReducer,
-    initialStateListComputer
-  );
+  const [state, dispatch] = useReducer(listCctvReducer, initialStateListCctv);
   const {
-    computers,
+    cctvs,
     pagination,
     isLoading,
     isError,
@@ -52,32 +49,32 @@ export default function NetworkComputer() {
   const [assetIdOriginal, setAssetIdOriginal] = useState("");
 
   useEffect(() => {
-    const fetchComputers = async () => {
+    const fetchCctvs = async () => {
       try {
         const page = searchParams.get("page") || "1";
         const nopage = globalFilter ? "no" : undefined;
-        const data = await getComputers(page, dispatch, globalFilter, nopage);
+        const data = await getCctvs(page, dispatch, globalFilter, nopage);
         dispatch({ type: "SET_PAGINATION", payload: data.pagination });
-        dispatch({ type: "SET_COMPUTERS", payload: data.data });
+        dispatch({ type: "SET_CCTVS", payload: data.data });
       } catch (err) {
         dispatch({
           type: "SET_IS_ERROR",
-          payload: "Failed to fetch computers",
+          payload: "Failed to fetch cctv",
         });
       }
     };
 
-    fetchComputers();
+    fetchCctvs();
   }, [searchParams, globalFilter]);
 
-  const columns: ColumnDef<Computer>[] = positionColumn
+  const columns: ColumnDef<Cctv>[] = positionColumn
     ? [
         {
           accessorKey: "id",
-          header: "Computer Id",
+          header: "Cctv Id",
           cell: ({ row }) => (
             <Link
-              to={`/main/assets/datapotensi/detail/network/computer?id=${row.original.id}`}
+              to={`/main/assets/datapotensi/detail/security/cctv?id=${row.original.id}`}
               style={{
                 color: "#000",
                 fontSize: "1.8rem",
@@ -92,18 +89,8 @@ export default function NetworkComputer() {
         { accessorKey: "floor_name", header: "Lantai" },
         { accessorKey: "room_name", header: "Ruangan" },
         { accessorKey: "vendor_name", header: "Vendor" },
-        { accessorKey: "display", header: "Display" },
-        { accessorKey: "keyboard", header: "Keyboard" },
-        { accessorKey: "mouse", header: "Mouse" },
-        { accessorKey: "motherboard", header: "Motherboard" },
-        { accessorKey: "processor", header: "Processor" },
-        { accessorKey: "vga", header: "VGA" },
-        { accessorKey: "ram", header: "RAM" },
-        { accessorKey: "casing", header: "Casing" },
-        { accessorKey: "power_supply", header: "Power Supply" },
-        { accessorKey: "cooling", header: "Cooling" },
-        { accessorKey: "hardisk", header: "Hardisk" },
-
+        { accessorKey: "manufactur", header: "Manufactur" },
+        { accessorKey: "ip", header: "Ip" },
         { accessorKey: "installation_date", header: "Installation Date" },
         { accessorKey: "maintenance_date", header: "Maintenance Date" },
         { accessorKey: "warranty", header: "Garansi" },
@@ -131,7 +118,7 @@ export default function NetworkComputer() {
                 className={styles.btnEdit}
                 onClick={() =>
                   navigate(
-                    `/main/assets/datapotensi/category/update/network/computer?id=${row.original.id}`
+                    `/main/assets/datapotensi/category/update/security/cctv?id=${row.original.id}`
                   )
                 }
               >
@@ -154,10 +141,10 @@ export default function NetworkComputer() {
     : [
         {
           accessorKey: "id",
-          header: "Computer Id",
+          header: "Cctv Id",
           cell: ({ row }) => (
             <Link
-              to={`/main/assets/datapotensi/detail/network/computer?id=${row.original.id}`}
+              to={`/main/assets/datapotensi/detail/security/cctv?id=${row.original.id}`}
               style={{
                 color: "#000",
                 fontSize: "1.8rem",
@@ -168,17 +155,8 @@ export default function NetworkComputer() {
           ),
         },
         { accessorKey: "vendor_name", header: "Vendor" },
-        { accessorKey: "display", header: "Display" },
-        { accessorKey: "keyboard", header: "Keyboard" },
-        { accessorKey: "mouse", header: "Mouse" },
-        { accessorKey: "motherboard", header: "Motherboard" },
-        { accessorKey: "processor", header: "Processor" },
-        { accessorKey: "vga", header: "VGA" },
-        { accessorKey: "ram", header: "RAM" },
-        { accessorKey: "casing", header: "Casing" },
-        { accessorKey: "power_supply", header: "Power Supply" },
-        { accessorKey: "cooling", header: "Cooling" },
-        { accessorKey: "hardisk", header: "Hardisk" },
+        { accessorKey: "manufactur", header: "Manufactur" },
+        { accessorKey: "ip", header: "Ip" },
         { accessorKey: "installation_date", header: "Installation Date" },
         { accessorKey: "maintenance_date", header: "Maintenance Date" },
         { accessorKey: "created_at", header: "Last Update" },
@@ -200,7 +178,7 @@ export default function NetworkComputer() {
                 className={styles.btnEdit}
                 onClick={() =>
                   navigate(
-                    `/main/assets/datapotensi/category/update/network/computer?id=${row.original.id}`
+                    `/main/assets/datapotensi/category/update/security/cctv?id=${row.original.id}`
                   )
                 }
               >
@@ -222,7 +200,7 @@ export default function NetworkComputer() {
       ];
 
   const table = useReactTable({
-    data: computers,
+    data: cctvs,
     columns,
     columnResizeMode: "onChange",
     columnResizeDirection: "ltr",
@@ -244,7 +222,7 @@ export default function NetworkComputer() {
   };
 
   const deleteHandle = async (id: string, assetId: string) => {
-    const data = await deleteComputer(dispatch, id, assetId);
+    const data = await deleteCctv(dispatch, id, assetId);
     if (data.success) {
       navigate(0);
     }
@@ -257,10 +235,10 @@ export default function NetworkComputer() {
       ) : isError ? (
         <>
           <HeadPageDapot
-            title={`List Computer`}
+            title={`List Cctv`}
             valueGlobalFilter={globalFilter}
             setGlobalFilter={dispatch}
-            subCategory="network"
+            subCategory="security"
             columnToggle={positionColumn}
             exportToggle={exportToggle}
             setToggle={dispatch}
@@ -270,23 +248,23 @@ export default function NetworkComputer() {
       ) : (
         <>
           <HeadPageDapot
-            title={`List Computer`}
+            title={`List Cctv`}
             valueGlobalFilter={globalFilter}
             setGlobalFilter={dispatch}
-            subCategory="network"
+            subCategory="security"
             columnToggle={positionColumn}
             exportToggle={exportToggle}
             setToggle={dispatch}
-            exportCsv={exportComputersCsv}
-            exportXlsx={exportComputersXlsx}
+            exportCsv={exportCctvsCsv}
+            exportXlsx={exportCctvsXlsx}
           />
           <div className={styles.tableSeal}>
             <div className={styles.tableWrapper}>
               <DapotButtonsCategory
-                listpages={networkListButtons}
-                subCategory="network"
+                listpages={securityListButtons}
+                subCategory="security"
               />
-              {computers.length > 0 ? (
+              {cctvs.length > 0 ? (
                 <div className={styles.tableDetail}>
                   <table
                     className={styles.assetTable}
@@ -349,12 +327,11 @@ export default function NetworkComputer() {
                                   background:
                                     row.index % 2 !== 0 ? "#ffd1d1" : "",
                                   borderBottomLeftRadius:
-                                    row.index === computers.length - 1 &&
-                                    ind === 0
+                                    row.index === cctvs.length - 1 && ind === 0
                                       ? "10px"
                                       : undefined,
                                   borderBottomRightRadius:
-                                    row.index === computers.length - 1 &&
+                                    row.index === cctvs.length - 1 &&
                                     ind === row.getVisibleCells().length - 1
                                       ? "10px"
                                       : undefined,

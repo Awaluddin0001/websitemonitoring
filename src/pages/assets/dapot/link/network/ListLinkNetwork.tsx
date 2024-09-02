@@ -5,15 +5,6 @@ import styles from "@/css/module/Asset.module.css";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useReducer, useState } from "react";
 import {
-  initialStateListLinkNetwork,
-  listLinkNetworkReducer,
-} from "src/reducers/networkReducer";
-
-import {
-  deleteLinkNetwork,
-  getLinkNetwork,
-} from "@/services/network/dapotNetwork";
-import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
@@ -21,12 +12,20 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { NetworkBrand } from "@/types/networkTypes";
 import LoadingFetch from "@/components/loading/LoadingFetch";
 import Lottie from "lottie-react";
 import noData from "@/assets/lottie/noData.json";
 import HomeModal from "@/components/modal/HomeModal";
 import { renderPagination } from "@/components/table/RenderPagination";
+import {
+  deleteLinkNetwork,
+  getLinkNetwork,
+} from "@/services/network/dapotNetwork";
+import {
+  initialStateListLinkNetwork,
+  listLinkNetworkReducer,
+} from "src/reducers/networkReducer";
+import { NetworkBrand } from "@/types/networkTypes";
 
 export default function ListLinkNetwork() {
   const navigate = useNavigate();

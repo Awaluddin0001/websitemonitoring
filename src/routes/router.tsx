@@ -82,9 +82,41 @@ import UpdateTypeNetwork from "@/pages/assets/dapot/type/network/UpdateTypeNetwo
 import ListMaintenanceNetwork from "@/pages/assets/dapot/maintenance/network/ListMaintenanceNetwork";
 import NewMaintenanceNetwork from "@/pages/assets/dapot/maintenance/network/NewMaintenanceNetwork";
 import UpdateMaintenanceNetwork from "@/pages/assets/dapot/maintenance/network/UpdateMaintenanceNetwork";
+
+import NetworkComputerAdd from "@/pages/assets/dapot/category/network/NetworkComputerAdd";
+import NetworkComputerUpdate from "@/pages/assets/dapot/category/network/NetworkComputerUpdate";
+import NetworkComputerDetail from "@/pages/assets/dapot/detail/network/NetworkComputerDetail";
+import NetworkRackServer from "@/pages/assets/dapot/category/network/NetworkRackServer";
+import NetworkRackserverAdd from "@/pages/assets/dapot/category/network/NetworkRackServerAdd";
+import NetworkRackserverUpdate from "@/pages/assets/dapot/category/network/NetworkRackServerUpdate";
+import NetworkRackServerDetail from "@/pages/assets/dapot/detail/network/NetworkRackServerDetail";
+import NetworkStorage from "@/pages/assets/dapot/category/network/NetworkStorage";
+import NetworkStorageAdd from "@/pages/assets/dapot/category/network/NetworkStorageAdd";
+import NetworkStorageUpdate from "@/pages/assets/dapot/category/network/NetworkStorageUpdate";
+import NetworkStorageDetail from "@/pages/assets/dapot/detail/network/NetworkStorageDetail";
+import NetworkFirewall from "@/pages/assets/dapot/category/network/NetworkFirewall";
+import NetworkFirewallAdd from "@/pages/assets/dapot/category/network/NetworkFirewallAdd";
+import NetworkFirewallUpdate from "@/pages/assets/dapot/category/network/NetworkFirewallUpdate";
+import NetworkFirewallDetail from "@/pages/assets/dapot/detail/network/NetworkFirewallDetail";
+import NetworkSwitchesAdd from "@/pages/assets/dapot/category/network/NetworkSwitchesAdd";
+import NetworkPatchPanelsAdd from "@/pages/assets/dapot/category/network/NetworkPatchPanelsAdd";
+import NetworkRoutersAdd from "@/pages/assets/dapot/category/network/NetworkRoutersAdd";
+import NetworkSwitchesUpdate from "@/pages/assets/dapot/category/network/NetworkSwitchesUpdate";
+import NetworkPatchPanelsUpdate from "@/pages/assets/dapot/category/network/NetworkPatchPanelsUpdate";
+import NetworkRoutersUpdate from "@/pages/assets/dapot/category/network/NetworkRoutersUpdate";
+import NetworkSwitches from "@/pages/assets/dapot/category/network/NetworkSwitches";
+import NetworkPatchPanels from "@/pages/assets/dapot/category/network/NetworkPatchPanels";
+import NetworkRouters from "@/pages/assets/dapot/category/network/NetworkRouters";
+import NetworkSwitchesDetail from "@/pages/assets/dapot/detail/network/NetworkSwitchesDetail";
+import NetworkPatchPanelsDetail from "@/pages/assets/dapot/detail/network/NetworkPatchPanelsDetail";
+import NetworkRoutersDetail from "@/pages/assets/dapot/detail/network/NetworkRoutersDetail";
 import ListLinkNetwork from "@/pages/assets/dapot/link/network/ListLinkNetwork";
 import NewLinkNetwork from "@/pages/assets/dapot/link/network/NewLinkNetwork";
 import UpdateLinkNetwork from "@/pages/assets/dapot/link/network/UpdateLinkNetwork";
+import SecurityAll from "@/pages/assets/dapot/category/security/SecurityAll";
+import SecurityCctv from "@/pages/assets/dapot/category/security/SecurityCctv";
+import SecurityCctvUpdate from "@/pages/assets/dapot/category/security/SecurityCctvUpdate";
+import SecurityCctvAdd from "@/pages/assets/dapot/category/security/SecurityCctvAdd";
 
 export const router = createBrowserRouter([
   {
@@ -185,6 +217,7 @@ export const router = createBrowserRouter([
         path: "assets/datapotensi/category/",
         element: <AssetListCategory />,
       },
+      // Category Add
       {
         path: "assets/datapotensi/category/add/electrical/rectifier",
         element: <ElectricalRectifierAdd />,
@@ -218,6 +251,39 @@ export const router = createBrowserRouter([
         element: <ElectricalUpsAdd />,
       },
       {
+        path: "assets/datapotensi/category/add/network/computer",
+        element: <NetworkComputerAdd />,
+      },
+      {
+        path: "assets/datapotensi/category/add/network/rack_server",
+        element: <NetworkRackserverAdd />,
+      },
+      {
+        path: "assets/datapotensi/category/add/network/storage",
+        element: <NetworkStorageAdd />,
+      },
+      {
+        path: "assets/datapotensi/category/add/network/firewalls",
+        element: <NetworkFirewallAdd />,
+      },
+      {
+        path: "assets/datapotensi/category/add/network/network_switches",
+        element: <NetworkSwitchesAdd />,
+      },
+      {
+        path: "assets/datapotensi/category/add/network/patch_panels",
+        element: <NetworkPatchPanelsAdd />,
+      },
+      {
+        path: "assets/datapotensi/category/add/network/routers",
+        element: <NetworkRoutersAdd />,
+      },
+      {
+        path: "assets/datapotensi/category/add/security/cctv",
+        element: <SecurityCctvAdd />,
+      },
+      // Category Update
+      {
         path: "assets/datapotensi/category/update/electrical/rectifier",
         element: <ElectricalRectifierUpdate />,
       },
@@ -249,6 +315,39 @@ export const router = createBrowserRouter([
         path: "assets/datapotensi/category/update/electrical/ups",
         element: <ElectricalUpsUpdate />,
       },
+      {
+        path: "assets/datapotensi/category/update/network/computer",
+        element: <NetworkComputerUpdate />,
+      },
+      {
+        path: "assets/datapotensi/category/update/network/rack_server",
+        element: <NetworkRackserverUpdate />,
+      },
+      {
+        path: "assets/datapotensi/category/update/network/storage",
+        element: <NetworkStorageUpdate />,
+      },
+      {
+        path: "assets/datapotensi/category/update/network/firewalls",
+        element: <NetworkFirewallUpdate />,
+      },
+      {
+        path: "assets/datapotensi/category/update/network/network_switches",
+        element: <NetworkSwitchesUpdate />,
+      },
+      {
+        path: "assets/datapotensi/category/update/network/patch_panels",
+        element: <NetworkPatchPanelsUpdate />,
+      },
+      {
+        path: "assets/datapotensi/category/update/network/routers",
+        element: <NetworkRoutersUpdate />,
+      },
+      {
+        path: "assets/datapotensi/category/update/security/cctv",
+        element: <SecurityCctvUpdate />,
+      },
+      // category list
       {
         path: "assets/datapotensi/category/list/electrical/all",
         element: <ElectricalAll />,
@@ -293,6 +392,39 @@ export const router = createBrowserRouter([
         path: "assets/datapotensi/category/list/network/computer",
         element: <NetworkComputer />,
       },
+      {
+        path: "assets/datapotensi/category/list/network/rack_server",
+        element: <NetworkRackServer />,
+      },
+      {
+        path: "assets/datapotensi/category/list/network/storage",
+        element: <NetworkStorage />,
+      },
+      {
+        path: "assets/datapotensi/category/list/network/firewalls",
+        element: <NetworkFirewall />,
+      },
+      {
+        path: "assets/datapotensi/category/list/network/network_switches",
+        element: <NetworkSwitches />,
+      },
+      {
+        path: "assets/datapotensi/category/list/network/patch_panels",
+        element: <NetworkPatchPanels />,
+      },
+      {
+        path: "assets/datapotensi/category/list/network/routers",
+        element: <NetworkRouters />,
+      },
+      {
+        path: "assets/datapotensi/category/list/security/all",
+        element: <SecurityAll />,
+      },
+      {
+        path: "assets/datapotensi/category/list/security/cctv",
+        element: <SecurityCctv />,
+      },
+      // vendor list
       {
         path: "assets/datapotensi/vendor/list/electrical",
         element: <ListVendorElectrical />,
@@ -365,6 +497,7 @@ export const router = createBrowserRouter([
         path: "assets/datapotensi/maintenance/update/network",
         element: <UpdateMaintenanceNetwork />,
       },
+      // Category Detail
       {
         path: "assets/datapotensi/detail/electrical/rectifier",
         element: <ElectricalRectifierDetail />,
@@ -398,24 +531,56 @@ export const router = createBrowserRouter([
         element: <ElectricalUpsDetail />,
       },
       {
+        path: "assets/datapotensi/detail/network/computer",
+        element: <NetworkComputerDetail />,
+      },
+      {
+        path: "assets/datapotensi/detail/network/rack_server",
+        element: <NetworkRackServerDetail />,
+      },
+      {
+        path: "assets/datapotensi/detail/network/storage",
+        element: <NetworkStorageDetail />,
+      },
+      {
+        path: "assets/datapotensi/detail/network/firewalls",
+        element: <NetworkFirewallDetail />,
+      },
+      {
+        path: "assets/datapotensi/detail/network/network_switches",
+        element: <NetworkSwitchesDetail />,
+      },
+      {
+        path: "assets/datapotensi/detail/network/patch_panels",
+        element: <NetworkPatchPanelsDetail />,
+      },
+      {
+        path: "assets/datapotensi/detail/network/routers",
+        element: <NetworkRoutersDetail />,
+      },
+      // Link List
+      {
         path: "assets/datapotensi/link/list/electrical",
         element: <ListLinkElectrical />,
-      },
-      {
-        path: "assets/datapotensi/link/add/electrical",
-        element: <NewLinkElectrical />,
-      },
-      {
-        path: "assets/datapotensi/link/update/electrical",
-        element: <UpdateLinkElectrical />,
       },
       {
         path: "assets/datapotensi/link/list/network",
         element: <ListLinkNetwork />,
       },
+      // link add
+      {
+        path: "assets/datapotensi/link/add/electrical",
+        element: <NewLinkElectrical />,
+      },
       {
         path: "assets/datapotensi/link/add/network",
         element: <NewLinkNetwork />,
+      },
+
+      // link update
+      {
+        path: "assets/datapotensi/link/update/electrical",
+        element: <UpdateLinkElectrical />,
       },
       {
         path: "assets/datapotensi/link/update/network",

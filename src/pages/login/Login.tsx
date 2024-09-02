@@ -1,6 +1,7 @@
 import Lottie, { LottieRefCurrentProps } from "lottie-react";
+import loginAnimation from "@/assets/lottie/loginAnimation.json";
+import LoadingFetch from "@/components/loading/LoadingFetch";
 import { useRef, useEffect, useState } from "react";
-import loginanimation from "@/assets/lottie/loginAnimation.json";
 import styles from "@/css/module/Login.module.css";
 import Captcha from "@/components/captcha/Captcha";
 import axios from "axios";
@@ -22,6 +23,7 @@ export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [captchaText, setCaptchaText] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -32,6 +34,7 @@ export default function Login() {
 
   const handleLogin = async () => {
     try {
+      setIsLoading(true);
       const response = await axios.post(
         `/api/v1/user/login`,
         {
@@ -41,7 +44,6 @@ export default function Login() {
         },
         { withCredentials: true }
       );
-      console.log("User logged in:", response.data);
       const { token, user } = response.data;
 
       // Save data to local storage
@@ -53,6 +55,8 @@ export default function Login() {
       setErrorMessage(error.response.data.message);
       console.error("Error logging in:", error);
     }
+
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -74,64 +78,72 @@ export default function Login() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.animationLogin}>
-        <h1>Dashboard Automatis Pantau Gedung Telkomsel</h1>
-        <Lottie
-          animationData={loginanimation}
-          loop={true}
-          lottieRef={animationRef}
-          style={{
-            width: "80%",
-          }}
-        />
-      </div>
-      <div className={styles.cardOutsideLogin}>
-        <div className={styles.cardLogin}>
-          <div>
-            <h2>LOGIN</h2>
-            <p>Masuk dengan menggunakan akun anda</p>
-          </div>
-          <div className={styles.formInput}>
-            <input
-              type="text"
-              placeholder="username"
-              onChange={(e) => setUsername(e.target.value)}
-              required
+      {isLoading ? (
+        <LoadingFetch />
+      ) : (
+        <>
+          <div className={styles.animationLogin}>
+            <h1>Dashboard Automatis Pantau Gedung Telkomsel</h1>
+            <Lottie
+              animationData={loginAnimation}
+              loop={true}
+              lottieRef={animationRef}
+              style={{
+                width: "80%",
+              }}
             />
-            <div>
-              <input
-                type="password"
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password"
-                required
-              />
+          </div>
+          <div className={styles.cardOutsideLogin}>
+            <div className={styles.cardLogin}>
+              <div>
+                <h2>LOGIN</h2>
+                <p>Masuk dengan menggunakan akun anda</p>
+              </div>
+              <div className={styles.formInput}>
+                <input
+                  type="text"
+                  placeholder="username"
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                />
+                <div>
+                  <input
+                    type="password"
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Password"
+                    required
+                  />
+                </div>
+                <a href="#">Lupa Password ?</a>
+              </div>
+              <div>
+                <Captcha />
+                <input
+                  type="text"
+                  placeholder="Enter CAPTCHA"
+                  value={captchaText}
+                  onChange={(e) => setCaptchaText(e.target.value)}
+                />
+                <h3
+                  style={{ color: "red", fontSize: "18px", marginTop: "10px" }}
+                >
+                  {errorMessage === "Invalid credentials"
+                    ? "Password Salah"
+                    : errorMessage === "Invalid captcha"
+                    ? "Captcha Salah"
+                    : errorMessage === "User Not Found"
+                    ? "User Tidak Terdaftar"
+                    : ""}
+                </h3>
+              </div>
             </div>
-            <a href="#">Lupa Password ?</a>
-          </div>
-          <div>
-            <Captcha />
-            <input
-              type="text"
-              placeholder="Enter CAPTCHA"
-              value={captchaText}
-              onChange={(e) => setCaptchaText(e.target.value)}
-            />
-            <h3 style={{ color: "red", fontSize: "18px", marginTop: "10px" }}>
-              {errorMessage === "Invalid credentials"
-                ? "Password Salah"
-                : errorMessage === "Invalid credentials"
-                ? "Captcha Salah"
-                : errorMessage === "User Not Found"
-                ? "User Tidak Terdaftar"
-                : ""}
-            </h3>
-          </div>
-        </div>
 
-        <div className={styles.btnLogin} onClick={handleLogin}>
-          Login
-        </div>
-      </div>
+            <div className={styles.btnLogin} onClick={handleLogin}>
+              Login
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }

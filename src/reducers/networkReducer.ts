@@ -73,6 +73,8 @@ export const initialStateComputer: NetWorkComputerState = {
   floor_id: { value: "", label: "" },
   room_id: { value: "", label: "" },
   vendor_id: { value: "", label: "" },
+  type_id: { value: "", label: "" },
+  brand_id: { value: "", label: "" },
   vendor_user_name: "",
   vendor_phone: "",
   maintenance_id: { value: "", label: "" },
@@ -81,7 +83,8 @@ export const initialStateComputer: NetWorkComputerState = {
   keyboard: "",
   mouse: "",
   motherboard: "",
-  case: "",
+  _case: "",
+  casing: "",
   processor: "",
   vga: "",
   hardisk: "",
@@ -148,7 +151,7 @@ export function updateComputerReducer(
     case "SET_MOTHERBOARD":
       return { ...state, motherboard: action.payload };
     case "SET_CASE":
-      return { ...state, case: action.payload };
+      return { ...state, _case: action.payload };
     case "SET_PROCESSOR":
       return { ...state, processor: action.payload };
     case "SET_VGA":
@@ -300,6 +303,7 @@ export const initialStateRackServer: NetWorkRackServerState = {
   room_id: { value: "", label: "" },
   brand_id: { value: "", label: "" },
   vendor_id: { value: "", label: "" },
+  type_id: { value: "", label: "" },
   vendor_user_name: "",
   vendor_phone: "",
   maintenance_id: { value: "", label: "" },
@@ -365,6 +369,8 @@ export function updateRackServerReducer(
       return { ...state, maintenance_id: action.payload };
     case "SET_LINK_ID":
       return { ...state, link_id: action.payload };
+    case "SET_TYPE_ID":
+      return { ...state, type_id: action.payload };
     case "SET_MANUFACTUR":
       return { ...state, manufactur: action.payload };
     case "SET_CAPACITY":
@@ -518,6 +524,7 @@ export const initialStateStorage: NetWorkStorageState = {
   room_id: { value: "", label: "" },
   brand_id: { value: "", label: "" },
   vendor_id: { value: "", label: "" },
+  type_id: { value: "", label: "" },
   vendor_user_name: "",
   vendor_phone: "",
   maintenance_id: { value: "", label: "" },
@@ -584,6 +591,8 @@ export function updateStorageReducer(
       return { ...state, maintenance_id: action.payload };
     case "SET_LINK_ID":
       return { ...state, link_id: action.payload };
+    case "SET_TYPE_ID":
+      return { ...state, type_id: action.payload };
     case "SET_RACK_SERVER_ID":
       return { ...state, rack_server_id: action.payload };
     case "SET_NAME":
@@ -699,7 +708,7 @@ export const initialStateListStorage: NetworkStorageListState = {
 };
 
 export function listStorageReducer(
-  state: NetworkRackServerListState,
+  state: NetworkStorageListState,
   action: ActionType
 ) {
   switch (action.type) {
@@ -739,6 +748,7 @@ export const initialStateOtherSc: NetWorkOtherScState = {
   room_id: { value: "", label: "" },
   brand_id: { value: "", label: "" },
   vendor_id: { value: "", label: "" },
+  type_id: { value: "", label: "" },
   vendor_user_name: "",
   vendor_phone: "",
   maintenance_id: { value: "", label: "" },
@@ -804,14 +814,16 @@ export function updateOtherScReducer(
       return { ...state, maintenance_id: action.payload };
     case "SET_LINK_ID":
       return { ...state, link_id: action.payload };
+    case "SET_TYPE_ID":
+      return { ...state, type_id: action.payload };
     case "SET_RACK_SERVER_ID":
       return { ...state, rack_server_id: action.payload };
     case "SET_NAME":
       return { ...state, name: action.payload };
     case "SET_MANUFACTUR":
       return { ...state, manufactur: action.payload };
-    case "SET_CAPACITY":
-      return { ...state, capacity: action.payload };
+    case "SET_CAPACITY_PORT":
+      return { ...state, capacity_port: action.payload };
     case "SET_PORT":
       return { ...state, port: action.payload };
     case "SET_POSITION_UNIT":
@@ -919,7 +931,7 @@ export const initialStateListOtherSc: NetworkOtherScListState = {
 };
 
 export function listOtherScReducer(
-  state: NetworkRackServerListState,
+  state: NetworkOtherScListState,
   action: ActionType
 ) {
   switch (action.type) {

@@ -348,7 +348,6 @@ export const getSubCategoriesNetwork = async () => {
     const response = await apiClient.get(
       "/api/v1/dapot/network/subcategories?nopage=yes"
     );
-    console.log(response);
     return response.data;
   } catch (error) {
     console.error("Error fetching brand floors:", error);
@@ -401,7 +400,6 @@ export const postMaintenanceNetwork = async (
   dispatch: (dispatch: any) => void
 ) => {
   setLoadingAndError(dispatch);
-  console.log(data.get("activity"));
   try {
     const response = await apiClient.post(
       "/api/v1/dapot/network/maintenance",
@@ -412,6 +410,7 @@ export const postMaintenanceNetwork = async (
         },
       }
     );
+    console.log(response);
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -501,8 +500,8 @@ export const postLinkNetwork = async (
 export const updateLinkNetwork = async (
   incoming: string,
   outgoing: string,
-  dispatch: (dispatch: any) => void,
-  id: string
+  id: string,
+  dispatch: (dispatch: any) => void
 ) => {
   setLoadingAndError(dispatch);
   const userData: any = localStorage.getItem("user");

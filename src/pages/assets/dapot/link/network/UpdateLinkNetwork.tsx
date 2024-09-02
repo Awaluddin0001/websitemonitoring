@@ -88,8 +88,8 @@ export default function UpdateLinkNetwork() {
       const result = await updateLinkNetwork(
         incoming.value!,
         outgoing,
-        dispatch,
-        searchParams.get("id")!
+        searchParams.get("id")!,
+        dispatch
       );
       if (result.success) {
         navigate(`/main/assets/datapotensi/link/list/network?page=1`);

@@ -12,7 +12,7 @@ import {
 export const getRackservers = async (
   page: string | null,
   dispatch: (dispatch: any) => void,
-  globalFilter: string,
+  globalFilter: string | null,
   nopage?: string | null
 ) => {
   setLoadingAndError(dispatch);

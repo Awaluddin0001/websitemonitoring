@@ -37,10 +37,81 @@
   width: 100%;
 }
 
+.containerValueCard {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+
 .cardSectionValue {
   display: flex;
   flex-direction: row;
   gap: 10px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  width: max-content;
+  cursor: grab;
+  flex-shrink: 0;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
+
+.cardSectionValuePue {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.containerValueCard::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+  /* visibility: hidden;
+  opacity: 0; */
+}
+
+.containerValueCard::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.containerValueCard::-webkit-scrollbar-thumb {
+  background-color: rgb(14 170 203); /* Color of the scroll thumb */
+  border-radius: 10px; /* Rounded corners */
+  border: transparent; /* Padding around thumb */
+}
+
+.containerValueCard::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(0, 89, 107); /* Darker color on hover */
+}
+
+.containerValueCard::-webkit-scrollbar-corner {
+  background: #f1f1f1; /* Corner background */
+}
+.cardSectionValue::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  /* visibility: hidden;
+  opacity: 0; */
+}
+
+.cardSectionValue::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.cardSectionValue::-webkit-scrollbar-thumb {
+  background-color: rgb(14 170 203); /* Color of the scroll thumb */
+  border-radius: 10px; /* Rounded corners */
+  border: transparent; /* Padding around thumb */
+}
+
+.cardSectionValue::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(0, 89, 107); /* Darker color on hover */
+}
+
+.cardSectionValue::-webkit-scrollbar-corner {
+  background: #f1f1f1; /* Corner background */
 }
 
 .sectionWrapper::-webkit-scrollbar {

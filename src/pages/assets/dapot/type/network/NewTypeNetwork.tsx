@@ -69,7 +69,10 @@ export default function NewTypeNetwork() {
         }));
         dispatch({ type: "LIST_SUB_CATEGORY", payload: selectOptions });
       } catch (err) {
-        dispatch({ type: "SET_IS_ERROR", payload: "Failed to fetch floors" });
+        dispatch({
+          type: "SET_IS_ERROR",
+          payload: "Failed to fetch SUB CATEGORY",
+        });
       }
     };
     fetchSubCategories();

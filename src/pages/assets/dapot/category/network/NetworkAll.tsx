@@ -225,7 +225,6 @@ export default function NetworkAll() {
                     ))}
                   </tbody>
                 </table>
-                {renderPagination(pagination, pageHandle, styles)}
               </div>
             ) : (
               <div className={styles.noData}>
@@ -238,6 +237,7 @@ export default function NetworkAll() {
               </div>
             )}
           </div>
+          {renderPagination(pagination, pageHandle, styles)}
         </>
       )}
     </>

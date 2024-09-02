@@ -9,8 +9,8 @@ import LoadingFetch from "@/components/loading/LoadingFetch";
 import ErrorFetch from "@/components/error/ErrorFetch";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import {
-  initialStateListComputer,
-  listComputerReducer,
+  initialStateListRackServer,
+  listRackServerReducer,
 } from "src/reducers/networkReducer";
 import HeadPageDapot from "@/components/header/HeadPageDapot";
 import {
@@ -25,21 +25,21 @@ import HomeModal from "@/components/modal/HomeModal";
 import { networkListButtons } from "@/routes/dapotCategory";
 import { renderPagination } from "@/components/table/RenderPagination";
 import {
-  deleteComputer,
-  exportComputersCsv,
-  exportComputersXlsx,
-  getComputers,
-} from "@/services/network/dapotComputer";
-import { Computer } from "@/types/networkTypes";
-export default function NetworkComputer() {
+  deleteRackserver,
+  exportRackserversCsv,
+  exportRackserversXlsx,
+  getRackservers,
+} from "@/services/network/dapotRackServer";
+import { RackServer } from "@/types/networkTypes";
+export default function NetworkRackServer() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [state, dispatch] = useReducer(
-    listComputerReducer,
-    initialStateListComputer
+    listRackServerReducer,
+    initialStateListRackServer
   );
   const {
-    computers,
+    rackservers,
     pagination,
     isLoading,
     isError,
@@ -52,32 +52,32 @@ export default function NetworkComputer() {
   const [assetIdOriginal, setAssetIdOriginal] = useState("");
 
   useEffect(() => {
-    const fetchComputers = async () => {
+    const fetchRackservers = async () => {
       try {
         const page = searchParams.get("page") || "1";
         const nopage = globalFilter ? "no" : undefined;
-        const data = await getComputers(page, dispatch, globalFilter, nopage);
+        const data = await getRackservers(page, dispatch, globalFilter, nopage);
         dispatch({ type: "SET_PAGINATION", payload: data.pagination });
-        dispatch({ type: "SET_COMPUTERS", payload: data.data });
+        dispatch({ type: "SET_RACKSERVERS", payload: data.data });
       } catch (err) {
         dispatch({
           type: "SET_IS_ERROR",
-          payload: "Failed to fetch computers",
+          payload: "Failed to fetch rack servers",
         });
       }
     };
 
-    fetchComputers();
+    fetchRackservers();
   }, [searchParams, globalFilter]);
 
-  const columns: ColumnDef<Computer>[] = positionColumn
+  const columns: ColumnDef<RackServer>[] = positionColumn
     ? [
         {
           accessorKey: "id",
-          header: "Computer Id",
+          header: "Rack Server Id",
           cell: ({ row }) => (
             <Link
-              to={`/main/assets/datapotensi/detail/network/computer?id=${row.original.id}`}
+              to={`/main/assets/datapotensi/detail/network/rack_server?id=${row.original.id}`}
               style={{
                 color: "#000",
                 fontSize: "1.8rem",
@@ -92,18 +92,15 @@ export default function NetworkComputer() {
         { accessorKey: "floor_name", header: "Lantai" },
         { accessorKey: "room_name", header: "Ruangan" },
         { accessorKey: "vendor_name", header: "Vendor" },
-        { accessorKey: "display", header: "Display" },
-        { accessorKey: "keyboard", header: "Keyboard" },
-        { accessorKey: "mouse", header: "Mouse" },
-        { accessorKey: "motherboard", header: "Motherboard" },
-        { accessorKey: "processor", header: "Processor" },
-        { accessorKey: "vga", header: "VGA" },
-        { accessorKey: "ram", header: "RAM" },
-        { accessorKey: "casing", header: "Casing" },
-        { accessorKey: "power_supply", header: "Power Supply" },
-        { accessorKey: "cooling", header: "Cooling" },
-        { accessorKey: "hardisk", header: "Hardisk" },
-
+        { accessorKey: "brand_name", header: "Brand" },
+        { accessorKey: "type_name", header: "Type" },
+        { accessorKey: "manufactur", header: "Manufactur" },
+        { accessorKey: "capacity", header: "Capacity" },
+        { accessorKey: "port", header: "Port" },
+        { accessorKey: "case_pc", header: "Case PC" },
+        { accessorKey: "rack_sn", header: "Rack SN" },
+        { accessorKey: "kvm_id", header: "KVM ID" },
+        { accessorKey: "power", header: "Power" },
         { accessorKey: "installation_date", header: "Installation Date" },
         { accessorKey: "maintenance_date", header: "Maintenance Date" },
         { accessorKey: "warranty", header: "Garansi" },
@@ -131,7 +128,7 @@ export default function NetworkComputer() {
                 className={styles.btnEdit}
                 onClick={() =>
                   navigate(
-                    `/main/assets/datapotensi/category/update/network/computer?id=${row.original.id}`
+                    `/main/assets/datapotensi/category/update/network/rack_server?id=${row.original.id}`
                   )
                 }
               >
@@ -154,10 +151,10 @@ export default function NetworkComputer() {
     : [
         {
           accessorKey: "id",
-          header: "Computer Id",
+          header: "Rack Server Id",
           cell: ({ row }) => (
             <Link
-              to={`/main/assets/datapotensi/detail/network/computer?id=${row.original.id}`}
+              to={`/main/assets/datapotensi/detail/network/rack_server?id=${row.original.id}`}
               style={{
                 color: "#000",
                 fontSize: "1.8rem",
@@ -168,17 +165,15 @@ export default function NetworkComputer() {
           ),
         },
         { accessorKey: "vendor_name", header: "Vendor" },
-        { accessorKey: "display", header: "Display" },
-        { accessorKey: "keyboard", header: "Keyboard" },
-        { accessorKey: "mouse", header: "Mouse" },
-        { accessorKey: "motherboard", header: "Motherboard" },
-        { accessorKey: "processor", header: "Processor" },
-        { accessorKey: "vga", header: "VGA" },
-        { accessorKey: "ram", header: "RAM" },
-        { accessorKey: "casing", header: "Casing" },
-        { accessorKey: "power_supply", header: "Power Supply" },
-        { accessorKey: "cooling", header: "Cooling" },
-        { accessorKey: "hardisk", header: "Hardisk" },
+        { accessorKey: "brand_name", header: "Brand" },
+        { accessorKey: "type_name", header: "Type" },
+        { accessorKey: "manufactur", header: "Manufactur" },
+        { accessorKey: "capacity", header: "Capacity" },
+        { accessorKey: "port", header: "Port" },
+        { accessorKey: "case_pc", header: "Case PC" },
+        { accessorKey: "rack_sn", header: "Rack SN" },
+        { accessorKey: "kvm_id", header: "KVM ID" },
+        { accessorKey: "power", header: "Power" },
         { accessorKey: "installation_date", header: "Installation Date" },
         { accessorKey: "maintenance_date", header: "Maintenance Date" },
         { accessorKey: "created_at", header: "Last Update" },
@@ -200,7 +195,7 @@ export default function NetworkComputer() {
                 className={styles.btnEdit}
                 onClick={() =>
                   navigate(
-                    `/main/assets/datapotensi/category/update/network/computer?id=${row.original.id}`
+                    `/main/assets/datapotensi/category/update/network/rack_server?id=${row.original.id}`
                   )
                 }
               >
@@ -222,7 +217,7 @@ export default function NetworkComputer() {
       ];
 
   const table = useReactTable({
-    data: computers,
+    data: rackservers,
     columns,
     columnResizeMode: "onChange",
     columnResizeDirection: "ltr",
@@ -244,7 +239,7 @@ export default function NetworkComputer() {
   };
 
   const deleteHandle = async (id: string, assetId: string) => {
-    const data = await deleteComputer(dispatch, id, assetId);
+    const data = await deleteRackserver(dispatch, id, assetId);
     if (data.success) {
       navigate(0);
     }
@@ -257,7 +252,7 @@ export default function NetworkComputer() {
       ) : isError ? (
         <>
           <HeadPageDapot
-            title={`List Computer`}
+            title={`List Rack Server`}
             valueGlobalFilter={globalFilter}
             setGlobalFilter={dispatch}
             subCategory="network"
@@ -270,15 +265,15 @@ export default function NetworkComputer() {
       ) : (
         <>
           <HeadPageDapot
-            title={`List Computer`}
+            title={`List Rack Server`}
             valueGlobalFilter={globalFilter}
             setGlobalFilter={dispatch}
             subCategory="network"
             columnToggle={positionColumn}
             exportToggle={exportToggle}
             setToggle={dispatch}
-            exportCsv={exportComputersCsv}
-            exportXlsx={exportComputersXlsx}
+            exportCsv={exportRackserversCsv}
+            exportXlsx={exportRackserversXlsx}
           />
           <div className={styles.tableSeal}>
             <div className={styles.tableWrapper}>
@@ -286,7 +281,7 @@ export default function NetworkComputer() {
                 listpages={networkListButtons}
                 subCategory="network"
               />
-              {computers.length > 0 ? (
+              {rackservers.length > 0 ? (
                 <div className={styles.tableDetail}>
                   <table
                     className={styles.assetTable}
@@ -349,12 +344,12 @@ export default function NetworkComputer() {
                                   background:
                                     row.index % 2 !== 0 ? "#ffd1d1" : "",
                                   borderBottomLeftRadius:
-                                    row.index === computers.length - 1 &&
+                                    row.index === rackservers.length - 1 &&
                                     ind === 0
                                       ? "10px"
                                       : undefined,
                                   borderBottomRightRadius:
-                                    row.index === computers.length - 1 &&
+                                    row.index === rackservers.length - 1 &&
                                     ind === row.getVisibleCells().length - 1
                                       ? "10px"
                                       : undefined,

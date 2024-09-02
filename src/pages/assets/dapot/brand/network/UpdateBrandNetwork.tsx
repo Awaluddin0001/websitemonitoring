@@ -49,9 +49,7 @@ export default function UpdateBrandNetwork() {
         dispatch
       );
       if (result.success) {
-        navigate(
-          `/main/assets/datapotensi/category/list/network/rectifier?page=1`
-        );
+        navigate(`/main/assets/datapotensi/brand/list/network?page=1`);
       }
     };
 

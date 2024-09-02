@@ -221,69 +221,67 @@ export default function Home() {
               style={{ cursor: "pointer", width: "20px", height: "20px" }}
             />
           </div>
-          <div className={styles.containerValue}>
+          <div className={styles.containerValueCard}>
             <div className={styles.cardSectionValue}>
               {thermalData &&
                 thermalData.map((item: ThermalRoomDetail | any, index) => {
-                  if (
-                    item.value.temperature !== 0 &&
-                    item.value.humidity !== 0
-                  ) {
-                    return (
-                      <CardValue
-                        key={index}
-                        title={`Room ${item.value.name} Temperature`}
-                        value={`${item.value.temperature}°C`}
-                        cardColor={
-                          item.value.temperature < 18
-                            ? "#0ECBC0"
-                            : item.value.temperature > 17 &&
-                              item.value.temperature < 24
-                            ? "#56CB0E"
-                            : item.value.temperature > 23 &&
-                              item.value.temperature < 30
-                            ? "rgb(14 170 203)"
-                            : "#CB300E"
-                        }
-                        valueColor="#fff"
-                        width="14rem"
-                        height="12rem"
-                      />
-                    );
-                  }
+                  return (
+                    <CardValue
+                      key={index}
+                      title={`Room ${item.value.name} Temperature`}
+                      value={
+                        item.value.temperature !== 0
+                          ? `${item.value.temperature}°C`
+                          : "N/A"
+                      }
+                      cardColor={
+                        item.value.temperature === 0
+                          ? "#ddd"
+                          : item.value.temperature < 18
+                          ? "#0ECBC0"
+                          : item.value.temperature > 17 &&
+                            item.value.temperature < 24
+                          ? "#56CB0E"
+                          : item.value.temperature > 23 &&
+                            item.value.temperature < 30
+                          ? "rgb(14 170 203)"
+                          : "#CB300E"
+                      }
+                      valueColor="#fff"
+                      width="14rem"
+                      height="12rem"
+                    />
+                  );
                 })}
             </div>
           </div>
-          <div className={styles.containerValue}>
+          <div className={styles.containerValueCard}>
             <div className={styles.cardSectionValue}>
               {thermalData &&
                 thermalData.map((item: ThermalRoomDetail | any, index) => {
-                  if (
-                    item.value.temperature !== 0 &&
-                    item.value.humidity !== 0
-                  ) {
-                    return (
-                      <CardValue
-                        key={index}
-                        title={`Room ${item.value.name} Humidity`}
-                        value={`${item.value.humidity}%`}
-                        cardColor={
-                          item.value.humidity < 45
-                            ? "rgb(14 170 203)"
-                            : item.value.humidity > 44 &&
-                              item.value.humidity < 60
-                            ? "#0ECBC0"
-                            : item.value.humidity > 59 &&
-                              item.value.humidity < 70
-                            ? "#56CB0E"
-                            : "#CB300E"
-                        }
-                        valueColor="#fff"
-                        width="14rem"
-                        height="12rem"
-                      />
-                    );
-                  }
+                  return (
+                    <CardValue
+                      key={index}
+                      title={`Room ${item.value.name} Humidity`}
+                      value={
+                        item.humidity !== 0 ? `${item.value.humidity}%` : "N/A"
+                      }
+                      cardColor={
+                        item.value.humidity === 0
+                          ? "#ddd"
+                          : item.value.humidity < 45
+                          ? "rgb(14 170 203)"
+                          : item.value.humidity > 44 && item.value.humidity < 60
+                          ? "#0ECBC0"
+                          : item.value.humidity > 59 && item.value.humidity < 70
+                          ? "#56CB0E"
+                          : "#CB300E"
+                      }
+                      valueColor="#fff"
+                      width="14rem"
+                      height="12rem"
+                    />
+                  );
                 })}
             </div>
           </div>
@@ -294,7 +292,7 @@ export default function Home() {
 
             <div className={styles.containerValue}>
               {pueData && (
-                <div className={styles.cardSectionValue}>
+                <div className={styles.cardSectionValuePue}>
                   <CardValue
                     title={`PUE - ${pueData.timestamp}`}
                     value={pueData.value.toFixed(2)}
@@ -346,7 +344,7 @@ export default function Home() {
 
             <div className={styles.containerValue}>
               {facilityLoad && (
-                <div className={styles.cardSectionValue}>
+                <div className={styles.cardSectionValuePue}>
                   <CardValue
                     title={`Facility Load - ${facilityLoad.timestamp}`}
                     value={
@@ -382,7 +380,7 @@ export default function Home() {
             </div>
             <div className={styles.containerValue}>
               {itLoad && (
-                <div className={styles.cardSectionValue}>
+                <div className={styles.cardSectionValuePue}>
                   <CardValue
                     title={`IT Load - ${itLoad.timestamp}`}
                     value={itLoad ? `${itLoad.value.toFixed(2)} kVa` : "0"}

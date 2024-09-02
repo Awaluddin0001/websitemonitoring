@@ -2,17 +2,17 @@ import HeadPage from "@/components/header/HeadPageMonitoring";
 import ErrorFetch from "@/components/error/ErrorFetch";
 import LoadingFetch from "@/components/loading/LoadingFetch";
 import styles from "@/css/module/Asset.module.css";
-import {
-  getNetworksLink,
-  postLinkNetwork,
-} from "@/services/network/dapotNetwork";
 import React, { useEffect, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
+import Select, { MultiValue } from "react-select";
 import {
   initialStateUpdateNetworkLink,
   updateNetworkLinkReducer,
 } from "src/reducers/networkReducer";
-import Select, { MultiValue } from "react-select";
+import {
+  getNetworksLink,
+  postLinkNetwork,
+} from "@/services/network/dapotNetwork";
 
 interface Options {
   value: string;

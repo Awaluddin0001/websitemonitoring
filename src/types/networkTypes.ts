@@ -74,13 +74,16 @@ interface NetworkComputer {
   floor_id: ReactSelect;
   room_id: ReactSelect;
   vendor_id: ReactSelect;
+  brand_id: ReactSelect;
   maintenance_id: ReactSelect;
+  type_id: ReactSelect;
   link_id: ReactSelect;
   display: string;
   keyboard: string;
   mouse: string;
   motherboard: string;
-  case: string;
+  _case: string;
+  casing: string;
   processor: string;
   vga: string;
   hardisk: string;
@@ -180,6 +183,7 @@ interface NetworkRackServer {
   brand_id: ReactSelect;
   vendor_id: ReactSelect;
   maintenance_id: ReactSelect;
+  type_id: ReactSelect;
   link_id: ReactSelect;
   manufactur: string;
   capacity: string;
@@ -284,6 +288,7 @@ interface NetworkStorage {
   vendor_id: ReactSelect;
   maintenance_id: ReactSelect;
   link_id: ReactSelect;
+  type_id: ReactSelect;
   rack_server_id: ReactSelect;
   name: string;
   manufactur: string;
@@ -386,6 +391,7 @@ interface NetworkOtherSc {
   brand_id: ReactSelect;
   vendor_id: ReactSelect;
   maintenance_id: ReactSelect;
+  type_id: ReactSelect;
   link_id: ReactSelect;
   rack_server_id: ReactSelect;
   name: string;
