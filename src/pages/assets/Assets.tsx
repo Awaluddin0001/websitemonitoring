@@ -5,11 +5,13 @@ import spaceManagement from "@/assets/lottie/spaceManagement1.json";
 import styles from "@/css/module/Asset.module.css";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import HeadPageMonitoring from "@/components/header/HeadPageMonitoring";
 
 export default function Assets() {
   const navigate = useNavigate();
   return (
     <>
+      <HeadPageMonitoring title="Pilih Antara Data atau Denah - TTC Pengayoman" />
       <div className={styles.groupingChoice}>
         <motion.div
           className={styles.cardChoice}

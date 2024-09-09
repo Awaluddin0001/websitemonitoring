@@ -29,9 +29,9 @@ const DonutChart: React.FC<DonutChartProps> = ({
     const parentWidth = parent.clientWidth;
     const parentHeight = parent.clientHeight;
 
-    const radius = Math.min(parentWidth, parentHeight) / 3;
+    const radius = Math.min(parentWidth, parentHeight) / 3.35;
     const centerX = parentWidth / 2;
-    const centerY = parentHeight / 2;
+    const centerY = parentHeight / 3;
 
     const totalValue = d3.sum(data, (d) => d.value);
 
@@ -42,7 +42,7 @@ const DonutChart: React.FC<DonutChartProps> = ({
         if (percentage > 70) {
           return "#2ECC40";
         } else if (percentage > 50) {
-          return "#FFA500";
+          return "#0eaacb";
         } else {
           return "#FF0000";
         }
@@ -176,7 +176,7 @@ const DonutChart: React.FC<DonutChartProps> = ({
           height: "100%",
         }}
       >
-        <svg viewBox="250 30 400 400">
+        <svg viewBox="250 30 -50 -100">
           <g
             ref={gRef}
             style={{

@@ -70,6 +70,8 @@ export const initialStateCeramic: FinishingBuildingCeramicState = {
   floor_id: { value: "", label: "" },
   room_id: { value: "", label: "" },
   vendor_id: { value: "", label: "" },
+  brand_id: { value: "", label: "" },
+  type_id: { value: "", label: "" },
   vendor_user_name: "",
   vendor_phone: "",
   maintenance_id: { value: "", label: "" },
@@ -88,6 +90,8 @@ export const initialStateCeramic: FinishingBuildingCeramicState = {
   listRooms: [],
   listAllRooms: [],
   listMaintenance: [],
+  listType: [],
+  listBrand: [],
 
   //   FOR COMPONENT
   isLoading: false,
@@ -125,6 +129,8 @@ export function updateCeramicReducer(
       return { ...state, maintenance_id: action.payload };
     case "SET_LINK_ID":
       return { ...state, link_id: action.payload };
+    case "SET_TYPE_ID":
+      return { ...state, type_id: action.payload };
     case "SET_DISPLAY":
       return { ...state, display: action.payload };
     case "SET_KEYBOARD":
@@ -275,6 +281,8 @@ export const initialStateCat1: FinishingBuildingCat1State = {
   floor_id: { value: "", label: "" },
   room_id: { value: "", label: "" },
   vendor_id: { value: "", label: "" },
+  brand_id: { value: "", label: "" },
+  type_id: { value: "", label: "" },
   vendor_user_name: "",
   vendor_phone: "",
   maintenance_id: { value: "", label: "" },
@@ -292,6 +300,7 @@ export const initialStateCat1: FinishingBuildingCat1State = {
   listRooms: [],
   listAllRooms: [],
   listMaintenance: [],
+  listType: [],
 
   //   FOR COMPONENT
   isLoading: false,
@@ -329,6 +338,8 @@ export function updateCat1Reducer(
       return { ...state, maintenance_id: action.payload };
     case "SET_LINK_ID":
       return { ...state, link_id: action.payload };
+    case "SET_TYPE_ID":
+      return { ...state, type_id: action.payload };
     case "SET_GOOD":
       return { ...state, good: action.payload };
     case "SET_BROKE":
@@ -473,9 +484,12 @@ export const initialStateCat2: FinishingBuildingCat2State = {
   floor_id: { value: "", label: "" },
   room_id: { value: "", label: "" },
   vendor_id: { value: "", label: "" },
+  brand_id: { value: "", label: "" },
+  type_id: { value: "", label: "" },
   vendor_user_name: "",
   vendor_phone: "",
   maintenance_id: { value: "", label: "" },
+  name: "",
   color: "",
   installation_date: `${new Date()}`,
   condition_asset: "",
@@ -488,6 +502,7 @@ export const initialStateCat2: FinishingBuildingCat2State = {
   listRooms: [],
   listAllRooms: [],
   listMaintenance: [],
+  listType: [],
 
   //   FOR COMPONENT
   isLoading: false,
@@ -525,6 +540,10 @@ export function updateCat2Reducer(
       return { ...state, maintenance_id: action.payload };
     case "SET_LINK_ID":
       return { ...state, link_id: action.payload };
+    case "SET_TYPE_ID":
+      return { ...state, type_id: action.payload };
+    case "SET_NAME":
+      return { ...state, name: action.payload };
     case "SET_COLOR":
       return { ...state, color: action.payload };
     case "SET_INSTALLATION_DATE":

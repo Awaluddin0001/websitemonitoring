@@ -18,7 +18,7 @@ export const getWallpapers = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.get(
-      "/api/v1/dapot/electrical/wallpapers",
+      "/api/v1/dapot/buildingfinishes/wallpapers",
       {
         params: {
           page,
@@ -42,7 +42,7 @@ export const exportWallpapersCsv = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/electrical/wallpaper-export-csv",
+      "/api/v1/dapot/buildingfinishes/wallpaper-export-csv",
       {
         params: {
           page,
@@ -66,7 +66,7 @@ export const exportWallpapersXlsx = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/electrical/wallpaper-export-xlsx",
+      "/api/v1/dapot/buildingfinishes/wallpaper-export-xlsx",
       {
         params: {
           page,
@@ -89,7 +89,7 @@ export const postNewWallpaper = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.post(
-      "/api/v1/dapot/electrical/wallpaper",
+      "/api/v1/dapot/buildingfinishes/wallpaper",
       data,
       {
         headers: {
@@ -111,7 +111,7 @@ export const getWallpaper = async (
     setLoadingAndError(dispatch);
     try {
       const response = await apiClient.get(
-        `/api/v1/dapot/electrical/wallpaper?id=${id}`
+        `/api/v1/dapot/buildingfinishes/wallpaper?id=${id}`
       );
       return handleResponse(response, dispatch);
     } catch (error) {
@@ -129,7 +129,7 @@ export const updateWallpaper = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.put(
-      `/api/v1/dapot/electrical/wallpaper?id=${deviceid}&assetid=${assetid}`,
+      `/api/v1/dapot/buildingfinishes/wallpaper?id=${deviceid}&assetid=${assetid}`,
       data,
       {
         headers: {
@@ -154,7 +154,7 @@ export const deleteWallpaper = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/electrical/wallpaper?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
+      `/api/v1/dapot/buildingfinishes/wallpaper?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {

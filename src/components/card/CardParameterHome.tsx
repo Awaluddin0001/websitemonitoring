@@ -27,12 +27,17 @@ export default function CardParameterHome() {
             <h3>{"Di atas 30°C"}</h3>
             <h3>Panas</h3>
           </div>
+          <div className={styles.parameterCard}>
+            <div className={styles.color5}></div>
+            <h3>{"N/A"}</h3>
+            <h3>Tidak aktif</h3>
+          </div>
         </div>
         <div className={styles.parameterHumidity}>
           <h2>Parameter Warna Kartu Kelembaban</h2>
           <div className={styles.parameterCard}>
             <div className={styles.color4}></div>
-            <h3>{"di bawah 45%"}</h3>
+            <h3>{"Di bawah 45%"}</h3>
             <h3>Dalam Perhatian</h3>
           </div>
           <div className={styles.parameterCard}>
@@ -49,6 +54,11 @@ export default function CardParameterHome() {
             <div className={styles.color3}></div>
             <h3>{"Di atas 70%"}</h3>
             <h3>Berbahaya (Lembab)</h3>
+          </div>
+          <div className={styles.parameterCard}>
+            <div className={styles.color5}></div>
+            <h3>{"N/A"}</h3>
+            <h3>Tidak aktif</h3>
           </div>
         </div>
         <div className={styles.parameterPue}>

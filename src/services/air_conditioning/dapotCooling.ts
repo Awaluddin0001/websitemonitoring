@@ -17,14 +17,17 @@ export const getCoolings = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/electrical/coolings", {
-      params: {
-        page,
-        limit: 15,
-        globalFilter,
-        nopage,
-      },
-    });
+    const response = await apiClient.get(
+      "/api/v1/dapot/airconditioning/coolings",
+      {
+        params: {
+          page,
+          limit: 15,
+          globalFilter,
+          nopage,
+        },
+      }
+    );
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -39,7 +42,7 @@ export const exportCoolingsCsv = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/electrical/cooling-export-csv",
+      "/api/v1/dapot/airconditioning/cooling-export-csv",
       {
         params: {
           page,
@@ -63,7 +66,7 @@ export const exportCoolingsXlsx = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/electrical/cooling-export-xlsx",
+      "/api/v1/dapot/airconditioning/cooling-export-xlsx",
       {
         params: {
           page,
@@ -86,7 +89,7 @@ export const postNewCooling = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.post(
-      "/api/v1/dapot/electrical/cooling",
+      "/api/v1/dapot/airconditioning/cooling",
       data,
       {
         headers: {
@@ -108,7 +111,7 @@ export const getCooling = async (
     setLoadingAndError(dispatch);
     try {
       const response = await apiClient.get(
-        `/api/v1/dapot/electrical/cooling?id=${id}`
+        `/api/v1/dapot/airconditioning/cooling?id=${id}`
       );
       return handleResponse(response, dispatch);
     } catch (error) {
@@ -126,7 +129,7 @@ export const updateCooling = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.put(
-      `/api/v1/dapot/electrical/cooling?id=${deviceid}&assetid=${assetid}`,
+      `/api/v1/dapot/airconditioning/cooling?id=${deviceid}&assetid=${assetid}`,
       data,
       {
         headers: {
@@ -151,7 +154,7 @@ export const deleteCooling = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/electrical/cooling?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
+      `/api/v1/dapot/airconditioning/cooling?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {

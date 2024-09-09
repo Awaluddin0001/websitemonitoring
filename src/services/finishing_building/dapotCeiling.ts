@@ -17,14 +17,17 @@ export const getCeilings = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/electrical/ceilings", {
-      params: {
-        page,
-        limit: 15,
-        globalFilter,
-        nopage,
-      },
-    });
+    const response = await apiClient.get(
+      "/api/v1/dapot/buildingfinishes/ceilings",
+      {
+        params: {
+          page,
+          limit: 15,
+          globalFilter,
+          nopage,
+        },
+      }
+    );
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -39,7 +42,7 @@ export const exportCeilingsCsv = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/electrical/ceiling-export-csv",
+      "/api/v1/dapot/buildingfinishes/ceiling-export-csv",
       {
         params: {
           page,
@@ -63,7 +66,7 @@ export const exportCeilingsXlsx = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/electrical/ceiling-export-xlsx",
+      "/api/v1/dapot/buildingfinishes/ceiling-export-xlsx",
       {
         params: {
           page,
@@ -86,7 +89,7 @@ export const postNewCeiling = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.post(
-      "/api/v1/dapot/electrical/ceiling",
+      "/api/v1/dapot/buildingfinishes/ceiling",
       data,
       {
         headers: {
@@ -108,7 +111,7 @@ export const getCeiling = async (
     setLoadingAndError(dispatch);
     try {
       const response = await apiClient.get(
-        `/api/v1/dapot/electrical/ceiling?id=${id}`
+        `/api/v1/dapot/buildingfinishes/ceiling?id=${id}`
       );
       return handleResponse(response, dispatch);
     } catch (error) {
@@ -126,7 +129,7 @@ export const updateCeiling = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.put(
-      `/api/v1/dapot/electrical/ceiling?id=${deviceid}&assetid=${assetid}`,
+      `/api/v1/dapot/buildingfinishes/ceiling?id=${deviceid}&assetid=${assetid}`,
       data,
       {
         headers: {
@@ -151,7 +154,7 @@ export const deleteCeiling = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/electrical/ceiling?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
+      `/api/v1/dapot/buildingfinishes/ceiling?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {

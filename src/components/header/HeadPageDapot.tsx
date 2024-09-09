@@ -126,7 +126,13 @@ export default function HeadPageDapot({
               <SearchSvg color="#8b0000" width="20" height="26" />
             </div>
           </div>
-          {parameter[2] !== "all" && (
+          {![
+            "airconditioning",
+            "buildingfinishing",
+            "electrical",
+            "network",
+            "security",
+          ].includes(subCategory) || parameter[2] !== "all" ? (
             <>
               <div className={styles.actionAdd}>
                 <div
@@ -161,16 +167,18 @@ export default function HeadPageDapot({
                   >
                     + Tambah Asset
                   </div>
-                  <div
-                    onClick={() =>
-                      navigate(
-                        `/main/assets/datapotensi/vendor/list/${subCategory}?page=1`
-                      )
-                    }
-                    className={styles.addButton}
-                  >
-                    ⁝ List Vendor
-                  </div>
+                  {
+                    <div
+                      onClick={() =>
+                        navigate(
+                          `/main/assets/datapotensi/vendor/list/${subCategory}?page=1`
+                        )
+                      }
+                      className={styles.addButton}
+                    >
+                      ⁝ List Vendor
+                    </div>
+                  }
                   <div
                     onClick={() =>
                       navigate(
@@ -181,36 +189,56 @@ export default function HeadPageDapot({
                   >
                     ⁝ List Brand
                   </div>
-                  <div
-                    onClick={() =>
-                      navigate(
-                        `/main/assets/datapotensi/type/list/${subCategory}?page=1`
-                      )
-                    }
-                    className={styles.addButton}
-                  >
-                    ⁝ List Type
-                  </div>
-                  <div
-                    onClick={() =>
-                      navigate(
-                        `/main/assets/datapotensi/maintenance/list/${subCategory}?page=1`
-                      )
-                    }
-                    className={styles.addButton}
-                  >
-                    ⁝ List Maintenance
-                  </div>
-                  <div
-                    onClick={() =>
-                      navigate(
-                        `/main/assets/datapotensi/link/list/${subCategory}?page=1`
-                      )
-                    }
-                    className={styles.addButton}
-                  >
-                    ⁝ List Link
-                  </div>
+                  {[
+                    "lighting",
+                    "pump",
+                    "furniture",
+                    "safety",
+                    "fluid",
+                  ].includes(subCategory) ? (
+                    ""
+                  ) : (
+                    <div
+                      onClick={() =>
+                        navigate(
+                          `/main/assets/datapotensi/type/list/${subCategory}?page=1`
+                        )
+                      }
+                      className={styles.addButton}
+                    >
+                      ⁝ List Type
+                    </div>
+                  )}
+                  {["furniture", "safety"].includes(subCategory) ? (
+                    ""
+                  ) : (
+                    <div
+                      onClick={() =>
+                        navigate(
+                          `/main/assets/datapotensi/maintenance/list/${subCategory}?page=1`
+                        )
+                      }
+                      className={styles.addButton}
+                    >
+                      ⁝ List Maintenance
+                    </div>
+                  )}
+                  {!["electrical", "network", "security"].includes(
+                    subCategory
+                  ) ? (
+                    ""
+                  ) : (
+                    <div
+                      onClick={() =>
+                        navigate(
+                          `/main/assets/datapotensi/link/list/${subCategory}?page=1`
+                        )
+                      }
+                      className={styles.addButton}
+                    >
+                      ⁝ List Link
+                    </div>
+                  )}
                 </div>
               </div>
               <div className={styles.actionAdd}>
@@ -222,6 +250,8 @@ export default function HeadPageDapot({
                 </div>
               </div>
             </>
+          ) : (
+            ""
           )}
         </div>
       </div>

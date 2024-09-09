@@ -500,3 +500,44 @@ export const postLinkSecurity = async (
     handleError(error, dispatch);
   }
 };
+
+export const updateLinkSecurity = async (
+  incoming: string,
+  outgoing: string,
+  id: string,
+  dispatch: (dispatch: any) => void
+) => {
+  setLoadingAndError(dispatch);
+  const userData: any = localStorage.getItem("user");
+  const jsonuserData = JSON.parse(userData);
+  const user_id = jsonuserData.id;
+  try {
+    const response = await apiClient.put(
+      "/api/v1/dapot/security/link?id=" + id,
+      {
+        incoming,
+        outgoing,
+        user_id,
+      }
+    );
+    return handleResponse(response, dispatch);
+  } catch (error) {
+    handleError(error, dispatch);
+  }
+};
+
+export const deleteLinkSecurity = async (
+  dispatch: (dispatch: any) => void,
+  deviceid: string,
+  asset_id: string
+) => {
+  setLoadingAndError(dispatch);
+  try {
+    const response = await apiClient.delete(
+      `/api/v1/dapot/security/link?id=${deviceid}&assetid=${asset_id}`
+    );
+    return handleResponse(response, dispatch);
+  } catch (error) {
+    handleError(error, dispatch);
+  }
+};

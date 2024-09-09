@@ -29,3 +29,20 @@ export const securityListButtons = [
   "detector",
   "sound",
 ];
+export const airListButtons = ["all", "air", "cooling", "heating"];
+export const finishingListButtons = [
+  "all",
+  "ceiling",
+  "ceramic",
+  "door",
+  "window",
+  "wallpaper",
+  "mebel",
+];
+export const conveyanceListButtons = ["conveyance"];
+export const extinguishListButtons = ["all", "extinguish"];
+export const furnitureListButtons = ["furniture"];
+export const lightingListButtons = ["all", "lighting"];
+export const fluidListButtons = ["all", "fluid"];
+export const pumpListButtons = ["all", "pump"];
+export const safetyListButtons = ["safety"];

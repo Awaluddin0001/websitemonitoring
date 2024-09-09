@@ -23,9 +23,7 @@ export default function NewBrandElectrical() {
     const postnew = async (name: any) => {
       const result = await postBrandElectrical(name, dispatch);
       if (result.success) {
-        navigate(
-          `/main/assets/datapotensi/category/list/electrical/rectifier?page=1`
-        );
+        navigate(`/main/assets/datapotensi/brand/list/electrical?page=1`);
       }
     };
 

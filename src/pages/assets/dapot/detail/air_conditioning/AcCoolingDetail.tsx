@@ -1,0 +1,203 @@
+import HeadPage from "@/components/header/HeadPageMonitoring";
+import styles from "@/css/module/Asset.module.css";
+import { useEffect, useReducer } from "react";
+import "react-datepicker/dist/react-datepicker.css";
+import CardDetail from "@/components/card/CardDetail";
+import LoadingFetch from "@/components/loading/LoadingFetch";
+import ErrorFetch from "@/components/error/ErrorFetch";
+import { useSearchParams } from "react-router-dom";
+import {
+  initialStateCoolingDevice,
+  updateCoolingDeviceReducer,
+} from "src/reducers/airConditioningReducer";
+import { getCooling } from "@/services/air_conditioning/dapotCooling";
+
+export default function AirConditioningCoolingDetail() {
+  const [searchParams, _] = useSearchParams();
+  const [state, dispatch] = useReducer(
+    updateCoolingDeviceReducer,
+    initialStateCoolingDevice
+  );
+  const {
+    asset_id,
+    ne_id,
+    site_id,
+    floor_id,
+    room_id,
+    brand_id,
+    vendor_id,
+    vendor_phone,
+    vendor_user_name,
+    maintenance_id,
+    maintenance_activity,
+    type_id,
+    name,
+    manufactur,
+    indoor_sn,
+    type_indoor,
+    outdoor_sn,
+    type_outdoor,
+    paard_kracht,
+    btu_hour,
+    refrigerant,
+    power,
+    installation_date,
+    condition_asset,
+    status,
+    waranty,
+    amount,
+    notes,
+    link_in,
+    link_out,
+    isLoading,
+    isError,
+    photo1,
+    photo2,
+    photo3,
+  } = state;
+
+  useEffect(() => {
+    const getRecti = async () => {
+      try {
+        const data = await getCooling(searchParams.get("id"), dispatch);
+        console.log(data);
+        dispatch({
+          type: "GET_COOLINGDEVICE",
+          payload: {
+            asset_id: data.asset_id,
+            ne_id: data.ne_id,
+            maintenance_activity: data.maintenance_activity,
+            vendor_user_name: data.vendor_user_name,
+            vendor_phone: data.vendor_phone,
+            site_id: { value: data.site_id, label: data.site_name },
+            floor_id: { value: data.floor_id, label: data.floor_name },
+            room_id: { value: data.room_id, label: data.room_name },
+            brand_id: { value: data.brand_id, label: data.brand_name },
+            vendor_id: { value: data.vendor_id, label: data.vendor_name },
+            maintenance_id: {
+              value: data.maintenance_id,
+              label: data.maintenance_date,
+            },
+            document_name: data.document_name,
+            link_in: data.incoming,
+            link_out: [data.outgoing],
+            link_id: { value: data.link_id, label: data.link_id },
+            type_id: { value: data.type_id, label: data.type_name },
+            name: data.name,
+            manufactur: data.manufactur,
+            indoor_sn: data.indoor_sn,
+            type_indoor: data.type_indoor,
+            outdoor_sn: data.outdoor_sn,
+            type_outdoor: data.type_outdoor,
+            paard_kracht: data.paard_kracht,
+            btu_hour: data.btu_hour,
+            refrigerant: data.refrigerant,
+            power: data.power,
+            waranty: data.waranty,
+            amount: data.amount,
+            installation_date: data.installation_date,
+            condition_asset: data.condition_asset,
+            status: data.status,
+            notes: data.notes,
+            photo1: data.photo1,
+            photo2: data.photo2,
+            photo3: data.photo3,
+          },
+        });
+      } catch (err) {
+        dispatch({
+          type: "SET_IS_ERROR",
+          payload: "Failed to fetch Air",
+        });
+      }
+    };
+
+    getRecti();
+  }, []);
+
+  return (
+    <>
+      {isLoading ? (
+        <LoadingFetch />
+      ) : isError ? (
+        <>
+          <HeadPage title={`Detail Data untuk ${searchParams.get("id")}`} />
+          <ErrorFetch message={isError} />
+        </>
+      ) : (
+        <>
+          <HeadPage title={`Detail Data untuk ${searchParams.get("id")}`} />
+          <div className={styles.detailSubCategory}>
+            <div className={styles.cardsDetailDeck}>
+              <CardDetail
+                title="Position"
+                type="position"
+                siteId={site_id.value}
+                siteName={site_id.label}
+                floorName={floor_id.label}
+                roomName={room_id.label}
+                neId={ne_id}
+              />
+              <CardDetail
+                title="Vendor"
+                type="vendor"
+                companyName={vendor_id.label}
+                personName={vendor_user_name}
+                numberPhone={vendor_phone}
+              />
+              <CardDetail
+                title="Model"
+                type="model"
+                typeName={type_id.label}
+                brandName={brand_id.label}
+              />
+              <CardDetail
+                title="Maintenance"
+                type="maintenance"
+                deviceId={asset_id}
+                maintenanceDate={maintenance_id.label}
+                maintenanceActivity={maintenance_activity}
+              />
+              <CardDetail
+                title="Link"
+                type="link"
+                linkIn={link_in}
+                linkOut={link_out}
+              />
+            </div>
+            <CardDetail
+              title="Detail"
+              type="detail"
+              detail={{
+                nama: name,
+                manufactur: manufactur,
+                indoor_sn: indoor_sn,
+                type_indoor: type_indoor,
+                outdoor_sn: outdoor_sn,
+                type_outdoor: type_outdoor,
+                paard_kracht: paard_kracht,
+                btu_hour: btu_hour,
+                refrigerant: refrigerant,
+                status: status,
+                notes: notes,
+                amount: amount,
+                garansi: waranty,
+                power: power,
+                installation_date: installation_date,
+                condition_asset: condition_asset,
+              }}
+            />
+            <CardDetail
+              title="Foto"
+              type="foto"
+              urlImage="http://localhost:2001/images/airconditioning"
+              imageTitle1={photo1}
+              imageTitle2={photo2}
+              imageTitle3={photo3}
+            />
+          </div>
+        </>
+      )}
+    </>
+  );
+}

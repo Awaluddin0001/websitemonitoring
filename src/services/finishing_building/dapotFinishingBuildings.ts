@@ -13,17 +13,14 @@ export const getFinishingbuildings = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get(
-      "/api/v1/dapot/finishingbuilding/all",
-      {
-        params: {
-          page,
-          limit: 15,
-          globalFilter,
-          nopage,
-        },
-      }
-    );
+    const response = await apiClient.get("/api/v1/dapot/buildingfinishes/all", {
+      params: {
+        page,
+        limit: 15,
+        globalFilter,
+        nopage,
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -32,7 +29,7 @@ export const getFinishingbuildings = async (
 export const getFinishingbuildingsLink = async () => {
   try {
     const response = await apiClient.get(
-      "/api/v1/dapot/finishingbuilding/all?nopage=yes"
+      "/api/v1/dapot/buildingfinishes/all?nopage=yes"
     );
     return response.data;
   } catch (error) {
@@ -50,7 +47,7 @@ export const getBrandFinishingbuilding = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.get(
-      "/api/v1/dapot/finishingbuilding/brands",
+      "/api/v1/dapot/buildingfinishes/brands",
       {
         params: {
           page,
@@ -73,7 +70,7 @@ export const getOneBrandFinishingbuilding = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.get(
-      "/api/v1/dapot/finishingbuilding/brand",
+      "/api/v1/dapot/buildingfinishes/brand",
       {
         params: {
           id,
@@ -97,7 +94,7 @@ export const postBrandFinishingbuilding = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.post(
-      "/api/v1/dapot/finishingbuilding/brand",
+      "/api/v1/dapot/buildingfinishes/brand",
       {
         name: name,
         user_id,
@@ -119,7 +116,7 @@ export const updateBrandFinishingbuilding = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.put(
-      "/api/v1/dapot/finishingbuilding/brand?id=" + id,
+      "/api/v1/dapot/buildingfinishes/brand?id=" + id,
       {
         name: name,
         user_id,
@@ -139,7 +136,7 @@ export const deleteFinishingbuilding = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/finishingbuilding/brand?id=${deviceid}&assetid=${asset_id}`
+      `/api/v1/dapot/buildingfinishes/brand?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -156,7 +153,7 @@ export const getVendorFinishingbuilding = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.get(
-      "/api/v1/dapot/finishingbuilding/vendors",
+      "/api/v1/dapot/buildingfinishes/vendors",
       {
         params: {
           page,
@@ -179,7 +176,7 @@ export const getOneVendorFinishingbuilding = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.get(
-      "/api/v1/dapot/finishingbuilding/vendor",
+      "/api/v1/dapot/buildingfinishes/vendor",
       {
         params: {
           id,
@@ -205,7 +202,7 @@ export const postVendorFinishingbuilding = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.post(
-      "/api/v1/dapot/finishingbuilding/vendor",
+      "/api/v1/dapot/buildingfinishes/vendor",
       {
         company,
         company_user_name,
@@ -227,7 +224,7 @@ export const deleteVendorFinishingbuilding = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/finishingbuilding/vendor?id=${deviceid}&assetid=${asset_id}`
+      `/api/v1/dapot/buildingfinishes/vendor?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -248,7 +245,7 @@ export const updateVendorFinishingbuilding = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.put(
-      "/api/v1/dapot/finishingbuilding/vendor?id=" + id,
+      "/api/v1/dapot/buildingfinishes/vendor?id=" + id,
       {
         company,
         company_user_name,
@@ -272,7 +269,7 @@ export const getTypeFinishingbuilding = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.get(
-      "/api/v1/dapot/finishingbuilding/types",
+      "/api/v1/dapot/buildingfinishes/types",
       {
         params: {
           page,
@@ -295,7 +292,7 @@ export const getOneTypeFinishingbuilding = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.get(
-      "/api/v1/dapot/finishingbuilding/type",
+      "/api/v1/dapot/buildingfinishes/type",
       {
         params: {
           id,
@@ -319,7 +316,7 @@ export const postTypeFinishingbuilding = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.post(
-      "/api/v1/dapot/finishingbuilding/type",
+      "/api/v1/dapot/buildingfinishes/type",
       {
         name,
         sub_category_id,
@@ -344,7 +341,7 @@ export const updateTypeFinishingbuilding = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.put(
-      "/api/v1/dapot/finishingbuilding/type?id=" + id,
+      "/api/v1/dapot/buildingfinishes/type?id=" + id,
       {
         name,
         sub_category_id,
@@ -365,7 +362,7 @@ export const deleteTypeFinishingbuilding = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/finishingbuilding/type?id=${deviceid}&assetid=${asset_id}`
+      `/api/v1/dapot/buildingfinishes/type?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -376,7 +373,7 @@ export const deleteTypeFinishingbuilding = async (
 export const getSubCategoriesFinishingbuilding = async () => {
   try {
     const response = await apiClient.get(
-      "/api/v1/dapot/finishingbuilding/subcategories?nopage=yes"
+      "/api/v1/dapot/buildingfinishes/subcategories?nopage=yes"
     );
     console.log(response);
     return response.data;
@@ -395,7 +392,7 @@ export const getMaintenanceFinishingbuilding = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.get(
-      "/api/v1/dapot/finishingbuilding/maintenances",
+      "/api/v1/dapot/buildingfinishes/maintenances",
       {
         params: {
           page,
@@ -418,7 +415,7 @@ export const getOneMaintenanceFinishingbuilding = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.get(
-      "/api/v1/dapot/finishingbuilding/maintenance",
+      "/api/v1/dapot/buildingfinishes/maintenance",
       {
         params: {
           id,
@@ -440,7 +437,7 @@ export const postMaintenanceFinishingbuilding = async (
   console.log(data.get("activity"));
   try {
     const response = await apiClient.post(
-      "/api/v1/dapot/finishingbuilding/maintenance",
+      "/api/v1/dapot/buildingfinishes/maintenance",
       data,
       {
         headers: {
@@ -461,7 +458,7 @@ export const updateMaintenanceFinishingbuilding = async (
   console.log(data.get("id"));
   try {
     const response = await apiClient.put(
-      "/api/v1/dapot/finishingbuilding/maintenance?id=" + data.get("id"),
+      "/api/v1/dapot/buildingfinishes/maintenance?id=" + data.get("id"),
       data,
       {
         headers: {
@@ -483,7 +480,7 @@ export const deleteMaintenanceFinishingbuilding = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/finishingbuilding/maintenance?id=${deviceid}&assetid=${asset_id}`
+      `/api/v1/dapot/buildingfinishes/maintenance?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -500,7 +497,7 @@ export const getLinkFinishingbuilding = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.get(
-      "/api/v1/dapot/finishingbuilding/links",
+      "/api/v1/dapot/buildingfinishes/links",
       {
         params: {
           page,
@@ -527,7 +524,7 @@ export const postLinkFinishingbuilding = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.post(
-      "/api/v1/dapot/finishingbuilding/link",
+      "/api/v1/dapot/buildingfinishes/link",
       {
         incoming,
         outgoing,

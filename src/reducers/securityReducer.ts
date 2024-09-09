@@ -71,6 +71,8 @@ export const initialStateCctv: SecurityCctvState = {
   floor_id: { value: "", label: "" },
   room_id: { value: "", label: "" },
   vendor_id: { value: "", label: "" },
+  type_id: { value: "", label: "" },
+  brand_id: { value: "", label: "" },
   vendor_user_name: "",
   vendor_phone: "",
   maintenance_id: { value: "", label: "" },
@@ -89,6 +91,7 @@ export const initialStateCctv: SecurityCctvState = {
   listAllRooms: [],
   listMaintenance: [],
   listLink: [],
+  listType: [],
 
   //   FOR COMPONENT
   isLoading: false,
@@ -128,6 +131,8 @@ export function updateCctvReducer(
       return { ...state, maintenance_id: action.payload };
     case "SET_LINK_ID":
       return { ...state, link_id: action.payload };
+    case "SET_TYPE_ID":
+      return { ...state, type_id: action.payload };
     case "SET_MANUFACTUR":
       return { ...state, manufactur: action.payload };
     case "SET_IP":
@@ -270,6 +275,8 @@ export const initialStateVideorecording: SecurityVideoRecordingState = {
   floor_id: { value: "", label: "" },
   room_id: { value: "", label: "" },
   vendor_id: { value: "", label: "" },
+  type_id: { value: "", label: "" },
+  brand_id: { value: "", label: "" },
   vendor_user_name: "",
   vendor_phone: "",
   maintenance_id: { value: "", label: "" },
@@ -326,7 +333,8 @@ export function updateVideorecordingReducer(
       return { ...state, maintenance_id: action.payload };
     case "SET_LINK_ID":
       return { ...state, link_id: action.payload };
-
+    case "SET_TYPE_ID":
+      return { ...state, type_id: action.payload };
     case "SET_IP":
       return { ...state, ip: action.payload };
     case "SET_INSTALLATION_DATE":
@@ -467,6 +475,8 @@ export const initialStateOsc: SecurityOtherScState = {
   floor_id: { value: "", label: "" },
   room_id: { value: "", label: "" },
   vendor_id: { value: "", label: "" },
+  type_id: { value: "", label: "" },
+  brand_id: { value: "", label: "" },
   vendor_user_name: "",
   vendor_phone: "",
   maintenance_id: { value: "", label: "" },
@@ -522,7 +532,8 @@ export function updateOscReducer(
       return { ...state, maintenance_id: action.payload };
     case "SET_LINK_ID":
       return { ...state, link_id: action.payload };
-
+    case "SET_TYPE_ID":
+      return { ...state, type_id: action.payload };
     case "SET_IP":
       return { ...state, ip: action.payload };
     case "SET_INSTALLATION_DATE":

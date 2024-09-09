@@ -17,14 +17,17 @@ export const getWindows = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/electrical/windows", {
-      params: {
-        page,
-        limit: 15,
-        globalFilter,
-        nopage,
-      },
-    });
+    const response = await apiClient.get(
+      "/api/v1/dapot/buildingfinishes/windows",
+      {
+        params: {
+          page,
+          limit: 15,
+          globalFilter,
+          nopage,
+        },
+      }
+    );
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -39,7 +42,7 @@ export const exportWindowsCsv = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/electrical/window-export-csv",
+      "/api/v1/dapot/buildingfinishes/window-export-csv",
       {
         params: {
           page,
@@ -63,7 +66,7 @@ export const exportWindowsXlsx = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/electrical/window-export-xlsx",
+      "/api/v1/dapot/buildingfinishes/window-export-xlsx",
       {
         params: {
           page,
@@ -86,7 +89,7 @@ export const postNewWindow = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.post(
-      "/api/v1/dapot/electrical/window",
+      "/api/v1/dapot/buildingfinishes/window",
       data,
       {
         headers: {
@@ -108,7 +111,7 @@ export const getWindow = async (
     setLoadingAndError(dispatch);
     try {
       const response = await apiClient.get(
-        `/api/v1/dapot/electrical/window?id=${id}`
+        `/api/v1/dapot/buildingfinishes/window?id=${id}`
       );
       return handleResponse(response, dispatch);
     } catch (error) {
@@ -126,7 +129,7 @@ export const updateWindow = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.put(
-      `/api/v1/dapot/electrical/window?id=${deviceid}&assetid=${assetid}`,
+      `/api/v1/dapot/buildingfinishes/window?id=${deviceid}&assetid=${assetid}`,
       data,
       {
         headers: {
@@ -151,7 +154,7 @@ export const deleteWindow = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/electrical/window?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
+      `/api/v1/dapot/buildingfinishes/window?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {

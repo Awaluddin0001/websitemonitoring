@@ -17,14 +17,17 @@ export const getMebels = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/electrical/mebels", {
-      params: {
-        page,
-        limit: 15,
-        globalFilter,
-        nopage,
-      },
-    });
+    const response = await apiClient.get(
+      "/api/v1/dapot/buildingfinishes/mebels",
+      {
+        params: {
+          page,
+          limit: 15,
+          globalFilter,
+          nopage,
+        },
+      }
+    );
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -39,7 +42,7 @@ export const exportMebelsCsv = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/electrical/mebel-export-csv",
+      "/api/v1/dapot/buildingfinishes/mebel-export-csv",
       {
         params: {
           page,
@@ -63,7 +66,7 @@ export const exportMebelsXlsx = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/electrical/mebel-export-xlsx",
+      "/api/v1/dapot/buildingfinishes/mebel-export-xlsx",
       {
         params: {
           page,
@@ -86,7 +89,7 @@ export const postNewMebel = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.post(
-      "/api/v1/dapot/electrical/mebel",
+      "/api/v1/dapot/buildingfinishes/mebel",
       data,
       {
         headers: {
@@ -108,7 +111,7 @@ export const getMebel = async (
     setLoadingAndError(dispatch);
     try {
       const response = await apiClient.get(
-        `/api/v1/dapot/electrical/mebel?id=${id}`
+        `/api/v1/dapot/buildingfinishes/mebel?id=${id}`
       );
       return handleResponse(response, dispatch);
     } catch (error) {
@@ -126,7 +129,7 @@ export const updateMebel = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.put(
-      `/api/v1/dapot/electrical/mebel?id=${deviceid}&assetid=${assetid}`,
+      `/api/v1/dapot/buildingfinishes/mebel?id=${deviceid}&assetid=${assetid}`,
       data,
       {
         headers: {
@@ -151,7 +154,7 @@ export const deleteMebel = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/electrical/mebel?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
+      `/api/v1/dapot/buildingfinishes/mebel?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {

@@ -50,6 +50,10 @@ export const updateExtinguishAllReducer = (
       };
     case "SET_GLOBAL_FILTER":
       return { ...state, globalFilter: action.payload };
+    case "SET_POSITION_COLUMN":
+      return { ...state, positionColumn: action.payload };
+    case "SET_EXPORT_TOGGLE":
+      return { ...state, exportToggle: action.payload };
     default:
       throw new Error(`unknown action type: ${action.type}`);
   }
@@ -73,12 +77,13 @@ export const initialStateDevice: ExtinguishDeviceState = {
   name: "",
   system_wiring: "",
   extinguish_agent: "",
-  weight: "",
-  capacity: "",
+  weight: 0,
+  capacity: 0,
   installation_date: `${new Date()}`,
   condition_asset: "",
   status: "",
   notes: "",
+  amount: 0,
   // List
   listVendor: [],
   listSite: [{ value: "UPD057", label: "TTC PENGAYOMAN" }],
@@ -139,6 +144,8 @@ export function updateDeviceReducer(
       return { ...state, weight: action.payload };
     case "SET_CAPACITY":
       return { ...state, capacity: action.payload };
+    case "SET_AMOUNT":
+      return { ...state, amount: action.payload };
     case "SET_CONDITION_ASSET":
       return { ...state, condition_asset: action.payload };
     case "SET_INSTALLATION_DATE":

@@ -6,6 +6,8 @@ import styles from "@/css/module/Login.module.css";
 import Captcha from "@/components/captcha/Captcha";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import openEyes from "@/assets/svg/openEyes.svg";
+import closeEyes from "@/assets/svg/closeEyes.svg";
 
 export default function Login() {
   const animationRef = useRef<LottieRefCurrentProps>(null);
@@ -24,6 +26,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [captchaText, setCaptchaText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -83,7 +86,7 @@ export default function Login() {
       ) : (
         <>
           <div className={styles.animationLogin}>
-            <h1>Dashboard Automatis Pantau Gedung Telkomsel</h1>
+            <h1>iPage Dashboard System Monitoring TTC Pengayoman</h1>
             <Lottie
               animationData={loginAnimation}
               loop={true}
@@ -100,19 +103,41 @@ export default function Login() {
                 <p>Masuk dengan menggunakan akun anda</p>
               </div>
               <div className={styles.formInput}>
-                <input
-                  type="text"
-                  placeholder="username"
-                  onChange={(e) => setUsername(e.target.value)}
-                  required
-                />
-                <div>
+                <div className={styles.wrapperInputPassword}>
                   <input
-                    type="password"
+                    type="text"
+                    placeholder="username"
+                    onChange={(e) => setUsername(e.target.value)}
+                    required
+                    className={styles.inputPassword}
+                    style={{ width: "100%" }}
+                  />
+                </div>
+                <div className={styles.wrapperInputPassword}>
+                  <input
+                    type={showPassword ? "text" : "password"}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Password"
                     required
+                    className={styles.inputPassword}
                   />
+                  {showPassword ? (
+                    <img
+                      src={openEyes}
+                      alt="openEyes"
+                      onClick={() => setShowPassword(false)}
+                      width={"30rem"}
+                      style={{ cursor: "pointer" }}
+                    />
+                  ) : (
+                    <img
+                      src={closeEyes}
+                      alt="closeEyes"
+                      onClick={() => setShowPassword(true)}
+                      width={"30rem"}
+                      style={{ cursor: "pointer" }}
+                    />
+                  )}
                 </div>
                 <a href="#">Lupa Password ?</a>
               </div>
@@ -123,6 +148,7 @@ export default function Login() {
                   placeholder="Enter CAPTCHA"
                   value={captchaText}
                   onChange={(e) => setCaptchaText(e.target.value)}
+                  className={styles.input}
                 />
                 <h3
                   style={{ color: "red", fontSize: "18px", marginTop: "10px" }}

@@ -50,6 +50,10 @@ export const updatePumpAllReducer = (
       };
     case "SET_GLOBAL_FILTER":
       return { ...state, globalFilter: action.payload };
+    case "SET_POSITION_COLUMN":
+      return { ...state, positionColumn: action.payload };
+    case "SET_EXPORT_TOGGLE":
+      return { ...state, exportToggle: action.payload };
     default:
       throw new Error(`unknown action type: ${action.type}`);
   }

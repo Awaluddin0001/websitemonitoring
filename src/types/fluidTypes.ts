@@ -1,6 +1,7 @@
 import { ReactSelect } from "@/types/basicTypes";
 export interface Fluid {
   id: string;
+  asset_id: string;
   ne_id: string;
   site_id: string;
   site_name: string;
@@ -49,7 +50,7 @@ export interface Device {
   name: string;
   type: string;
   fluid: string;
-  capacity: string;
+  capacity: number;
   installation_date: string;
   maintenance_id: string | null;
   maintenance_date: string | null;
@@ -67,14 +68,93 @@ interface FluidDevice {
   room_id: ReactSelect;
   vendor_id: ReactSelect;
   maintenance_id: ReactSelect;
+  type_id: ReactSelect;
   name: string;
   type: string;
   fluid: string;
-  capacity: string;
+  capacity: number;
   installation_date: string;
   condition_asset: string;
+  amount: number;
   status: string;
   notes: string;
+}
+
+export interface fluid {
+  asset_id: string;
+  ne_id: string;
+  site_id: string;
+  brand_id: string;
+  floor_id: string;
+  room_id: string;
+  vendor_id: string;
+  maintenance_id: string;
+  type_id: string;
+  name: string;
+  installation_date: string;
+  condition_asset: string;
+  amount: number;
+  status: string;
+  notes: string;
+}
+interface FluidState {
+  asset_id: string;
+  ne_id: string;
+  site_id: ReactSelect;
+  brand_id: ReactSelect;
+  floor_id: ReactSelect;
+  room_id: ReactSelect;
+  vendor_id: ReactSelect;
+  maintenance_id: ReactSelect;
+  type_id: ReactSelect;
+  name: string;
+  type: string;
+  fluid: string;
+  capacity: number;
+  installation_date: string;
+  condition_asset: string;
+  amount: number;
+  status: string;
+  notes: string;
+}
+
+export interface FluidFluidState extends FluidState {
+  // List
+  listVendor: any[];
+  listSite: any[];
+  listFloors: any[];
+  listRooms: any[];
+  listAllRooms: any[];
+  listMaintenance: any[];
+  listLink: any[];
+  listType: any[];
+  listBrand: any[];
+
+  //   FOR COMPONENT
+  isLoading: boolean;
+  isError: string | null;
+
+  //   FOR FILE
+  selectedFiles: {
+    file1: File | null;
+    file2: File | null;
+    file3: File | null;
+  };
+  errorMessagesFiles: {
+    file1: null;
+    file2: null;
+    file3: null;
+  };
+  vendor_phone?: string;
+  vendor_user_name?: string;
+  maintenance_date?: string;
+  maintenance_activity?: string;
+  link_in?: string;
+  link_out?: string[];
+  document_name?: string;
+  photo1?: string;
+  photo2?: string;
+  photo3?: string;
 }
 
 export interface FluidDeviceState extends FluidDevice {
@@ -85,6 +165,8 @@ export interface FluidDeviceState extends FluidDevice {
   listRooms: any[];
   listAllRooms: any[];
   listMaintenance: any[];
+  listBrand: any[];
+  listType: any[];
 
   //   FOR COMPONENT
   isLoading: boolean;

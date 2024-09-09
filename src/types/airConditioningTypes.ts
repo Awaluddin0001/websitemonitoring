@@ -68,13 +68,14 @@ interface AirConditioningAirDevice {
   asset_id: string;
   ne_id: string;
   site_id: ReactSelect;
+  brand_id: ReactSelect;
   floor_id: ReactSelect;
   room_id: ReactSelect;
   vendor_id: ReactSelect;
   maintenance_id: ReactSelect;
   type_id: ReactSelect;
   amount: number;
-  warranty: string;
+  waranty: string;
   name: string;
   air_flow: string;
   speed: string;
@@ -89,6 +90,7 @@ export interface AirConditioningAirDeviceState
   extends AirConditioningAirDevice {
   // List
   listVendor: any[];
+  listBrand: any[];
   listSite: any[];
   listFloors: any[];
   listRooms: any[];
@@ -165,6 +167,7 @@ interface AirConditioningCoolingDevice {
   asset_id: string;
   ne_id: string;
   site_id: ReactSelect;
+  brand_id: ReactSelect;
   floor_id: ReactSelect;
   room_id: ReactSelect;
   vendor_id: ReactSelect;
@@ -198,6 +201,7 @@ export interface AirConditioningCoolingDeviceState
   listAllRooms: any[];
   listMaintenance: any[];
   listType: any[];
+  listBrand: any[];
 
   //   FOR COMPONENT
   isLoading: boolean;
@@ -270,6 +274,7 @@ interface AirConditioningHeatingDevice {
   floor_id: ReactSelect;
   room_id: ReactSelect;
   vendor_id: ReactSelect;
+  maintenance_id: ReactSelect;
   amount: number;
   warranty: string;
   name: string;

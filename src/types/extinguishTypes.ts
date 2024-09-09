@@ -73,8 +73,9 @@ interface ExtinguishDevice {
   name: string;
   system_wiring: string;
   extinguish_agent: string;
-  weight: string;
-  capacity: string;
+  weight: number;
+  capacity: number;
+  amount: number;
   installation_date: string;
   condition_asset: string;
   status: string;

@@ -1,31 +1,12 @@
-import { apiClientDapot as apiClient } from "@/utils/apiClient";
+import {
+  apiClientDapot as apiClient,
+  exportClientDapot,
+} from "@/utils/apiClient";
 import {
   handleError,
   handleResponse,
   setLoadingAndError,
 } from "@/utils/LoadingAndErrorApi";
-
-export const getConveyances = async (
-  page: string | null,
-  dispatch: (dispatch: any) => void,
-  globalFilter?: string | null,
-  nopage?: string | null
-) => {
-  setLoadingAndError(dispatch);
-  try {
-    const response = await apiClient.get("/api/v1/dapot/conveyance/all", {
-      params: {
-        page,
-        limit: 15,
-        globalFilter,
-        nopage,
-      },
-    });
-    return handleResponse(response, dispatch);
-  } catch (error) {
-    handleError(error, dispatch);
-  }
-};
 export const getConveyancesLink = async () => {
   try {
     const response = await apiClient.get(
@@ -112,22 +93,6 @@ export const updateBrandConveyance = async (
         name: name,
         user_id,
       }
-    );
-    return handleResponse(response, dispatch);
-  } catch (error) {
-    handleError(error, dispatch);
-  }
-};
-
-export const deleteConveyance = async (
-  dispatch: (dispatch: any) => void,
-  deviceid: string,
-  asset_id: string
-) => {
-  setLoadingAndError(dispatch);
-  try {
-    const response = await apiClient.delete(
-      `/api/v1/dapot/conveyance/brand?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -283,7 +248,6 @@ export const getOneTypeConveyance = async (
 
 export const postTypeConveyance = async (
   name: string,
-  sub_category_id: string,
   dispatch: (dispatch: any) => void
 ) => {
   setLoadingAndError(dispatch);
@@ -293,7 +257,6 @@ export const postTypeConveyance = async (
   try {
     const response = await apiClient.post("/api/v1/dapot/conveyance/type", {
       name,
-      sub_category_id,
       user_id,
     });
     return handleResponse(response, dispatch);
@@ -304,7 +267,6 @@ export const postTypeConveyance = async (
 
 export const updateTypeConveyance = async (
   name: string,
-  sub_category_id: string,
   id: string,
   dispatch: (dispatch: any) => void
 ) => {
@@ -317,7 +279,6 @@ export const updateTypeConveyance = async (
       "/api/v1/dapot/conveyance/type?id=" + id,
       {
         name,
-        sub_category_id,
         user_id,
       }
     );
@@ -498,6 +459,158 @@ export const postLinkConveyance = async (
       outgoing,
       user_id,
     });
+    return handleResponse(response, dispatch);
+  } catch (error) {
+    handleError(error, dispatch);
+  }
+};
+
+export const getConveyances = async (
+  page: string | null,
+  dispatch: (dispatch: any) => void,
+  globalFilter: string,
+  nopage?: string | null
+) => {
+  setLoadingAndError(dispatch);
+  try {
+    const response = await apiClient.get(
+      "/api/v1/dapot/conveyance/conveyances",
+      {
+        params: {
+          page,
+          limit: 15,
+          globalFilter,
+          nopage,
+        },
+      }
+    );
+    return handleResponse(response, dispatch);
+  } catch (error) {
+    handleError(error, dispatch);
+  }
+};
+export const exportConveyancesCsv = async (
+  page: string | null,
+  dispatch: (dispatch: any) => void,
+  globalFilter: string,
+  nopage?: string | null
+) => {
+  setLoadingAndError(dispatch);
+  try {
+    const response = await exportClientDapot.get(
+      "/api/v1/dapot/conveyance/conveyance-export-csv",
+      {
+        params: {
+          page,
+          limit: 15,
+          globalFilter,
+          nopage,
+        },
+      }
+    );
+    return handleResponse(response, dispatch);
+  } catch (error) {
+    handleError(error, dispatch);
+  }
+};
+export const exportConveyancesXlsx = async (
+  page: string | null,
+  dispatch: (dispatch: any) => void,
+  globalFilter: string,
+  nopage?: string | null
+) => {
+  setLoadingAndError(dispatch);
+  try {
+    const response = await exportClientDapot.get(
+      "/api/v1/dapot/conveyance/conveyance-export-xlsx",
+      {
+        params: {
+          page,
+          limit: 15,
+          globalFilter,
+          nopage,
+        },
+      }
+    );
+    return handleResponse(response, dispatch);
+  } catch (error) {
+    handleError(error, dispatch);
+  }
+};
+export const getConveyance = async (
+  id: string | null,
+  dispatch: (dispatch: any) => void
+) => {
+  if (id) {
+    setLoadingAndError(dispatch);
+    try {
+      const response = await apiClient.get(
+        `/api/v1/dapot/conveyance/conveyance?id=${id}`
+      );
+      return handleResponse(response, dispatch);
+    } catch (error) {
+      handleError(error, dispatch);
+    }
+  }
+};
+
+export const postNewConveyance = async (
+  data: any,
+  dispatch: (dispatch: any) => void
+) => {
+  setLoadingAndError(dispatch);
+  try {
+    const response = await apiClient.post(
+      "/api/v1/dapot/conveyance/conveyance",
+      data,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    return handleResponse(response, dispatch);
+  } catch (error) {
+    handleError(error, dispatch);
+  }
+};
+
+export const updateConveyance = async (
+  data: any,
+  dispatch: (dispatch: any) => void,
+  deviceid: string,
+  assetid: string
+) => {
+  setLoadingAndError(dispatch);
+  try {
+    const response = await apiClient.put(
+      `/api/v1/dapot/conveyance/conveyance?id=${deviceid}&assetid=${assetid}`,
+      data,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    return handleResponse(response, dispatch);
+  } catch (error) {
+    handleError(error, dispatch);
+  }
+};
+
+export const deleteConveyance = async (
+  dispatch: (dispatch: any) => void,
+  deviceid: string,
+  asset_id: string
+) => {
+  setLoadingAndError(dispatch);
+  const userData: any = localStorage.getItem("user");
+  const jsonuserData = JSON.parse(userData);
+  const user_id = jsonuserData.id;
+  try {
+    const response = await apiClient.delete(
+      `/api/v1/dapot/conveyance/conveyance?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
+    );
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);

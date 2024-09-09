@@ -104,6 +104,18 @@ export const fetchType = async (getType: any, dispatch: any, id: any) => {
     dispatch({ type: "SET_IS_ERROR", payload: "Failed to fetch Types" });
   }
 };
+export const fetchTypeNonSc = async (getType: any, dispatch: any) => {
+  try {
+    const data = await getType("1", dispatch, null, "no");
+    const selectOptions = data.data.map((item: any) => ({
+      value: item.id,
+      label: item.name,
+    }));
+    dispatch({ type: "LIST_TYPES", payload: selectOptions });
+  } catch (err) {
+    dispatch({ type: "SET_IS_ERROR", payload: "Failed to fetch Types" });
+  }
+};
 export const fetchRackServer = async (dispatch: any) => {
   try {
     const data = await getRackservers("1", dispatch, null, "no");

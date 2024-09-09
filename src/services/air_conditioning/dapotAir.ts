@@ -17,7 +17,7 @@ export const getAirs = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/electrical/airs", {
+    const response = await apiClient.get("/api/v1/dapot/airconditioning/airs", {
       params: {
         page,
         limit: 15,
@@ -39,7 +39,7 @@ export const exportAirsCsv = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/electrical/air-export-csv",
+      "/api/v1/dapot/airconditioning/air-export-csv",
       {
         params: {
           page,
@@ -63,7 +63,7 @@ export const exportAirsXlsx = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/electrical/air-export-xlsx",
+      "/api/v1/dapot/airconditioning/air-export-xlsx",
       {
         params: {
           page,
@@ -86,7 +86,7 @@ export const postNewAir = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.post(
-      "/api/v1/dapot/electrical/air",
+      "/api/v1/dapot/airconditioning/air",
       data,
       {
         headers: {
@@ -108,7 +108,7 @@ export const getAir = async (
     setLoadingAndError(dispatch);
     try {
       const response = await apiClient.get(
-        `/api/v1/dapot/electrical/air?id=${id}`
+        `/api/v1/dapot/airconditioning/air?id=${id}`
       );
       return handleResponse(response, dispatch);
     } catch (error) {
@@ -126,7 +126,7 @@ export const updateAir = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.put(
-      `/api/v1/dapot/electrical/air?id=${deviceid}&assetid=${assetid}`,
+      `/api/v1/dapot/airconditioning/air?id=${deviceid}&assetid=${assetid}`,
       data,
       {
         headers: {
@@ -151,7 +151,7 @@ export const deleteAir = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/electrical/air?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
+      `/api/v1/dapot/airconditioning/air?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {

@@ -1,4 +1,7 @@
-import { apiClientDapot as apiClient } from "@/utils/apiClient";
+import {
+  apiClientDapot as apiClient,
+  exportClientDapot,
+} from "@/utils/apiClient";
 import {
   handleError,
   handleResponse,
@@ -275,7 +278,6 @@ export const getOneTypePump = async (
 
 export const postTypePump = async (
   name: string,
-  sub_category_id: string,
   dispatch: (dispatch: any) => void
 ) => {
   setLoadingAndError(dispatch);
@@ -285,7 +287,6 @@ export const postTypePump = async (
   try {
     const response = await apiClient.post("/api/v1/dapot/pump/type", {
       name,
-      sub_category_id,
       user_id,
     });
     return handleResponse(response, dispatch);
@@ -296,7 +297,6 @@ export const postTypePump = async (
 
 export const updateTypePump = async (
   name: string,
-  sub_category_id: string,
   id: string,
   dispatch: (dispatch: any) => void
 ) => {
@@ -307,7 +307,6 @@ export const updateTypePump = async (
   try {
     const response = await apiClient.put("/api/v1/dapot/pump/type?id=" + id, {
       name,
-      sub_category_id,
       user_id,
     });
     return handleResponse(response, dispatch);
@@ -466,21 +465,143 @@ export const getLinkPump = async (
   }
 };
 
-export const postLinkPump = async (
-  incoming: string,
-  outgoing: string,
+export const getPumpdevices = async (
+  page: string | null,
+  dispatch: (dispatch: any) => void,
+  globalFilter: string,
+  nopage?: string | null
+) => {
+  setLoadingAndError(dispatch);
+  try {
+    const response = await apiClient.get("/api/v1/dapot/pump/pumps", {
+      params: {
+        page,
+        limit: 15,
+        globalFilter,
+        nopage,
+      },
+    });
+    return handleResponse(response, dispatch);
+  } catch (error) {
+    handleError(error, dispatch);
+  }
+};
+export const exportPumpdeviceCsv = async (
+  page: string | null,
+  dispatch: (dispatch: any) => void,
+  globalFilter: string,
+  nopage?: string | null
+) => {
+  setLoadingAndError(dispatch);
+  try {
+    const response = await exportClientDapot.get(
+      "/api/v1/dapot/pump/pump-export-csv",
+      {
+        params: {
+          page,
+          limit: 15,
+          globalFilter,
+          nopage,
+        },
+      }
+    );
+    return handleResponse(response, dispatch);
+  } catch (error) {
+    handleError(error, dispatch);
+  }
+};
+export const exportPumpdeviceXlsx = async (
+  page: string | null,
+  dispatch: (dispatch: any) => void,
+  globalFilter: string,
+  nopage?: string | null
+) => {
+  setLoadingAndError(dispatch);
+  try {
+    const response = await exportClientDapot.get(
+      "/api/v1/dapot/pump/pump-export-xlsx",
+      {
+        params: {
+          page,
+          limit: 15,
+          globalFilter,
+          nopage,
+        },
+      }
+    );
+    return handleResponse(response, dispatch);
+  } catch (error) {
+    handleError(error, dispatch);
+  }
+};
+export const getPumpdevice = async (
+  id: string | null,
   dispatch: (dispatch: any) => void
+) => {
+  if (id) {
+    setLoadingAndError(dispatch);
+    try {
+      const response = await apiClient.get(`/api/v1/dapot/pump/pump?id=${id}`);
+      return handleResponse(response, dispatch);
+    } catch (error) {
+      handleError(error, dispatch);
+    }
+  }
+};
+
+export const postNewPumpdevice = async (
+  data: any,
+  dispatch: (dispatch: any) => void
+) => {
+  setLoadingAndError(dispatch);
+  try {
+    const response = await apiClient.post("/api/v1/dapot/pump/pump", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return handleResponse(response, dispatch);
+  } catch (error) {
+    handleError(error, dispatch);
+  }
+};
+
+export const updatePumpdevice = async (
+  data: any,
+  dispatch: (dispatch: any) => void,
+  deviceid: string,
+  assetid: string
+) => {
+  setLoadingAndError(dispatch);
+  try {
+    const response = await apiClient.put(
+      `/api/v1/dapot/pump/pump?id=${deviceid}&assetid=${assetid}`,
+      data,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    return handleResponse(response, dispatch);
+  } catch (error) {
+    handleError(error, dispatch);
+  }
+};
+
+export const deletePumpdevice = async (
+  dispatch: (dispatch: any) => void,
+  deviceid: string,
+  asset_id: string
 ) => {
   setLoadingAndError(dispatch);
   const userData: any = localStorage.getItem("user");
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.post("/api/v1/dapot/pump/link", {
-      incoming,
-      outgoing,
-      user_id,
-    });
+    const response = await apiClient.delete(
+      `/api/v1/dapot/pump/pump?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
+    );
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);

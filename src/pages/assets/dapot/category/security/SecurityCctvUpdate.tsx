@@ -5,14 +5,6 @@ import { useEffect, useReducer } from "react";
 import Select from "react-select";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
-import {
-  getBrandNetwork,
-  getLinkNetwork,
-  getMaintenanceNetwork,
-  getTypeNetwork,
-  getVendorNetwork,
-} from "@/services/network/dapotNetwork";
 import { getFloors, getRooms } from "@/services/electrical/dapotPosition";
 interface Options {
   value: string;
@@ -30,11 +22,19 @@ import {
   fetchType,
   fetchVendor,
 } from "@/utils/fetchData";
+
 import {
-  initialStateComputer,
-  updateComputerReducer,
-} from "src/reducers/networkReducer";
-import { getComputer, updateComputer } from "@/services/network/dapotComputer";
+  initialStateCctv,
+  updateCctvReducer,
+} from "src/reducers/securityReducer";
+import { getCctv, updateCctv } from "@/services/security/dapotCctv";
+import {
+  getBrandSecurity,
+  getLinkSecurity,
+  getMaintenanceSecurity,
+  getTypeSecurity,
+  getVendorSecurity,
+} from "@/services/security/dapotSecurity";
 
 const styleSelect = {
   control: (baseStyles: any, state: any) => ({
@@ -60,34 +60,25 @@ const themeSelect = (theme: any) => ({
 export default function SecurityCctvUpdate() {
   const navigate = useNavigate();
   const [searchParams, _] = useSearchParams();
-  const [state, dispatch] = useReducer(
-    updateComputerReducer,
-    initialStateComputer
-  );
+  const [state, dispatch] = useReducer(updateCctvReducer, initialStateCctv);
   const {
     asset_id,
-    ne_id,
     site_id,
     floor_id,
     room_id,
     vendor_id,
     maintenance_id,
+    brand_id,
+    type_id,
     link_id,
-    display,
-    keyboard,
-    mouse,
-    motherboard,
-    processor,
-    vga,
-    hardisk,
-    ram,
-    cooling,
-    power_supply,
-    _case,
+    manufactur,
+    ip,
     installation_date,
     condition_asset,
     status,
     notes,
+    listBrand,
+    listType,
     listVendor,
     listSite,
     listFloors,
@@ -169,25 +160,17 @@ export default function SecurityCctvUpdate() {
     formData.append("foto2", selectedFiles.file2 as File);
     formData.append("foto3", selectedFiles.file3 as File);
     formData.append("user_id", user_id);
-    formData.append("sub_category_id", "NSC01");
-    formData.append("ne_id", ne_id);
+    formData.append("sub_category_id", "SSC04");
     formData.append("site_id", site_id.value || "");
     formData.append("floor_id", floor_id.value || "");
     formData.append("room_id", room_id.value || "");
     formData.append("vendor_id", vendor_id.value || "");
+    formData.append("brand_id", brand_id.value || "");
+    formData.append("type_id", type_id.value || "");
     formData.append("maintenance_id", maintenance_id.value || "");
     formData.append("link_id", link_id.value || "");
-    formData.append("display", display);
-    formData.append("keyboard", keyboard);
-    formData.append("mouse", mouse);
-    formData.append("motherboard", motherboard);
-    formData.append("processor", processor);
-    formData.append("vga", vga);
-    formData.append("hardisk", hardisk);
-    formData.append("ram", ram);
-    formData.append("cooling", cooling);
-    formData.append("power_supply", power_supply);
-    formData.append("casing", _case);
+    formData.append("manufactur", manufactur);
+    formData.append("ip", ip);
     formData.append(
       "installation_date",
       formatDate(new Date(installation_date))
@@ -197,17 +180,14 @@ export default function SecurityCctvUpdate() {
     formData.append("notes", notes);
 
     const postnew = async (data: any) => {
-      const result = await updateComputer(
+      const result = await updateCctv(
         data,
         dispatch,
         searchParams.get("id") || "",
         asset_id
       );
-      console.log(result);
       if (result.success) {
-        navigate(
-          `/main/assets/datapotensi/category/list/network/computer?page=1`
-        );
+        navigate(`/main/assets/datapotensi/category/list/security/cctv?page=1`);
       }
     };
 
@@ -215,35 +195,27 @@ export default function SecurityCctvUpdate() {
   };
 
   useEffect(() => {
-    const getComputers = async () => {
+    const getCctvs = async () => {
       try {
-        const data = await getComputer(searchParams.get("id"), dispatch);
+        const data = await getCctv(searchParams.get("id"), dispatch);
+        console.log(data);
         dispatch({
-          type: "GET_COMPUTER",
+          type: "GET_CCTV",
           payload: {
             asset_id: data.asset_id,
-            ne_id: data.ne_id,
             site_id: { value: data.site_id, label: data.site_name },
             floor_id: { value: data.floor_id, label: data.floor_name },
             room_id: { value: data.room_id, label: data.room_name },
             brand_id: { value: data.brand_id, label: data.brand_name },
             vendor_id: { value: data.vendor_id, label: data.vendor_name },
+            type_id: { value: data.type_id, label: data.type_name },
             maintenance_id: {
               value: data.maintenance_id,
               label: data.maintenance_date,
             },
             link_id: { value: data.link_id, label: data.link_id },
-            display: data.display,
-            keyboard: data.keyboard,
-            mouse: data.mouse,
-            motherboard: data.motherboard,
-            processor: data.processor,
-            vga: data.vga,
-            hardisk: data.hardisk,
-            ram: data.ram,
-            cooling: data.cooling,
-            power_supply: data.power_supply,
-            _case: data.casing,
+            manufactur: data.manufactur,
+            ip: data.ip,
             installation_date: data.installation_date,
             condition_asset: data.condition_asset,
             status: data.status,
@@ -253,19 +225,19 @@ export default function SecurityCctvUpdate() {
       } catch (err) {
         dispatch({
           type: "SET_IS_ERROR",
-          payload: "Failed to fetch computer",
+          payload: "Failed to fetch cctv",
         });
       }
     };
 
-    getComputers();
+    getCctvs();
     fetchFloor(getFloors, dispatch);
     fetchRoom(getRooms, dispatch);
-    fetchBrand(getBrandNetwork, dispatch);
-    fetchVendor(getVendorNetwork, dispatch);
-    fetchLink(getLinkNetwork, dispatch);
-    fetchType(getTypeNetwork, dispatch, "NSC01");
-    fetchMaintenance(getMaintenanceNetwork, dispatch);
+    fetchVendor(getVendorSecurity, dispatch);
+    fetchLink(getLinkSecurity, dispatch);
+    fetchMaintenance(getMaintenanceSecurity, dispatch);
+    fetchBrand(getBrandSecurity, dispatch);
+    fetchType(getTypeSecurity, dispatch, "SSC04");
   }, []);
 
   return (
@@ -284,17 +256,6 @@ export default function SecurityCctvUpdate() {
             <div className={styles.posisiInput}>
               <p className={styles.textTitle}>Posisi</p>
               <div className={styles.inputGroup}>
-                <div className={styles.containerInput}>
-                  <p className={styles.textTitleInput}>NE ID</p>
-                  <input
-                    type="text"
-                    className={styles.inputAsset}
-                    value={ne_id || ""}
-                    onChange={(e) =>
-                      dispatch({ type: "SET_NE_ID", payload: e.target.value })
-                    }
-                  />
-                </div>
                 <div className={styles.containerInput}>
                   <p className={styles.textTitleInput}>SITE ID</p>
                   <Select
@@ -352,141 +313,64 @@ export default function SecurityCctvUpdate() {
                 </div>
               </div>
             </div>
+            <div className={styles.posisiInput}>
+              <p className={styles.textTitle}>Brand</p>
+              <div className={styles.inputGroup}>
+                <div className={styles.containerInput}>
+                  <p className={styles.textTitleInput}>LIST BRAND</p>
+                  <Select
+                    value={brand_id}
+                    onChange={(e) =>
+                      dispatch({ type: "SET_BRAND_ID", payload: e })
+                    }
+                    options={listBrand}
+                    className={styles.selectAsset}
+                    styles={styleSelect}
+                    theme={themeSelect}
+                  />
+                </div>
+              </div>
+            </div>
           </div>
           <div className={styles.sectionInput}>
             <div className={styles.posisiInput}>
               <p className={styles.textTitle}>Detail Aset</p>
               <div className={styles.inputGroup}>
                 <div className={styles.containerInput}>
-                  <p className={styles.textTitleInput}>Display</p>
+                  <p className={styles.textTitleInput}>Manufactur</p>
                   <input
                     type="text"
                     className={styles.inputAsset}
-                    value={display || ""}
-                    onChange={(e) =>
-                      dispatch({ type: "SET_DISPLAY", payload: e.target.value })
-                    }
-                  />
-                </div>
-                <div className={styles.containerInput}>
-                  <p className={styles.textTitleInput}>Keyboard</p>
-                  <input
-                    type="text"
-                    className={styles.inputAsset}
-                    value={keyboard || ""}
+                    value={manufactur || ""}
                     onChange={(e) =>
                       dispatch({
-                        type: "SET_KEYBOARD",
+                        type: "SET_MANUFACTUR",
                         payload: e.target.value,
                       })
                     }
                   />
                 </div>
                 <div className={styles.containerInput}>
-                  <p className={styles.textTitleInput}>Mouse</p>
-                  <input
-                    type="text"
-                    className={styles.inputAsset}
-                    value={mouse || ""}
-                    onChange={(e) =>
-                      dispatch({ type: "SET_MOUSE", payload: e.target.value })
-                    }
+                  <p className={styles.textTitleInput}>Type</p>
+                  <Select
+                    value={type_id}
+                    onChange={(e) => {
+                      dispatch({ type: "SET_TYPE_ID", payload: e });
+                    }}
+                    options={listType}
+                    className={styles.selectAsset}
+                    styles={styleSelect}
+                    theme={themeSelect}
                   />
                 </div>
                 <div className={styles.containerInput}>
-                  <p className={styles.textTitleInput}>Motherboard</p>
+                  <p className={styles.textTitleInput}>Ip</p>
                   <input
                     type="text"
                     className={styles.inputAsset}
-                    value={motherboard || ""}
+                    value={ip || ""}
                     onChange={(e) =>
-                      dispatch({
-                        type: "SET_MOTHERBOARD",
-                        payload: e.target.value,
-                      })
-                    }
-                  />
-                </div>
-                <div className={styles.containerInput}>
-                  <p className={styles.textTitleInput}>Casing</p>
-                  <input
-                    type="text"
-                    className={styles.inputAsset}
-                    value={_case || ""}
-                    onChange={(e) =>
-                      dispatch({ type: "SET_CASE", payload: e.target.value })
-                    }
-                  />
-                </div>
-                <div className={styles.containerInput}>
-                  <p className={styles.textTitleInput}>Processor</p>
-                  <input
-                    type="text"
-                    className={styles.inputAsset}
-                    value={processor || ""}
-                    onChange={(e) =>
-                      dispatch({
-                        type: "SET_PROCESSOR",
-                        payload: e.target.value,
-                      })
-                    }
-                  />
-                </div>
-                <div className={styles.containerInput}>
-                  <p className={styles.textTitleInput}>Vga</p>
-                  <input
-                    type="text"
-                    className={styles.inputAsset}
-                    value={vga || ""}
-                    onChange={(e) =>
-                      dispatch({ type: "SET_VGA", payload: e.target.value })
-                    }
-                  />
-                </div>
-                <div className={styles.containerInput}>
-                  <p className={styles.textTitleInput}>Hardisk</p>
-                  <input
-                    type="text"
-                    className={styles.inputAsset}
-                    value={hardisk || ""}
-                    onChange={(e) =>
-                      dispatch({ type: "SET_HARDISK", payload: e.target.value })
-                    }
-                  />
-                </div>
-                <div className={styles.containerInput}>
-                  <p className={styles.textTitleInput}>Ram</p>
-                  <input
-                    type="text"
-                    className={styles.inputAsset}
-                    value={ram || ""}
-                    onChange={(e) =>
-                      dispatch({ type: "SET_RAM", payload: e.target.value })
-                    }
-                  />
-                </div>
-                <div className={styles.containerInput}>
-                  <p className={styles.textTitleInput}>Cooling</p>
-                  <input
-                    type="text"
-                    className={styles.inputAsset}
-                    value={cooling || ""}
-                    onChange={(e) =>
-                      dispatch({ type: "SET_COOLING", payload: e.target.value })
-                    }
-                  />
-                </div>
-                <div className={styles.containerInput}>
-                  <p className={styles.textTitleInput}>Power Supply</p>
-                  <input
-                    type="text"
-                    className={styles.inputAsset}
-                    value={power_supply || ""}
-                    onChange={(e) =>
-                      dispatch({
-                        type: "SET_POWER_SUPPLY",
-                        payload: e.target.value,
-                      })
+                      dispatch({ type: "SET_IP", payload: e.target.value })
                     }
                   />
                 </div>

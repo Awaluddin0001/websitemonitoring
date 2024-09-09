@@ -17,7 +17,7 @@ export const getButtons = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/electrical/buttons", {
+    const response = await apiClient.get("/api/v1/dapot/security/buttons", {
       params: {
         page,
         limit: 15,
@@ -39,7 +39,7 @@ export const exportButtonsCsv = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/electrical/button-export-csv",
+      "/api/v1/dapot/security/button-export-csv",
       {
         params: {
           page,
@@ -63,7 +63,7 @@ export const exportButtonsXlsx = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/electrical/button-export-xlsx",
+      "/api/v1/dapot/security/button-export-xlsx",
       {
         params: {
           page,
@@ -86,7 +86,7 @@ export const postNewButton = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.post(
-      "/api/v1/dapot/electrical/button",
+      "/api/v1/dapot/security/button",
       data,
       {
         headers: {
@@ -108,7 +108,7 @@ export const getButton = async (
     setLoadingAndError(dispatch);
     try {
       const response = await apiClient.get(
-        `/api/v1/dapot/electrical/button?id=${id}`
+        `/api/v1/dapot/security/button?id=${id}`
       );
       return handleResponse(response, dispatch);
     } catch (error) {
@@ -126,7 +126,7 @@ export const updateButton = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.put(
-      `/api/v1/dapot/electrical/button?id=${deviceid}&assetid=${assetid}`,
+      `/api/v1/dapot/security/button?id=${deviceid}&assetid=${assetid}`,
       data,
       {
         headers: {
@@ -151,7 +151,7 @@ export const deleteButton = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/electrical/button?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
+      `/api/v1/dapot/security/button?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {

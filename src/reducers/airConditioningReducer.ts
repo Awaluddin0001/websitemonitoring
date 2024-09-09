@@ -69,12 +69,11 @@ export const initialStateAirdevice: AirConditioningAirDeviceState = {
   floor_id: { value: "", label: "" },
   room_id: { value: "", label: "" },
   vendor_id: { value: "", label: "" },
+  brand_id: { value: "", label: "" },
   vendor_user_name: "",
   vendor_phone: "",
   maintenance_id: { value: "", label: "" },
   type_id: { value: "", label: "" },
-  amount: 0,
-  warranty: "",
   name: "",
   air_flow: "",
   speed: "",
@@ -82,6 +81,8 @@ export const initialStateAirdevice: AirConditioningAirDeviceState = {
   installation_date: `${new Date()}`,
   condition_asset: "",
   status: "",
+  amount: 0,
+  waranty: "",
   notes: "",
   // List
   listVendor: [],
@@ -91,6 +92,7 @@ export const initialStateAirdevice: AirConditioningAirDeviceState = {
   listAllRooms: [],
   listMaintenance: [],
   listType: [],
+  listBrand: [],
 
   //   FOR COMPONENT
   isLoading: false,
@@ -131,7 +133,7 @@ export function updateAirdeviceReducer(
     case "SET_AMOUNT":
       return { ...state, amount: action.payload };
     case "SET_WARRANTY":
-      return { ...state, warranty: action.payload };
+      return { ...state, waranty: action.payload };
     case "SET_NAME":
       return { ...state, name: action.payload };
     case "SET_AIR_FLOW":
@@ -279,6 +281,7 @@ export const initialStateCoolingDevice: AirConditioningCoolingDeviceState = {
   site_id: { value: "", label: "" },
   floor_id: { value: "", label: "" },
   room_id: { value: "", label: "" },
+  brand_id: { value: "", label: "" },
   vendor_id: { value: "", label: "" },
   vendor_user_name: "",
   vendor_phone: "",
@@ -308,6 +311,7 @@ export const initialStateCoolingDevice: AirConditioningCoolingDeviceState = {
   listAllRooms: [],
   listMaintenance: [],
   listType: [],
+  listBrand: [],
 
   //   FOR COMPONENT
   isLoading: false,
@@ -348,7 +352,7 @@ export function updateCoolingDeviceReducer(
     case "SET_AMOUNT":
       return { ...state, amount: action.payload };
     case "SET_WARRANTY":
-      return { ...state, warranty: action.payload };
+      return { ...state, waranty: action.payload };
     case "SET_NAME":
       return { ...state, name: action.payload };
     case "SET_MANUFACTUR":
@@ -510,6 +514,7 @@ export const initialStateHeatingDevice: AirConditioningHeatingDeviceState = {
   floor_id: { value: "", label: "" },
   room_id: { value: "", label: "" },
   vendor_id: { value: "", label: "" },
+  maintenance_id: { value: "", label: "" },
   vendor_user_name: "",
   vendor_phone: "",
   name: "",
@@ -567,7 +572,7 @@ export function updateHeatingDeviceReducer(
     case "SET_AMOUNT":
       return { ...state, amount: action.payload };
     case "SET_WARRANTY":
-      return { ...state, warranty: action.payload };
+      return { ...state, waranty: action.payload };
     case "SET_NAME":
       return { ...state, name: action.payload };
     case "SET_TEMPERATURE_MAX":

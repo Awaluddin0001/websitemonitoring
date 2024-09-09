@@ -60,7 +60,6 @@ export default function SecurityCctvAdd() {
   const navigate = useNavigate();
   const [state, dispatch] = useReducer(updateCctvReducer, initialStateCctv);
   const {
-    ne_id,
     site_id,
     floor_id,
     room_id,
@@ -155,11 +154,12 @@ export default function SecurityCctvAdd() {
     formData.append("foto3", selectedFiles.file3 as File);
     formData.append("user_id", user_id);
     formData.append("sub_category_id", "SSC04");
-    formData.append("ne_id", ne_id);
     formData.append("site_id", site_id.value || "");
     formData.append("floor_id", floor_id.value || "");
     formData.append("room_id", room_id.value || "");
     formData.append("vendor_id", vendor_id.value || "");
+    formData.append("brand_id", brand_id.value || "");
+    formData.append("type_id", type_id.value || "");
     formData.append("maintenance_id", maintenance_id.value || "");
     formData.append("link_id", link_id.value || "");
     formData.append("manufactur", manufactur);
@@ -208,17 +208,6 @@ export default function SecurityCctvAdd() {
             <div className={styles.posisiInput}>
               <p className={styles.textTitle}>Posisi</p>
               <div className={styles.inputGroup}>
-                <div className={styles.containerInput}>
-                  <p className={styles.textTitleInput}>NE ID</p>
-                  <input
-                    type="text"
-                    className={styles.inputAsset}
-                    value={ne_id || ""}
-                    onChange={(e) =>
-                      dispatch({ type: "SET_NE_ID", payload: e.target.value })
-                    }
-                  />
-                </div>
                 <div className={styles.containerInput}>
                   <p className={styles.textTitleInput}>SITE ID</p>
                   <Select

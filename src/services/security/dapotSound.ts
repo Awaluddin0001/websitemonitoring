@@ -17,7 +17,7 @@ export const getSounds = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/electrical/sounds", {
+    const response = await apiClient.get("/api/v1/dapot/security/sounds", {
       params: {
         page,
         limit: 15,
@@ -39,7 +39,7 @@ export const exportSoundsCsv = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/electrical/sound-export-csv",
+      "/api/v1/dapot/security/sound-export-csv",
       {
         params: {
           page,
@@ -63,7 +63,7 @@ export const exportSoundsXlsx = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/electrical/sound-export-xlsx",
+      "/api/v1/dapot/security/sound-export-xlsx",
       {
         params: {
           page,
@@ -86,7 +86,7 @@ export const postNewSound = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.post(
-      "/api/v1/dapot/electrical/sound",
+      "/api/v1/dapot/security/sound",
       data,
       {
         headers: {
@@ -108,7 +108,7 @@ export const getSound = async (
     setLoadingAndError(dispatch);
     try {
       const response = await apiClient.get(
-        `/api/v1/dapot/electrical/sound?id=${id}`
+        `/api/v1/dapot/security/sound?id=${id}`
       );
       return handleResponse(response, dispatch);
     } catch (error) {
@@ -126,7 +126,7 @@ export const updateSound = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.put(
-      `/api/v1/dapot/electrical/sound?id=${deviceid}&assetid=${assetid}`,
+      `/api/v1/dapot/security/sound?id=${deviceid}&assetid=${assetid}`,
       data,
       {
         headers: {
@@ -151,7 +151,7 @@ export const deleteSound = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/electrical/sound?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
+      `/api/v1/dapot/security/sound?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {

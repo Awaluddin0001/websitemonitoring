@@ -51,6 +51,7 @@ export interface Cctv {
   vendor_id: string;
   vendor_name: string;
   manufactur: string;
+  type_id: string;
   ip: string;
   installation_date: string;
   maintenance_id: string | null;
@@ -64,11 +65,13 @@ interface SecurityCctv {
   asset_id: string;
   ne_id: string;
   site_id: ReactSelect;
+  brand_id: ReactSelect;
   floor_id: ReactSelect;
   room_id: ReactSelect;
   vendor_id: ReactSelect;
   maintenance_id: ReactSelect;
   link_id: ReactSelect;
+  type_id: ReactSelect;
   manufactur: string;
   ip: string;
   installation_date: string;
@@ -86,6 +89,7 @@ export interface SecurityCctvState extends SecurityCctv {
   listAllRooms: any[];
   listMaintenance: any[];
   listLink: any[];
+  listType: any[];
 
   //   FOR COMPONENT
   isLoading: boolean;
@@ -157,6 +161,8 @@ interface SecurityVideoRecording {
   vendor_id: ReactSelect;
   maintenance_id: ReactSelect;
   link_id: ReactSelect;
+  brand_id: ReactSelect;
+  type_id: ReactSelect;
   ip: string;
   installation_date: string;
   condition_asset: string;
@@ -243,6 +249,8 @@ interface SecurityOtherSc {
   vendor_id: ReactSelect;
   maintenance_id: ReactSelect;
   link_id: ReactSelect;
+  type_id: ReactSelect;
+  brand_id: ReactSelect;
   installation_date: string;
   condition_asset: string;
   status: string;

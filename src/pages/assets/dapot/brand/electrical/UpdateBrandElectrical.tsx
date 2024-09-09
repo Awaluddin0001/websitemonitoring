@@ -49,9 +49,7 @@ export default function UpdateBrandElectrical() {
         dispatch
       );
       if (result.success) {
-        navigate(
-          `/main/assets/datapotensi/category/list/electrical/rectifier?page=1`
-        );
+        navigate(`/main/assets/datapotensi/brand/list/electrical?page=1`);
       }
     };
 

@@ -17,7 +17,7 @@ export const getAlarms = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/electrical/alarms", {
+    const response = await apiClient.get("/api/v1/dapot/security/alarms", {
       params: {
         page,
         limit: 15,
@@ -39,7 +39,7 @@ export const exportAlarmsCsv = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/electrical/alarm-export-csv",
+      "/api/v1/dapot/security/alarm-export-csv",
       {
         params: {
           page,
@@ -63,7 +63,7 @@ export const exportAlarmsXlsx = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/electrical/alarm-export-xlsx",
+      "/api/v1/dapot/security/alarm-export-xlsx",
       {
         params: {
           page,
@@ -86,7 +86,7 @@ export const postNewAlarm = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.post(
-      "/api/v1/dapot/electrical/alarm",
+      "/api/v1/dapot/security/alarm",
       data,
       {
         headers: {
@@ -108,7 +108,7 @@ export const getAlarm = async (
     setLoadingAndError(dispatch);
     try {
       const response = await apiClient.get(
-        `/api/v1/dapot/electrical/alarm?id=${id}`
+        `/api/v1/dapot/security/alarm?id=${id}`
       );
       return handleResponse(response, dispatch);
     } catch (error) {
@@ -126,7 +126,7 @@ export const updateAlarm = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.put(
-      `/api/v1/dapot/electrical/alarm?id=${deviceid}&assetid=${assetid}`,
+      `/api/v1/dapot/security/alarm?id=${deviceid}&assetid=${assetid}`,
       data,
       {
         headers: {
@@ -151,7 +151,7 @@ export const deleteAlarm = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/electrical/alarm?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
+      `/api/v1/dapot/security/alarm?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {

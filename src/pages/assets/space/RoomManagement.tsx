@@ -844,7 +844,7 @@ const RoomManagement: React.FC = () => {
 
             <div
               className={styles.offButton}
-              onClick={() => navigate(`/space/plan/${floor}`)}
+              onClick={() => navigate(`/main/assets/space/${floor}`)}
               style={{ borderColor: "red" }}
               id="closeOff"
             >

@@ -64,6 +64,8 @@ interface FinishingBuildingCat1 {
   room_id: ReactSelect;
   vendor_id: ReactSelect;
   maintenance_id: ReactSelect;
+  type_id: ReactSelect;
+  brand_id: ReactSelect;
   good: number;
   broke: number;
   amount: number;
@@ -81,6 +83,7 @@ export interface FinishingBuildingCat1State extends FinishingBuildingCat1 {
   listRooms: any[];
   listAllRooms: any[];
   listMaintenance: any[];
+  listType: any[];
 
   //   FOR COMPONENT
   isLoading: boolean;
@@ -149,7 +152,9 @@ interface FinishingBuildingCeramic {
   floor_id: ReactSelect;
   room_id: ReactSelect;
   vendor_id: ReactSelect;
+  brand_id: ReactSelect;
   maintenance_id: ReactSelect;
+  type_id: ReactSelect;
   rise: number;
   good: number;
   broke: number;
@@ -165,10 +170,12 @@ export interface FinishingBuildingCeramicState
   // List
   listVendor: any[];
   listSite: any[];
+  listBrand: any[];
   listFloors: any[];
   listRooms: any[];
   listAllRooms: any[];
   listMaintenance: any[];
+  listType: any[];
 
   //   FOR COMPONENT
   isLoading: boolean;
@@ -235,6 +242,9 @@ interface FinishingBuildingCat2 {
   room_id: ReactSelect;
   vendor_id: ReactSelect;
   maintenance_id: ReactSelect;
+  type_id: ReactSelect;
+  brand_id: ReactSelect;
+  name: string;
   color: string;
   installation_date: string;
   condition_asset: string;
@@ -250,6 +260,7 @@ export interface FinishingBuildingCat2State extends FinishingBuildingCat2 {
   listRooms: any[];
   listAllRooms: any[];
   listMaintenance: any[];
+  listType: any[];
 
   //   FOR COMPONENT
   isLoading: boolean;

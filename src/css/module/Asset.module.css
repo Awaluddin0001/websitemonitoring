@@ -205,6 +205,13 @@
   font-weight: 500;
 }
 
+.sectionScroll {
+  overflow-y: scroll;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+}
+
 .sectionInput {
   display: flex;
   justify-content: flex-start;

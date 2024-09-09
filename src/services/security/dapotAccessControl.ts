@@ -18,7 +18,7 @@ export const getAccesscontrols = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.get(
-      "/api/v1/dapot/electrical/accesscontrols",
+      "/api/v1/dapot/security/accesscontrols",
       {
         params: {
           page,
@@ -42,7 +42,7 @@ export const exportAccesscontrolsCsv = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/electrical/accesscontrol-export-csv",
+      "/api/v1/dapot/security/accesscontrol-export-csv",
       {
         params: {
           page,
@@ -66,7 +66,7 @@ export const exportAccesscontrolsXlsx = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/electrical/accesscontrol-export-xlsx",
+      "/api/v1/dapot/security/accesscontrol-export-xlsx",
       {
         params: {
           page,
@@ -89,7 +89,7 @@ export const postNewAccesscontrol = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.post(
-      "/api/v1/dapot/electrical/accesscontrol",
+      "/api/v1/dapot/security/accesscontrol",
       data,
       {
         headers: {
@@ -111,7 +111,7 @@ export const getAccesscontrol = async (
     setLoadingAndError(dispatch);
     try {
       const response = await apiClient.get(
-        `/api/v1/dapot/electrical/accesscontrol?id=${id}`
+        `/api/v1/dapot/security/accesscontrol?id=${id}`
       );
       return handleResponse(response, dispatch);
     } catch (error) {
@@ -129,7 +129,7 @@ export const updateAccesscontrol = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.put(
-      `/api/v1/dapot/electrical/accesscontrol?id=${deviceid}&assetid=${assetid}`,
+      `/api/v1/dapot/security/accesscontrol?id=${deviceid}&assetid=${assetid}`,
       data,
       {
         headers: {
@@ -154,7 +154,7 @@ export const deleteAccesscontrol = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/electrical/accesscontrol?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
+      `/api/v1/dapot/security/accesscontrol?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {

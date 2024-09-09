@@ -10,6 +10,7 @@ import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 // import RoomSvg from "@/components/svg/RoomSvg";
 import { useState } from "react";
+import BriefCaseSvg from "../svg/BriefCaseSvg";
 export default function DesktopIconBar({
   to,
   icon,
@@ -98,6 +99,12 @@ export default function DesktopIconBar({
               width="27"
               height="30"
             />
+          ) : icon === "supervisor" ? (
+            <BriefCaseSvg
+              color={isActive ? "#8b0000" : "#000000"}
+              width="27"
+              height="30"
+            />
           ) : (
             <LogoutSvg
               color={isActive ? "#8b0000" : "#000000"}
@@ -129,6 +136,8 @@ export default function DesktopIconBar({
               ? "Pengaturan"
               : icon === "admin"
               ? "Admin"
+              : icon === "supervisor"
+              ? "Supervisor"
               : "Keluar"}
           </h4>
         </motion.div>

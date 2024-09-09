@@ -62,7 +62,6 @@ export default function SecurityAll() {
 
   const columns: ColumnDef<Security>[] = [
     { accessorKey: "asset_id", header: "Security ID" },
-    { accessorKey: "ne_id", header: "NE ID" },
     { accessorKey: "site_name", header: "Site" },
     { accessorKey: "floor_name", header: "Lantai" },
     { accessorKey: "room_name", header: "Ruangan" },
