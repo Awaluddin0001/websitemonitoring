@@ -11,7 +11,6 @@ import CardParameterHome from "@/components/card/CardParameterHome";
 import question from "@/assets/png/question.png";
 import LoadingPage from "@/components/loading/LoadingPage";
 import MonitoringDown from "@/components/error/MonitoringDown";
-import { useNavigate } from "react-router-dom";
 
 type DataGrafikPower = {
   date: Date;
@@ -37,7 +36,6 @@ const formatNumberIndonesian = (num: number): string => {
 
 // React component
 export default function Home() {
-  const navigate = useNavigate();
   const [pueData, setPueData] = useState<{ timestamp: string; value: number }>({
     timestamp: "",
     value: 0,
@@ -73,7 +71,7 @@ export default function Home() {
   >();
 
   const { data, loading, error } = useMonitoringFetchData(
-    "http://192.168.1.62:2041/api/v1/eventbus/bbmthermalpower"
+    "/api/v1/monitoring/bbmthermalpower"
   );
 
   const [modalController, setModalController] = useState(false);
@@ -677,11 +675,7 @@ export default function Home() {
           </div>
         </div>
         <div className={styles.sectionHomeBottom}>
-          <div
-            className={styles.sectionHome}
-            onClick={() => navigate("/main/monitoring/power")}
-            style={{ cursor: "pointer" }}
-          >
+          <div className={styles.sectionHome}>
             <h1>Power Usage Effectiveness - Last Updated {data.lastUpdate}</h1>
 
             <div className={styles.containerValue}>

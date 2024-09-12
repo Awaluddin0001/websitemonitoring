@@ -2,23 +2,13 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const useMonitoringFetchData = (url: string) => {
+const useMonitoringSystem = (url: string) => {
   const [data, setData] = useState<{
-    success: string;
-    result: {
-      bbmData: { data: Array<any>; success: boolean };
-      powerData: [];
-      thermalData: object;
-    };
-    lastUpdate: string;
+    success: boolean;
+    data: any[];
   }>({
-    success: "",
-    result: {
-      bbmData: { data: [], success: false },
-      powerData: [],
-      thermalData: {},
-    },
-    lastUpdate: "",
+    success: false,
+    data: [],
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -26,7 +16,6 @@ const useMonitoringFetchData = (url: string) => {
   const fetchData = async () => {
     try {
       const response = await axios.get(url);
-      console.log(response);
       setData(response.data);
     } catch (err: any) {
       setError(err);
@@ -55,4 +44,4 @@ const useMonitoringFetchData = (url: string) => {
   return { data, loading, error };
 };
 
-export default useMonitoringFetchData;
+export default useMonitoringSystem;
