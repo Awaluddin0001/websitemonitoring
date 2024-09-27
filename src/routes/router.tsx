@@ -3,7 +3,6 @@ import Desktopdash from "@/components/navbar/Desktopdash";
 import Home from "@/pages/monitoring/Home";
 import Monitoring from "@/pages/monitoring/Monitoring";
 import Power from "@/pages/monitoring/Power";
-import Thermal from "@/pages/monitoring/Thermal";
 import Fire from "@/pages/monitoring/Fire";
 import Bbm from "@/pages/monitoring/Bbm";
 import Assets from "@/pages/assets/Assets";
@@ -318,6 +317,7 @@ import SafetyDeviceUpdate from "@/pages/assets/dapot/category/safety/SafetyDevic
 import ListVendorSafety from "@/pages/assets/dapot/vendor/safety/ListVendorSafety";
 import NewVendorSafety from "@/pages/assets/dapot/vendor/safety/NewVendorSafety";
 import UpdateVendorSafety from "@/pages/assets/dapot/vendor/safety/UpdateVendorSafety";
+import ThermalPage from "@/pages/monitoring/Thermal";
 
 export const router = createBrowserRouter([
   {
@@ -366,7 +366,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "monitoring/thermal",
-        element: <Thermal />,
+        element: <ThermalPage />,
       },
       {
         path: "monitoring/fire",

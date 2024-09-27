@@ -23,6 +23,9 @@ const DonutChart: React.FC<DonutChartProps> = ({
     const svg = d3.select(svgRef.current);
     const g = d3.select(gRef.current);
 
+    // Membersihkan elemen sebelumnya
+    g.selectAll("*").remove();
+
     const parent = svg.node()?.parentNode as HTMLElement;
     if (!parent) return;
 

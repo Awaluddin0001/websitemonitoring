@@ -55,20 +55,31 @@ function Power() {
     DataGrafikPower[] | undefined
   >();
 
-  const [panel1Data, setPanel1Data] = useState<DataGrafikPanel[] | undefined>();
-  const [panel2Data, setPanel2Data] = useState<DataGrafikPanel[] | undefined>();
-  const [panel3Data, setPanel3Data] = useState<DataGrafikPanel[] | undefined>();
-  const [panel4Data, setPanel4Data] = useState<DataGrafikPanel[] | undefined>();
-  const [panel5Data, setPanel5Data] = useState<DataGrafikPanel[] | undefined>();
-  const [panel6Data, setPanel6Data] = useState<DataGrafikPanel[] | undefined>();
-  const [panel7Data, setPanel7Data] = useState<DataGrafikPanel[] | undefined>();
-  const [panel1Graf, setPanel1Graf] = useState<DataGrafikPower[] | undefined>();
-  const [panel2Graf, setPanel2Graf] = useState<DataGrafikPower[] | undefined>();
-  const [panel3Graf, setPanel3Graf] = useState<DataGrafikPower[] | undefined>();
-  const [panel4Graf, setPanel4Graf] = useState<DataGrafikPower[] | undefined>();
-  const [panel5Graf, setPanel5Graf] = useState<DataGrafikPower[] | undefined>();
-  const [panel6Graf, setPanel6Graf] = useState<DataGrafikPower[] | undefined>();
-  const [panel7Graf, setPanel7Graf] = useState<DataGrafikPower[] | undefined>();
+  const [panelData, setPanelData] = useState<
+    | {
+        panel1: DataGrafikPanel[];
+        panel2: DataGrafikPanel[];
+        panel3: DataGrafikPanel[];
+        panel4: DataGrafikPanel[];
+        panel5: DataGrafikPanel[];
+        panel6: DataGrafikPanel[];
+        panel7: DataGrafikPanel[];
+      }
+    | undefined
+  >();
+
+  const [panelGraf, setPanelGraf] = useState<
+    | {
+        panel1: DataGrafikPower[];
+        panel2: DataGrafikPower[];
+        panel3: DataGrafikPower[];
+        panel4: DataGrafikPower[];
+        panel5: DataGrafikPower[];
+        panel6: DataGrafikPower[];
+        panel7: DataGrafikPower[];
+      }
+    | undefined
+  >();
   // untuk table
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
@@ -128,694 +139,107 @@ function Power() {
       }));
     };
 
-    const returnPanel1 = (arr: any) => {
+    const returnPanel = (arr: any, name: any) => {
       return arr.map((item: any) => ({
         date: moment(item.timestamp as string)
           .tz("Asia/Singapore")
           .format("YYYY-MM-DD HH:mm:ss"),
-        name: item.panel1.name,
-        currentA: Number(item.panel1.currentA.toFixed(2)),
-        currentB: Number(item.panel1.currentB.toFixed(2)),
-        currentC: Number(item.panel1.currentC.toFixed(2)),
-        voltageRS: Number(item.panel1.voltageRS.toFixed(2)),
-        voltageST: Number(item.panel1.voltageST.toFixed(2)),
-        voltageRT: Number(item.panel1.voltageRT.toFixed(2)),
-        activePowerTotal: Number(item.panel1.activePowerTotal.toFixed(2)),
-        apparentPower: Number(item.panel1.apparentPower.toFixed(2)),
-        frequency: Number(item.panel1.frequency.toFixed(2)),
-        powerMeter: item.panel1.powerMeter,
-        status: item.panel1.status,
-        id: item.panel1.id,
+        name: item[`${name}`].name,
+        currentA: Number(item[`${name}`].currentA.toFixed(2)),
+        currentB: Number(item[`${name}`].currentB.toFixed(2)),
+        currentC: Number(item[`${name}`].currentC.toFixed(2)),
+        voltageRS: Number(item[`${name}`].voltageRS.toFixed(2)),
+        voltageST: Number(item[`${name}`].voltageST.toFixed(2)),
+        voltageRT: Number(item[`${name}`].voltageRT.toFixed(2)),
+        activePowerTotal: Number(item[`${name}`].activePowerTotal.toFixed(2)),
+        apparentPower: Number(item[`${name}`].apparentPower.toFixed(2)),
+        frequency: Number(item[`${name}`].frequency.toFixed(2)),
+        powerMeter: item[`${name}`].powerMeter,
+        status: item[`${name}`].status,
+        id: item[`${name}`].id,
       }));
     };
-    const returnPanel2 = (arr: any) => {
-      return arr.map((item: any) => ({
-        date: moment(item.timestamp as string)
-          .tz("Asia/Singapore")
-          .format("YYYY-MM-DD HH:mm:ss"),
-        name: item.panel2.name,
-        currentA: Number(item.panel2.currentA.toFixed(2)),
-        currentB: Number(item.panel2.currentB.toFixed(2)),
-        currentC: Number(item.panel2.currentC.toFixed(2)),
-        voltageRS: Number(item.panel2.voltageRS.toFixed(2)),
-        voltageST: Number(item.panel2.voltageST.toFixed(2)),
-        voltageRT: Number(item.panel2.voltageRT.toFixed(2)),
-        activePowerTotal: Number(item.panel2.activePowerTotal.toFixed(2)),
-        apparentPower: Number(item.panel2.apparentPower.toFixed(2)),
-        frequency: Number(item.panel2.frequency.toFixed(2)),
-        powerMeter: item.panel2.powerMeter,
-        status: item.panel2.status,
-        id: item.panel2.id,
-      }));
-    };
-    const returnPanel3 = (arr: any) => {
-      return arr.map((item: any) => ({
-        date: moment(item.timestamp as string)
-          .tz("Asia/Singapore")
-          .format("YYYY-MM-DD HH:mm:ss"),
-        name: item.panel3.name,
-        currentA: Number(item.panel3.currentA.toFixed(2)),
-        currentB: Number(item.panel3.currentB.toFixed(2)),
-        currentC: Number(item.panel3.currentC.toFixed(2)),
-        voltageRS: Number(item.panel3.voltageRS.toFixed(2)),
-        voltageST: Number(item.panel3.voltageST.toFixed(2)),
-        voltageRT: Number(item.panel3.voltageRT.toFixed(2)),
-        activePowerTotal: Number(item.panel3.activePowerTotal.toFixed(2)),
-        apparentPower: Number(item.panel3.apparentPower.toFixed(2)),
-        frequency: Number(item.panel3.frequency.toFixed(2)),
-        powerMeter: item.panel3.powerMeter,
-        status: item.panel3.status,
-        id: item.panel3.id,
-      }));
-    };
-    const returnPanel4 = (arr: any) => {
-      return arr.map((item: any) => ({
-        date: moment(item.timestamp as string)
-          .tz("Asia/Singapore")
-          .format("YYYY-MM-DD HH:mm:ss"),
-        name: item.panel4.name,
-        currentA: Number(item.panel4.currentA.toFixed(2)),
-        currentB: Number(item.panel4.currentB.toFixed(2)),
-        currentC: Number(item.panel4.currentC.toFixed(2)),
-        voltageRS: Number(item.panel4.voltageRS.toFixed(2)),
-        voltageST: Number(item.panel4.voltageST.toFixed(2)),
-        voltageRT: Number(item.panel4.voltageRT.toFixed(2)),
-        activePowerTotal: Number(item.panel4.activePowerTotal.toFixed(2)),
-        apparentPower: Number(item.panel4.apparentPower.toFixed(2)),
-        frequency: Number(item.panel4.frequency.toFixed(2)),
-        powerMeter: item.panel4.powerMeter,
-        status: item.panel4.status,
-        id: item.panel4.id,
-      }));
-    };
-    const returnPanel5 = (arr: any) => {
-      return arr.map((item: any) => ({
-        date: moment(item.timestamp as string)
-          .tz("Asia/Singapore")
-          .format("YYYY-MM-DD HH:mm:ss"),
-        name: item.panel5.name,
-        currentA: Number(item.panel5.currentA.toFixed(2)),
-        currentB: Number(item.panel5.currentB.toFixed(2)),
-        currentC: Number(item.panel5.currentC.toFixed(2)),
-        voltageRS: Number(item.panel5.voltageRS.toFixed(2)),
-        voltageST: Number(item.panel5.voltageST.toFixed(2)),
-        voltageRT: Number(item.panel5.voltageRT.toFixed(2)),
-        activePowerTotal: Number(item.panel5.activePowerTotal.toFixed(2)),
-        apparentPower: Number(item.panel5.apparentPower.toFixed(2)),
-        frequency: Number(item.panel5.frequency.toFixed(2)),
-        powerMeter: item.panel5.powerMeter,
-        status: item.panel5.status,
-        id: item.panel5.id,
-      }));
-    };
-    const returnPanel6 = (arr: any) => {
-      return arr.map((item: any) => ({
-        date: moment(item.timestamp as string)
-          .tz("Asia/Singapore")
-          .format("YYYY-MM-DD HH:mm:ss"),
-        name: item.panel6.name,
-        currentA: Number(item.panel6.currentA.toFixed(2)),
-        currentB: Number(item.panel6.currentB.toFixed(2)),
-        currentC: Number(item.panel6.currentC.toFixed(2)),
-        voltageRS: Number(item.panel6.voltageRS.toFixed(2)),
-        voltageST: Number(item.panel6.voltageST.toFixed(2)),
-        voltageRT: Number(item.panel6.voltageRT.toFixed(2)),
-        activePowerTotal: Number(item.panel6.activePowerTotal.toFixed(2)),
-        apparentPower: Number(item.panel6.apparentPower.toFixed(2)),
-        frequency: Number(item.panel6.frequency.toFixed(2)),
-        powerMeter: item.panel6.powerMeter,
-        status: item.panel6.status,
-        id: item.panel6.id,
-      }));
-    };
-    const returnPanel7 = (arr: any) => {
-      return arr.map((item: any) => ({
-        date: moment(item.timestamp as string)
-          .tz("Asia/Singapore")
-          .format("YYYY-MM-DD HH:mm:ss"),
-        name: item.panel7.name,
-        currentA: Number(item.panel7.currentA.toFixed(2)),
-        currentB: Number(item.panel7.currentB.toFixed(2)),
-        currentC: Number(item.panel7.currentC.toFixed(2)),
-        voltageRS: Number(item.panel7.voltageRS.toFixed(2)),
-        voltageST: Number(item.panel7.voltageST.toFixed(2)),
-        voltageRT: Number(item.panel7.voltageRT.toFixed(2)),
-        activePowerTotal: Number(item.panel7.activePowerTotal.toFixed(2)),
-        apparentPower: Number(item.panel7.apparentPower.toFixed(2)),
-        frequency: Number(item.panel7.frequency.toFixed(2)),
-        powerMeter: item.panel7.powerMeter,
-        status: item.panel7.status,
-        id: item.panel7.id,
-      }));
-    };
-    const returnPanel1Graph = (arr: any) => {
-      return arr.map((item: any) => ({
-        date: new Date(item.timestamp as string),
-        value: Number(item.panel1.apparentPower.toFixed(2)),
-      }));
-    };
-    const returnPanel2Graph = (arr: any) => {
-      return arr.map((item: any) => ({
-        date: new Date(item.timestamp as string),
-        value: Number(item.panel2.apparentPower.toFixed(2)),
-      }));
-    };
-    const returnPanel3Graph = (arr: any) => {
-      return arr.map((item: any) => ({
-        date: new Date(item.timestamp as string),
-        value: Number(item.panel3.apparentPower.toFixed(2)),
-      }));
-    };
-    const returnPanel4Graph = (arr: any) => {
-      return arr.map((item: any) => ({
-        date: new Date(item.timestamp as string),
 
-        value: Number(item.panel4.apparentPower.toFixed(2)),
-      }));
-    };
-    const returnPanel5Graph = (arr: any) => {
+    const returnPanelGraph = (arr: any, name: any) => {
       return arr.map((item: any) => ({
         date: new Date(item.timestamp as string),
-
-        value: Number(item.panel5.apparentPower.toFixed(2)),
-      }));
-    };
-    const returnPanel6Graph = (arr: any) => {
-      return arr.map((item: any) => ({
-        date: new Date(item.timestamp as string),
-
-        value: Number(item.panel6.apparentPower.toFixed(2)),
-      }));
-    };
-    const returnPanel7Graph = (arr: any) => {
-      return arr.map((item: any) => ({
-        date: new Date(item.timestamp as string),
-
-        value: Number(item.panel7.apparentPower.toFixed(2)),
+        value: Number(item[`${name}`].apparentPower.toFixed(2)),
       }));
     };
 
     if (data.data) {
       if (data.data.length > 0) {
+        setUpdateData(lasttValueArrPower(data.data));
         setFacilityLoadGraf(returnValueFL(data.data));
         setPueDataGraf(returnValuePue(data.data));
         setItLoadGraf(returnValueIL(data.data));
-        setPanel1Graf(returnPanel1Graph(data.data));
-        setPanel2Graf(returnPanel2Graph(data.data));
-        setPanel3Graf(returnPanel3Graph(data.data));
-        setPanel4Graf(returnPanel4Graph(data.data));
-        setPanel5Graf(returnPanel5Graph(data.data));
-        setPanel6Graf(returnPanel6Graph(data.data));
-        setPanel7Graf(returnPanel7Graph(data.data));
-        setUpdateData(lasttValueArrPower(data.data));
-        setPanel1Data(returnPanel1(data.data));
-        setPanel2Data(returnPanel2(data.data));
-        setPanel3Data(returnPanel3(data.data));
-        setPanel4Data(returnPanel4(data.data));
-        setPanel5Data(returnPanel5(data.data));
-        setPanel6Data(returnPanel6(data.data));
-        setPanel7Data(returnPanel7(data.data));
+        setPanelGraf((obj) => {
+          return {
+            ...obj,
+            panel1: returnPanelGraph(data.data, "panel1"),
+            panel2: returnPanelGraph(data.data, "panel2"),
+            panel3: returnPanelGraph(data.data, "panel3"),
+            panel4: returnPanelGraph(data.data, "panel4"),
+            panel5: returnPanelGraph(data.data, "panel5"),
+            panel6: returnPanelGraph(data.data, "panel6"),
+            panel7: returnPanelGraph(data.data, "panel7"),
+          };
+        });
+        setPanelData((obj: any) => {
+          return {
+            ...obj,
+            panel1: returnPanel(data.data, "panel1"),
+            panel2: returnPanel(data.data, "panel2"),
+            panel3: returnPanel(data.data, "panel3"),
+            panel4: returnPanel(data.data, "panel4"),
+            panel5: returnPanel(data.data, "panel5"),
+            panel6: returnPanel(data.data, "panel6"),
+            panel7: returnPanel(data.data, "panel7"),
+          };
+        });
       }
     }
   }, [data]);
 
   useEffect(() => {
-    let returnPanel1Graph = (arr: any) => {
+    const returnPanelGraph = (arr: any, name: any) => {
       return arr.map((item: any) => ({
         date: new Date(item.timestamp as string),
-        value: Number(item.panel1.apparentPower.toFixed(2)),
+        value:
+          dataActive === "apparent"
+            ? Number(item[`${name}`].apparentPower.toFixed(2))
+            : dataActive === "active"
+            ? Number(item[`${name}`].activePowerTotal.toFixed(2))
+            : dataActive === "currenta"
+            ? Number(item[`${name}`].currentA.toFixed(2))
+            : dataActive === "currentb"
+            ? Number(item[`${name}`].currentB.toFixed(2))
+            : dataActive === "currentc"
+            ? Number(item[`${name}`].currentC.toFixed(2))
+            : dataActive === "voltagea"
+            ? Number(item[`${name}`].voltageRS.toFixed(2))
+            : dataActive === "voltageb"
+            ? Number(item[`${name}`].voltageST.toFixed(2))
+            : dataActive === "voltagec"
+            ? Number(item[`${name}`].voltageRT.toFixed(2))
+            : Number(item[`${name}`].frequency.toFixed(2)),
       }));
     };
-    let returnPanel2Graph = (arr: any) => {
-      return arr.map((item: any) => ({
-        date: new Date(item.timestamp as string),
-        value: Number(item.panel2.apparentPower.toFixed(2)),
-      }));
-    };
-    let returnPanel3Graph = (arr: any) => {
-      return arr.map((item: any) => ({
-        date: new Date(item.timestamp as string),
-        value: Number(item.panel3.apparentPower.toFixed(2)),
-      }));
-    };
-    let returnPanel4Graph = (arr: any) => {
-      return arr.map((item: any) => ({
-        date: new Date(item.timestamp as string),
-
-        value: Number(item.panel4.apparentPower.toFixed(2)),
-      }));
-    };
-    let returnPanel5Graph = (arr: any) => {
-      return arr.map((item: any) => ({
-        date: new Date(item.timestamp as string),
-
-        value: Number(item.panel5.apparentPower.toFixed(2)),
-      }));
-    };
-    let returnPanel6Graph = (arr: any) => {
-      return arr.map((item: any) => ({
-        date: new Date(item.timestamp as string),
-
-        value: Number(item.panel6.apparentPower.toFixed(2)),
-      }));
-    };
-    let returnPanel7Graph = (arr: any) => {
-      return arr.map((item: any) => ({
-        date: new Date(item.timestamp as string),
-
-        value: Number(item.panel7.apparentPower.toFixed(2)),
-      }));
-    };
-    if (dataActive === "apparent") {
-      returnPanel1Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-          value: Number(item.panel1.apparentPower.toFixed(2)),
-        }));
-      };
-      returnPanel2Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-          value: Number(item.panel2.apparentPower.toFixed(2)),
-        }));
-      };
-      returnPanel3Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-          value: Number(item.panel3.apparentPower.toFixed(2)),
-        }));
-      };
-      returnPanel4Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-
-          value: Number(item.panel4.apparentPower.toFixed(2)),
-        }));
-      };
-      returnPanel5Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-
-          value: Number(item.panel5.apparentPower.toFixed(2)),
-        }));
-      };
-      returnPanel6Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-
-          value: Number(item.panel6.apparentPower.toFixed(2)),
-        }));
-      };
-      returnPanel7Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-
-          value: Number(item.panel7.apparentPower.toFixed(2)),
-        }));
-      };
-    } else if (dataActive === "active") {
-      returnPanel1Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-          value: Number(item.panel1.activePowerTotal.toFixed(2)),
-        }));
-      };
-      returnPanel2Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-          value: Number(item.panel2.activePowerTotal.toFixed(2)),
-        }));
-      };
-      returnPanel3Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-          value: Number(item.panel3.activePowerTotal.toFixed(2)),
-        }));
-      };
-      returnPanel4Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-          value: Number(item.panel4.activePowerTotal.toFixed(2)),
-        }));
-      };
-      returnPanel5Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-          value: Number(item.panel5.activePowerTotal.toFixed(2)),
-        }));
-      };
-      returnPanel6Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-          value: Number(item.panel6.activePowerTotal.toFixed(2)),
-        }));
-      };
-      returnPanel7Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-          value: Number(item.panel7.activePowerTotal.toFixed(2)),
-        }));
-      };
-    } else if (dataActive === "currenta") {
-      returnPanel1Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-          value: Number(item.panel1.currentA.toFixed(2)),
-        }));
-      };
-      returnPanel2Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-          value: Number(item.panel2.currentA.toFixed(2)),
-        }));
-      };
-      returnPanel3Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-          value: Number(item.panel3.currentA.toFixed(2)),
-        }));
-      };
-      returnPanel4Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-
-          value: Number(item.panel4.currentA.toFixed(2)),
-        }));
-      };
-      returnPanel5Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-
-          value: Number(item.panel5.currentA.toFixed(2)),
-        }));
-      };
-      returnPanel6Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-
-          value: Number(item.panel6.currentA.toFixed(2)),
-        }));
-      };
-      returnPanel7Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-
-          value: Number(item.panel7.currentA.toFixed(2)),
-        }));
-      };
-    } else if (dataActive === "currentb") {
-      returnPanel1Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-          value: Number(item.panel1.currentB.toFixed(2)),
-        }));
-      };
-      returnPanel2Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-          value: Number(item.panel2.currentB.toFixed(2)),
-        }));
-      };
-      returnPanel3Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-          value: Number(item.panel3.currentB.toFixed(2)),
-        }));
-      };
-      returnPanel4Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-
-          value: Number(item.panel4.currentB.toFixed(2)),
-        }));
-      };
-      returnPanel5Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-
-          value: Number(item.panel5.currentB.toFixed(2)),
-        }));
-      };
-      returnPanel6Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-
-          value: Number(item.panel6.currentB.toFixed(2)),
-        }));
-      };
-      returnPanel7Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-
-          value: Number(item.panel7.currentB.toFixed(2)),
-        }));
-      };
-    } else if (dataActive === "currentc") {
-      returnPanel1Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-          value: Number(item.panel1.currentC.toFixed(2)),
-        }));
-      };
-      returnPanel2Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-          value: Number(item.panel2.currentC.toFixed(2)),
-        }));
-      };
-      returnPanel3Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-          value: Number(item.panel3.currentC.toFixed(2)),
-        }));
-      };
-      returnPanel4Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-
-          value: Number(item.panel4.currentC.toFixed(2)),
-        }));
-      };
-      returnPanel5Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-
-          value: Number(item.panel5.currentC.toFixed(2)),
-        }));
-      };
-      returnPanel6Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-
-          value: Number(item.panel6.currentC.toFixed(2)),
-        }));
-      };
-      returnPanel7Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-
-          value: Number(item.panel7.currentC.toFixed(2)),
-        }));
-      };
-    } else if (dataActive === "voltagea") {
-      returnPanel1Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-          value: Number(item.panel1.voltageRS.toFixed(2)),
-        }));
-      };
-      returnPanel2Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-          value: Number(item.panel2.voltageRS.toFixed(2)),
-        }));
-      };
-      returnPanel3Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-          value: Number(item.panel3.voltageRS.toFixed(2)),
-        }));
-      };
-      returnPanel4Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-
-          value: Number(item.panel4.voltageRS.toFixed(2)),
-        }));
-      };
-      returnPanel5Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-
-          value: Number(item.panel5.voltageRS.toFixed(2)),
-        }));
-      };
-      returnPanel6Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-
-          value: Number(item.panel6.voltageRS.toFixed(2)),
-        }));
-      };
-      returnPanel7Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-
-          value: Number(item.panel7.voltageRS.toFixed(2)),
-        }));
-      };
-    } else if (dataActive === "voltageb") {
-      returnPanel1Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-          value: Number(item.panel1.voltageST.toFixed(2)),
-        }));
-      };
-      returnPanel2Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-          value: Number(item.panel2.voltageST.toFixed(2)),
-        }));
-      };
-      returnPanel3Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-          value: Number(item.panel3.voltageST.toFixed(2)),
-        }));
-      };
-      returnPanel4Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-
-          value: Number(item.panel4.voltageST.toFixed(2)),
-        }));
-      };
-      returnPanel5Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-
-          value: Number(item.panel5.voltageST.toFixed(2)),
-        }));
-      };
-      returnPanel6Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-
-          value: Number(item.panel6.voltageST.toFixed(2)),
-        }));
-      };
-      returnPanel7Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-
-          value: Number(item.panel7.voltageST.toFixed(2)),
-        }));
-      };
-    } else if (dataActive === "voltagec") {
-      returnPanel1Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-          value: Number(item.panel1.voltageRT.toFixed(2)),
-        }));
-      };
-      returnPanel2Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-          value: Number(item.panel2.voltageRT.toFixed(2)),
-        }));
-      };
-      returnPanel3Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-          value: Number(item.panel3.voltageRT.toFixed(2)),
-        }));
-      };
-      returnPanel4Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-
-          value: Number(item.panel4.voltageRT.toFixed(2)),
-        }));
-      };
-      returnPanel5Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-
-          value: Number(item.panel5.voltageRT.toFixed(2)),
-        }));
-      };
-      returnPanel6Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-
-          value: Number(item.panel6.voltageRT.toFixed(2)),
-        }));
-      };
-      returnPanel7Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-
-          value: Number(item.panel7.voltageRT.toFixed(2)),
-        }));
-      };
-    } else if (dataActive === "frekuensi") {
-      returnPanel1Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-          value: Number(item.panel1.frequency.toFixed(2)),
-        }));
-      };
-      returnPanel2Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-          value: Number(item.panel2.frequency.toFixed(2)),
-        }));
-      };
-      returnPanel3Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-          value: Number(item.panel3.frequency.toFixed(2)),
-        }));
-      };
-      returnPanel4Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-
-          value: Number(item.panel4.frequency.toFixed(2)),
-        }));
-      };
-      returnPanel5Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-
-          value: Number(item.panel5.frequency.toFixed(2)),
-        }));
-      };
-      returnPanel6Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-
-          value: Number(item.panel6.frequency.toFixed(2)),
-        }));
-      };
-      returnPanel7Graph = (arr: any) => {
-        return arr.map((item: any) => ({
-          date: new Date(item.timestamp as string),
-
-          value: Number(item.panel7.frequency.toFixed(2)),
-        }));
-      };
-    }
 
     if (data.data) {
       if (data.data.length > 0) {
-        setPanel1Graf(returnPanel1Graph(data.data));
-        setPanel2Graf(returnPanel2Graph(data.data));
-        setPanel3Graf(returnPanel3Graph(data.data));
-        setPanel4Graf(returnPanel4Graph(data.data));
-        setPanel5Graf(returnPanel5Graph(data.data));
-        setPanel6Graf(returnPanel6Graph(data.data));
-        setPanel7Graf(returnPanel7Graph(data.data));
+        setPanelGraf((obj) => {
+          return {
+            ...obj,
+            panel1: returnPanelGraph(data.data, "panel1"),
+            panel2: returnPanelGraph(data.data, "panel2"),
+            panel3: returnPanelGraph(data.data, "panel3"),
+            panel4: returnPanelGraph(data.data, "panel4"),
+            panel5: returnPanelGraph(data.data, "panel5"),
+            panel6: returnPanelGraph(data.data, "panel6"),
+            panel7: returnPanelGraph(data.data, "panel7"),
+          };
+        });
       }
     }
   }, [dataActive]);
@@ -856,30 +280,30 @@ function Power() {
             (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
           ) ?? []
         : activeIndex === 4
-        ? panel1Data?.sort(
+        ? panelData?.panel1?.sort(
             (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
           ) ?? []
         : activeIndex === 5
-        ? panel2Data?.sort(
+        ? panelData?.panel2?.sort(
             (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
           ) ?? []
         : activeIndex === 6
-        ? panel4Data?.sort(
+        ? panelData?.panel4?.sort(
             (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
           ) ?? []
         : activeIndex === 7
-        ? panel5Data?.sort(
+        ? panelData?.panel5?.sort(
             (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
           ) ?? []
         : activeIndex === 8
-        ? panel3Data?.sort(
+        ? panelData?.panel3?.sort(
             (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
           ) ?? []
         : activeIndex === 9
-        ? panel6Data?.sort(
+        ? panelData?.panel6?.sort(
             (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
           ) ?? []
-        : panel7Data?.sort(
+        : panelData?.panel7?.sort(
             (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
           ) ?? [],
     columns,
@@ -1220,15 +644,15 @@ function Power() {
             }`}
             onClick={() => showTableHandler(4)}
           >
-            {panel1Graf && (
+            {panelGraf?.panel1 && (
               <TrendGrafic
-                data={panel1Graf}
+                data={panelGraf?.panel1}
                 heightGrafic={140}
                 lineColor="#d5c830"
                 pointColor="#000"
                 label="Data LVMDP1 - 24 Jam"
                 fontSize="14px"
-                unit=" kVa"
+                unit=" "
                 mode="24hour"
                 positionLabel={132}
                 backgroundColor="#fff"
@@ -1243,15 +667,15 @@ function Power() {
             }`}
             onClick={() => showTableHandler(5)}
           >
-            {panel2Graf && (
+            {panelGraf?.panel2 && (
               <TrendGrafic
-                data={panel2Graf}
+                data={panelGraf?.panel2}
                 heightGrafic={140}
                 lineColor="#d5c830"
                 pointColor="#000"
                 label="Data LVMDP2 - 24 Jam"
                 fontSize="14px"
-                unit=" kVa"
+                unit=" "
                 mode="24hour"
                 positionLabel={132}
                 setValue={setGraphToolTip}
@@ -1266,15 +690,15 @@ function Power() {
             }`}
             onClick={() => showTableHandler(6)}
           >
-            {panel4Graf && (
+            {panelGraf?.panel4 && (
               <TrendGrafic
-                data={panel4Graf}
+                data={panelGraf?.panel4}
                 heightGrafic={140}
                 lineColor="#d5c830"
                 pointColor="#000"
                 label="Data UPS A - 24 Jam"
                 fontSize="14px"
-                unit=" kVa"
+                unit=" "
                 mode="24hour"
                 positionLabel={132}
                 backgroundColor="#fff"
@@ -1289,15 +713,15 @@ function Power() {
             }`}
             onClick={() => showTableHandler(7)}
           >
-            {panel5Graf && (
+            {panelGraf?.panel5 && (
               <TrendGrafic
-                data={panel5Graf}
+                data={panelGraf?.panel5}
                 heightGrafic={140}
                 lineColor="#d5c830"
                 pointColor="#000"
                 label="Data UPS B - 24 Jam"
                 fontSize="14px"
-                unit=" kVa"
+                unit=" "
                 mode="24hour"
                 positionLabel={132}
                 backgroundColor="#fff"
@@ -1312,15 +736,15 @@ function Power() {
             }`}
             onClick={() => showTableHandler(8)}
           >
-            {panel3Graf && (
+            {panelGraf?.panel3 && (
               <TrendGrafic
-                data={panel3Graf}
+                data={panelGraf?.panel3}
                 heightGrafic={140}
                 lineColor="#d5c830"
                 pointColor="#000"
                 label="Data ACPDB1.18 - 24 Jam"
                 fontSize="14px"
-                unit=" kVa"
+                unit=" "
                 mode="24hour"
                 positionLabel={132}
                 backgroundColor="#fff"
@@ -1335,15 +759,15 @@ function Power() {
             }`}
             onClick={() => showTableHandler(9)}
           >
-            {panel6Graf && (
+            {panelGraf?.panel6 && (
               <TrendGrafic
-                data={panel6Graf}
+                data={panelGraf?.panel6}
                 heightGrafic={140}
                 lineColor="#d5c830"
                 pointColor="#000"
                 label="Data ACPDB1.14 - 24 Jam"
                 fontSize="14px"
-                unit=" kVa"
+                unit=" "
                 mode="24hour"
                 positionLabel={132}
                 backgroundColor="#fff"
@@ -1358,15 +782,15 @@ function Power() {
             }`}
             onClick={() => showTableHandler(10)}
           >
-            {panel7Graf && (
+            {panelGraf?.panel7 && (
               <TrendGrafic
-                data={panel7Graf}
+                data={panelGraf?.panel7}
                 heightGrafic={140}
                 lineColor="#d5c830"
                 pointColor="#000"
                 label="Data ACPDB1.16 - 24 Jam"
                 fontSize="14px"
-                unit=" kVa"
+                unit=" "
                 mode="24hour"
                 positionLabel={132}
                 backgroundColor="#fff"

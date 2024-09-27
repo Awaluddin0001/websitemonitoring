@@ -1,149 +1,561 @@
-import { useState, useRef } from "react";
-import Lottie from "lottie-react";
+import { useState, useEffect } from "react";
+import styles from "@/css/module/Power.module.css";
+import useMonitoringSystem from "@/hooks/useMonitoringSystem";
+import {
+  ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
+import HeadPageMonitoring from "@/components/header/HeadPageMonitoring";
+import MonitoringDown from "@/components/error/MonitoringDown";
+import LoadingPage from "@/components/loading/LoadingPage";
+import TrendGrafic from "@/components/grafic/TendGrafic";
+import DatePicker from "react-datepicker";
+import moment from "moment-timezone";
 
-import styles from "@/css/module/Liquid.module.css";
-import AnalogPressure from "@/components/svg/AnalogPressure";
-import TheBarrel from "@/components/svg/TheBarrel";
-import graphLoading from "@/assets/lottie/graphLoading.json";
-import { useDrawChart } from "@/hooks/useDrawChart";
-
-interface DataPoint {
+type GrafikBbm = {
   date: Date;
   value: number;
-}
+};
+
+type TableBbm = {
+  date: Date;
+  volume: number;
+  level: number;
+  name: string;
+};
 
 function Bbm() {
-  const chartRef = useRef<HTMLDivElement>(null);
-  const [graphData1, setGraphData1] = useState(true);
-  const generateDummyData1 = (): Promise<DataPoint[]> => {
-    return new Promise((resolve) => {
-      // Simulate delay with setTimeout
-      setTimeout(() => {
-        const data: DataPoint[] = [];
-        for (let i = 1; i <= 30; i++) {
-          data.push({
-            date: new Date(2024, 4, i), // May 2024
-            value: parseFloat((Math.random() * (1000 - 200) + 200).toFixed(2)), // Random values between 1.9 and 2.5
-          });
-        }
-        resolve(data);
-        setGraphData1(false);
-      }, 1000); // Delay of 1000 milliseconds (1 second)
-    });
-  };
-  useDrawChart(
-    generateDummyData1(),
-    chartRef,
-    [new Date(2024, 4, 1), new Date(2024, 4, 30)],
-    [200, 1000],
-    "#ffca67",
-    "TANGKI BULANAN",
-    0.22,
-    "0.8rem",
-    "",
-    " Liter"
+  const [updateData, setUpdateData] = useState<any>();
+  const [dataActive, setDataActive] = useState("volume");
+  const [_, setGraphToolTip] = useState<{ timestamp: string; value: number }>({
+    timestamp: "",
+    value: 0,
+  });
+
+  const [tableBbm, setTableBbm] = useState<
+    | {
+        tangkibulanana: TableBbm[];
+        tangkibulananb: TableBbm[];
+        tangkihariana: TableBbm[];
+        tangkiharianb: TableBbm[];
+        tangkicadangan: TableBbm[];
+      }
+    | undefined
+  >();
+  const [grafBbm, setGrafBbm] = useState<
+    | {
+        tangkibulanana: GrafikBbm[];
+        tangkibulananb: GrafikBbm[];
+        tangkihariana: GrafikBbm[];
+        tangkiharianb: GrafikBbm[];
+        tangkicadangan: GrafikBbm[];
+      }
+    | undefined
+  >();
+
+  // untuk table
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+
+  const [showModal, setShowModal] = useState(false);
+
+  const nowUTC8 = moment().tz("Asia/Singapore"); // Waktu sekarang di UTC+8
+  const initialEndDate = nowUTC8.toDate(); // Mengonversi ke objek Date
+  const initialStartDate = nowUTC8.subtract(24, "hours").toDate();
+  const [startDate, setStartDate] = useState<Date | null>(initialStartDate);
+  const [endDate, setEndDate] = useState<Date | null>(initialEndDate);
+
+  const { data, loading, error } = useMonitoringSystem(
+    "http://192.168.1.62:2012/api/v1/monitoring/bbm"
   );
+
+  // Handle click to set active class
+  const showTableHandler = (index: number) => {
+    setActiveIndex((prev) => (prev === index ? null : index)); // Toggle active state
+  };
+
+  useEffect(() => {
+    setDataActive("volume");
+    console.log(data);
+    const lasttValueArrPower: any = (arr: any) => {
+      return arr[arr.length - 1];
+    };
+
+    const returnTable = (arr: any, name: any) => {
+      return arr.map((item: any) => {
+        return {
+          date: moment(item.timestamp as string)
+            .tz("Asia/Singapore")
+            .format("YYYY-MM-DD HH:mm:ss"),
+          name:
+            name === "tangkibulanana"
+              ? "Tangki Bulanan A"
+              : name === "tangkibulananb"
+              ? "Tangki Bulanan B"
+              : name === "tangkihariana"
+              ? "Tangki Harian A"
+              : name === "tangkiharianb"
+              ? "Tangki Harian B"
+              : "Tangki Cadangan",
+          volume: Number(item[`${name}`].volume),
+          level: Number(item[`${name}`].level),
+        };
+      });
+    };
+
+    const returnGraph = (arr: any, name: any) => {
+      return arr.map((item: any) => ({
+        date: new Date(item.timestamp as string),
+        value: Number(item[`${name}`].volume),
+      }));
+    };
+
+    if (data.data) {
+      if (data.data.length > 0) {
+        setUpdateData(lasttValueArrPower(data.data));
+        setGrafBbm((obj) => {
+          return {
+            ...obj,
+            tangkibulanana: returnGraph(data.data, "tangkibulanana"),
+            tangkibulananb: returnGraph(data.data, "tangkibulananb"),
+            tangkihariana: returnGraph(data.data, "tangkihariana"),
+            tangkiharianb: returnGraph(data.data, "tangkiharianb"),
+            tangkicadangan: returnGraph(data.data, "tangkicadangan"),
+          };
+        });
+        setTableBbm((obj) => {
+          return {
+            ...obj,
+            tangkibulanana: returnTable(data.data, "tangkibulanana"),
+            tangkibulananb: returnTable(data.data, "tangkibulananb"),
+            tangkihariana: returnTable(data.data, "tangkihariana"),
+            tangkiharianb: returnTable(data.data, "tangkiharianb"),
+            tangkicadangan: returnTable(data.data, "tangkicadangan"),
+          };
+        });
+      }
+    }
+  }, [data]);
+
+  useEffect(() => {
+    const returnGraph = (arr: any, name: any) => {
+      return arr.map((item: any) => ({
+        date: new Date(item.timestamp as string),
+        value:
+          dataActive === "volume"
+            ? Number(item[`${name}`].volume)
+            : Number(item[`${name}`].level),
+      }));
+    };
+    if (data.data) {
+      if (data.data.length > 0) {
+        setGrafBbm((obj) => {
+          return {
+            ...obj,
+            tangkibulanana: returnGraph(data.data, "tangkibulanana"),
+            tangkibulananb: returnGraph(data.data, "tangkibulananb"),
+            tangkihariana: returnGraph(data.data, "tangkihariana"),
+            tangkiharianb: returnGraph(data.data, "tangkiharianb"),
+            tangkicadangan: returnGraph(data.data, "tangkicadangan"),
+          };
+        });
+      }
+    }
+  }, [dataActive]);
+
+  const columns: ColumnDef<TableBbm | undefined>[] = [
+    { accessorKey: "name", header: "Nama Ruangan" },
+    { accessorKey: "date", header: "Waktu Pengambilan Data" },
+    {
+      accessorKey: "volume",
+      header: "Volume (Liter)",
+      cell: ({ row }) => (
+        <p style={{ fontSize: "1.8rem" }}>
+          {row.original?.volume ? row.original.volume : 0} Liter
+        </p>
+      ),
+    },
+    {
+      accessorKey: "level",
+      header: "level (CM)",
+      cell: ({ row }) => (
+        <p style={{ fontSize: "1.8rem" }}>
+          {row.original?.level ? row.original.level : 0} CM
+        </p>
+      ),
+    },
+  ];
+  const table = useReactTable({
+    data:
+      activeIndex === 1
+        ? tableBbm?.tangkibulanana?.sort(
+            (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+          ) ?? []
+        : activeIndex === 2
+        ? tableBbm?.tangkibulananb?.sort(
+            (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+          ) ?? []
+        : activeIndex === 3
+        ? tableBbm?.tangkihariana?.sort(
+            (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+          ) ?? []
+        : activeIndex === 4
+        ? tableBbm?.tangkiharianb?.sort(
+            (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+          ) ?? []
+        : tableBbm?.tangkicadangan?.sort(
+            (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+          ) ?? [],
+    columns,
+    columnResizeMode: "onChange",
+    columnResizeDirection: "ltr",
+    pageCount: 0,
+    manualPagination: true,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+  });
+
+  if (loading) return <LoadingPage />;
+  if (error)
+    return (
+      <>
+        <HeadPageMonitoring title="Bbm System Monitoring - TTC Pengayoman" />
+        <MonitoringDown />
+      </>
+    );
+
   return (
     <>
-      <div
-        style={{
-          width: "100%",
-          display: "flex",
-          flexDirection: "column",
-          gap: "8px",
-        }}
-      >
-        <div className={styles.headerDashboard}>
-          <h1>FUEL SYSTEM - TTC PENGAYOMAN</h1>
-          <div className={styles.inputDateWraper}>
-            <div className="wraper--date__filter">
-              <label htmlFor="start" className="date-label">
-                Start Date
-              </label>
-              <input
-                type="date"
-                name="start"
-                className="date-input bebasneue--regular"
-              />
-            </div>
-            <div className="wraper--date__filter">
-              <label htmlFor="end" className="date-label">
-                End Date
-              </label>
-              <input
-                type="date"
-                name="end"
-                className="date-input bebasneue--regular"
-              />
-            </div>
+      <HeadPageMonitoring title="Bbm System Monitoring - TTC Pengayoman" />
+      {activeIndex ? (
+        <div className={styles.buttonDataActiveGroup}>
+          <div
+            className={styles.buttonDataActive}
+            onClick={() => setShowModal(true)}
+          >
+            Export .xlsx
           </div>
         </div>
-        <div className={styles.headerDashboard}>
-          <div className={styles.navRooms}></div>
-          <div className={styles.inputDateWraper}>
-            <div className="wraper--date__filter">
-              <label htmlFor="start" className="date-label">
-                TANGKI BBM
-              </label>
-              <select name="floor" className="select-input bebasneue--regular">
-                <option>TANGKI CADANGAN</option>
-                <option>TANGKI BULANAN</option>
-              </select>
-            </div>
+      ) : (
+        <div className={styles.buttonDataActiveGroup}>
+          <div
+            className={`${styles.buttonDataActive} ${
+              dataActive === "volume" ? styles.active : ""
+            }`}
+            onClick={() => setDataActive("volume")}
+          >
+            Volume
+          </div>
+          <div
+            className={`${styles.buttonDataActive} ${
+              dataActive === "level" ? styles.active : ""
+            }`}
+            onClick={() => setDataActive("level")}
+          >
+            Level
           </div>
         </div>
-      </div>
+      )}
       <div className={styles.sectionWrapper}>
-        <div className={styles.sectionInfo}>
-          <div className={styles.sectionDetail}>
-            <div className={styles.card}>
-              <div className={styles.headerCard}>
-                <AnalogPressure volume={90} color="#ffca67" />
+        {activeIndex && (
+          <div className={styles.sectionTable}>
+            {updateData && (
+              <div
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <h2 style={{ fontSize: "2rem" }}>
+                  {activeIndex === 1
+                    ? `Table Data ${updateData.tangkibulanana.name} by System`
+                    : activeIndex === 2
+                    ? `Table Data ${updateData.tangkibulananb.name} by System`
+                    : activeIndex === 3
+                    ? `Table Data ${updateData.tangkihariana.name} by System`
+                    : activeIndex === 4
+                    ? `Table Data ${updateData.tangkiharianb.name} by System`
+                    : `Table Data ${updateData.tangkicadangan.name} by System`}
+                </h2>
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                  }}
+                >
+                  <h2 style={{ fontSize: "2rem" }}>
+                    {activeIndex === 1
+                      ? `Nilai Sekarang ${updateData.tangkibulanana.value}`
+                      : activeIndex === 2
+                      ? `Nilai Sekarang ${updateData.tangkibulananb.value}`
+                      : activeIndex === 3
+                      ? `Nilai Sekarang ${updateData.tangkihariana.value}`
+                      : activeIndex === 4
+                      ? `Nilai Sekarang ${updateData.tangkiharianb.value}`
+                      : `Nilai Sekarang ${updateData.tangkicadangan.value}`}
+                  </h2>
+                </div>
               </div>
-              <div className={styles.bodyCard}>
-                <div className={styles.valueMeters}>
-                  <div className={styles.valueMeterFlex}>
-                    <div className={styles.valueMeter}>
-                      <p className="mohave--semibold">900</p>
-                    </div>
-                    <div className={styles.valueMeter}>
-                      <p className="mohave--semibold">psi</p>
-                    </div>
-                  </div>
-                  <div className={styles.valueMeterFlex}>
-                    <div className={styles.valueMeter}>
-                      <p className="mohave--semibold">90</p>
-                    </div>
-                    <div className={styles.valueMeter}>
-                      <p className="mohave--semibold">%</p>
-                    </div>
-                  </div>
+            )}
+            <div className={styles.tableSeal}>
+              <div className={styles.tableWrapper}>
+                <div className={styles.tableDetail}>
+                  <table className={styles.assetTable}>
+                    <thead>
+                      {table.getHeaderGroups().map((headerGroup) => (
+                        <tr key={headerGroup.id}>
+                          {headerGroup.headers.map((header) => {
+                            return (
+                              <th
+                                key={header.id}
+                                className={`${styles.sticky} ${styles.stickyHeader}`}
+                                colSpan={header.colSpan}
+                                style={{
+                                  width:
+                                    header.getSize() !== 150
+                                      ? header.getSize()
+                                      : "auto",
+                                }}
+                              >
+                                {flexRender(
+                                  header.column.columnDef.header,
+                                  header.getContext()
+                                )}
+                                <div
+                                  {...{
+                                    onDoubleClick: () =>
+                                      header.column.resetSize(),
+                                    onMouseDown: header.getResizeHandler(),
+                                    onTouchStart: header.getResizeHandler(),
+                                    className: `resizer ${
+                                      table.options.columnResizeDirection
+                                    } ${
+                                      header.column.getIsResizing()
+                                        ? "isResizing"
+                                        : ""
+                                    }`,
+                                  }}
+                                />
+                              </th>
+                            );
+                          })}
+                        </tr>
+                      ))}
+                    </thead>
+                    <tbody>
+                      {table.getRowModel().rows.map((row) => (
+                        <tr key={row.id}>
+                          {row.getVisibleCells().map((cell) => {
+                            return (
+                              <td
+                                key={cell.id}
+                                style={{
+                                  background:
+                                    row.index % 2 !== 0 ? "#ffd1d1" : "",
+                                }}
+                              >
+                                {flexRender(
+                                  cell.column.columnDef.cell,
+                                  cell.getContext()
+                                )}
+                              </td>
+                            );
+                          })}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
-            {graphData1 ? (
-              <div className={styles.loadingData}>
-                <Lottie
-                  animationData={graphLoading}
-                  loop={true}
-                  style={{
-                    width: "20%",
-                  }}
-                />
-              </div>
-            ) : (
-              <div className={styles.cardGrafik} ref={chartRef}></div>
+          </div>
+        )}
+        <div className={styles.sectionGraph}>
+          <div
+            className={`${styles.containerValue} ${
+              activeIndex === 1 ? styles.active : ""
+            }`}
+            onClick={() => showTableHandler(1)}
+          >
+            {grafBbm?.tangkibulanana && (
+              <TrendGrafic
+                data={grafBbm?.tangkibulanana}
+                heightGrafic={140}
+                lineColor="#d5c830"
+                pointColor="#000"
+                label={`Data ${tableBbm?.tangkibulanana[0].name} - 24 Jam`}
+                fontSize="14px"
+                unit=" "
+                mode="24hour"
+                positionLabel={180}
+                setValue={setGraphToolTip}
+                backgroundColor="#fff"
+                stroke="#000"
+              />
             )}
           </div>
-          <div className={styles.sectionImage}>
-            <TheBarrel volume={90} />
-            <div>
-              <h6>900/1000 psi</h6>
-              <h6>90%</h6>
-            </div>
+          <div
+            className={`${styles.containerValue} ${
+              activeIndex === 2 ? styles.active : ""
+            }`}
+            onClick={() => showTableHandler(2)}
+          >
+            {grafBbm?.tangkibulananb && (
+              <TrendGrafic
+                data={grafBbm?.tangkibulananb}
+                heightGrafic={140}
+                lineColor="#d5c830"
+                pointColor="#000"
+                label={`Data ${tableBbm?.tangkibulananb[0].name} - 24 Jam`}
+                fontSize="14px"
+                unit=" "
+                mode="24hour"
+                positionLabel={180}
+                setValue={setGraphToolTip}
+                backgroundColor="#fff"
+                stroke="#000"
+              />
+            )}
+          </div>
+          <div
+            className={`${styles.containerValue} ${
+              activeIndex === 3 ? styles.active : ""
+            }`}
+            onClick={() => showTableHandler(3)}
+          >
+            {grafBbm?.tangkihariana && (
+              <TrendGrafic
+                data={grafBbm?.tangkihariana}
+                heightGrafic={140}
+                lineColor="#d5c830"
+                pointColor="#000"
+                label={`Data ${tableBbm?.tangkihariana[0].name} - 24 Jam`}
+                fontSize="14px"
+                unit=" "
+                mode="24hour"
+                positionLabel={180}
+                setValue={setGraphToolTip}
+                backgroundColor="#fff"
+                stroke="#000"
+              />
+            )}
+          </div>
+          <div
+            className={`${styles.containerValue} ${
+              activeIndex === 4 ? styles.active : ""
+            }`}
+            onClick={() => showTableHandler(4)}
+          >
+            {grafBbm?.tangkiharianb && (
+              <TrendGrafic
+                data={grafBbm?.tangkiharianb}
+                heightGrafic={140}
+                lineColor="#d5c830"
+                pointColor="#000"
+                label={`Data ${tableBbm?.tangkiharianb[0].name} - 24 Jam`}
+                fontSize="14px"
+                unit=" "
+                mode="24hour"
+                positionLabel={180}
+                backgroundColor="#fff"
+                setValue={setGraphToolTip}
+                stroke="#000"
+              />
+            )}
+          </div>
+          <div
+            className={`${styles.containerValue} ${
+              activeIndex === 5 ? styles.active : ""
+            }`}
+            onClick={() => showTableHandler(5)}
+          >
+            {grafBbm?.tangkicadangan && (
+              <TrendGrafic
+                data={grafBbm?.tangkicadangan}
+                heightGrafic={140}
+                lineColor="#d5c830"
+                pointColor="#000"
+                label={`Data ${tableBbm?.tangkicadangan[0].name} - 24 Jam`}
+                fontSize="14px"
+                unit=" "
+                mode="24hour"
+                positionLabel={180}
+                setValue={setGraphToolTip}
+                backgroundColor="#fff"
+                stroke="#000"
+              />
+            )}
           </div>
         </div>
       </div>
+      {showModal && (
+        <div className={styles.blackLight}>
+          <div className={styles.modalExport}>
+            <h2 style={{ fontSize: "2rem", color: "#fff" }}>Export Data</h2>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                width: "100%",
+                gap: "6rem",
+              }}
+            >
+              <div className={styles.containerInput}>
+                <p className={styles.textTitleInput}>Mulai Tanggal</p>
+                <DatePicker
+                  selected={startDate}
+                  onChange={(date) => setStartDate(date)}
+                  className={styles.inputDate}
+                  maxDate={endDate || undefined}
+                />
+              </div>
+              <div className={styles.containerInput}>
+                <p className={styles.textTitleInput}>Akhir Tanggal</p>
+                <DatePicker
+                  selected={endDate}
+                  onChange={(date) => setEndDate(date)}
+                  className={styles.inputDate}
+                  minDate={startDate || undefined}
+                />
+              </div>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                width: "100%",
+                gap: "6rem",
+              }}
+            >
+              <div
+                className={styles.buttonExport}
+                onClick={() => setShowModal(false)}
+                style={{
+                  backgroundColor: "#dbcf4b",
+                  color: "#000",
+                }}
+              >
+                Close
+              </div>
+              <div
+                className={styles.buttonExport}
+                // onClick={() =>
+                //   downloadExcelFileThermal(startDate as Date, endDate as Date)
+                // }
+              >
+                Export All Data
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
