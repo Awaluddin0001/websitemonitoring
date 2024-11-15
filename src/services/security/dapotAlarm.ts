@@ -17,7 +17,7 @@ export const getAlarms = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/security/alarms", {
+    const response = await apiClient.get("/security/alarms", {
       params: {
         page,
         limit: 15,
@@ -38,17 +38,14 @@ export const exportAlarmsCsv = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await exportClientDapot.get(
-      "/api/v1/dapot/security/alarm-export-csv",
-      {
-        params: {
-          page,
-          limit: 15,
-          globalFilter,
-          nopage,
-        },
-      }
-    );
+    const response = await exportClientDapot.get("/security/alarm-export-csv", {
+      params: {
+        page,
+        limit: 15,
+        globalFilter,
+        nopage,
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -63,7 +60,7 @@ export const exportAlarmsXlsx = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/security/alarm-export-xlsx",
+      "/security/alarm-export-xlsx",
       {
         params: {
           page,
@@ -85,15 +82,11 @@ export const postNewAlarm = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.post(
-      "/api/v1/dapot/security/alarm",
-      data,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = await apiClient.post("/security/alarm", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -107,9 +100,7 @@ export const getAlarm = async (
   if (id) {
     setLoadingAndError(dispatch);
     try {
-      const response = await apiClient.get(
-        `/api/v1/dapot/security/alarm?id=${id}`
-      );
+      const response = await apiClient.get(`/security/alarm?id=${id}`);
       return handleResponse(response, dispatch);
     } catch (error) {
       handleError(error, dispatch);
@@ -126,7 +117,7 @@ export const updateAlarm = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.put(
-      `/api/v1/dapot/security/alarm?id=${deviceid}&assetid=${assetid}`,
+      `/security/alarm?id=${deviceid}&assetid=${assetid}`,
       data,
       {
         headers: {
@@ -151,7 +142,7 @@ export const deleteAlarm = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/security/alarm?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
+      `/security/alarm?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {

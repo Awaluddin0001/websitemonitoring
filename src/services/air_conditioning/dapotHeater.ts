@@ -17,17 +17,14 @@ export const getHeaters = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get(
-      "/api/v1/dapot/airconditioning/heaters",
-      {
-        params: {
-          page,
-          limit: 15,
-          globalFilter,
-          nopage,
-        },
-      }
-    );
+    const response = await apiClient.get("/airconditioning/heaters", {
+      params: {
+        page,
+        limit: 15,
+        globalFilter,
+        nopage,
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -42,7 +39,7 @@ export const exportHeatersCsv = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/airconditioning/heater-export-csv",
+      "/airconditioning/heater-export-csv",
       {
         params: {
           page,
@@ -66,7 +63,7 @@ export const exportHeatersXlsx = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/airconditioning/heater-export-xlsx",
+      "/airconditioning/heater-export-xlsx",
       {
         params: {
           page,
@@ -88,15 +85,11 @@ export const postNewHeater = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.post(
-      "/api/v1/dapot/airconditioning/heater",
-      data,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = await apiClient.post("/airconditioning/heater", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -110,9 +103,7 @@ export const getHeater = async (
   if (id) {
     setLoadingAndError(dispatch);
     try {
-      const response = await apiClient.get(
-        `/api/v1/dapot/airconditioning/heater?id=${id}`
-      );
+      const response = await apiClient.get(`/airconditioning/heater?id=${id}`);
       return handleResponse(response, dispatch);
     } catch (error) {
       handleError(error, dispatch);
@@ -129,7 +120,7 @@ export const updateHeater = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.put(
-      `/api/v1/dapot/airconditioning/heater?id=${deviceid}&assetid=${assetid}`,
+      `/airconditioning/heater?id=${deviceid}&assetid=${assetid}`,
       data,
       {
         headers: {
@@ -154,7 +145,7 @@ export const deleteHeater = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/airconditioning/heater?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
+      `/airconditioning/heater?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {

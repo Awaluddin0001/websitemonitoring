@@ -11,6 +11,7 @@ import { motion } from "framer-motion";
 // import RoomSvg from "@/components/svg/RoomSvg";
 import { useState } from "react";
 import BriefCaseSvg from "../svg/BriefCaseSvg";
+import LicenseSvg from "../svg/LicenseSvg";
 export default function DesktopIconBar({
   to,
   icon,
@@ -105,6 +106,12 @@ export default function DesktopIconBar({
               width="27"
               height="30"
             />
+          ) : icon === "license" ? (
+            <LicenseSvg
+              color={isActive ? "#8b0000" : "#000000"}
+              width="27"
+              height="30"
+            />
           ) : (
             <LogoutSvg
               color={isActive ? "#8b0000" : "#000000"}
@@ -138,6 +145,8 @@ export default function DesktopIconBar({
               ? "Admin"
               : icon === "supervisor"
               ? "Supervisor"
+              : icon === "license"
+              ? "License"
               : "Keluar"}
           </h4>
         </motion.div>

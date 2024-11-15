@@ -17,17 +17,14 @@ export const getDoors = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get(
-      "/api/v1/dapot/buildingfinishes/doors",
-      {
-        params: {
-          page,
-          limit: 15,
-          globalFilter,
-          nopage,
-        },
-      }
-    );
+    const response = await apiClient.get("/buildingfinishes/doors", {
+      params: {
+        page,
+        limit: 15,
+        globalFilter,
+        nopage,
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -42,7 +39,7 @@ export const exportDoorsCsv = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/buildingfinishes/door-export-csv",
+      "/buildingfinishes/door-export-csv",
       {
         params: {
           page,
@@ -66,7 +63,7 @@ export const exportDoorsXlsx = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/buildingfinishes/door-export-xlsx",
+      "/buildingfinishes/door-export-xlsx",
       {
         params: {
           page,
@@ -88,15 +85,11 @@ export const postNewDoor = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.post(
-      "/api/v1/dapot/buildingfinishes/door",
-      data,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = await apiClient.post("/buildingfinishes/door", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -110,9 +103,7 @@ export const getDoor = async (
   if (id) {
     setLoadingAndError(dispatch);
     try {
-      const response = await apiClient.get(
-        `/api/v1/dapot/buildingfinishes/door?id=${id}`
-      );
+      const response = await apiClient.get(`/buildingfinishes/door?id=${id}`);
       return handleResponse(response, dispatch);
     } catch (error) {
       handleError(error, dispatch);
@@ -129,7 +120,7 @@ export const updateDoor = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.put(
-      `/api/v1/dapot/buildingfinishes/door?id=${deviceid}&assetid=${assetid}`,
+      `/buildingfinishes/door?id=${deviceid}&assetid=${assetid}`,
       data,
       {
         headers: {
@@ -154,7 +145,7 @@ export const deleteDoor = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/buildingfinishes/door?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
+      `/buildingfinishes/door?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {

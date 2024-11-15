@@ -318,6 +318,11 @@ import ListVendorSafety from "@/pages/assets/dapot/vendor/safety/ListVendorSafet
 import NewVendorSafety from "@/pages/assets/dapot/vendor/safety/NewVendorSafety";
 import UpdateVendorSafety from "@/pages/assets/dapot/vendor/safety/UpdateVendorSafety";
 import ThermalPage from "@/pages/monitoring/Thermal";
+import SSAPLantai1 from "@/pages/monitoring/SSAPLantai1";
+import SSAPLantai2 from "@/pages/monitoring/SSAPLantai2";
+import SSAPLantai3 from "@/pages/monitoring/SSAPLantai3";
+import SSAPLantai4 from "@/pages/monitoring/SSAPLantai4";
+import SSAPLantai5 from "@/pages/monitoring/SSAPLantai5";
 
 export const router = createBrowserRouter([
   {
@@ -371,6 +376,26 @@ export const router = createBrowserRouter([
       {
         path: "monitoring/fire",
         element: <Fire />,
+      },
+      {
+        path: "monitoring/manual/add/ssap1",
+        element: <SSAPLantai1 />,
+      },
+      {
+        path: "monitoring/manual/add/ssap2",
+        element: <SSAPLantai2 />,
+      },
+      {
+        path: "monitoring/manual/add/ssap3",
+        element: <SSAPLantai3 />,
+      },
+      {
+        path: "monitoring/manual/add/ssap4",
+        element: <SSAPLantai4 />,
+      },
+      {
+        path: "monitoring/manual/add/ssap5",
+        element: <SSAPLantai5 />,
       },
       {
         path: "monitoring/bbm",

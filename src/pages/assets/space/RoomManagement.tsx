@@ -569,7 +569,7 @@ const RoomManagement: React.FC = () => {
       const json = canvas.toJSON();
 
       axios
-        .post("http://localhost:3001/api/v1/savespace", {
+        .post("http://192.168.1.62:3001/api/v1/savespace", {
           fileName: canvasName,
           jsonContent: json,
           imageContent: imageContent,
@@ -586,7 +586,7 @@ const RoomManagement: React.FC = () => {
 
   const loadCanvas = (canvasName: string) => {
     axios
-      .get(`http://localhost:3001/api/v1/loadspace/${canvasName}`)
+      .get(`http://192.168.1.62:3001/api/v1/loadspace/${canvasName}`)
       .then((response) => {
         if (canvasRef.current) {
           canvasRef.current.loadFromJSON(response.data, () => {

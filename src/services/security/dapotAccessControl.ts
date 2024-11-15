@@ -17,17 +17,14 @@ export const getAccesscontrols = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get(
-      "/api/v1/dapot/security/accesscontrols",
-      {
-        params: {
-          page,
-          limit: 15,
-          globalFilter,
-          nopage,
-        },
-      }
-    );
+    const response = await apiClient.get("/security/accesscontrols", {
+      params: {
+        page,
+        limit: 15,
+        globalFilter,
+        nopage,
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -42,7 +39,7 @@ export const exportAccesscontrolsCsv = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/security/accesscontrol-export-csv",
+      "/security/accesscontrol-export-csv",
       {
         params: {
           page,
@@ -66,7 +63,7 @@ export const exportAccesscontrolsXlsx = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/security/accesscontrol-export-xlsx",
+      "/security/accesscontrol-export-xlsx",
       {
         params: {
           page,
@@ -88,15 +85,11 @@ export const postNewAccesscontrol = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.post(
-      "/api/v1/dapot/security/accesscontrol",
-      data,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = await apiClient.post("/security/accesscontrol", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -110,9 +103,7 @@ export const getAccesscontrol = async (
   if (id) {
     setLoadingAndError(dispatch);
     try {
-      const response = await apiClient.get(
-        `/api/v1/dapot/security/accesscontrol?id=${id}`
-      );
+      const response = await apiClient.get(`/security/accesscontrol?id=${id}`);
       return handleResponse(response, dispatch);
     } catch (error) {
       handleError(error, dispatch);
@@ -129,7 +120,7 @@ export const updateAccesscontrol = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.put(
-      `/api/v1/dapot/security/accesscontrol?id=${deviceid}&assetid=${assetid}`,
+      `/security/accesscontrol?id=${deviceid}&assetid=${assetid}`,
       data,
       {
         headers: {
@@ -154,7 +145,7 @@ export const deleteAccesscontrol = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/security/accesscontrol?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
+      `/security/accesscontrol?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {

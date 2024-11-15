@@ -42,18 +42,14 @@ export default defineConfig(({ mode }) => {
           rewrite: (path) => path.replace(/^\/api\/v1\/user/, "/api/v1/user"),
         },
         "/api/v1/eventbus": {
-          // target: apiEventbus,
-          target: "http://192.168.1.62:2041",
-          // target: "http://77.37.44.158:2041",
+          target: apiMonitoring,
           changeOrigin: true,
           secure: false,
           rewrite: (path) =>
             path.replace(/^\/api\/v1\/eventbus/, "/api/v1/eventbus"),
         },
         "/api/v1/monitoring": {
-          // target: apiMonitoring,
-          target: "http://192.168.1.62:2022",
-          // target: "http://77.37.44.158:2041",
+          target: apiMonitoring,
           changeOrigin: true,
           secure: false,
           rewrite: (path) =>
@@ -85,18 +81,14 @@ export default defineConfig(({ mode }) => {
           rewrite: (path) => path.replace(/^\/api\/v1\/dapot/, "/api/v1/dapot"),
         },
         "/api/v1/eventbus": {
-          // target: apiEventbus,
-          target: "http://192.168.1.62:2041",
-          // target: "http://77.37.44.158:2041",
+          target: apiMonitoring,
           changeOrigin: true,
           secure: false,
           rewrite: (path) =>
             path.replace(/^\/api\/v1\/eventbus/, "/api/v1/eventbus"),
         },
         "/api/v1/monitoring": {
-          // target: apiMonitoring,
-          target: "http://192.168.1.62:2022",
-          // target: "http://77.37.44.158:2041",
+          target: apiMonitoring,
           changeOrigin: true,
           secure: false,
           rewrite: (path) =>

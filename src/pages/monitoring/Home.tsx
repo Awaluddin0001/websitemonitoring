@@ -19,8 +19,11 @@ type DataGrafikPower = {
 };
 
 type BbmTangki = {
+  value: {
+    volume: number;
+    level: number;
+  };
   name: string;
-  value: unknown;
 };
 type ThermalRoomDetail = {
   room: string;
@@ -73,7 +76,8 @@ export default function Home() {
   >();
 
   const { data, loading, error } = useMonitoringFetchData(
-    "http://192.168.1.62:2041/api/v1/eventbus/bbmthermalpower"
+    // "http://192.168.1.62:2041/api/v1/eventbus/bbmthermalpower"
+    "https://apipengayoman.ipagemakassar.com/api/v1/eventbus/bbmthermalpower"
   );
 
   const [modalController, setModalController] = useState(false);
@@ -353,7 +357,7 @@ export default function Home() {
                     return (
                       <CardValue
                         key={index}
-                        title={`Ruangan ${item.value.name}`}
+                        title={`Temp R. ${item.value.name}`}
                         value={
                           item.value.temperature !== 0
                             ? `${item.value.temperature}°C`
@@ -369,10 +373,22 @@ export default function Home() {
                             ? "#56CB0E"
                             : item.value.temperature > 23 &&
                               item.value.temperature < 30
-                            ? "#0eaacb"
+                            ? "#fcfd11"
                             : "#CB300E"
                         }
-                        valueColor="#fff"
+                        valueColor={
+                          item.value.temperature === 0
+                            ? "#000"
+                            : item.value.temperature < 18
+                            ? "#000"
+                            : item.value.temperature > 17 &&
+                              item.value.temperature < 24
+                            ? "#000"
+                            : item.value.temperature > 23 &&
+                              item.value.temperature < 30
+                            ? "#000"
+                            : "#fff"
+                        }
                         width="14rem"
                         height="12rem"
                         tip="Temperature"
@@ -394,7 +410,7 @@ export default function Home() {
                     return (
                       <CardValue
                         key={index}
-                        title={`Ruangan ${item.value.name}`}
+                        title={`Humd R. ${item.value.name}`}
                         value={
                           item.value.humidity !== 0
                             ? `${item.value.humidity} %`
@@ -403,17 +419,29 @@ export default function Home() {
                         cardColor={
                           item.value.humidity === 0
                             ? "#ddd"
-                            : item.value.humidity < 18
-                            ? "#0ECBC0"
-                            : item.value.humidity > 17 &&
-                              item.value.humidity < 24
+                            : item.value.humidity < 45
+                            ? "#fcfd11"
+                            : item.value.humidity > 44 &&
+                              item.value.humidity < 61
                             ? "#56CB0E"
-                            : item.value.humidity > 23 &&
-                              item.value.humidity < 30
-                            ? "#0eaacb"
+                            : item.value.humidity > 60 &&
+                              item.value.humidity < 71
+                            ? "#fcfd11"
                             : "#CB300E"
                         }
-                        valueColor="#fff"
+                        valueColor={
+                          item.value.humidity === 0
+                            ? "#000"
+                            : item.value.humidity < 45
+                            ? "#000"
+                            : item.value.humidity > 44 &&
+                              item.value.humidity < 61
+                            ? "#000"
+                            : item.value.humidity > 60 &&
+                              item.value.humidity < 71
+                            ? "#000"
+                            : "#fff"
+                        }
                         width="14rem"
                         height="12rem"
                         tip="Humidity"
@@ -437,7 +465,7 @@ export default function Home() {
                     return (
                       <CardValue
                         key={index}
-                        title={`Ruangan ${item.value.name}`}
+                        title={`Temp R. ${item.value.name}`}
                         value={
                           item.value.temperature !== 0
                             ? `${item.value.temperature}°C`
@@ -453,10 +481,22 @@ export default function Home() {
                             ? "#56CB0E"
                             : item.value.temperature > 23 &&
                               item.value.temperature < 30
-                            ? "#0eaacb"
+                            ? "#fcfd11"
                             : "#CB300E"
                         }
-                        valueColor="#fff"
+                        valueColor={
+                          item.value.temperature === 0
+                            ? "#000"
+                            : item.value.temperature < 18
+                            ? "#000"
+                            : item.value.temperature > 17 &&
+                              item.value.temperature < 24
+                            ? "#000"
+                            : item.value.temperature > 23 &&
+                              item.value.temperature < 30
+                            ? "#000"
+                            : "#fff"
+                        }
                         width="14rem"
                         height="12rem"
                         tip="Temperature"
@@ -478,7 +518,7 @@ export default function Home() {
                     return (
                       <CardValue
                         key={index}
-                        title={`Ruangan ${item.value.name}`}
+                        title={`Humd R. ${item.value.name}`}
                         value={
                           item.value.humidity !== 0
                             ? `${item.value.humidity} %`
@@ -487,17 +527,29 @@ export default function Home() {
                         cardColor={
                           item.value.humidity === 0
                             ? "#ddd"
-                            : item.value.humidity < 18
-                            ? "#0ECBC0"
-                            : item.value.humidity > 17 &&
-                              item.value.humidity < 24
+                            : item.value.humidity < 45
+                            ? "#fcfd11"
+                            : item.value.humidity > 44 &&
+                              item.value.humidity < 61
                             ? "#56CB0E"
-                            : item.value.humidity > 23 &&
-                              item.value.humidity < 30
-                            ? "#0eaacb"
+                            : item.value.humidity > 60 &&
+                              item.value.humidity < 71
+                            ? "#fcfd11"
                             : "#CB300E"
                         }
-                        valueColor="#fff"
+                        valueColor={
+                          item.value.humidity === 0
+                            ? "#000"
+                            : item.value.humidity < 45
+                            ? "#000"
+                            : item.value.humidity > 44 &&
+                              item.value.humidity < 61
+                            ? "#000"
+                            : item.value.humidity > 60 &&
+                              item.value.humidity < 71
+                            ? "#000"
+                            : "#fff"
+                        }
                         width="14rem"
                         height="12rem"
                         tip="Humidity"
@@ -521,7 +573,7 @@ export default function Home() {
                     return (
                       <CardValue
                         key={index}
-                        title={`Ruangan ${item.value.name}`}
+                        title={`Temp R. ${item.value.name}`}
                         value={
                           item.value.temperature !== 0
                             ? `${item.value.temperature}°C`
@@ -537,10 +589,22 @@ export default function Home() {
                             ? "#56CB0E"
                             : item.value.temperature > 23 &&
                               item.value.temperature < 30
-                            ? "#0eaacb"
+                            ? "#fcfd11"
                             : "#CB300E"
                         }
-                        valueColor="#fff"
+                        valueColor={
+                          item.value.temperature === 0
+                            ? "#000"
+                            : item.value.temperature < 18
+                            ? "#000"
+                            : item.value.temperature > 17 &&
+                              item.value.temperature < 24
+                            ? "#000"
+                            : item.value.temperature > 23 &&
+                              item.value.temperature < 30
+                            ? "#000"
+                            : "#fff"
+                        }
                         width="14rem"
                         height="12rem"
                         tip="Temperature"
@@ -562,7 +626,7 @@ export default function Home() {
                     return (
                       <CardValue
                         key={index}
-                        title={`Ruangan ${item.value.name}`}
+                        title={`Humd R. ${item.value.name}`}
                         value={
                           item.value.humidity !== 0
                             ? `${item.value.humidity} %`
@@ -571,17 +635,29 @@ export default function Home() {
                         cardColor={
                           item.value.humidity === 0
                             ? "#ddd"
-                            : item.value.humidity < 18
-                            ? "#0ECBC0"
-                            : item.value.humidity > 17 &&
-                              item.value.humidity < 24
+                            : item.value.humidity < 45
+                            ? "#fcfd11"
+                            : item.value.humidity > 44 &&
+                              item.value.humidity < 61
                             ? "#56CB0E"
-                            : item.value.humidity > 23 &&
-                              item.value.humidity < 30
-                            ? "#0eaacb"
+                            : item.value.humidity > 60 &&
+                              item.value.humidity < 71
+                            ? "#fcfd11"
                             : "#CB300E"
                         }
-                        valueColor="#fff"
+                        valueColor={
+                          item.value.humidity === 0
+                            ? "#000"
+                            : item.value.humidity < 45
+                            ? "#000"
+                            : item.value.humidity > 44 &&
+                              item.value.humidity < 61
+                            ? "#000"
+                            : item.value.humidity > 60 &&
+                              item.value.humidity < 71
+                            ? "#000"
+                            : "#fff"
+                        }
                         width="14rem"
                         height="12rem"
                         tip="Humidity"
@@ -605,7 +681,7 @@ export default function Home() {
                     return (
                       <CardValue
                         key={index}
-                        title={`Ruangan ${item.value.name}`}
+                        title={`Temp R. ${item.value.name}`}
                         value={
                           item.value.temperature !== 0
                             ? `${item.value.temperature}°C`
@@ -621,10 +697,22 @@ export default function Home() {
                             ? "#56CB0E"
                             : item.value.temperature > 23 &&
                               item.value.temperature < 30
-                            ? "#0eaacb"
+                            ? "#fcfd11"
                             : "#CB300E"
                         }
-                        valueColor="#fff"
+                        valueColor={
+                          item.value.temperature === 0
+                            ? "#000"
+                            : item.value.temperature < 18
+                            ? "#000"
+                            : item.value.temperature > 17 &&
+                              item.value.temperature < 24
+                            ? "#000"
+                            : item.value.temperature > 23 &&
+                              item.value.temperature < 30
+                            ? "#000"
+                            : "#fff"
+                        }
                         width="14rem"
                         height="12rem"
                         tip="Temperature"
@@ -646,7 +734,7 @@ export default function Home() {
                     return (
                       <CardValue
                         key={index}
-                        title={`Ruangan ${item.value.name}`}
+                        title={`Humd R. ${item.value.name}`}
                         value={
                           item.value.humidity !== 0
                             ? `${item.value.humidity} %`
@@ -655,17 +743,29 @@ export default function Home() {
                         cardColor={
                           item.value.humidity === 0
                             ? "#ddd"
-                            : item.value.humidity < 18
-                            ? "#0ECBC0"
-                            : item.value.humidity > 17 &&
-                              item.value.humidity < 24
+                            : item.value.humidity < 45
+                            ? "#fcfd11"
+                            : item.value.humidity > 44 &&
+                              item.value.humidity < 61
                             ? "#56CB0E"
-                            : item.value.humidity > 23 &&
-                              item.value.humidity < 30
-                            ? "#0eaacb"
+                            : item.value.humidity > 60 &&
+                              item.value.humidity < 71
+                            ? "#fcfd11"
                             : "#CB300E"
                         }
-                        valueColor="#fff"
+                        valueColor={
+                          item.value.humidity === 0
+                            ? "#000"
+                            : item.value.humidity < 45
+                            ? "#000"
+                            : item.value.humidity > 44 &&
+                              item.value.humidity < 61
+                            ? "#000"
+                            : item.value.humidity > 60 &&
+                              item.value.humidity < 71
+                            ? "#000"
+                            : "#fff"
+                        }
                         width="14rem"
                         height="12rem"
                         tip="Humidity"
@@ -680,7 +780,7 @@ export default function Home() {
           <div
             className={styles.sectionHome}
             onClick={() => navigate("/main/monitoring/power")}
-            style={{ cursor: "pointer" }}
+            style={{ cursor: "pointer", height: "100%", width: "65%" }}
           >
             <h1>Power Usage Effectiveness - Last Updated {data.lastUpdate}</h1>
 
@@ -692,12 +792,18 @@ export default function Home() {
                     value={pueData.value.toFixed(2)}
                     cardColor={
                       pueData.value < 1.5
-                        ? "#56CB0E"
+                        ? "#0ECBC0"
                         : pueData.value < 2.0
-                        ? "#0eaacb"
+                        ? "#56CB0E"
                         : "#CB300E"
                     }
-                    valueColor="#fff"
+                    valueColor={
+                      pueData.value < 1.5
+                        ? "#000"
+                        : pueData.value < 2.0
+                        ? "#000"
+                        : "#fff"
+                    }
                     width="17rem"
                     height="14rem"
                   />
@@ -710,10 +816,10 @@ export default function Home() {
                   heightGrafic={140}
                   lineColor={
                     pueData.value < 1.5
-                      ? "#56CB0E"
+                      ? "#0ECBC0"
                       : pueData.value < 2.0
                       ? // ? "#0eaacb"
-                        "#0eaacb"
+                        "#56CB0E"
                       : "#CB300E"
                   }
                   pointColor="#000"
@@ -746,8 +852,8 @@ export default function Home() {
                         ? `${facilityLoad.value.toFixed(2)} kVa`
                         : "0"
                     }
-                    cardColor="#0ECBC0"
-                    valueColor="#fff"
+                    cardColor="#1acdf3"
+                    valueColor="#000"
                     width="17rem"
                     height="14rem"
                   />
@@ -758,7 +864,7 @@ export default function Home() {
                 <TrendGrafic
                   data={facilityLoadGraf}
                   heightGrafic={140}
-                  lineColor="#0ECBC0"
+                  lineColor="#1acdf3"
                   pointColor="#000"
                   label="Data Facility Load - 24 Jam"
                   fontSize="14px"
@@ -778,8 +884,8 @@ export default function Home() {
                   <CardValue
                     title={`IT Load - ${itLoad.timestamp}`}
                     value={itLoad ? `${itLoad.value.toFixed(2)} kVa` : "0"}
-                    cardColor="#0ECBC0"
-                    valueColor="#fff"
+                    cardColor="#1acdf3"
+                    valueColor="#000"
                     width="17rem"
                     height="14rem"
                   />
@@ -790,7 +896,7 @@ export default function Home() {
                 <TrendGrafic
                   data={itLoadGraf}
                   heightGrafic={140}
-                  lineColor="#0ECBC0"
+                  lineColor="#1acdf3"
                   pointColor="#000"
                   label="Data IT Load - 24 Jam"
                   fontSize="14px"
@@ -805,42 +911,88 @@ export default function Home() {
               )}
             </div>
           </div>
-          <div className={styles.sectionHome} style={{ height: "100%" }}>
-            <h1>BBM Usage Information - Last Updated {data.lastUpdate}</h1>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                width: "100%",
-                height: "100%",
-                gap: "21px",
-              }}
-            >
-              {bbmData &&
-                bbmData.map((item: any, index: number) => {
-                  const usage = ((12000 - item.value.volume) / 12000) * 100;
-                  const free = (item.value.volume / 12000) * 100;
-                  return (
-                    <DonutChart
-                      key={index}
-                      data={[
+          <div
+            className={styles.sectionHome}
+            style={{ height: "100%", width: "35%" }}
+          >
+            <h1>Occupancy Information - Last Updated {data.lastUpdate}</h1>
+            <div className="donut-chart-container">
+              {bbmData && (
+                <DonutChart
+                  data={[
+                    // First Circle - Tangki Cadangan
+                    {
+                      title: `${bbmData[0].name}`,
+                      slices: [
                         {
-                          label: `Tersisa: ${formatNumberIndonesian(
-                            item.value.volume.toFixed(0)
+                          label: `${
+                            bbmData[0].name
+                          } Tersisa: ${formatNumberIndonesian(
+                            Number(bbmData[0].value.volume.toFixed(0))
                           )} liter`,
-                          value: free,
+                          value: (bbmData[0].value.volume / 12000) * 100,
                         },
                         {
-                          label: `Terpakai: ${formatNumberIndonesian(
-                            12000 - item.value.volume.toFixed(0)
+                          label: `${
+                            bbmData[0].name
+                          } Terpakai: ${formatNumberIndonesian(
+                            Number((12000 - bbmData[0].value.volume).toFixed(0))
                           )} liter`,
-                          value: usage,
+                          value:
+                            ((12000 - bbmData[0].value.volume) / 12000) * 100,
                         },
-                      ]}
-                      title={`${item.name}`}
-                    />
-                  );
-                })}
+                      ],
+                    },
+                    // Second Circle - Tangki Bulanan
+                    {
+                      title: `${bbmData[1].name}`,
+                      slices: [
+                        {
+                          label: `${
+                            bbmData[1].name
+                          } Tersisa: ${formatNumberIndonesian(
+                            Number(bbmData[1].value.volume.toFixed(0))
+                          )} liter`,
+                          value: (bbmData[1].value.volume / 12000) * 100,
+                        },
+                        {
+                          label: `${
+                            bbmData[1].name
+                          } Terpakai: ${formatNumberIndonesian(
+                            Number((12000 - bbmData[1].value.volume).toFixed(0))
+                          )} liter`,
+                          value:
+                            ((12000 - bbmData[1].value.volume) / 12000) * 100,
+                        },
+                      ],
+                    },
+                    // Third Circle - Tangki Harian
+                    {
+                      title: `${bbmData[2].name}`,
+                      slices: [
+                        {
+                          label: `${
+                            bbmData[2].name
+                          } Tersisa: ${formatNumberIndonesian(
+                            Number(bbmData[2].value.volume.toFixed(0))
+                          )} liter`,
+                          value: (bbmData[2].value.volume / 12000) * 100,
+                        },
+                        {
+                          label: `${
+                            bbmData[2].name
+                          } Terpakai: ${formatNumberIndonesian(
+                            Number((12000 - bbmData[2].value.volume).toFixed(0))
+                          )} liter`,
+                          value:
+                            ((12000 - bbmData[2].value.volume) / 12000) * 100,
+                        },
+                      ],
+                    },
+                  ]}
+                  title="Monitoring Occupancy BBM, PLN dan Trafo"
+                />
+              )}
             </div>
           </div>
         </div>

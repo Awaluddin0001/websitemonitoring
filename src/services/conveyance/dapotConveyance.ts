@@ -9,9 +9,7 @@ import {
 } from "@/utils/LoadingAndErrorApi";
 export const getConveyancesLink = async () => {
   try {
-    const response = await apiClient.get(
-      "/api/v1/dapot/conveyance/all?nopage=yes"
-    );
+    const response = await apiClient.get("/conveyance/all?nopage=yes");
     return response.data;
   } catch (error) {
     console.error("Error fetching Link floors:", error);
@@ -27,7 +25,7 @@ export const getBrandConveyance = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/conveyance/brands", {
+    const response = await apiClient.get("/conveyance/brands", {
       params: {
         page,
         limit: 15,
@@ -47,7 +45,7 @@ export const getOneBrandConveyance = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/conveyance/brand", {
+    const response = await apiClient.get("/conveyance/brand", {
       params: {
         id,
       },
@@ -68,7 +66,7 @@ export const postBrandConveyance = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.post("/api/v1/dapot/conveyance/brand", {
+    const response = await apiClient.post("/conveyance/brand", {
       name: name,
       user_id,
     });
@@ -87,13 +85,10 @@ export const updateBrandConveyance = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.put(
-      "/api/v1/dapot/conveyance/brand?id=" + id,
-      {
-        name: name,
-        user_id,
-      }
-    );
+    const response = await apiClient.put("/conveyance/brand?id=" + id, {
+      name: name,
+      user_id,
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -108,7 +103,7 @@ export const getVendorConveyance = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/conveyance/vendors", {
+    const response = await apiClient.get("/conveyance/vendors", {
       params: {
         page,
         limit: 15,
@@ -128,7 +123,7 @@ export const getOneVendorConveyance = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/conveyance/vendor", {
+    const response = await apiClient.get("/conveyance/vendor", {
       params: {
         id,
       },
@@ -151,7 +146,7 @@ export const postVendorConveyance = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.post("/api/v1/dapot/conveyance/vendor", {
+    const response = await apiClient.post("/conveyance/vendor", {
       company,
       company_user_name,
       number_phone,
@@ -171,7 +166,7 @@ export const deleteVendorConveyance = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/conveyance/vendor?id=${deviceid}&assetid=${asset_id}`
+      `/conveyance/vendor?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -191,15 +186,12 @@ export const updateVendorConveyance = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.put(
-      "/api/v1/dapot/conveyance/vendor?id=" + id,
-      {
-        company,
-        company_user_name,
-        number_phone,
-        user_id,
-      }
-    );
+    const response = await apiClient.put("/conveyance/vendor?id=" + id, {
+      company,
+      company_user_name,
+      number_phone,
+      user_id,
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -215,7 +207,7 @@ export const getTypeConveyance = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/conveyance/types", {
+    const response = await apiClient.get("/conveyance/types", {
       params: {
         page,
         limit: 15,
@@ -235,7 +227,7 @@ export const getOneTypeConveyance = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/conveyance/type", {
+    const response = await apiClient.get("/conveyance/type", {
       params: {
         id,
       },
@@ -255,7 +247,7 @@ export const postTypeConveyance = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.post("/api/v1/dapot/conveyance/type", {
+    const response = await apiClient.post("/conveyance/type", {
       name,
       user_id,
     });
@@ -275,13 +267,10 @@ export const updateTypeConveyance = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.put(
-      "/api/v1/dapot/conveyance/type?id=" + id,
-      {
-        name,
-        user_id,
-      }
-    );
+    const response = await apiClient.put("/conveyance/type?id=" + id, {
+      name,
+      user_id,
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -296,7 +285,7 @@ export const deleteTypeConveyance = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/conveyance/type?id=${deviceid}&assetid=${asset_id}`
+      `/conveyance/type?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -307,7 +296,7 @@ export const deleteTypeConveyance = async (
 export const getSubCategoriesConveyance = async () => {
   try {
     const response = await apiClient.get(
-      "/api/v1/dapot/conveyance/subcategories?nopage=yes"
+      "/conveyance/subcategories?nopage=yes"
     );
     console.log(response);
     return response.data;
@@ -325,17 +314,14 @@ export const getMaintenanceConveyance = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get(
-      "/api/v1/dapot/conveyance/maintenances",
-      {
-        params: {
-          page,
-          limit: 15,
-          globalFilter,
-          nopage,
-        },
-      }
-    );
+    const response = await apiClient.get("/conveyance/maintenances", {
+      params: {
+        page,
+        limit: 15,
+        globalFilter,
+        nopage,
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -348,14 +334,11 @@ export const getOneMaintenanceConveyance = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get(
-      "/api/v1/dapot/conveyance/maintenance",
-      {
-        params: {
-          id,
-        },
-      }
-    );
+    const response = await apiClient.get("/conveyance/maintenance", {
+      params: {
+        id,
+      },
+    });
     console.log(response);
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -370,15 +353,11 @@ export const postMaintenanceConveyance = async (
   setLoadingAndError(dispatch);
   console.log(data.get("activity"));
   try {
-    const response = await apiClient.post(
-      "/api/v1/dapot/conveyance/maintenance",
-      data,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = await apiClient.post("/conveyance/maintenance", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -392,7 +371,7 @@ export const updateMaintenanceConveyance = async (
   console.log(data.get("id"));
   try {
     const response = await apiClient.put(
-      "/api/v1/dapot/conveyance/maintenance?id=" + data.get("id"),
+      "/conveyance/maintenance?id=" + data.get("id"),
       data,
       {
         headers: {
@@ -414,7 +393,7 @@ export const deleteMaintenanceConveyance = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/conveyance/maintenance?id=${deviceid}&assetid=${asset_id}`
+      `/conveyance/maintenance?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -430,7 +409,7 @@ export const getLinkConveyance = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/conveyance/links", {
+    const response = await apiClient.get("/conveyance/links", {
       params: {
         page,
         limit: 15,
@@ -454,7 +433,7 @@ export const postLinkConveyance = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.post("/api/v1/dapot/conveyance/link", {
+    const response = await apiClient.post("/conveyance/link", {
       incoming,
       outgoing,
       user_id,
@@ -473,17 +452,14 @@ export const getConveyances = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get(
-      "/api/v1/dapot/conveyance/conveyances",
-      {
-        params: {
-          page,
-          limit: 15,
-          globalFilter,
-          nopage,
-        },
-      }
-    );
+    const response = await apiClient.get("/conveyance/conveyances", {
+      params: {
+        page,
+        limit: 15,
+        globalFilter,
+        nopage,
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -498,7 +474,7 @@ export const exportConveyancesCsv = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/conveyance/conveyance-export-csv",
+      "/conveyance/conveyance-export-csv",
       {
         params: {
           page,
@@ -522,7 +498,7 @@ export const exportConveyancesXlsx = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/conveyance/conveyance-export-xlsx",
+      "/conveyance/conveyance-export-xlsx",
       {
         params: {
           page,
@@ -544,9 +520,7 @@ export const getConveyance = async (
   if (id) {
     setLoadingAndError(dispatch);
     try {
-      const response = await apiClient.get(
-        `/api/v1/dapot/conveyance/conveyance?id=${id}`
-      );
+      const response = await apiClient.get(`/conveyance/conveyance?id=${id}`);
       return handleResponse(response, dispatch);
     } catch (error) {
       handleError(error, dispatch);
@@ -560,15 +534,11 @@ export const postNewConveyance = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.post(
-      "/api/v1/dapot/conveyance/conveyance",
-      data,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = await apiClient.post("/conveyance/conveyance", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -584,7 +554,7 @@ export const updateConveyance = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.put(
-      `/api/v1/dapot/conveyance/conveyance?id=${deviceid}&assetid=${assetid}`,
+      `/conveyance/conveyance?id=${deviceid}&assetid=${assetid}`,
       data,
       {
         headers: {
@@ -609,7 +579,7 @@ export const deleteConveyance = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/conveyance/conveyance?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
+      `/conveyance/conveyance?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {

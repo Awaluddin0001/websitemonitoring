@@ -13,7 +13,7 @@ export const getAirconditionings = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/airconditioning/all", {
+    const response = await apiClient.get("/airconditioning/all", {
       params: {
         page,
         limit: 15,
@@ -28,9 +28,7 @@ export const getAirconditionings = async (
 };
 export const getAirconditioningsLink = async () => {
   try {
-    const response = await apiClient.get(
-      "/api/v1/dapot/airconditioning/all?nopage=yes"
-    );
+    const response = await apiClient.get("/airconditioning/all?nopage=yes");
     return response.data;
   } catch (error) {
     console.error("Error fetching Link floors:", error);
@@ -46,17 +44,14 @@ export const getBrandAirconditioning = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get(
-      "/api/v1/dapot/airconditioning/brands",
-      {
-        params: {
-          page,
-          limit: 15,
-          globalFilter,
-          nopage,
-        },
-      }
-    );
+    const response = await apiClient.get("/airconditioning/brands", {
+      params: {
+        page,
+        limit: 15,
+        globalFilter,
+        nopage,
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -69,14 +64,11 @@ export const getOneBrandAirconditioning = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get(
-      "/api/v1/dapot/airconditioning/brand",
-      {
-        params: {
-          id,
-        },
-      }
-    );
+    const response = await apiClient.get("/airconditioning/brand", {
+      params: {
+        id,
+      },
+    });
     console.log(response);
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -93,13 +85,10 @@ export const postBrandAirconditioning = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.post(
-      "/api/v1/dapot/airconditioning/brand",
-      {
-        name: name,
-        user_id,
-      }
-    );
+    const response = await apiClient.post("/airconditioning/brand", {
+      name: name,
+      user_id,
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -115,13 +104,10 @@ export const updateBrandAirconditioning = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.put(
-      "/api/v1/dapot/airconditioning/brand?id=" + id,
-      {
-        name: name,
-        user_id,
-      }
-    );
+    const response = await apiClient.put("/airconditioning/brand?id=" + id, {
+      name: name,
+      user_id,
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -136,7 +122,7 @@ export const deleteAirconditioning = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/airconditioning/brand?id=${deviceid}&assetid=${asset_id}`
+      `/airconditioning/brand?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -152,17 +138,14 @@ export const getVendorAirconditioning = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get(
-      "/api/v1/dapot/airconditioning/vendors",
-      {
-        params: {
-          page,
-          limit: 15,
-          globalFilter,
-          nopage,
-        },
-      }
-    );
+    const response = await apiClient.get("/airconditioning/vendors", {
+      params: {
+        page,
+        limit: 15,
+        globalFilter,
+        nopage,
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -175,14 +158,11 @@ export const getOneVendorAirconditioning = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get(
-      "/api/v1/dapot/airconditioning/vendor",
-      {
-        params: {
-          id,
-        },
-      }
-    );
+    const response = await apiClient.get("/airconditioning/vendor", {
+      params: {
+        id,
+      },
+    });
     console.log(response);
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -201,15 +181,12 @@ export const postVendorAirconditioning = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.post(
-      "/api/v1/dapot/airconditioning/vendor",
-      {
-        company,
-        company_user_name,
-        number_phone,
-        user_id,
-      }
-    );
+    const response = await apiClient.post("/airconditioning/vendor", {
+      company,
+      company_user_name,
+      number_phone,
+      user_id,
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -224,7 +201,7 @@ export const deleteVendorAirconditioning = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/airconditioning/vendor?id=${deviceid}&assetid=${asset_id}`
+      `/airconditioning/vendor?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -244,15 +221,12 @@ export const updateVendorAirconditioning = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.put(
-      "/api/v1/dapot/airconditioning/vendor?id=" + id,
-      {
-        company,
-        company_user_name,
-        number_phone,
-        user_id,
-      }
-    );
+    const response = await apiClient.put("/airconditioning/vendor?id=" + id, {
+      company,
+      company_user_name,
+      number_phone,
+      user_id,
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -268,17 +242,14 @@ export const getTypeAirconditioning = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get(
-      "/api/v1/dapot/airconditioning/types",
-      {
-        params: {
-          page,
-          limit: 15,
-          globalFilter,
-          nopage,
-        },
-      }
-    );
+    const response = await apiClient.get("/airconditioning/types", {
+      params: {
+        page,
+        limit: 15,
+        globalFilter,
+        nopage,
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -291,7 +262,7 @@ export const getOneTypeAirconditioning = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/airconditioning/type", {
+    const response = await apiClient.get("/airconditioning/type", {
       params: {
         id,
       },
@@ -312,14 +283,11 @@ export const postTypeAirconditioning = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.post(
-      "/api/v1/dapot/airconditioning/type",
-      {
-        name,
-        sub_category_id,
-        user_id,
-      }
-    );
+    const response = await apiClient.post("/airconditioning/type", {
+      name,
+      sub_category_id,
+      user_id,
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -337,14 +305,11 @@ export const updateTypeAirconditioning = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.put(
-      "/api/v1/dapot/airconditioning/type?id=" + id,
-      {
-        name,
-        sub_category_id,
-        user_id,
-      }
-    );
+    const response = await apiClient.put("/airconditioning/type?id=" + id, {
+      name,
+      sub_category_id,
+      user_id,
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -359,7 +324,7 @@ export const deleteTypeAirconditioning = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/airconditioning/type?id=${deviceid}&assetid=${asset_id}`
+      `/airconditioning/type?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -370,7 +335,7 @@ export const deleteTypeAirconditioning = async (
 export const getSubCategoriesAirconditioning = async () => {
   try {
     const response = await apiClient.get(
-      "/api/v1/dapot/airconditioning/subcategories?nopage=yes"
+      "/airconditioning/subcategories?nopage=yes"
     );
     console.log(response);
     return response.data;
@@ -388,17 +353,14 @@ export const getMaintenanceAirconditioning = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get(
-      "/api/v1/dapot/airconditioning/maintenances",
-      {
-        params: {
-          page,
-          limit: 15,
-          globalFilter,
-          nopage,
-        },
-      }
-    );
+    const response = await apiClient.get("/airconditioning/maintenances", {
+      params: {
+        page,
+        limit: 15,
+        globalFilter,
+        nopage,
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -411,14 +373,11 @@ export const getOneMaintenanceAirconditioning = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get(
-      "/api/v1/dapot/airconditioning/maintenance",
-      {
-        params: {
-          id,
-        },
-      }
-    );
+    const response = await apiClient.get("/airconditioning/maintenance", {
+      params: {
+        id,
+      },
+    });
     console.log(response);
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -434,7 +393,7 @@ export const postMaintenanceAirconditioning = async (
   console.log(data.get("activity"));
   try {
     const response = await apiClient.post(
-      "/api/v1/dapot/airconditioning/maintenance",
+      "/airconditioning/maintenance",
       data,
       {
         headers: {
@@ -455,7 +414,7 @@ export const updateMaintenanceAirconditioning = async (
   console.log(data.get("id"));
   try {
     const response = await apiClient.put(
-      "/api/v1/dapot/airconditioning/maintenance?id=" + data.get("id"),
+      "/airconditioning/maintenance?id=" + data.get("id"),
       data,
       {
         headers: {
@@ -477,7 +436,7 @@ export const deleteMaintenanceAirconditioning = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/airconditioning/maintenance?id=${deviceid}&assetid=${asset_id}`
+      `/airconditioning/maintenance?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -493,17 +452,14 @@ export const getLinkAirconditioning = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get(
-      "/api/v1/dapot/airconditioning/links",
-      {
-        params: {
-          page,
-          limit: 15,
-          globalFilter,
-          nopage,
-        },
-      }
-    );
+    const response = await apiClient.get("/airconditioning/links", {
+      params: {
+        page,
+        limit: 15,
+        globalFilter,
+        nopage,
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -520,14 +476,11 @@ export const postLinkAirconditioning = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.post(
-      "/api/v1/dapot/airconditioning/link",
-      {
-        incoming,
-        outgoing,
-        user_id,
-      }
-    );
+    const response = await apiClient.post("/airconditioning/link", {
+      incoming,
+      outgoing,
+      user_id,
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);

@@ -260,6 +260,14 @@ button:focus-visible {
   opacity: 1;
 }
 
+.donut-chart-container {
+  width: 100%; /* or specify a fixed size */
+  height: 400px; /* or a percentage based on the container */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 @media (hover: hover) {
   .resizer {
     opacity: 0;

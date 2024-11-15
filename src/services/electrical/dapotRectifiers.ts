@@ -17,17 +17,14 @@ export const getRectifiers = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get(
-      "/api/v1/dapot/electrical/rectifiers",
-      {
-        params: {
-          page,
-          limit: 15,
-          globalFilter,
-          nopage,
-        },
-      }
-    );
+    const response = await apiClient.get("/electrical/rectifiers", {
+      params: {
+        page,
+        limit: 15,
+        globalFilter,
+        nopage,
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -42,7 +39,7 @@ export const exportRectifiersCsv = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/electrical/rectifier-export-csv",
+      "/electrical/rectifier-export-csv",
       {
         params: {
           page,
@@ -66,7 +63,7 @@ export const exportRectifiersXlsx = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/electrical/rectifier-export-xlsx",
+      "/electrical/rectifier-export-xlsx",
       {
         params: {
           page,
@@ -88,9 +85,7 @@ export const getRectifier = async (
   if (id) {
     setLoadingAndError(dispatch);
     try {
-      const response = await apiClient.get(
-        `/api/v1/dapot/electrical/rectifier?id=${id}`
-      );
+      const response = await apiClient.get(`/electrical/rectifier?id=${id}`);
       return handleResponse(response, dispatch);
     } catch (error) {
       handleError(error, dispatch);
@@ -104,15 +99,11 @@ export const postNewRectifier = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.post(
-      "/api/v1/dapot/electrical/rectifier",
-      data,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = await apiClient.post("/electrical/rectifier", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -128,7 +119,7 @@ export const updateRectifier = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.put(
-      `/api/v1/dapot/electrical/rectifier?id=${deviceid}&assetid=${assetid}`,
+      `/electrical/rectifier?id=${deviceid}&assetid=${assetid}`,
       data,
       {
         headers: {
@@ -153,7 +144,7 @@ export const deleteRectifier = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/electrical/rectifier?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
+      `/electrical/rectifier?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {

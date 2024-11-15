@@ -16,7 +16,7 @@ export const getLightings = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/lighting/all", {
+    const response = await apiClient.get("/lighting/all", {
       params: {
         page,
         limit: 15,
@@ -31,9 +31,7 @@ export const getLightings = async (
 };
 export const getLightingsLink = async () => {
   try {
-    const response = await apiClient.get(
-      "/api/v1/dapot/lighting/all?nopage=yes"
-    );
+    const response = await apiClient.get("/lighting/all?nopage=yes");
     return response.data;
   } catch (error) {
     console.error("Error fetching Link floors:", error);
@@ -49,7 +47,7 @@ export const getBrandLighting = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/lighting/brands", {
+    const response = await apiClient.get("/lighting/brands", {
       params: {
         page,
         limit: 15,
@@ -69,7 +67,7 @@ export const getOneBrandLighting = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/lighting/brand", {
+    const response = await apiClient.get("/lighting/brand", {
       params: {
         id,
       },
@@ -90,7 +88,7 @@ export const postBrandLighting = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.post("/api/v1/dapot/lighting/brand", {
+    const response = await apiClient.post("/lighting/brand", {
       name: name,
       user_id,
     });
@@ -109,13 +107,10 @@ export const updateBrandLighting = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.put(
-      "/api/v1/dapot/lighting/brand?id=" + id,
-      {
-        name: name,
-        user_id,
-      }
-    );
+    const response = await apiClient.put("/lighting/brand?id=" + id, {
+      name: name,
+      user_id,
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -130,7 +125,7 @@ export const deleteLighting = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/lighting/brand?id=${deviceid}&assetid=${asset_id}`
+      `/lighting/brand?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -146,7 +141,7 @@ export const getVendorLighting = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/lighting/vendors", {
+    const response = await apiClient.get("/lighting/vendors", {
       params: {
         page,
         limit: 15,
@@ -166,7 +161,7 @@ export const getOneVendorLighting = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/lighting/vendor", {
+    const response = await apiClient.get("/lighting/vendor", {
       params: {
         id,
       },
@@ -189,7 +184,7 @@ export const postVendorLighting = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.post("/api/v1/dapot/lighting/vendor", {
+    const response = await apiClient.post("/lighting/vendor", {
       company,
       company_user_name,
       number_phone,
@@ -209,7 +204,7 @@ export const deleteVendorLighting = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/lighting/vendor?id=${deviceid}&assetid=${asset_id}`
+      `/lighting/vendor?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -229,15 +224,12 @@ export const updateVendorLighting = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.put(
-      "/api/v1/dapot/lighting/vendor?id=" + id,
-      {
-        company,
-        company_user_name,
-        number_phone,
-        user_id,
-      }
-    );
+    const response = await apiClient.put("/lighting/vendor?id=" + id, {
+      company,
+      company_user_name,
+      number_phone,
+      user_id,
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -253,7 +245,7 @@ export const getTypeLighting = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/lighting/types", {
+    const response = await apiClient.get("/lighting/types", {
       params: {
         page,
         limit: 15,
@@ -273,7 +265,7 @@ export const getOneTypeLighting = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/lighting/type", {
+    const response = await apiClient.get("/lighting/type", {
       params: {
         id,
       },
@@ -293,7 +285,7 @@ export const postTypeLighting = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.post("/api/v1/dapot/lighting/type", {
+    const response = await apiClient.post("/lighting/type", {
       name,
       user_id,
     });
@@ -313,13 +305,10 @@ export const updateTypeLighting = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.put(
-      "/api/v1/dapot/lighting/type?id=" + id,
-      {
-        name,
-        user_id,
-      }
-    );
+    const response = await apiClient.put("/lighting/type?id=" + id, {
+      name,
+      user_id,
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -334,7 +323,7 @@ export const deleteTypeLighting = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/lighting/type?id=${deviceid}&assetid=${asset_id}`
+      `/lighting/type?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -344,9 +333,7 @@ export const deleteTypeLighting = async (
 
 export const getSubCategoriesLighting = async () => {
   try {
-    const response = await apiClient.get(
-      "/api/v1/dapot/lighting/subcategories?nopage=yes"
-    );
+    const response = await apiClient.get("/lighting/subcategories?nopage=yes");
     console.log(response);
     return response.data;
   } catch (error) {
@@ -363,17 +350,14 @@ export const getMaintenanceLighting = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get(
-      "/api/v1/dapot/lighting/maintenances",
-      {
-        params: {
-          page,
-          limit: 15,
-          globalFilter,
-          nopage,
-        },
-      }
-    );
+    const response = await apiClient.get("/lighting/maintenances", {
+      params: {
+        page,
+        limit: 15,
+        globalFilter,
+        nopage,
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -386,7 +370,7 @@ export const getOneMaintenanceLighting = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/lighting/maintenance", {
+    const response = await apiClient.get("/lighting/maintenance", {
       params: {
         id,
       },
@@ -405,15 +389,11 @@ export const postMaintenanceLighting = async (
   setLoadingAndError(dispatch);
   console.log(data.get("activity"));
   try {
-    const response = await apiClient.post(
-      "/api/v1/dapot/lighting/maintenance",
-      data,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = await apiClient.post("/lighting/maintenance", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -427,7 +407,7 @@ export const updateMaintenanceLighting = async (
   console.log(data.get("id"));
   try {
     const response = await apiClient.put(
-      "/api/v1/dapot/lighting/maintenance?id=" + data.get("id"),
+      "/lighting/maintenance?id=" + data.get("id"),
       data,
       {
         headers: {
@@ -449,7 +429,7 @@ export const deleteMaintenanceLighting = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/lighting/maintenance?id=${deviceid}&assetid=${asset_id}`
+      `/lighting/maintenance?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -465,7 +445,7 @@ export const getLinkLighting = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/lighting/links", {
+    const response = await apiClient.get("/lighting/links", {
       params: {
         page,
         limit: 15,
@@ -487,7 +467,7 @@ export const getLightingdevices = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/lighting/lightings", {
+    const response = await apiClient.get("/lighting/lightings", {
       params: {
         page,
         limit: 15,
@@ -509,7 +489,7 @@ export const exportLightingdeviceCsv = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/lighting/lighting-export-csv",
+      "/lighting/lighting-export-csv",
       {
         params: {
           page,
@@ -533,7 +513,7 @@ export const exportLightingdeviceXlsx = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/lighting/lighting-export-xlsx",
+      "/lighting/lighting-export-xlsx",
       {
         params: {
           page,
@@ -555,9 +535,7 @@ export const getLightingdevice = async (
   if (id) {
     setLoadingAndError(dispatch);
     try {
-      const response = await apiClient.get(
-        `/api/v1/dapot/lighting/lighting?id=${id}`
-      );
+      const response = await apiClient.get(`/lighting/lighting?id=${id}`);
       return handleResponse(response, dispatch);
     } catch (error) {
       handleError(error, dispatch);
@@ -571,15 +549,11 @@ export const postNewLightingdevice = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.post(
-      "/api/v1/dapot/lighting/lighting",
-      data,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = await apiClient.post("/lighting/lighting", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -595,7 +569,7 @@ export const updateLightingdevice = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.put(
-      `/api/v1/dapot/lighting/lighting?id=${deviceid}&assetid=${assetid}`,
+      `/lighting/lighting?id=${deviceid}&assetid=${assetid}`,
       data,
       {
         headers: {
@@ -620,7 +594,7 @@ export const deleteLightingdevice = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/lighting/lighting?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
+      `/lighting/lighting?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {

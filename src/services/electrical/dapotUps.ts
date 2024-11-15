@@ -17,7 +17,7 @@ export const getUpses = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/electrical/upses", {
+    const response = await apiClient.get("/electrical/upses", {
       params: {
         page,
         limit: 15,
@@ -37,15 +37,11 @@ export const postNewUps = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.post(
-      "/api/v1/dapot/electrical/ups",
-      data,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = await apiClient.post("/electrical/ups", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -59,9 +55,7 @@ export const getUps = async (
   if (id) {
     setLoadingAndError(dispatch);
     try {
-      const response = await apiClient.get(
-        `/api/v1/dapot/electrical/ups?id=${id}`
-      );
+      const response = await apiClient.get(`/electrical/ups?id=${id}`);
       return handleResponse(response, dispatch);
     } catch (error) {
       handleError(error, dispatch);
@@ -78,7 +72,7 @@ export const updateUps = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.put(
-      `/api/v1/dapot/electrical/ups?id=${deviceid}&assetid=${assetid}`,
+      `/electrical/ups?id=${deviceid}&assetid=${assetid}`,
       data,
       {
         headers: {
@@ -103,7 +97,7 @@ export const deleteUps = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/electrical/ups?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
+      `/electrical/ups?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -119,17 +113,14 @@ export const exportUpssCsv = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await exportClientDapot.get(
-      "/api/v1/dapot/electrical/ups-export-csv",
-      {
-        params: {
-          page,
-          limit: 15,
-          globalFilter,
-          nopage,
-        },
-      }
-    );
+    const response = await exportClientDapot.get("/electrical/ups-export-csv", {
+      params: {
+        page,
+        limit: 15,
+        globalFilter,
+        nopage,
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -144,7 +135,7 @@ export const exportUpssXlsx = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/electrical/ups-export-xlsx",
+      "/electrical/ups-export-xlsx",
       {
         params: {
           page,

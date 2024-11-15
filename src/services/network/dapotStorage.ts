@@ -17,7 +17,7 @@ export const getStorages = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/network/storages", {
+    const response = await apiClient.get("/network/storages", {
       params: {
         page,
         limit: 15,
@@ -39,7 +39,7 @@ export const exportStoragesCsv = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/network/storage-export-csv",
+      "/network/storage-export-csv",
       {
         params: {
           page,
@@ -63,7 +63,7 @@ export const exportStoragesXlsx = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/network/storage-export-xlsx",
+      "/network/storage-export-xlsx",
       {
         params: {
           page,
@@ -85,15 +85,11 @@ export const postNewStorage = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.post(
-      "/api/v1/dapot/network/storage",
-      data,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = await apiClient.post("/network/storage", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -107,9 +103,7 @@ export const getStorage = async (
   if (id) {
     setLoadingAndError(dispatch);
     try {
-      const response = await apiClient.get(
-        `/api/v1/dapot/network/storage?id=${id}`
-      );
+      const response = await apiClient.get(`/network/storage?id=${id}`);
       return handleResponse(response, dispatch);
     } catch (error) {
       handleError(error, dispatch);
@@ -126,7 +120,7 @@ export const updateStorage = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.put(
-      `/api/v1/dapot/network/storage?id=${deviceid}&assetid=${assetid}`,
+      `/network/storage?id=${deviceid}&assetid=${assetid}`,
       data,
       {
         headers: {
@@ -151,7 +145,7 @@ export const deleteStorage = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/network/storage?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
+      `/network/storage?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {

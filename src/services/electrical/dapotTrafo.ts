@@ -17,7 +17,7 @@ export const getTrafos = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/electrical/trafos", {
+    const response = await apiClient.get("/electrical/trafos", {
       params: {
         page,
         limit: 15,
@@ -37,15 +37,11 @@ export const postNewTrafo = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.post(
-      "/api/v1/dapot/electrical/trafo",
-      data,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = await apiClient.post("/electrical/trafo", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -59,9 +55,7 @@ export const getTrafo = async (
   if (id) {
     setLoadingAndError(dispatch);
     try {
-      const response = await apiClient.get(
-        `/api/v1/dapot/electrical/trafo?id=${id}`
-      );
+      const response = await apiClient.get(`/electrical/trafo?id=${id}`);
       return handleResponse(response, dispatch);
     } catch (error) {
       handleError(error, dispatch);
@@ -78,7 +72,7 @@ export const updateTrafo = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.put(
-      `/api/v1/dapot/electrical/trafo?id=${deviceid}&assetid=${assetid}`,
+      `/electrical/trafo?id=${deviceid}&assetid=${assetid}`,
       data,
       {
         headers: {
@@ -103,7 +97,7 @@ export const deleteTrafo = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/electrical/trafo?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
+      `/electrical/trafo?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -120,7 +114,7 @@ export const exportTrafosCsv = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/electrical/trafo-export-csv",
+      "/electrical/trafo-export-csv",
       {
         params: {
           page,
@@ -144,7 +138,7 @@ export const exportTrafosXlsx = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/electrical/trafo-export-xlsx",
+      "/electrical/trafo-export-xlsx",
       {
         params: {
           page,

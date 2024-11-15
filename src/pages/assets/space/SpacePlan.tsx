@@ -10,10 +10,10 @@ function SpacePlan() {
   const [lantai, _] = useState(floor ? floor : "lantai1");
 
   // URL gambar yang ingin ditampilkan
-  const imageUrl1 = `http://localhost:3001/gambar/lantai1.png`;
-  const imageUrl2 = `http://localhost:3001/gambar/lantai2.png`;
-  const imageUrl3 = `http://localhost:3001/gambar/lantai3.png`;
-  const imageUrl4 = `http://localhost:3001/gambar/lantai4.png`;
+  const imageUrl1 = `http://192.168.1.62:3001/gambar/lantai1.png`;
+  const imageUrl2 = `http://192.168.1.62:3001/gambar/lantai2.png`;
+  const imageUrl3 = `http://192.168.1.62:3001/gambar/lantai3.png`;
+  const imageUrl4 = `http://192.168.1.62:3001/gambar/lantai4.png`;
   return (
     <>
       <div

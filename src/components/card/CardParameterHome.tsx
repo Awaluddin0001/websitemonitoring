@@ -41,12 +41,12 @@ export default function CardParameterHome() {
             <h3>Dalam Perhatian</h3>
           </div>
           <div className={styles.parameterCard}>
-            <div className={styles.color1}></div>
+            <div className={styles.color2}></div>
             <h3>{"45% - 60%"}</h3>
             <h3>Normal</h3>
           </div>
           <div className={styles.parameterCard}>
-            <div className={styles.color2}></div>
+            <div className={styles.color4}></div>
             <h3>{"61% - 70%"}</h3>
             <h3>Dalam Perhatian</h3>
           </div>
@@ -64,12 +64,12 @@ export default function CardParameterHome() {
         <div className={styles.parameterPue}>
           <h2>Parameter Warna Kartu PUE</h2>
           <div className={styles.parameterCard}>
-            <div className={styles.color2}></div>
+            <div className={styles.color1}></div>
             <h3>{"Di bawah 1.5"}</h3>
             <h3>Sangat Efisien</h3>
           </div>
           <div className={styles.parameterCard}>
-            <div className={styles.color4}></div>
+            <div className={styles.color2}></div>
             <h3>{"1.6 - 2.0"}</h3>
             <h3>Efisien</h3>
           </div>

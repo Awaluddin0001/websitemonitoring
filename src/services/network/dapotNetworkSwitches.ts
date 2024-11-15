@@ -17,7 +17,7 @@ export const getNetworkswitches = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/network/switchs", {
+    const response = await apiClient.get("/network/switchs", {
       params: {
         page,
         limit: 15,
@@ -38,17 +38,14 @@ export const exportNetworkswitchesCsv = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await exportClientDapot.get(
-      "/api/v1/dapot/network/switch-export-csv",
-      {
-        params: {
-          page,
-          limit: 15,
-          globalFilter,
-          nopage,
-        },
-      }
-    );
+    const response = await exportClientDapot.get("/network/switch-export-csv", {
+      params: {
+        page,
+        limit: 15,
+        globalFilter,
+        nopage,
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -63,7 +60,7 @@ export const exportNetworkswitchesXlsx = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/network/switch-export-xlsx",
+      "/network/switch-export-xlsx",
       {
         params: {
           page,
@@ -85,15 +82,11 @@ export const postNewNetworkswitche = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.post(
-      "/api/v1/dapot/network/switch",
-      data,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = await apiClient.post("/network/switch", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -107,9 +100,7 @@ export const getNetworkswitche = async (
   if (id) {
     setLoadingAndError(dispatch);
     try {
-      const response = await apiClient.get(
-        `/api/v1/dapot/network/switch?id=${id}`
-      );
+      const response = await apiClient.get(`/network/switch?id=${id}`);
       return handleResponse(response, dispatch);
     } catch (error) {
       handleError(error, dispatch);
@@ -126,7 +117,7 @@ export const updateNetworkswitche = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.put(
-      `/api/v1/dapot/network/switch?id=${deviceid}&assetid=${assetid}`,
+      `/network/switch?id=${deviceid}&assetid=${assetid}`,
       data,
       {
         headers: {
@@ -151,7 +142,7 @@ export const deleteNetworkswitche = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/network/switch?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
+      `/network/switch?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {

@@ -103,6 +103,18 @@
   font-size: 2.4rem;
 }
 
+.inputPassword:-webkit-autofill,
+.inputPassword:-webkit-autofill:hover,
+.inputPassword:-webkit-autofill:focus,
+.inputPassword:-webkit-autofill:active {
+  background-color: transparent !important;
+  color: var(--blackWhite1-color) !important;
+  box-shadow: 0 0 0 1000px var(--redwhite1-color) inset !important;
+  -webkit-text-fill-color: var(
+    --blackWhite1-color
+  ) !important; /* Force text color */
+}
+
 .btnLogin {
   background-color: var(--background1-color);
   color: var(--foreground1a-color);

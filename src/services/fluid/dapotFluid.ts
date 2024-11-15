@@ -16,7 +16,7 @@ export const getFluids = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/fluid/all", {
+    const response = await apiClient.get("/fluid/all", {
       params: {
         page,
         limit: 15,
@@ -31,7 +31,7 @@ export const getFluids = async (
 };
 export const getFluidsLink = async () => {
   try {
-    const response = await apiClient.get("/api/v1/dapot/fluid/all?nopage=yes");
+    const response = await apiClient.get("/fluid/all?nopage=yes");
     return response.data;
   } catch (error) {
     console.error("Error fetching Link floors:", error);
@@ -47,7 +47,7 @@ export const getBrandFluid = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/fluid/brands", {
+    const response = await apiClient.get("/fluid/brands", {
       params: {
         page,
         limit: 15,
@@ -67,7 +67,7 @@ export const getOneBrandFluid = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/fluid/brand", {
+    const response = await apiClient.get("/fluid/brand", {
       params: {
         id,
       },
@@ -88,7 +88,7 @@ export const postBrandFluid = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.post("/api/v1/dapot/fluid/brand", {
+    const response = await apiClient.post("/fluid/brand", {
       name: name,
       user_id,
     });
@@ -107,7 +107,7 @@ export const updateBrandFluid = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.put("/api/v1/dapot/fluid/brand?id=" + id, {
+    const response = await apiClient.put("/fluid/brand?id=" + id, {
       name: name,
       user_id,
     });
@@ -125,7 +125,7 @@ export const deleteFluid = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/fluid/brand?id=${deviceid}&assetid=${asset_id}`
+      `/fluid/brand?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -141,7 +141,7 @@ export const getVendorFluid = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/fluid/vendors", {
+    const response = await apiClient.get("/fluid/vendors", {
       params: {
         page,
         limit: 15,
@@ -161,7 +161,7 @@ export const getOneVendorFluid = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/fluid/vendor", {
+    const response = await apiClient.get("/fluid/vendor", {
       params: {
         id,
       },
@@ -184,7 +184,7 @@ export const postVendorFluid = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.post("/api/v1/dapot/fluid/vendor", {
+    const response = await apiClient.post("/fluid/vendor", {
       company,
       company_user_name,
       number_phone,
@@ -204,7 +204,7 @@ export const deleteVendorFluid = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/fluid/vendor?id=${deviceid}&assetid=${asset_id}`
+      `/fluid/vendor?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -224,15 +224,12 @@ export const updateVendorFluid = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.put(
-      "/api/v1/dapot/fluid/vendor?id=" + id,
-      {
-        company,
-        company_user_name,
-        number_phone,
-        user_id,
-      }
-    );
+    const response = await apiClient.put("/fluid/vendor?id=" + id, {
+      company,
+      company_user_name,
+      number_phone,
+      user_id,
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -248,7 +245,7 @@ export const getTypeFluid = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/fluid/types", {
+    const response = await apiClient.get("/fluid/types", {
       params: {
         page,
         limit: 15,
@@ -268,7 +265,7 @@ export const getOneTypeFluid = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/fluid/type", {
+    const response = await apiClient.get("/fluid/type", {
       params: {
         id,
       },
@@ -288,7 +285,7 @@ export const postTypeFluid = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.post("/api/v1/dapot/fluid/type", {
+    const response = await apiClient.post("/fluid/type", {
       name,
       user_id,
     });
@@ -308,7 +305,7 @@ export const updateTypeFluid = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.put("/api/v1/dapot/fluid/type?id=" + id, {
+    const response = await apiClient.put("/fluid/type?id=" + id, {
       name,
       user_id,
     });
@@ -326,7 +323,7 @@ export const deleteTypeFluid = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/fluid/type?id=${deviceid}&assetid=${asset_id}`
+      `/fluid/type?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -336,9 +333,7 @@ export const deleteTypeFluid = async (
 
 export const getSubCategoriesFluid = async () => {
   try {
-    const response = await apiClient.get(
-      "/api/v1/dapot/fluid/subcategories?nopage=yes"
-    );
+    const response = await apiClient.get("/fluid/subcategories?nopage=yes");
     console.log(response);
     return response.data;
   } catch (error) {
@@ -355,7 +350,7 @@ export const getMaintenanceFluid = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/fluid/maintenances", {
+    const response = await apiClient.get("/fluid/maintenances", {
       params: {
         page,
         limit: 15,
@@ -375,7 +370,7 @@ export const getOneMaintenanceFluid = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/fluid/maintenance", {
+    const response = await apiClient.get("/fluid/maintenance", {
       params: {
         id,
       },
@@ -394,15 +389,11 @@ export const postMaintenanceFluid = async (
   setLoadingAndError(dispatch);
   console.log(data.get("activity"));
   try {
-    const response = await apiClient.post(
-      "/api/v1/dapot/fluid/maintenance",
-      data,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = await apiClient.post("/fluid/maintenance", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -416,7 +407,7 @@ export const updateMaintenanceFluid = async (
   console.log(data.get("id"));
   try {
     const response = await apiClient.put(
-      "/api/v1/dapot/fluid/maintenance?id=" + data.get("id"),
+      "/fluid/maintenance?id=" + data.get("id"),
       data,
       {
         headers: {
@@ -438,7 +429,7 @@ export const deleteMaintenanceFluid = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/fluid/maintenance?id=${deviceid}&assetid=${asset_id}`
+      `/fluid/maintenance?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -454,7 +445,7 @@ export const getLinkFluid = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/fluid/links", {
+    const response = await apiClient.get("/fluid/links", {
       params: {
         page,
         limit: 15,
@@ -476,7 +467,7 @@ export const getFluiddevices = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/fluid/fluids", {
+    const response = await apiClient.get("/fluid/fluids", {
       params: {
         page,
         limit: 15,
@@ -497,17 +488,14 @@ export const exportFluiddeviceCsv = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await exportClientDapot.get(
-      "/api/v1/dapot/fluid/fluid-export-csv",
-      {
-        params: {
-          page,
-          limit: 15,
-          globalFilter,
-          nopage,
-        },
-      }
-    );
+    const response = await exportClientDapot.get("/fluid/fluid-export-csv", {
+      params: {
+        page,
+        limit: 15,
+        globalFilter,
+        nopage,
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -521,17 +509,14 @@ export const exportFluiddeviceXlsx = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await exportClientDapot.get(
-      "/api/v1/dapot/fluid/fluid-export-xlsx",
-      {
-        params: {
-          page,
-          limit: 15,
-          globalFilter,
-          nopage,
-        },
-      }
-    );
+    const response = await exportClientDapot.get("/fluid/fluid-export-xlsx", {
+      params: {
+        page,
+        limit: 15,
+        globalFilter,
+        nopage,
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -544,9 +529,7 @@ export const getFluiddevice = async (
   if (id) {
     setLoadingAndError(dispatch);
     try {
-      const response = await apiClient.get(
-        `/api/v1/dapot/fluid/fluid?id=${id}`
-      );
+      const response = await apiClient.get(`/fluid/fluid?id=${id}`);
       return handleResponse(response, dispatch);
     } catch (error) {
       handleError(error, dispatch);
@@ -560,7 +543,7 @@ export const postNewFluiddevice = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.post("/api/v1/dapot/fluid/fluid", data, {
+    const response = await apiClient.post("/fluid/fluid", data, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -580,7 +563,7 @@ export const updateFluiddevice = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.put(
-      `/api/v1/dapot/fluid/fluid?id=${deviceid}&assetid=${assetid}`,
+      `/fluid/fluid?id=${deviceid}&assetid=${assetid}`,
       data,
       {
         headers: {
@@ -605,7 +588,7 @@ export const deleteFluiddevice = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/fluid/fluid?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
+      `/fluid/fluid?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {

@@ -17,7 +17,7 @@ export const getCubicles = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/electrical/cubicles", {
+    const response = await apiClient.get("/electrical/cubicles", {
       params: {
         page,
         limit: 15,
@@ -37,15 +37,11 @@ export const postNewCubicle = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.post(
-      "/api/v1/dapot/electrical/cubicle",
-      data,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = await apiClient.post("/electrical/cubicle", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -59,9 +55,7 @@ export const getCubicle = async (
   if (id) {
     setLoadingAndError(dispatch);
     try {
-      const response = await apiClient.get(
-        `/api/v1/dapot/electrical/cubicle?id=${id}`
-      );
+      const response = await apiClient.get(`/electrical/cubicle?id=${id}`);
       return handleResponse(response, dispatch);
     } catch (error) {
       handleError(error, dispatch);
@@ -78,7 +72,7 @@ export const updateCubicle = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.put(
-      `/api/v1/dapot/electrical/cubicle?id=${deviceid}&assetid=${assetid}`,
+      `/electrical/cubicle?id=${deviceid}&assetid=${assetid}`,
       data,
       {
         headers: {
@@ -103,7 +97,7 @@ export const deleteCubicle = async (
     const jsonuserData = JSON.parse(userData);
     const user_id = jsonuserData.id;
     const response = await apiClient.delete(
-      `/api/v1/dapot/electrical/cubicle?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
+      `/electrical/cubicle?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -120,7 +114,7 @@ export const exportCubiclesCsv = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/electrical/cubicle-export-csv",
+      "/electrical/cubicle-export-csv",
       {
         params: {
           page,
@@ -144,7 +138,7 @@ export const exportCubiclesXlsx = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/electrical/cubicle-export-xlsx",
+      "/electrical/cubicle-export-xlsx",
       {
         params: {
           page,

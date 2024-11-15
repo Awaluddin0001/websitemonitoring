@@ -61,6 +61,7 @@ export default function DekstopNavbar() {
             <>
               <DesktopIconBar to="/main/assets" icon="asset" />
               <DesktopIconBar to="/main/checklist" icon="checklist" />
+              <DesktopIconBar to="/main/license" icon="license" />
               <DesktopIconBar to="/main/admin" icon="admin" />
               <DesktopIconBar to="/main/supervisor" icon="supervisor" />
             </>

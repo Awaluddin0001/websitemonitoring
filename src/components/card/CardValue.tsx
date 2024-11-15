@@ -40,7 +40,7 @@ export default function CardValue({
       onMouseEnter={() => setShowTooltip(true)} // Show tooltip on hover
       onMouseLeave={() => setShowTooltip(false)} // Hide tooltip when not hovering
     >
-      <h2>{title}</h2>
+      <h2 style={{ color: valueColor }}>{title}</h2>
       <p style={{ color: valueColor }}>{cardValue}</p>
 
       {/* Conditionally render tooltip */}

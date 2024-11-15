@@ -17,7 +17,7 @@ export const getFirewalls = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/network/firewalls", {
+    const response = await apiClient.get("/network/firewalls", {
       params: {
         page,
         limit: 15,
@@ -39,7 +39,7 @@ export const exportFirewallsCsv = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/network/firewall-export-csv",
+      "/network/firewall-export-csv",
       {
         params: {
           page,
@@ -63,7 +63,7 @@ export const exportFirewallsXlsx = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/network/firewall-export-xlsx",
+      "/network/firewall-export-xlsx",
       {
         params: {
           page,
@@ -85,15 +85,11 @@ export const postNewFirewall = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.post(
-      "/api/v1/dapot/network/firewall",
-      data,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = await apiClient.post("/network/firewall", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -107,9 +103,7 @@ export const getFirewall = async (
   if (id) {
     setLoadingAndError(dispatch);
     try {
-      const response = await apiClient.get(
-        `/api/v1/dapot/network/firewall?id=${id}`
-      );
+      const response = await apiClient.get(`/network/firewall?id=${id}`);
       return handleResponse(response, dispatch);
     } catch (error) {
       handleError(error, dispatch);
@@ -126,7 +120,7 @@ export const updateFirewall = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.put(
-      `/api/v1/dapot/network/firewall?id=${deviceid}&assetid=${assetid}`,
+      `/network/firewall?id=${deviceid}&assetid=${assetid}`,
       data,
       {
         headers: {
@@ -151,7 +145,7 @@ export const deleteFirewall = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/network/firewall?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
+      `/network/firewall?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {

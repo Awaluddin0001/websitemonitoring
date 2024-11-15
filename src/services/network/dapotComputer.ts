@@ -17,7 +17,7 @@ export const getComputers = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/network/computers", {
+    const response = await apiClient.get("/network/computers", {
       params: {
         page,
         limit: 15,
@@ -39,7 +39,7 @@ export const exportComputersCsv = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/network/computer-export-csv",
+      "/network/computer-export-csv",
       {
         params: {
           page,
@@ -63,7 +63,7 @@ export const exportComputersXlsx = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/network/computer-export-xlsx",
+      "/network/computer-export-xlsx",
       {
         params: {
           page,
@@ -85,15 +85,11 @@ export const postNewComputer = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.post(
-      "/api/v1/dapot/network/computer",
-      data,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = await apiClient.post("/network/computer", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -107,9 +103,7 @@ export const getComputer = async (
   if (id) {
     setLoadingAndError(dispatch);
     try {
-      const response = await apiClient.get(
-        `/api/v1/dapot/network/computer?id=${id}`
-      );
+      const response = await apiClient.get(`/network/computer?id=${id}`);
       return handleResponse(response, dispatch);
     } catch (error) {
       handleError(error, dispatch);
@@ -126,7 +120,7 @@ export const updateComputer = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.put(
-      `/api/v1/dapot/network/computer?id=${deviceid}&assetid=${assetid}`,
+      `/network/computer?id=${deviceid}&assetid=${assetid}`,
       data,
       {
         headers: {
@@ -151,7 +145,7 @@ export const deleteComputer = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/network/computer?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
+      `/network/computer?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {

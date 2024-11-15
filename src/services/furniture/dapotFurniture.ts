@@ -16,7 +16,7 @@ export const getFurnitures = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/furniture/all", {
+    const response = await apiClient.get("/furniture/all", {
       params: {
         page,
         limit: 15,
@@ -31,9 +31,7 @@ export const getFurnitures = async (
 };
 export const getFurnituresLink = async () => {
   try {
-    const response = await apiClient.get(
-      "/api/v1/dapot/furniture/all?nopage=yes"
-    );
+    const response = await apiClient.get("/furniture/all?nopage=yes");
     return response.data;
   } catch (error) {
     console.error("Error fetching Link floors:", error);
@@ -49,7 +47,7 @@ export const getBrandFurniture = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/furniture/brands", {
+    const response = await apiClient.get("/furniture/brands", {
       params: {
         page,
         limit: 15,
@@ -69,7 +67,7 @@ export const getOneBrandFurniture = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/furniture/brand", {
+    const response = await apiClient.get("/furniture/brand", {
       params: {
         id,
       },
@@ -90,7 +88,7 @@ export const postBrandFurniture = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.post("/api/v1/dapot/furniture/brand", {
+    const response = await apiClient.post("/furniture/brand", {
       name: name,
       user_id,
     });
@@ -109,13 +107,10 @@ export const updateBrandFurniture = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.put(
-      "/api/v1/dapot/furniture/brand?id=" + id,
-      {
-        name: name,
-        user_id,
-      }
-    );
+    const response = await apiClient.put("/furniture/brand?id=" + id, {
+      name: name,
+      user_id,
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -130,7 +125,7 @@ export const deleteFurniture = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/furniture/brand?id=${deviceid}&assetid=${asset_id}`
+      `/furniture/brand?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -146,7 +141,7 @@ export const getVendorFurniture = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/furniture/vendors", {
+    const response = await apiClient.get("/furniture/vendors", {
       params: {
         page,
         limit: 15,
@@ -166,7 +161,7 @@ export const getOneVendorFurniture = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/furniture/vendor", {
+    const response = await apiClient.get("/furniture/vendor", {
       params: {
         id,
       },
@@ -189,7 +184,7 @@ export const postVendorFurniture = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.post("/api/v1/dapot/furniture/vendor", {
+    const response = await apiClient.post("/furniture/vendor", {
       company,
       company_user_name,
       number_phone,
@@ -209,7 +204,7 @@ export const deleteVendorFurniture = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/furniture/vendor?id=${deviceid}&assetid=${asset_id}`
+      `/furniture/vendor?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -229,15 +224,12 @@ export const updateVendorFurniture = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.put(
-      "/api/v1/dapot/furniture/vendor?id=" + id,
-      {
-        company,
-        company_user_name,
-        number_phone,
-        user_id,
-      }
-    );
+    const response = await apiClient.put("/furniture/vendor?id=" + id, {
+      company,
+      company_user_name,
+      number_phone,
+      user_id,
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -253,7 +245,7 @@ export const getTypeFurniture = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/furniture/types", {
+    const response = await apiClient.get("/furniture/types", {
       params: {
         page,
         limit: 15,
@@ -273,7 +265,7 @@ export const getOneTypeFurniture = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/furniture/type", {
+    const response = await apiClient.get("/furniture/type", {
       params: {
         id,
       },
@@ -293,7 +285,7 @@ export const postTypeFurniture = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.post("/api/v1/dapot/furniture/type", {
+    const response = await apiClient.post("/furniture/type", {
       name,
       user_id,
     });
@@ -313,13 +305,10 @@ export const updateTypeFurniture = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.put(
-      "/api/v1/dapot/furniture/type?id=" + id,
-      {
-        name,
-        user_id,
-      }
-    );
+    const response = await apiClient.put("/furniture/type?id=" + id, {
+      name,
+      user_id,
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -334,7 +323,7 @@ export const deleteTypeFurniture = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/furniture/type?id=${deviceid}&assetid=${asset_id}`
+      `/furniture/type?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -344,9 +333,7 @@ export const deleteTypeFurniture = async (
 
 export const getSubCategoriesFurniture = async () => {
   try {
-    const response = await apiClient.get(
-      "/api/v1/dapot/furniture/subcategories?nopage=yes"
-    );
+    const response = await apiClient.get("/furniture/subcategories?nopage=yes");
     console.log(response);
     return response.data;
   } catch (error) {
@@ -363,17 +350,14 @@ export const getMaintenanceFurniture = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get(
-      "/api/v1/dapot/furniture/maintenances",
-      {
-        params: {
-          page,
-          limit: 15,
-          globalFilter,
-          nopage,
-        },
-      }
-    );
+    const response = await apiClient.get("/furniture/maintenances", {
+      params: {
+        page,
+        limit: 15,
+        globalFilter,
+        nopage,
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -386,14 +370,11 @@ export const getOneMaintenanceFurniture = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get(
-      "/api/v1/dapot/furniture/maintenance",
-      {
-        params: {
-          id,
-        },
-      }
-    );
+    const response = await apiClient.get("/furniture/maintenance", {
+      params: {
+        id,
+      },
+    });
     console.log(response);
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -408,15 +389,11 @@ export const postMaintenanceFurniture = async (
   setLoadingAndError(dispatch);
   console.log(data.get("activity"));
   try {
-    const response = await apiClient.post(
-      "/api/v1/dapot/furniture/maintenance",
-      data,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = await apiClient.post("/furniture/maintenance", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -430,7 +407,7 @@ export const updateMaintenanceFurniture = async (
   console.log(data.get("id"));
   try {
     const response = await apiClient.put(
-      "/api/v1/dapot/furniture/maintenance?id=" + data.get("id"),
+      "/furniture/maintenance?id=" + data.get("id"),
       data,
       {
         headers: {
@@ -452,7 +429,7 @@ export const deleteMaintenanceFurniture = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/furniture/maintenance?id=${deviceid}&assetid=${asset_id}`
+      `/furniture/maintenance?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -468,7 +445,7 @@ export const getLinkFurniture = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/furniture/links", {
+    const response = await apiClient.get("/furniture/links", {
       params: {
         page,
         limit: 15,
@@ -490,7 +467,7 @@ export const getFurnituredevices = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/furniture/furnitures", {
+    const response = await apiClient.get("/furniture/furnitures", {
       params: {
         page,
         limit: 15,
@@ -512,7 +489,7 @@ export const exportFurnituredeviceCsv = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/furniture/furniture-export-csv",
+      "/furniture/furniture-export-csv",
       {
         params: {
           page,
@@ -536,7 +513,7 @@ export const exportFurnituredeviceXlsx = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/furniture/furniture-export-xlsx",
+      "/furniture/furniture-export-xlsx",
       {
         params: {
           page,
@@ -558,9 +535,7 @@ export const getFurnituredevice = async (
   if (id) {
     setLoadingAndError(dispatch);
     try {
-      const response = await apiClient.get(
-        `/api/v1/dapot/furniture/furniture?id=${id}`
-      );
+      const response = await apiClient.get(`/furniture/furniture?id=${id}`);
       return handleResponse(response, dispatch);
     } catch (error) {
       handleError(error, dispatch);
@@ -574,15 +549,11 @@ export const postNewFurnituredevice = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.post(
-      "/api/v1/dapot/furniture/furniture",
-      data,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = await apiClient.post("/furniture/furniture", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -598,7 +569,7 @@ export const updateFurnituredevice = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.put(
-      `/api/v1/dapot/furniture/furniture?id=${deviceid}&assetid=${assetid}`,
+      `/furniture/furniture?id=${deviceid}&assetid=${assetid}`,
       data,
       {
         headers: {
@@ -623,7 +594,7 @@ export const deleteFurnituredevice = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/furniture/furniture?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
+      `/furniture/furniture?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {

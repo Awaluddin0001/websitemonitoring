@@ -17,17 +17,14 @@ export const getCoolings = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get(
-      "/api/v1/dapot/airconditioning/coolings",
-      {
-        params: {
-          page,
-          limit: 15,
-          globalFilter,
-          nopage,
-        },
-      }
-    );
+    const response = await apiClient.get("/airconditioning/coolings", {
+      params: {
+        page,
+        limit: 15,
+        globalFilter,
+        nopage,
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -42,7 +39,7 @@ export const exportCoolingsCsv = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/airconditioning/cooling-export-csv",
+      "/airconditioning/cooling-export-csv",
       {
         params: {
           page,
@@ -66,7 +63,7 @@ export const exportCoolingsXlsx = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/airconditioning/cooling-export-xlsx",
+      "/airconditioning/cooling-export-xlsx",
       {
         params: {
           page,
@@ -88,15 +85,11 @@ export const postNewCooling = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.post(
-      "/api/v1/dapot/airconditioning/cooling",
-      data,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = await apiClient.post("/airconditioning/cooling", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -110,9 +103,7 @@ export const getCooling = async (
   if (id) {
     setLoadingAndError(dispatch);
     try {
-      const response = await apiClient.get(
-        `/api/v1/dapot/airconditioning/cooling?id=${id}`
-      );
+      const response = await apiClient.get(`/airconditioning/cooling?id=${id}`);
       return handleResponse(response, dispatch);
     } catch (error) {
       handleError(error, dispatch);
@@ -129,7 +120,7 @@ export const updateCooling = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.put(
-      `/api/v1/dapot/airconditioning/cooling?id=${deviceid}&assetid=${assetid}`,
+      `/airconditioning/cooling?id=${deviceid}&assetid=${assetid}`,
       data,
       {
         headers: {
@@ -154,7 +145,7 @@ export const deleteCooling = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/airconditioning/cooling?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
+      `/airconditioning/cooling?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {

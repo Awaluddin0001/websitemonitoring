@@ -17,7 +17,7 @@ export const getButtons = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/security/buttons", {
+    const response = await apiClient.get("/security/buttons", {
       params: {
         page,
         limit: 15,
@@ -39,7 +39,7 @@ export const exportButtonsCsv = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/security/button-export-csv",
+      "/security/button-export-csv",
       {
         params: {
           page,
@@ -63,7 +63,7 @@ export const exportButtonsXlsx = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/security/button-export-xlsx",
+      "/security/button-export-xlsx",
       {
         params: {
           page,
@@ -85,15 +85,11 @@ export const postNewButton = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.post(
-      "/api/v1/dapot/security/button",
-      data,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = await apiClient.post("/security/button", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -107,9 +103,7 @@ export const getButton = async (
   if (id) {
     setLoadingAndError(dispatch);
     try {
-      const response = await apiClient.get(
-        `/api/v1/dapot/security/button?id=${id}`
-      );
+      const response = await apiClient.get(`/security/button?id=${id}`);
       return handleResponse(response, dispatch);
     } catch (error) {
       handleError(error, dispatch);
@@ -126,7 +120,7 @@ export const updateButton = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.put(
-      `/api/v1/dapot/security/button?id=${deviceid}&assetid=${assetid}`,
+      `/security/button?id=${deviceid}&assetid=${assetid}`,
       data,
       {
         headers: {
@@ -151,7 +145,7 @@ export const deleteButton = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/security/button?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
+      `/security/button?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {

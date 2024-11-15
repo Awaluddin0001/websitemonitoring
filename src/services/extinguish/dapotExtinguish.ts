@@ -16,7 +16,7 @@ export const getExtinguishs = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/extinguish/all", {
+    const response = await apiClient.get("/extinguish/all", {
       params: {
         page,
         limit: 15,
@@ -31,9 +31,7 @@ export const getExtinguishs = async (
 };
 export const getExtinguishsLink = async () => {
   try {
-    const response = await apiClient.get(
-      "/api/v1/dapot/extinguish/all?nopage=yes"
-    );
+    const response = await apiClient.get("/extinguish/all?nopage=yes");
     return response.data;
   } catch (error) {
     console.error("Error fetching Link floors:", error);
@@ -49,7 +47,7 @@ export const getBrandExtinguish = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/extinguish/brands", {
+    const response = await apiClient.get("/extinguish/brands", {
       params: {
         page,
         limit: 15,
@@ -69,7 +67,7 @@ export const getOneBrandExtinguish = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/extinguish/brand", {
+    const response = await apiClient.get("/extinguish/brand", {
       params: {
         id,
       },
@@ -90,7 +88,7 @@ export const postBrandExtinguish = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.post("/api/v1/dapot/extinguish/brand", {
+    const response = await apiClient.post("/extinguish/brand", {
       name: name,
       user_id,
     });
@@ -109,13 +107,10 @@ export const updateBrandExtinguish = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.put(
-      "/api/v1/dapot/extinguish/brand?id=" + id,
-      {
-        name: name,
-        user_id,
-      }
-    );
+    const response = await apiClient.put("/extinguish/brand?id=" + id, {
+      name: name,
+      user_id,
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -130,7 +125,7 @@ export const deleteExtinguish = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/extinguish/brand?id=${deviceid}&assetid=${asset_id}`
+      `/extinguish/brand?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -146,7 +141,7 @@ export const getVendorExtinguish = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/extinguish/vendors", {
+    const response = await apiClient.get("/extinguish/vendors", {
       params: {
         page,
         limit: 15,
@@ -166,7 +161,7 @@ export const getOneVendorExtinguish = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/extinguish/vendor", {
+    const response = await apiClient.get("/extinguish/vendor", {
       params: {
         id,
       },
@@ -189,7 +184,7 @@ export const postVendorExtinguish = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.post("/api/v1/dapot/extinguish/vendor", {
+    const response = await apiClient.post("/extinguish/vendor", {
       company,
       company_user_name,
       number_phone,
@@ -209,7 +204,7 @@ export const deleteVendorExtinguish = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/extinguish/vendor?id=${deviceid}&assetid=${asset_id}`
+      `/extinguish/vendor?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -229,15 +224,12 @@ export const updateVendorExtinguish = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.put(
-      "/api/v1/dapot/extinguish/vendor?id=" + id,
-      {
-        company,
-        company_user_name,
-        number_phone,
-        user_id,
-      }
-    );
+    const response = await apiClient.put("/extinguish/vendor?id=" + id, {
+      company,
+      company_user_name,
+      number_phone,
+      user_id,
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -253,7 +245,7 @@ export const getTypeExtinguish = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/extinguish/types", {
+    const response = await apiClient.get("/extinguish/types", {
       params: {
         page,
         limit: 15,
@@ -273,7 +265,7 @@ export const getOneTypeExtinguish = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/extinguish/type", {
+    const response = await apiClient.get("/extinguish/type", {
       params: {
         id,
       },
@@ -293,7 +285,7 @@ export const postTypeExtinguish = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.post("/api/v1/dapot/extinguish/type", {
+    const response = await apiClient.post("/extinguish/type", {
       name,
       user_id,
     });
@@ -313,13 +305,10 @@ export const updateTypeExtinguish = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.put(
-      "/api/v1/dapot/extinguish/type?id=" + id,
-      {
-        name,
-        user_id,
-      }
-    );
+    const response = await apiClient.put("/extinguish/type?id=" + id, {
+      name,
+      user_id,
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -334,7 +323,7 @@ export const deleteTypeExtinguish = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/extinguish/type?id=${deviceid}&assetid=${asset_id}`
+      `/extinguish/type?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -345,7 +334,7 @@ export const deleteTypeExtinguish = async (
 export const getSubCategoriesExtinguish = async () => {
   try {
     const response = await apiClient.get(
-      "/api/v1/dapot/extinguish/subcategories?nopage=yes"
+      "/extinguish/subcategories?nopage=yes"
     );
     console.log(response);
     return response.data;
@@ -363,17 +352,14 @@ export const getMaintenanceExtinguish = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get(
-      "/api/v1/dapot/extinguish/maintenances",
-      {
-        params: {
-          page,
-          limit: 15,
-          globalFilter,
-          nopage,
-        },
-      }
-    );
+    const response = await apiClient.get("/extinguish/maintenances", {
+      params: {
+        page,
+        limit: 15,
+        globalFilter,
+        nopage,
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -386,14 +372,11 @@ export const getOneMaintenanceExtinguish = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get(
-      "/api/v1/dapot/extinguish/maintenance",
-      {
-        params: {
-          id,
-        },
-      }
-    );
+    const response = await apiClient.get("/extinguish/maintenance", {
+      params: {
+        id,
+      },
+    });
     console.log(response);
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -408,15 +391,11 @@ export const postMaintenanceExtinguish = async (
   setLoadingAndError(dispatch);
   console.log(data.get("activity"));
   try {
-    const response = await apiClient.post(
-      "/api/v1/dapot/extinguish/maintenance",
-      data,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = await apiClient.post("/extinguish/maintenance", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -430,7 +409,7 @@ export const updateMaintenanceExtinguish = async (
   console.log(data.get("id"));
   try {
     const response = await apiClient.put(
-      "/api/v1/dapot/extinguish/maintenance?id=" + data.get("id"),
+      "/extinguish/maintenance?id=" + data.get("id"),
       data,
       {
         headers: {
@@ -452,7 +431,7 @@ export const deleteMaintenanceExtinguish = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/extinguish/maintenance?id=${deviceid}&assetid=${asset_id}`
+      `/extinguish/maintenance?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -468,7 +447,7 @@ export const getLinkExtinguish = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/extinguish/links", {
+    const response = await apiClient.get("/extinguish/links", {
       params: {
         page,
         limit: 15,
@@ -490,17 +469,14 @@ export const getExtinguishdevices = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get(
-      "/api/v1/dapot/extinguish/extinguishs",
-      {
-        params: {
-          page,
-          limit: 15,
-          globalFilter,
-          nopage,
-        },
-      }
-    );
+    const response = await apiClient.get("/extinguish/extinguishs", {
+      params: {
+        page,
+        limit: 15,
+        globalFilter,
+        nopage,
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -515,7 +491,7 @@ export const exportExtinguishdeviceCsv = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/extinguish/extinguish-export-csv",
+      "/extinguish/extinguish-export-csv",
       {
         params: {
           page,
@@ -539,7 +515,7 @@ export const exportExtinguishdeviceXlsx = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/extinguish/extinguish-export-xlsx",
+      "/extinguish/extinguish-export-xlsx",
       {
         params: {
           page,
@@ -561,9 +537,7 @@ export const getExtinguishdevice = async (
   if (id) {
     setLoadingAndError(dispatch);
     try {
-      const response = await apiClient.get(
-        `/api/v1/dapot/extinguish/extinguish?id=${id}`
-      );
+      const response = await apiClient.get(`/extinguish/extinguish?id=${id}`);
       return handleResponse(response, dispatch);
     } catch (error) {
       handleError(error, dispatch);
@@ -577,15 +551,11 @@ export const postNewExtinguishdevice = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.post(
-      "/api/v1/dapot/extinguish/extinguish",
-      data,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = await apiClient.post("/extinguish/extinguish", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -601,7 +571,7 @@ export const updateExtinguishdevice = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.put(
-      `/api/v1/dapot/extinguish/extinguish?id=${deviceid}&assetid=${assetid}`,
+      `/extinguish/extinguish?id=${deviceid}&assetid=${assetid}`,
       data,
       {
         headers: {
@@ -626,7 +596,7 @@ export const deleteExtinguishdevice = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/extinguish/extinguish?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
+      `/extinguish/extinguish?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {

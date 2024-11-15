@@ -13,7 +13,7 @@ export const getSecuritys = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/security/all", {
+    const response = await apiClient.get("/security/all", {
       params: {
         page,
         limit: 15,
@@ -28,9 +28,7 @@ export const getSecuritys = async (
 };
 export const getSecuritysLink = async () => {
   try {
-    const response = await apiClient.get(
-      "/api/v1/dapot/security/all?nopage=yes"
-    );
+    const response = await apiClient.get("/security/all?nopage=yes");
     return response.data;
   } catch (error) {
     console.error("Error fetching Link floors:", error);
@@ -46,7 +44,7 @@ export const getBrandSecurity = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/security/brands", {
+    const response = await apiClient.get("/security/brands", {
       params: {
         page,
         limit: 15,
@@ -66,7 +64,7 @@ export const getOneBrandSecurity = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/security/brand", {
+    const response = await apiClient.get("/security/brand", {
       params: {
         id,
       },
@@ -87,7 +85,7 @@ export const postBrandSecurity = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.post("/api/v1/dapot/security/brand", {
+    const response = await apiClient.post("/security/brand", {
       name: name,
       user_id,
     });
@@ -106,13 +104,10 @@ export const updateBrandSecurity = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.put(
-      "/api/v1/dapot/security/brand?id=" + id,
-      {
-        name: name,
-        user_id,
-      }
-    );
+    const response = await apiClient.put("/security/brand?id=" + id, {
+      name: name,
+      user_id,
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -127,7 +122,7 @@ export const deleteSecurity = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/security/brand?id=${deviceid}&assetid=${asset_id}`
+      `/security/brand?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -143,7 +138,7 @@ export const getVendorSecurity = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/security/vendors", {
+    const response = await apiClient.get("/security/vendors", {
       params: {
         page,
         limit: 15,
@@ -163,7 +158,7 @@ export const getOneVendorSecurity = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/security/vendor", {
+    const response = await apiClient.get("/security/vendor", {
       params: {
         id,
       },
@@ -186,7 +181,7 @@ export const postVendorSecurity = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.post("/api/v1/dapot/security/vendor", {
+    const response = await apiClient.post("/security/vendor", {
       company,
       company_user_name,
       number_phone,
@@ -206,7 +201,7 @@ export const deleteVendorSecurity = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/security/vendor?id=${deviceid}&assetid=${asset_id}`
+      `/security/vendor?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -226,15 +221,12 @@ export const updateVendorSecurity = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.put(
-      "/api/v1/dapot/security/vendor?id=" + id,
-      {
-        company,
-        company_user_name,
-        number_phone,
-        user_id,
-      }
-    );
+    const response = await apiClient.put("/security/vendor?id=" + id, {
+      company,
+      company_user_name,
+      number_phone,
+      user_id,
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -250,7 +242,7 @@ export const getTypeSecurity = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/security/types", {
+    const response = await apiClient.get("/security/types", {
       params: {
         page,
         limit: 15,
@@ -270,7 +262,7 @@ export const getOneTypeSecurity = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/security/type", {
+    const response = await apiClient.get("/security/type", {
       params: {
         id,
       },
@@ -291,7 +283,7 @@ export const postTypeSecurity = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.post("/api/v1/dapot/security/type", {
+    const response = await apiClient.post("/security/type", {
       name,
       sub_category_id,
       user_id,
@@ -313,14 +305,11 @@ export const updateTypeSecurity = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.put(
-      "/api/v1/dapot/security/type?id=" + id,
-      {
-        name,
-        sub_category_id,
-        user_id,
-      }
-    );
+    const response = await apiClient.put("/security/type?id=" + id, {
+      name,
+      sub_category_id,
+      user_id,
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -335,7 +324,7 @@ export const deleteTypeSecurity = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/security/type?id=${deviceid}&assetid=${asset_id}`
+      `/security/type?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -345,9 +334,7 @@ export const deleteTypeSecurity = async (
 
 export const getSubCategoriesSecurity = async () => {
   try {
-    const response = await apiClient.get(
-      "/api/v1/dapot/security/subcategories?nopage=yes"
-    );
+    const response = await apiClient.get("/security/subcategories?nopage=yes");
     console.log(response);
     return response.data;
   } catch (error) {
@@ -364,17 +351,14 @@ export const getMaintenanceSecurity = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get(
-      "/api/v1/dapot/security/maintenances",
-      {
-        params: {
-          page,
-          limit: 15,
-          globalFilter,
-          nopage,
-        },
-      }
-    );
+    const response = await apiClient.get("/security/maintenances", {
+      params: {
+        page,
+        limit: 15,
+        globalFilter,
+        nopage,
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -387,7 +371,7 @@ export const getOneMaintenanceSecurity = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/security/maintenance", {
+    const response = await apiClient.get("/security/maintenance", {
       params: {
         id,
       },
@@ -406,15 +390,11 @@ export const postMaintenanceSecurity = async (
   setLoadingAndError(dispatch);
   console.log(data.get("activity"));
   try {
-    const response = await apiClient.post(
-      "/api/v1/dapot/security/maintenance",
-      data,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = await apiClient.post("/security/maintenance", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -428,7 +408,7 @@ export const updateMaintenanceSecurity = async (
   console.log(data.get("id"));
   try {
     const response = await apiClient.put(
-      "/api/v1/dapot/security/maintenance?id=" + data.get("id"),
+      "/security/maintenance?id=" + data.get("id"),
       data,
       {
         headers: {
@@ -450,7 +430,7 @@ export const deleteMaintenanceSecurity = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/security/maintenance?id=${deviceid}&assetid=${asset_id}`
+      `/security/maintenance?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -466,7 +446,7 @@ export const getLinkSecurity = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/security/links", {
+    const response = await apiClient.get("/security/links", {
       params: {
         page,
         limit: 15,
@@ -490,7 +470,7 @@ export const postLinkSecurity = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.post("/api/v1/dapot/security/link", {
+    const response = await apiClient.post("/security/link", {
       incoming,
       outgoing,
       user_id,
@@ -512,14 +492,11 @@ export const updateLinkSecurity = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.put(
-      "/api/v1/dapot/security/link?id=" + id,
-      {
-        incoming,
-        outgoing,
-        user_id,
-      }
-    );
+    const response = await apiClient.put("/security/link?id=" + id, {
+      incoming,
+      outgoing,
+      user_id,
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -534,7 +511,7 @@ export const deleteLinkSecurity = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/security/link?id=${deviceid}&assetid=${asset_id}`
+      `/security/link?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {

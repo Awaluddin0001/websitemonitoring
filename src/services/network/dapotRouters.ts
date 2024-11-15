@@ -17,7 +17,7 @@ export const getRouters = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/network/routers", {
+    const response = await apiClient.get("/network/routers", {
       params: {
         page,
         limit: 15,
@@ -38,17 +38,14 @@ export const exportRoutersCsv = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await exportClientDapot.get(
-      "/api/v1/dapot/network/router-export-csv",
-      {
-        params: {
-          page,
-          limit: 15,
-          globalFilter,
-          nopage,
-        },
-      }
-    );
+    const response = await exportClientDapot.get("/network/router-export-csv", {
+      params: {
+        page,
+        limit: 15,
+        globalFilter,
+        nopage,
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -63,7 +60,7 @@ export const exportRoutersXlsx = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/network/router-export-xlsx",
+      "/network/router-export-xlsx",
       {
         params: {
           page,
@@ -85,15 +82,11 @@ export const postNewRouter = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.post(
-      "/api/v1/dapot/network/router",
-      data,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = await apiClient.post("/network/router", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -107,9 +100,7 @@ export const getRouter = async (
   if (id) {
     setLoadingAndError(dispatch);
     try {
-      const response = await apiClient.get(
-        `/api/v1/dapot/network/router?id=${id}`
-      );
+      const response = await apiClient.get(`/network/router?id=${id}`);
       return handleResponse(response, dispatch);
     } catch (error) {
       handleError(error, dispatch);
@@ -126,7 +117,7 @@ export const updateRouter = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.put(
-      `/api/v1/dapot/network/router?id=${deviceid}&assetid=${assetid}`,
+      `/network/router?id=${deviceid}&assetid=${assetid}`,
       data,
       {
         headers: {
@@ -151,7 +142,7 @@ export const deleteRouter = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/network/router?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
+      `/network/router?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {

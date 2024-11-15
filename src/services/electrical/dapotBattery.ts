@@ -17,7 +17,7 @@ export const getBatteries = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/electrical/batteries", {
+    const response = await apiClient.get("/electrical/batteries", {
       params: {
         page,
         limit: 15,
@@ -39,7 +39,7 @@ export const exportBatterysCsv = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/electrical/battery-export-csv",
+      "/electrical/battery-export-csv",
       {
         params: {
           page,
@@ -63,7 +63,7 @@ export const exportBatterysXlsx = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/electrical/battery-export-xlsx",
+      "/electrical/battery-export-xlsx",
       {
         params: {
           page,
@@ -85,15 +85,11 @@ export const postNewBattery = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.post(
-      "/api/v1/dapot/electrical/battery",
-      data,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = await apiClient.post("/electrical/battery", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -107,9 +103,7 @@ export const getBattery = async (
   if (id) {
     setLoadingAndError(dispatch);
     try {
-      const response = await apiClient.get(
-        `/api/v1/dapot/electrical/battery?id=${id}`
-      );
+      const response = await apiClient.get(`/electrical/battery?id=${id}`);
       return handleResponse(response, dispatch);
     } catch (error) {
       handleError(error, dispatch);
@@ -126,7 +120,7 @@ export const updateBattery = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.put(
-      `/api/v1/dapot/electrical/battery?id=${deviceid}&assetid=${assetid}`,
+      `/electrical/battery?id=${deviceid}&assetid=${assetid}`,
       data,
       {
         headers: {
@@ -151,7 +145,7 @@ export const deleteBattery = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/electrical/battery?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
+      `/electrical/battery?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {

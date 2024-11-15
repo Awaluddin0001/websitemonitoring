@@ -17,7 +17,7 @@ export const getGensets = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/electrical/gensets", {
+    const response = await apiClient.get("/electrical/gensets", {
       params: {
         page,
         limit: 15,
@@ -37,15 +37,11 @@ export const postNewGenset = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.post(
-      "/api/v1/dapot/electrical/genset",
-      data,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = await apiClient.post("/electrical/genset", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -59,9 +55,7 @@ export const getGenset = async (
   if (id) {
     setLoadingAndError(dispatch);
     try {
-      const response = await apiClient.get(
-        `/api/v1/dapot/electrical/genset?id=${id}`
-      );
+      const response = await apiClient.get(`/electrical/genset?id=${id}`);
       return handleResponse(response, dispatch);
     } catch (error) {
       handleError(error, dispatch);
@@ -78,7 +72,7 @@ export const updateGenset = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.put(
-      `/api/v1/dapot/electrical/genset?id=${deviceid}&assetid=${assetid}`,
+      `/electrical/genset?id=${deviceid}&assetid=${assetid}`,
       data,
       {
         headers: {
@@ -103,7 +97,7 @@ export const deleteGenset = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/electrical/genset?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
+      `/electrical/genset?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -120,7 +114,7 @@ export const exportGensetsCsv = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/electrical/genset-export-csv",
+      "/electrical/genset-export-csv",
       {
         params: {
           page,
@@ -144,7 +138,7 @@ export const exportGensetsXlsx = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/electrical/genset-export-xlsx",
+      "/electrical/genset-export-xlsx",
       {
         params: {
           page,

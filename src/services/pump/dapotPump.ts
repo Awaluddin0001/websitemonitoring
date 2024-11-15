@@ -16,7 +16,7 @@ export const getPumps = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/pump/all", {
+    const response = await apiClient.get("/pump/all", {
       params: {
         page,
         limit: 15,
@@ -31,7 +31,7 @@ export const getPumps = async (
 };
 export const getPumpsLink = async () => {
   try {
-    const response = await apiClient.get("/api/v1/dapot/pump/all?nopage=yes");
+    const response = await apiClient.get("/pump/all?nopage=yes");
     return response.data;
   } catch (error) {
     console.error("Error fetching Link floors:", error);
@@ -47,7 +47,7 @@ export const getBrandPump = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/pump/brands", {
+    const response = await apiClient.get("/pump/brands", {
       params: {
         page,
         limit: 15,
@@ -67,7 +67,7 @@ export const getOneBrandPump = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/pump/brand", {
+    const response = await apiClient.get("/pump/brand", {
       params: {
         id,
       },
@@ -88,7 +88,7 @@ export const postBrandPump = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.post("/api/v1/dapot/pump/brand", {
+    const response = await apiClient.post("/pump/brand", {
       name: name,
       user_id,
     });
@@ -107,7 +107,7 @@ export const updateBrandPump = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.put("/api/v1/dapot/pump/brand?id=" + id, {
+    const response = await apiClient.put("/pump/brand?id=" + id, {
       name: name,
       user_id,
     });
@@ -125,7 +125,7 @@ export const deletePump = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/pump/brand?id=${deviceid}&assetid=${asset_id}`
+      `/pump/brand?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -141,7 +141,7 @@ export const getVendorPump = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/pump/vendors", {
+    const response = await apiClient.get("/pump/vendors", {
       params: {
         page,
         limit: 15,
@@ -161,7 +161,7 @@ export const getOneVendorPump = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/pump/vendor", {
+    const response = await apiClient.get("/pump/vendor", {
       params: {
         id,
       },
@@ -184,7 +184,7 @@ export const postVendorPump = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.post("/api/v1/dapot/pump/vendor", {
+    const response = await apiClient.post("/pump/vendor", {
       company,
       company_user_name,
       number_phone,
@@ -204,7 +204,7 @@ export const deleteVendorPump = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/pump/vendor?id=${deviceid}&assetid=${asset_id}`
+      `/pump/vendor?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -224,7 +224,7 @@ export const updateVendorPump = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.put("/api/v1/dapot/pump/vendor?id=" + id, {
+    const response = await apiClient.put("/pump/vendor?id=" + id, {
       company,
       company_user_name,
       number_phone,
@@ -245,7 +245,7 @@ export const getTypePump = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/pump/types", {
+    const response = await apiClient.get("/pump/types", {
       params: {
         page,
         limit: 15,
@@ -265,7 +265,7 @@ export const getOneTypePump = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/pump/type", {
+    const response = await apiClient.get("/pump/type", {
       params: {
         id,
       },
@@ -285,7 +285,7 @@ export const postTypePump = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.post("/api/v1/dapot/pump/type", {
+    const response = await apiClient.post("/pump/type", {
       name,
       user_id,
     });
@@ -305,7 +305,7 @@ export const updateTypePump = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.put("/api/v1/dapot/pump/type?id=" + id, {
+    const response = await apiClient.put("/pump/type?id=" + id, {
       name,
       user_id,
     });
@@ -323,7 +323,7 @@ export const deleteTypePump = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/pump/type?id=${deviceid}&assetid=${asset_id}`
+      `/pump/type?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -333,9 +333,7 @@ export const deleteTypePump = async (
 
 export const getSubCategoriesPump = async () => {
   try {
-    const response = await apiClient.get(
-      "/api/v1/dapot/pump/subcategories?nopage=yes"
-    );
+    const response = await apiClient.get("/pump/subcategories?nopage=yes");
     console.log(response);
     return response.data;
   } catch (error) {
@@ -352,7 +350,7 @@ export const getMaintenancePump = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/pump/maintenances", {
+    const response = await apiClient.get("/pump/maintenances", {
       params: {
         page,
         limit: 15,
@@ -372,7 +370,7 @@ export const getOneMaintenancePump = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/pump/maintenance", {
+    const response = await apiClient.get("/pump/maintenance", {
       params: {
         id,
       },
@@ -391,15 +389,11 @@ export const postMaintenancePump = async (
   setLoadingAndError(dispatch);
   console.log(data.get("activity"));
   try {
-    const response = await apiClient.post(
-      "/api/v1/dapot/pump/maintenance",
-      data,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = await apiClient.post("/pump/maintenance", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -413,7 +407,7 @@ export const updateMaintenancePump = async (
   console.log(data.get("id"));
   try {
     const response = await apiClient.put(
-      "/api/v1/dapot/pump/maintenance?id=" + data.get("id"),
+      "/pump/maintenance?id=" + data.get("id"),
       data,
       {
         headers: {
@@ -435,7 +429,7 @@ export const deleteMaintenancePump = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/pump/maintenance?id=${deviceid}&assetid=${asset_id}`
+      `/pump/maintenance?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -451,7 +445,7 @@ export const getLinkPump = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/pump/links", {
+    const response = await apiClient.get("/pump/links", {
       params: {
         page,
         limit: 15,
@@ -473,7 +467,7 @@ export const getPumpdevices = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/pump/pumps", {
+    const response = await apiClient.get("/pump/pumps", {
       params: {
         page,
         limit: 15,
@@ -494,17 +488,14 @@ export const exportPumpdeviceCsv = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await exportClientDapot.get(
-      "/api/v1/dapot/pump/pump-export-csv",
-      {
-        params: {
-          page,
-          limit: 15,
-          globalFilter,
-          nopage,
-        },
-      }
-    );
+    const response = await exportClientDapot.get("/pump/pump-export-csv", {
+      params: {
+        page,
+        limit: 15,
+        globalFilter,
+        nopage,
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -518,17 +509,14 @@ export const exportPumpdeviceXlsx = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await exportClientDapot.get(
-      "/api/v1/dapot/pump/pump-export-xlsx",
-      {
-        params: {
-          page,
-          limit: 15,
-          globalFilter,
-          nopage,
-        },
-      }
-    );
+    const response = await exportClientDapot.get("/pump/pump-export-xlsx", {
+      params: {
+        page,
+        limit: 15,
+        globalFilter,
+        nopage,
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -541,7 +529,7 @@ export const getPumpdevice = async (
   if (id) {
     setLoadingAndError(dispatch);
     try {
-      const response = await apiClient.get(`/api/v1/dapot/pump/pump?id=${id}`);
+      const response = await apiClient.get(`/pump/pump?id=${id}`);
       return handleResponse(response, dispatch);
     } catch (error) {
       handleError(error, dispatch);
@@ -555,7 +543,7 @@ export const postNewPumpdevice = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.post("/api/v1/dapot/pump/pump", data, {
+    const response = await apiClient.post("/pump/pump", data, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -575,7 +563,7 @@ export const updatePumpdevice = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.put(
-      `/api/v1/dapot/pump/pump?id=${deviceid}&assetid=${assetid}`,
+      `/pump/pump?id=${deviceid}&assetid=${assetid}`,
       data,
       {
         headers: {
@@ -600,7 +588,7 @@ export const deletePumpdevice = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/pump/pump?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
+      `/pump/pump?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {

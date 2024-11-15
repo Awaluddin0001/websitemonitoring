@@ -17,7 +17,7 @@ export const getRackservers = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/network/rackservers", {
+    const response = await apiClient.get("/network/rackservers", {
       params: {
         page,
         limit: 15,
@@ -39,7 +39,7 @@ export const exportRackserversCsv = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/network/rackserver-export-csv",
+      "/network/rackserver-export-csv",
       {
         params: {
           page,
@@ -63,7 +63,7 @@ export const exportRackserversXlsx = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/network/rackserver-export-xlsx",
+      "/network/rackserver-export-xlsx",
       {
         params: {
           page,
@@ -85,15 +85,11 @@ export const postNewRackserver = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.post(
-      "/api/v1/dapot/network/rackserver",
-      data,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = await apiClient.post("/network/rackserver", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -107,9 +103,7 @@ export const getRackserver = async (
   if (id) {
     setLoadingAndError(dispatch);
     try {
-      const response = await apiClient.get(
-        `/api/v1/dapot/network/rackserver?id=${id}`
-      );
+      const response = await apiClient.get(`/network/rackserver?id=${id}`);
       return handleResponse(response, dispatch);
     } catch (error) {
       handleError(error, dispatch);
@@ -126,7 +120,7 @@ export const updateRackserver = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.put(
-      `/api/v1/dapot/network/rackserver?id=${deviceid}&assetid=${assetid}`,
+      `/network/rackserver?id=${deviceid}&assetid=${assetid}`,
       data,
       {
         headers: {
@@ -151,7 +145,7 @@ export const deleteRackserver = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/network/rackserver?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
+      `/network/rackserver?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {

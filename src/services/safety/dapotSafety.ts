@@ -16,7 +16,7 @@ export const getSafetys = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/safety/all", {
+    const response = await apiClient.get("/safety/all", {
       params: {
         page,
         limit: 15,
@@ -31,7 +31,7 @@ export const getSafetys = async (
 };
 export const getSafetysLink = async () => {
   try {
-    const response = await apiClient.get("/api/v1/dapot/safety/all?nopage=yes");
+    const response = await apiClient.get("/safety/all?nopage=yes");
     return response.data;
   } catch (error) {
     console.error("Error fetching Link floors:", error);
@@ -47,7 +47,7 @@ export const getBrandSafety = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/safety/brands", {
+    const response = await apiClient.get("/safety/brands", {
       params: {
         page,
         limit: 15,
@@ -67,7 +67,7 @@ export const getOneBrandSafety = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/safety/brand", {
+    const response = await apiClient.get("/safety/brand", {
       params: {
         id,
       },
@@ -88,7 +88,7 @@ export const postBrandSafety = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.post("/api/v1/dapot/safety/brand", {
+    const response = await apiClient.post("/safety/brand", {
       name: name,
       user_id,
     });
@@ -107,13 +107,10 @@ export const updateBrandSafety = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.put(
-      "/api/v1/dapot/safety/brand?id=" + id,
-      {
-        name: name,
-        user_id,
-      }
-    );
+    const response = await apiClient.put("/safety/brand?id=" + id, {
+      name: name,
+      user_id,
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -128,7 +125,7 @@ export const deleteSafety = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/safety/brand?id=${deviceid}&assetid=${asset_id}`
+      `/safety/brand?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -144,7 +141,7 @@ export const getVendorSafety = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/safety/vendors", {
+    const response = await apiClient.get("/safety/vendors", {
       params: {
         page,
         limit: 15,
@@ -164,7 +161,7 @@ export const getOneVendorSafety = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/safety/vendor", {
+    const response = await apiClient.get("/safety/vendor", {
       params: {
         id,
       },
@@ -187,7 +184,7 @@ export const postVendorSafety = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.post("/api/v1/dapot/safety/vendor", {
+    const response = await apiClient.post("/safety/vendor", {
       company,
       company_user_name,
       number_phone,
@@ -207,7 +204,7 @@ export const deleteVendorSafety = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/safety/vendor?id=${deviceid}&assetid=${asset_id}`
+      `/safety/vendor?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -227,15 +224,12 @@ export const updateVendorSafety = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.put(
-      "/api/v1/dapot/safety/vendor?id=" + id,
-      {
-        company,
-        company_user_name,
-        number_phone,
-        user_id,
-      }
-    );
+    const response = await apiClient.put("/safety/vendor?id=" + id, {
+      company,
+      company_user_name,
+      number_phone,
+      user_id,
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -251,7 +245,7 @@ export const getTypeSafety = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/safety/types", {
+    const response = await apiClient.get("/safety/types", {
       params: {
         page,
         limit: 15,
@@ -271,7 +265,7 @@ export const getOneTypeSafety = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/safety/type", {
+    const response = await apiClient.get("/safety/type", {
       params: {
         id,
       },
@@ -291,7 +285,7 @@ export const postTypeSafety = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.post("/api/v1/dapot/safety/type", {
+    const response = await apiClient.post("/safety/type", {
       name,
       user_id,
     });
@@ -311,7 +305,7 @@ export const updateTypeSafety = async (
   const jsonuserData = JSON.parse(userData);
   const user_id = jsonuserData.id;
   try {
-    const response = await apiClient.put("/api/v1/dapot/safety/type?id=" + id, {
+    const response = await apiClient.put("/safety/type?id=" + id, {
       name,
       user_id,
     });
@@ -329,7 +323,7 @@ export const deleteTypeSafety = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/safety/type?id=${deviceid}&assetid=${asset_id}`
+      `/safety/type?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -339,9 +333,7 @@ export const deleteTypeSafety = async (
 
 export const getSubCategoriesSafety = async () => {
   try {
-    const response = await apiClient.get(
-      "/api/v1/dapot/safety/subcategories?nopage=yes"
-    );
+    const response = await apiClient.get("/safety/subcategories?nopage=yes");
     console.log(response);
     return response.data;
   } catch (error) {
@@ -358,7 +350,7 @@ export const getMaintenanceSafety = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/safety/maintenances", {
+    const response = await apiClient.get("/safety/maintenances", {
       params: {
         page,
         limit: 15,
@@ -378,7 +370,7 @@ export const getOneMaintenanceSafety = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/safety/maintenance", {
+    const response = await apiClient.get("/safety/maintenance", {
       params: {
         id,
       },
@@ -397,15 +389,11 @@ export const postMaintenanceSafety = async (
   setLoadingAndError(dispatch);
   console.log(data.get("activity"));
   try {
-    const response = await apiClient.post(
-      "/api/v1/dapot/safety/maintenance",
-      data,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = await apiClient.post("/safety/maintenance", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -419,7 +407,7 @@ export const updateMaintenanceSafety = async (
   console.log(data.get("id"));
   try {
     const response = await apiClient.put(
-      "/api/v1/dapot/safety/maintenance?id=" + data.get("id"),
+      "/safety/maintenance?id=" + data.get("id"),
       data,
       {
         headers: {
@@ -441,7 +429,7 @@ export const deleteMaintenanceSafety = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/safety/maintenance?id=${deviceid}&assetid=${asset_id}`
+      `/safety/maintenance?id=${deviceid}&assetid=${asset_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -457,7 +445,7 @@ export const getLinkSafety = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/safety/links", {
+    const response = await apiClient.get("/safety/links", {
       params: {
         page,
         limit: 15,
@@ -479,7 +467,7 @@ export const getSafetydevices = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/safety/safetys", {
+    const response = await apiClient.get("/safety/safetys", {
       params: {
         page,
         limit: 15,
@@ -500,17 +488,14 @@ export const exportSafetydeviceCsv = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await exportClientDapot.get(
-      "/api/v1/dapot/safety/safety-export-csv",
-      {
-        params: {
-          page,
-          limit: 15,
-          globalFilter,
-          nopage,
-        },
-      }
-    );
+    const response = await exportClientDapot.get("/safety/safety-export-csv", {
+      params: {
+        page,
+        limit: 15,
+        globalFilter,
+        nopage,
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -524,17 +509,14 @@ export const exportSafetydeviceXlsx = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await exportClientDapot.get(
-      "/api/v1/dapot/safety/safety-export-xlsx",
-      {
-        params: {
-          page,
-          limit: 15,
-          globalFilter,
-          nopage,
-        },
-      }
-    );
+    const response = await exportClientDapot.get("/safety/safety-export-xlsx", {
+      params: {
+        page,
+        limit: 15,
+        globalFilter,
+        nopage,
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -547,9 +529,7 @@ export const getSafetydevice = async (
   if (id) {
     setLoadingAndError(dispatch);
     try {
-      const response = await apiClient.get(
-        `/api/v1/dapot/safety/safety?id=${id}`
-      );
+      const response = await apiClient.get(`/safety/safety?id=${id}`);
       return handleResponse(response, dispatch);
     } catch (error) {
       handleError(error, dispatch);
@@ -563,7 +543,7 @@ export const postNewSafetydevice = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.post("/api/v1/dapot/safety/safety", data, {
+    const response = await apiClient.post("/safety/safety", data, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -583,7 +563,7 @@ export const updateSafetydevice = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.put(
-      `/api/v1/dapot/safety/safety?id=${deviceid}&assetid=${assetid}`,
+      `/safety/safety?id=${deviceid}&assetid=${assetid}`,
       data,
       {
         headers: {
@@ -608,7 +588,7 @@ export const deleteSafetydevice = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/safety/safety?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
+      `/safety/safety?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {

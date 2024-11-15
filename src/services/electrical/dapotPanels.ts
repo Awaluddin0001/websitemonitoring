@@ -17,7 +17,7 @@ export const getPanels = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.get("/api/v1/dapot/electrical/panels", {
+    const response = await apiClient.get("/electrical/panels", {
       params: {
         page,
         limit: 15,
@@ -37,15 +37,11 @@ export const postNewPanel = async (
 ) => {
   setLoadingAndError(dispatch);
   try {
-    const response = await apiClient.post(
-      "/api/v1/dapot/electrical/panel",
-      data,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
+    const response = await apiClient.post("/electrical/panel", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return handleResponse(response, dispatch);
   } catch (error) {
     handleError(error, dispatch);
@@ -59,9 +55,7 @@ export const getPanel = async (
   if (id) {
     setLoadingAndError(dispatch);
     try {
-      const response = await apiClient.get(
-        `/api/v1/dapot/electrical/panel?id=${id}`
-      );
+      const response = await apiClient.get(`/electrical/panel?id=${id}`);
       return handleResponse(response, dispatch);
     } catch (error) {
       handleError(error, dispatch);
@@ -78,7 +72,7 @@ export const updatePanel = async (
   setLoadingAndError(dispatch);
   try {
     const response = await apiClient.put(
-      `/api/v1/dapot/electrical/panel?id=${deviceid}&assetid=${assetid}`,
+      `/electrical/panel?id=${deviceid}&assetid=${assetid}`,
       data,
       {
         headers: {
@@ -103,7 +97,7 @@ export const deletePanel = async (
   const user_id = jsonuserData.id;
   try {
     const response = await apiClient.delete(
-      `/api/v1/dapot/electrical/panel?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
+      `/electrical/panel?id=${deviceid}&assetid=${asset_id}&user_id=${user_id}`
     );
     return handleResponse(response, dispatch);
   } catch (error) {
@@ -120,7 +114,7 @@ export const exportPanelsCsv = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/electrical/panel-export-csv",
+      "/electrical/panel-export-csv",
       {
         params: {
           page,
@@ -144,7 +138,7 @@ export const exportPanelsXlsx = async (
   setLoadingAndError(dispatch);
   try {
     const response = await exportClientDapot.get(
-      "/api/v1/dapot/electrical/panel-export-xlsx",
+      "/electrical/panel-export-xlsx",
       {
         params: {
           page,
