@@ -100,7 +100,7 @@ function Power() {
     setActiveIndex((prev) => (prev === index ? null : index)); // Toggle active state
   };
   useEffect(() => {
-    console.log(updateData);
+    // console.log(updateData);
     setDataActive("apparent");
     const lasttValueArrPower:
       | {

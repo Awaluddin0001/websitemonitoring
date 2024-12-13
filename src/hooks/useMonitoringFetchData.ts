@@ -9,6 +9,7 @@ const useMonitoringFetchData = (url: string) => {
       bbmData: { data: Array<any>; success: boolean };
       powerData: [];
       thermalData: object;
+      pacMonitoring: object;
     };
     lastUpdate: string;
   }>({
@@ -17,6 +18,7 @@ const useMonitoringFetchData = (url: string) => {
       bbmData: { data: [], success: false },
       powerData: [],
       thermalData: {},
+      pacMonitoring: {},
     },
     lastUpdate: "",
   });

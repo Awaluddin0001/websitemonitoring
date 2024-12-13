@@ -83,18 +83,67 @@ export default function Home() {
   const [modalController, setModalController] = useState(false);
 
   useEffect(() => {
-    const transformObjectThermal = (obj: any) => {
+    const transformObjectThermal = (obj: any, objPac: any) => {
       let { success, ...others } = obj;
-      if (success === "") {
+      let { success: successPac, ...othersPac } = objPac;
+      if (success === "" || successPac === "") {
         success = false;
       }
-      if (success) {
+      if (success || successPac) {
         if (others.data.length > 0) {
           const lastData = others.data[others.data.length - 1];
           const { timestamp, connected, ...thermalRoom } = lastData;
           const thermal = Object.entries(thermalRoom).map(([key, value]) => {
             return { room: key, value: value };
           });
+
+          console.log(othersPac);
+
+          // const objectArrayLt1 = othersPac.data.slice(0, 4);
+          // const objectArrayLt2 = othersPac.data.slice(4, 10);
+          // const objectArrayLt3Radio = othersPac.data.slice(10, 14);
+          // const objectArrayLt3Transmisi = othersPac.data.slice(14, 17);
+          // const objectArrayLt3Core = othersPac.data.slice(17, 20);
+          // const objectArrayLt4Core = othersPac.data.slice(20, 23);
+          // const objectArrayLt4Containment = othersPac.data.slice(23, 27);
+
+          // console.log(
+          //   objectArrayLt1,
+          //   objectArrayLt2,
+          //   objectArrayLt3Core,
+          //   objectArrayLt3Transmisi,
+          //   objectArrayLt3Radio,
+          //   objectArrayLt4Core,
+          //   objectArrayLt4Containment
+          // );
+
+          // const returnTempParameters4Containment = objectArrayLt4Containment
+          //   .map((device: any) => {
+          //     const returnTempParam = device.parameters.find(
+          //       (param: any) => param.parameterName === "Return Temp"
+          //     );
+          //     return returnTempParam ? returnTempParam : null; // Return the parameter or null if not found
+          //   })
+          //   .filter((param: any) => param !== null); // Filter out any null values
+
+          // // Extracting lastValue, converting to number, and calculating the average
+          // const lastValues4Containment = returnTempParameters4Containment.map(
+          //   (param: any) => {
+          //     return Number(param.lastValue); // Convert lastValue to number
+          //   }
+          // );
+
+          // // Calculate the average
+          // const average4Containment =
+          //   lastValues4Containment.length > 0
+          //     ? lastValues4Containment.reduce(
+          //         (sum: number, value: number) => sum + value,
+          //         0
+          //       ) / lastValues4Containment.length
+          //     : 0;
+
+          // console.log("Average Return Temp:", average4Containment);
+
           // return { thermal };
           const getBaseName = (name: string) => name.replace(/ [A-Z]$/, "");
 
@@ -142,29 +191,35 @@ export default function Home() {
                 combinedRooms[baseName].count += 1;
               });
 
-              const averagedRooms = Object.keys(combinedRooms).map((name) => {
-                const { temperature, humidity, count } = combinedRooms[name];
-                return {
-                  room: name,
-                  value: {
-                    temperature:
-                      temperature / count === 0
-                        ? 0
-                        : (temperature / count).toFixed(2),
-                    humidity:
-                      humidity / count === 0
-                        ? 0
-                        : (humidity / count).toFixed(2),
-                    name,
-                  },
-                };
-              });
+              const averagedRooms = Object.keys(combinedRooms).map(
+                (name, index) => {
+                  const { temperature, humidity, count } = combinedRooms[name];
+                  console.log("index", index);
+                  console.log("name", name);
+                  return {
+                    room: name,
+                    value: {
+                      temperature:
+                        temperature / count === 0
+                          ? 0
+                          : (temperature / count).toFixed(2),
+                      humidity:
+                        humidity / count === 0
+                          ? 0
+                          : (humidity / count).toFixed(2),
+                      name,
+                    },
+                  };
+                }
+              );
 
               acc[prefix] = averagedRooms;
               return acc;
             },
             {}
           );
+
+          console.log(combinedData);
           setThermalLt1(combinedData.Lantai1);
           setThermalLt2(combinedData.Lantai2);
           setThermalLt3(combinedData.Lantai3);
@@ -174,15 +229,14 @@ export default function Home() {
     };
 
     const lastBbmVal = (arr: any) => {
-      const lastData = arr[arr.length - 1];
       const insertSpace = (input: any) => {
         const words = ["tangki", "cadangan", "harian", "bulanan", "a", "b"];
         const regex = new RegExp(`(${words.join("|")})`, "g");
 
         return input.replace(regex, " $1").trim();
       };
-      if (lastData.connected) {
-        const { connected, timestamp, __v, _id, ...others } = lastData;
+      if (arr.connected) {
+        const { connected, timestamp, __v, _id, ...others } = arr;
         const bbm = Object.entries(others).map(([key, value]) => {
           return { name: insertSpace(key), value: value };
         });
@@ -264,7 +318,10 @@ export default function Home() {
     };
     if (data) {
       if (data.result) {
-        transformObjectThermal(data.result.thermalData);
+        transformObjectThermal(
+          data.result.thermalData,
+          data.result.pacMonitoring
+        );
 
         if (data.result.bbmData.data.length > 0) {
           const lastBbmData = lastBbmVal(data.result.bbmData.data);
