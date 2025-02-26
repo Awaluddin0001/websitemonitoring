@@ -55,11 +55,6 @@ export default defineConfig(({ mode }) => {
           rewrite: (path) =>
             path.replace(/^\/api\/v1\/monitoring/, "/api/v1/monitoring"),
         },
-        "/pac": {
-          target: "http://192.168.1.72", // Target server
-          changeOrigin: true, // Change the origin of the host header to the target URL
-          rewrite: (path) => path.replace(/^\/pac/, ""), // Remove /pac from the path
-        },
       },
     },
     preview: {

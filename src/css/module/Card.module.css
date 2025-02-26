@@ -18,6 +18,26 @@
   font-weight: 500;
 }
 
+.cardValueContainerHomeThermal {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  position: relative;
+  padding: 1rem;
+  border-radius: 10px;
+}
+
+.cardValueContainerHomePower {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  position: relative;
+  padding: 1rem;
+  border-radius: 10px;
+}
+
 .cardExplainParameter {
   display: flex;
   flex-direction: column;

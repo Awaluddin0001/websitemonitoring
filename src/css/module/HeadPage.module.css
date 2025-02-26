@@ -210,6 +210,19 @@
   transition: transform 0.2s ease-in-out;
 }
 
+.toggleIcon {
+  cursor: pointer;
+  height: 4rem;
+  transform: translateY(-7px);
+  filter: grayscale(1);
+
+  transition: all 0.2s ease-in-out;
+}
+.toggleIcon:hover {
+  transform: translateY(-7px) scale(1.1);
+  filter: grayscale(0) drop-shadow(0 0 5px #8b000050);
+}
+
 .iconText.show {
   background-color: var(--foreground1b-color);
   color: var(--background1-color);

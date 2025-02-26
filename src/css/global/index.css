@@ -262,10 +262,10 @@ button:focus-visible {
 
 .donut-chart-container {
   width: 100%; /* or specify a fixed size */
-  height: 400px; /* or a percentage based on the container */
   display: flex;
   align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  flex-wrap: wrap;
 }
 
 @media (hover: hover) {

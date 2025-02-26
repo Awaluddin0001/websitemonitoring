@@ -28,7 +28,7 @@ const useMonitoringFetchData = (url: string) => {
   const fetchData = async () => {
     try {
       const response = await axios.get(url);
-      console.log(response);
+      // console.log(response);
       setData(response.data);
     } catch (err: any) {
       setError(err);

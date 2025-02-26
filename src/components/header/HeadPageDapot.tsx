@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import styles from "@/css/module/HeadPage.module.css";
-import togleNavbar from "@/assets/svg/toggleNavbar.svg";
+// import togleNavbar from "@/assets/svg/toggleNavbar.svg";
+import logo from "@/assets/svg/logoRed.svg";
 import { navbarAction } from "@/store/index";
 import { useDispatch } from "react-redux";
 import SearchSvg from "../svg/SearchSvg";
@@ -105,9 +106,9 @@ export default function HeadPageDapot({
       <div className={styles.sectionGroupDapot}>
         <div className={styles.header}>
           <img
-            src={togleNavbar}
+            src={logo}
             alt="toggle for navbar"
-            style={{ cursor: "pointer", height: "2rem" }}
+            className={styles.toggleIcon}
             onClick={toggleNavbar}
           />
           <h1>{title}</h1>

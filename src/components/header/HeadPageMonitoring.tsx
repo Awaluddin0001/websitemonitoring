@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import styles from "@/css/module/HeadPage.module.css";
-import togleNavbar from "@/assets/svg/toggleNavbar.svg";
+// import togleNavbar from "@/assets/svg/toggleNavbar.svg";
+import logo from "@/assets/svg/logoRed.svg";
 import { navbarAction } from "@/store/index";
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
@@ -51,9 +52,9 @@ export default function HeadPageMonitoring({ title }: { title: string }) {
     <motion.div className={styles.headerGroup}>
       <div className={styles.header}>
         <img
-          src={togleNavbar}
+          src={logo}
           alt="toggle for navbar"
-          style={{ cursor: "pointer", height: "2rem" }}
+          className={styles.toggleIcon}
           onClick={toggleNavbar}
         />
         <h1>{title}</h1>

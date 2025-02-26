@@ -39,18 +39,24 @@
 
 .containerValueCard {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  flex-wrap: wrap;
   width: 100%;
+  height: 34vh;
   gap: 1rem;
   padding: 0.5rem 0px 0.7rem 0px;
-  overflow-x: scroll;
-  overflow-y: hidden;
+  flex: 10;
+  /* align-items: flex-start;
+  justify-content: flex-start; */
+  /* overflow-x: scroll;
+  overflow-y: hidden; */
 }
 
 .groupFloorValueCard {
-  width: 100%;
+  display: flex;
+  flex-direction: column;
   border: 4px solid rgb(14 170 203);
-  padding: 2.5rem 1rem 1rem 1rem;
+  padding: 1.5rem 1rem 0.5rem 1rem;
   border-radius: 10px;
   position: relative;
   margin-top: 10px;
@@ -63,7 +69,16 @@
   background-color: #fff;
   padding: 4px 14px;
   border-radius: 10px;
-  top: -7%;
+  top: -14%;
+}
+.groupFloorValueCard .groupFloorValueCardTitleBMKG {
+  position: absolute;
+  font-size: 1.8rem;
+  font-weight: 800;
+  background-color: #fff;
+  padding: 4px 14px;
+  border-radius: 10px;
+  top: -5%;
 }
 
 .cardSectionValue {
@@ -81,9 +96,7 @@
 }
 
 .cardSectionValuePue {
-  display: flex;
-  flex-direction: row;
-  gap: 10px;
+  flex: 2;
 }
 
 .containerValueCard::-webkit-scrollbar {

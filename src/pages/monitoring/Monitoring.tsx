@@ -1,6 +1,6 @@
 import bbm from "@/assets/lottie/Bbm.json";
 import electrical from "@/assets/lottie/Electrical.json";
-import fire from "@/assets/lottie/Fire.json";
+// import fire from "@/assets/lottie/Fire.json";
 import thermal from "@/assets/lottie/Thermal.json";
 import Lottie from "lottie-react";
 import styles from "@/css/module/Monitoring.module.css";
@@ -50,7 +50,7 @@ export default function Monitoring() {
           <Lottie animationData={bbm} loop={true} />
           <h2>Sistem Pemantauan BBM</h2>
         </motion.div>
-        <motion.div
+        {/* <motion.div
           className={styles.cardChoice}
           whileHover={{
             scale: 1.02,
@@ -61,7 +61,7 @@ export default function Monitoring() {
         >
           <Lottie animationData={fire} loop={true} />
           <h2>Sistem Pemantuan Kebakaran</h2>
-        </motion.div>
+        </motion.div> */}
       </div>
     </>
   );

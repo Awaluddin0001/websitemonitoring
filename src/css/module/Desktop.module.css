@@ -39,7 +39,7 @@
   flex-direction: column;
   align-items: center;
   transform-origin: left;
-  gap: 15px;
+  gap: 1rem;
 }
 
 .navbarGroupingTop {
@@ -48,7 +48,7 @@
   flex-direction: column;
   align-items: center;
   transform-origin: left;
-  gap: 60px;
+  gap: 3rem;
 }
 
 .navbarGroupingBottom {
@@ -57,7 +57,7 @@
   flex-direction: column;
   align-items: center;
   transform-origin: left;
-  gap: 15px;
+  gap: 1rem;
 }
 
 .navbarDesktop {

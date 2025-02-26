@@ -310,6 +310,7 @@ const TrendGrafic: React.FC<DrawChartProps> = ({
     <div
       ref={ref}
       style={{
+        flex: 16,
         width: "100%",
         height: heightGrafic + "px",
         position: "relative",

@@ -324,6 +324,7 @@ import SSAPLantai3 from "@/pages/monitoring/SSAPLantai3";
 import SSAPLantai4 from "@/pages/monitoring/SSAPLantai4";
 import SSAPLantai5 from "@/pages/monitoring/SSAPLantai5";
 import Pac from "@/pages/monitoring/Pac";
+import NewLicense from "@/pages/licenses/NewLicense";
 
 export const router = createBrowserRouter([
   {
@@ -333,10 +334,6 @@ export const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
-  },
-  {
-    path: "/contoh",
-    element: <Pac />,
   },
   {
     path: "/roommanagement",
@@ -365,6 +362,14 @@ export const router = createBrowserRouter([
       {
         path: "dashboard",
         element: <Home />,
+      },
+      {
+        path: "pac",
+        element: <Pac />,
+      },
+      {
+        path: "license",
+        element: <NewLicense />,
       },
       {
         path: "monitoring/",
