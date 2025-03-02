@@ -323,8 +323,11 @@ import SSAPLantai2 from "@/pages/monitoring/SSAPLantai2";
 import SSAPLantai3 from "@/pages/monitoring/SSAPLantai3";
 import SSAPLantai4 from "@/pages/monitoring/SSAPLantai4";
 import SSAPLantai5 from "@/pages/monitoring/SSAPLantai5";
-import Pac from "@/pages/monitoring/Pac";
+// import Pac from "@/pages/monitoring/Pac";
 import NewLicense from "@/pages/licenses/NewLicense";
+import ListLicense from "@/pages/licenses/ListLicense";
+import UpdateLicense from "@/pages/licenses/UpdateLicense";
+import Setting from "@/pages/Setting";
 
 export const router = createBrowserRouter([
   {
@@ -363,13 +366,25 @@ export const router = createBrowserRouter([
         path: "dashboard",
         element: <Home />,
       },
+      // {
+      //   path: "pac",
+      //   element: <Pac />,
+      // },
       {
-        path: "pac",
-        element: <Pac />,
+        path: "setting",
+        element: <Setting />,
       },
       {
         path: "license",
+        element: <ListLicense />,
+      },
+      {
+        path: "license/add",
         element: <NewLicense />,
+      },
+      {
+        path: "license/update",
+        element: <UpdateLicense />,
       },
       {
         path: "monitoring/",

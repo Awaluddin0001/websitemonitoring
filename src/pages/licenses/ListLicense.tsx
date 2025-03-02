@@ -5,15 +5,6 @@ import styles from "@/css/module/Asset.module.css";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useReducer, useState } from "react";
 import {
-  listMaintenanceConveyanceReducer,
-  initialStateListMaintenanceConveyance,
-} from "src/reducers/conveyanceReducer";
-
-import {
-  deleteMaintenanceConveyance,
-  getMaintenanceConveyance,
-} from "@/services/conveyance/dapotConveyance";
-import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
@@ -21,21 +12,29 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ConveyanceMaintenance } from "@/types/conveyanceTypes";
 import LoadingFetch from "@/components/loading/LoadingFetch";
 import Lottie from "lottie-react";
 import noData from "@/assets/lottie/noData.json";
 import HomeModal from "@/components/modal/HomeModal";
 import { renderPagination } from "@/components/table/RenderPagination";
+import {
+  initialStateListMaintenanceLicenses,
+  listMaintenanceLicensesReducer,
+} from "src/reducers/licensesReducer";
+import {
+  deleteMaintenanceLicense,
+  getMaintenanceLicense,
+} from "@/services/licenses/dapotLicenses";
+import { License } from "@/types/licensesTypes";
 
 export default function ListLicense() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [state, dispatch] = useReducer(
-    listMaintenanceConveyanceReducer,
-    initialStateListMaintenanceConveyance
+    listMaintenanceLicensesReducer,
+    initialStateListMaintenanceLicenses
   );
-  const { maintenances, pagination, isLoading, globalFilter } = state;
+  const { licenses, pagination, isLoading, globalFilter } = state;
   const [isShowModal, setIsShowModal] = useState(false);
   const [idOriginal, setIdOriginal] = useState("");
   const [assetIdOriginal, setAssetIdOriginal] = useState("");
@@ -44,15 +43,15 @@ export default function ListLicense() {
       try {
         const page = searchParams.get("page") || "1";
         const nopage = globalFilter ? "no" : undefined;
-        const data = await getMaintenanceConveyance(
+        const data = await getMaintenanceLicense(
           page,
           dispatch,
           globalFilter,
           nopage
         );
-        console.log(maintenances);
+        console.log(licenses);
         dispatch({ type: "SET_PAGINATION", payload: data.pagination });
-        dispatch({ type: "SET_MAINTENANCES", payload: data.data });
+        dispatch({ type: "SET_LICENSES", payload: data.data });
       } catch (error) {
         dispatch({
           type: "SET_IS_ERROR",
@@ -63,9 +62,10 @@ export default function ListLicense() {
     fetchBrands();
   }, []);
 
-  const columns: ColumnDef<ConveyanceMaintenance>[] = [
-    { accessorKey: "id", header: "Brand Id" },
-    { accessorKey: "name_file", header: "name" },
+  const columns: ColumnDef<License>[] = [
+    { accessorKey: "id", header: "Id" },
+    { accessorKey: "name_file", header: "Name" },
+    { accessorKey: "expired_at", header: "Expired" },
     { accessorKey: "created_at", header: "Created At" },
     { accessorKey: "user_name", header: "Update By" },
     {
@@ -84,9 +84,7 @@ export default function ListLicense() {
           <div
             className={styles.btnEdit}
             onClick={() =>
-              navigate(
-                `/main/assets/datapotensi/maintenance/update/conveyance?id=${row.original.id}`
-              )
+              navigate(`/main/license/update?id=${row.original.id}`)
             }
           >
             <img src={Pen} alt="Edit" />
@@ -107,7 +105,7 @@ export default function ListLicense() {
   ];
 
   const table = useReactTable({
-    data: maintenances,
+    data: licenses,
     columns,
     columnResizeMode: "onChange",
     columnResizeDirection: "ltr",
@@ -129,7 +127,7 @@ export default function ListLicense() {
   };
 
   const deleteHandle = async (id: string, assetId: string) => {
-    const data = await deleteMaintenanceConveyance(dispatch, id, assetId);
+    const data = await deleteMaintenanceLicense(dispatch, id, assetId);
     if (data.success) {
       navigate(0);
     }
@@ -141,18 +139,16 @@ export default function ListLicense() {
         <LoadingFetch />
       ) : (
         <>
-          <HeadPage title={`List Maintenance Conveyance`} />
+          <HeadPage title={`List License`} />
           <div
-            onClick={() =>
-              navigate(`/main/assets/datapotensi/maintenance/add/conveyance`)
-            }
+            onClick={() => navigate(`/main/license/add`)}
             className={styles.addButton}
           >
-            + Add New Maintenance
+            + Tambah Dokumen Baru
           </div>
           <div className={styles.tableSeal}>
             <div className={styles.tableWrapper}>
-              {maintenances.length > 0 ? (
+              {licenses.length > 0 ? (
                 <div className={styles.tableDetail}>
                   <table className={styles.assetTable}>
                     <thead>
@@ -207,12 +203,12 @@ export default function ListLicense() {
                                   background:
                                     row.index % 2 !== 0 ? "#ffd1d1" : "",
                                   borderBottomLeftRadius:
-                                    row.index === maintenances.length - 1 &&
+                                    row.index === licenses.length - 1 &&
                                     ind === 0
                                       ? "10px"
                                       : undefined,
                                   borderBottomRightRadius:
-                                    row.index === maintenances.length - 1 &&
+                                    row.index === licenses.length - 1 &&
                                     ind === row.getVisibleCells().length - 1
                                       ? "10px"
                                       : undefined,

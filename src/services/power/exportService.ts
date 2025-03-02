@@ -7,7 +7,8 @@ export const downloadExcelFile = async (startDate: Date, endDate: Date) => {
   const nameDate = moment(singaporeTime).format("DD-MM-YYYY");
   try {
     const response = await axios.get(
-      "https://apipengayoman.ipagemakassar.com/api/v1/monitoring/2022/powersmeter/export-power", // Adjust the URL if necessary
+      "http://192.168.1.62:2022/api/v1/monitoring/powersmeter/export-power", // Adjust the URL if necessary
+      // "https://apipengayoman.ipagemakassar.com/api/v1/monitoring/2022/powersmeter/export-power", // Adjust the URL if necessary
       {
         params: {
           starttimestamp: startDate,
@@ -36,7 +37,8 @@ export const downloadExcelFileThermal = async (
   const nameDate = moment(singaporeTime).format("DD-MM-YYYY");
   try {
     const response = await axios.get(
-      "https://apipengayoman.ipagemakassar.com/api/v1/monitoring/2031/thermal/export-thermal", // Adjust the URL if necessary
+      "http://192.168.1.62:2031/api/v1/monitoring/thermal/export-thermal", // Adjust the URL if necessary
+      // "https://apipengayoman.ipagemakassar.com/api/v1/monitoring/2031/thermal/export-thermal", // Adjust the URL if necessary
       {
         params: {
           starttimestamp: startDate,

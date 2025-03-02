@@ -268,6 +268,12 @@ button:focus-visible {
   flex-wrap: wrap;
 }
 
+input[type="date"]::-webkit-calendar-picker-indicator {
+  background-color: #000;
+  border-radius: 10px;
+  padding: 0.2rem;
+}
+
 @media (hover: hover) {
   .resizer {
     opacity: 0;

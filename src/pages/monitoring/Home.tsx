@@ -10,7 +10,7 @@ import CardParameterHome from "@/components/card/CardParameterHome";
 import question from "@/assets/png/question.png";
 import LoadingPage from "@/components/loading/LoadingPage";
 import MonitoringDown from "@/components/error/MonitoringDown";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import FuelGauge from "@/components/grafic/FuelGauge";
 import CardValueHomePower from "@/components/card/CardValueHomePower";
 import CardValueHomeThermal from "@/components/card/CardValueHomeThermal";
@@ -44,7 +44,7 @@ type ThermalRoomDetail = {
 
 // React component
 export default function Home() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [pueData, setPueData] = useState<{ timestamp: string; value: number }>({
     timestamp: "",
     value: 0,
@@ -88,8 +88,8 @@ export default function Home() {
   const [isPac, setIsPac] = useState(false);
 
   const { data, loading, error } = useMonitoringFetchData(
-    // "http://192.168.1.62:2041/api/v1/eventbus/bbmthermalpower"
-    "https://apipengayoman.ipagemakassar.com/api/v1/eventbus/bbmthermalpower"
+    "http://192.168.1.62:2041/api/v1/eventbus/bbmthermalpower"
+    // "https://apipengayoman.ipagemakassar.com/api/v1/eventbus/bbmthermalpower"
   );
 
   const [modalController, setModalController] = useState(false);
@@ -121,7 +121,6 @@ export default function Home() {
         return itemDate >= startDate && itemDate < endDate; // Pastikan tanggal dan waktu sesuai
       });
       setWeather(filteredData[0]);
-      console.log("filtereddata", filteredData);
       // setCurrentWeather(filteredData || null);
     };
     const fetchData = async () => {
@@ -207,8 +206,8 @@ export default function Home() {
             // Final result object
             return {
               room: `${nameRoom}`,
-              temperature: Number((averageTemperature / 10).toFixed(2)),
-              humidity: Number((averageHumidity / 10).toFixed(2)),
+              temperature: Number((averageTemperature / 10).toFixed(0)),
+              humidity: Number((averageHumidity / 10).toFixed(0)),
             };
           };
 
@@ -254,8 +253,8 @@ export default function Home() {
             // Final result object
             return {
               room: `${nameRoom}`,
-              temperature: Number((averageTemperature / 10).toFixed(2)),
-              humidity: Number((averageHumidity / 10).toFixed(2)),
+              temperature: Number((averageTemperature / 10).toFixed(0)),
+              humidity: Number((averageHumidity / 10).toFixed(0)),
             };
           };
 
@@ -331,11 +330,15 @@ export default function Home() {
                     temperature:
                       temperature / count === 0
                         ? 0
-                        : Number((temperature / count).toFixed(2)),
+                        : name === "Data Center"
+                        ? Number(temperature.toFixed(0))
+                        : Number((temperature / count).toFixed(0)),
                     humidity:
                       humidity / count === 0
                         ? 0
-                        : Number((humidity / count).toFixed(2)),
+                        : name === "Data Center"
+                        ? Number(humidity.toFixed(0))
+                        : Number((humidity / count).toFixed(0)),
                     name,
                   },
                 };
@@ -529,6 +532,7 @@ export default function Home() {
         }
       }
     }
+    // console.log(data);
   }, [data]);
 
   if (loading) return <LoadingPage />;
@@ -792,7 +796,7 @@ export default function Home() {
               >
                 PAC
               </div>
-              <div
+              {/* <div
                 style={{
                   backgroundColor: "#0ECBC0",
                   cursor: "pointer",
@@ -806,7 +810,7 @@ export default function Home() {
                 onClick={() => navigate("/main/pac")}
               >
                 PAC Dashboard
-              </div>
+              </div> */}
             </div>
           </div>
 

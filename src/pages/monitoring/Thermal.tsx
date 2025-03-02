@@ -96,7 +96,8 @@ function ThermalPage() {
   const [endDate, setEndDate] = useState<Date | null>(initialEndDate);
 
   const { data, loading, error } = useMonitoringSystem(
-    "https://apipengayoman.ipagemakassar.com/api/v1/monitoring/2031/thermal"
+    "http://192.168.1.62:2031/api/v1/monitoring/thermal"
+    // "https://apipengayoman.ipagemakassar.com/api/v1/monitoring/2031/thermal"
   );
 
   // Handle click to set active class

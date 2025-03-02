@@ -92,7 +92,8 @@ function Power() {
   const [endDate, setEndDate] = useState<Date | null>(initialEndDate);
 
   const { data, loading, error } = useMonitoringSystem(
-    "https://apipengayoman.ipagemakassar.com/api/v1/monitoring/2022/powersmeter"
+    "http://192.168.1.62:2022/api/v1/monitoring/powersmeter"
+    // "https://apipengayoman.ipagemakassar.com/api/v1/monitoring/2022/powersmeter"
   );
 
   // Handle click to set active class

@@ -2,26 +2,32 @@ import HeadPage from "@/components/header/HeadPageMonitoring";
 import ErrorFetch from "@/components/error/ErrorFetch";
 import LoadingFetch from "@/components/loading/LoadingFetch";
 import styles from "@/css/module/Asset.module.css";
-import {
-  getOneMaintenanceConveyance,
-  updateMaintenanceConveyance,
-} from "@/services/conveyance/dapotConveyance";
 import React, { useEffect, useReducer } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import {
-  initialStateUpdateConveyanceMaintenance,
-  updateConveyanceMaintenanceReducer,
-} from "src/reducers/conveyanceReducer";
+  initialStateUpdateLicensesMaintenance,
+  updateLicensesMaintenanceReducer,
+} from "src/reducers/licensesReducer";
+import {
+  getOneMaintenanceLicense,
+  updateMaintenanceLicense,
+} from "@/services/licenses/dapotLicenses";
 export default function UpdateLicense() {
   const navigate = useNavigate();
   const [searchParams, _] = useSearchParams();
   const [state, dispatch] = useReducer(
-    updateConveyanceMaintenanceReducer,
-    initialStateUpdateConveyanceMaintenance
+    updateLicensesMaintenanceReducer,
+    initialStateUpdateLicensesMaintenance
   );
 
-  const { activity, isLoading, isError, errorMessagesFiles, selectedFiles } =
-    state;
+  const {
+    activity,
+    expired_at,
+    isLoading,
+    isError,
+    errorMessagesFiles,
+    selectedFiles,
+  } = state;
 
   const submitHandler = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -29,14 +35,15 @@ export default function UpdateLicense() {
     const jsonuserData = JSON.parse(userData);
     const user_id = jsonuserData.id;
     const formData = new FormData();
-    formData.append("activity", activity);
+    formData.append("name", activity);
     formData.append("document_name", selectedFiles.file1 as File);
     formData.append("user_id", user_id);
+    formData.append("expired_at", expired_at);
     formData.append("id", searchParams.get("id")!);
     const postnew = async (data: any) => {
-      const result = await updateMaintenanceConveyance(data, dispatch);
+      const result = await updateMaintenanceLicense(data, dispatch);
       if (result.success) {
-        navigate(`/main/assets/datapotensi/maintenance/list/conveyance?page=1`);
+        navigate(`/main/license?page=1`);
       }
     };
 
@@ -46,7 +53,7 @@ export default function UpdateLicense() {
   useEffect(() => {
     const getdata = async () => {
       if (searchParams.get("id")) {
-        const result = await getOneMaintenanceConveyance(
+        const result = await getOneMaintenanceLicense(
           dispatch,
           searchParams.get("id")
         );
@@ -97,12 +104,12 @@ export default function UpdateLicense() {
         <LoadingFetch />
       ) : isError ? (
         <>
-          <HeadPage title={`Update Data Maintenance Conveyance`} />
+          <HeadPage title={`Update Data Dokumen`} />
           <ErrorFetch message={isError} />
         </>
       ) : (
         <>
-          <HeadPage title={`Update Data Maintenance Conveyance`} />
+          <HeadPage title={`Update Data Dokumen`} />
           <div className={styles.inputGroup}>
             <div className={styles.containerInput}>
               <h2 className={styles.textTitleInput}>Aktifitas</h2>
@@ -127,6 +134,16 @@ export default function UpdateLicense() {
               {errorMessagesFiles && (
                 <p className={styles.errorMessage}>{errorMessagesFiles}</p>
               )}
+            </div>
+            <div className={styles.containerInput}>
+              <p className={styles.textTitleInput}>Expire</p>
+              <input
+                type="date"
+                className={styles.inputFile}
+                onChange={(e) =>
+                  dispatch({ type: "SET_EXPIRED", payload: e.target.value })
+                }
+              />
             </div>
             <button
               type="submit"

@@ -2,22 +2,28 @@ import HeadPage from "@/components/header/HeadPageMonitoring";
 import ErrorFetch from "@/components/error/ErrorFetch";
 import LoadingFetch from "@/components/loading/LoadingFetch";
 import styles from "@/css/module/Asset.module.css";
-import { postMaintenanceConveyance } from "@/services/conveyance/dapotConveyance";
 import React, { useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  initialStateUpdateConveyanceMaintenance,
-  updateConveyanceMaintenanceReducer,
-} from "src/reducers/conveyanceReducer";
+  initialStateUpdateLicensesMaintenance,
+  updateLicensesMaintenanceReducer,
+} from "src/reducers/licensesReducer";
+import { postMaintenanceLicense } from "@/services/licenses/dapotLicenses";
 export default function NewLicense() {
   const navigate = useNavigate();
   const [state, dispatch] = useReducer(
-    updateConveyanceMaintenanceReducer,
-    initialStateUpdateConveyanceMaintenance
+    updateLicensesMaintenanceReducer,
+    initialStateUpdateLicensesMaintenance
   );
 
-  const { activity, isLoading, isError, errorMessagesFiles, selectedFiles } =
-    state;
+  const {
+    activity,
+    expired_at,
+    isLoading,
+    isError,
+    errorMessagesFiles,
+    selectedFiles,
+  } = state;
 
   const submitHandler = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -25,13 +31,14 @@ export default function NewLicense() {
     const jsonuserData = JSON.parse(userData);
     const user_id = jsonuserData.id;
     const formData = new FormData();
-    formData.append("activity", activity);
+    formData.append("name", activity);
     formData.append("document_name", selectedFiles.file1 as File);
     formData.append("user_id", user_id);
+    formData.append("expired_at", expired_at);
     const postnew = async (data: any) => {
-      const result = await postMaintenanceConveyance(data, dispatch);
+      const result = await postMaintenanceLicense(data, dispatch);
       if (result.success) {
-        navigate(`/main/assets/datapotensi/maintenance/list/conveyance?page=1`);
+        navigate(`/main/license?page=1`);
       }
     };
 
@@ -103,6 +110,16 @@ export default function NewLicense() {
               {errorMessagesFiles && (
                 <p className={styles.errorMessage}>{errorMessagesFiles}</p>
               )}
+            </div>
+            <div className={styles.containerInput}>
+              <p className={styles.textTitleInput}>Expire</p>
+              <input
+                type="date"
+                className={styles.inputFile}
+                onChange={(e) =>
+                  dispatch({ type: "SET_EXPIRED", payload: e.target.value })
+                }
+              />
             </div>
             <button
               type="submit"
