@@ -92,7 +92,7 @@ function Power() {
   const [endDate, setEndDate] = useState<Date | null>(initialEndDate);
 
   const { data, loading, error } = useMonitoringSystem(
-    "http://192.168.1.62:2022/api/v1/monitoring/powersmeter"
+    "https://192.168.1.62:2022/api/v1/monitoring/powersmeter"
     // "https://apipengayoman.ipagemakassar.com/api/v1/monitoring/2022/powersmeter"
   );
 

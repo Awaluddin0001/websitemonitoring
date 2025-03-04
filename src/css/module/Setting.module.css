@@ -22,6 +22,7 @@
 
 .imageChange {
   width: 60%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -33,9 +34,25 @@
   height: 100%;
   width: 100%;
   position: absolute;
-  background-color: black;
+  background-color: rgba(0, 0, 0, 0.041);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .imageBack {
   display: none;
+}
+
+.buttonChangeImage {
+  font-size: 2rem;
+  font-weight: 600;
+  background-color: #2fdfd6;
+  padding: 0.4rem 2rem;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.buttonChangeImage:hover {
+  background-color: #0ecbc0;
 }

@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import styles from "@/css/module/Login.module.css";
 import re from "@/assets/svg/re.svg";
+import { apiUser } from "@/utils/apiUser";
 
 // const Captcha: React.FC<{ setCaptchaText: (text: string) => void }> = ({
 //   setCaptchaText,
@@ -15,14 +16,19 @@ const Captcha = () => {
 
   const fetchCaptcha = async () => {
     try {
-      // const response = await fetch("http://localhost:2061/api/v1/captcha", {
-      const response = await fetch("/api/v1/captcha", {
-        credentials: "include",
+      // Use axios to fetch the captcha image
+      const response = await apiUser.get("/captcha", {
+        responseType: "text", // Ensure the response is treated as text
+        withCredentials: true, // Equivalent to credentials: 'include' in fetch
       });
-      const data = await response.text();
+
+      // Convert the response data to base64
+      const data = response.data;
       setCaptchaSrc(`data:image/svg+xml;base64,${btoa(data)}`);
-      //   const captchaText = atob(data.split(",")[1]);
-      //   setCaptchaText(captchaText); // Update the parent component with the captcha text
+
+      // If you need to extract and set captcha text (commented out in the original code)
+      // const captchaText = atob(data.split(",")[1]);
+      // setCaptchaText(captchaText); // Update the parent component with the captcha text
     } catch (error) {
       console.error("Error fetching captcha:", error);
     }

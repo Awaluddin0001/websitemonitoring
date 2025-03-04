@@ -65,7 +65,7 @@ export default function CategoryNavbar({
   useEffect(() => {
     const takeDataCategory = async () => {
       const category = await axios.get(
-        `http://192.168.1.62:2001/api/v1/dapot/category/count`
+        `https://192.168.1.62:2001/api/v1/dapot/category/count`
         // `https://apipengayoman.ipagemakassar.com/api/v1/dapot/category/count`
       );
       console.log(category.data);

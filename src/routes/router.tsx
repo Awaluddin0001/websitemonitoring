@@ -328,6 +328,8 @@ import NewLicense from "@/pages/licenses/NewLicense";
 import ListLicense from "@/pages/licenses/ListLicense";
 import UpdateLicense from "@/pages/licenses/UpdateLicense";
 import Setting from "@/pages/Setting";
+import ChangePassword from "@/pages/setting/ChangePassword";
+import ListUser from "@/pages/admin/ListUser";
 
 export const router = createBrowserRouter([
   {
@@ -366,6 +368,10 @@ export const router = createBrowserRouter([
         path: "dashboard",
         element: <Home />,
       },
+      {
+        path: "admin",
+        element: <ListUser />,
+      },
       // {
       //   path: "pac",
       //   element: <Pac />,
@@ -373,6 +379,10 @@ export const router = createBrowserRouter([
       {
         path: "setting",
         element: <Setting />,
+      },
+      {
+        path: "setting/password",
+        element: <ChangePassword />,
       },
       {
         path: "license",

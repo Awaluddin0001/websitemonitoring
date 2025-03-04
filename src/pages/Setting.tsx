@@ -1,20 +1,22 @@
 import styles from "@/css/module/Setting.module.css";
 import HeadPageMonitoring from "@/components/header/HeadPageMonitoring";
-import fotoUser from "@/assets/png/userDefault.png";
+// import fotoUser from "@/assets/png/userDefault.png";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 const Setting = () => {
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [id, setId] = useState("");
   const [roleName, setRoleName] = useState("");
-  const [userFoto, setUserFoto] = useState("");
-  const [imageFlip, setImageFlip] = useState(false);
+  // const [userFoto, setUserFoto] = useState("");
+  // const [imageFlip, setImageFlip] = useState(false);
 
   useEffect(() => {
     const userData = localStorage.getItem("user");
     if (userData) {
       const objUserData = JSON.parse(userData);
       setId(objUserData.id);
-      setUserFoto(objUserData.foto);
+      // setUserFoto(objUserData.foto);
       setName(objUserData.name);
       setRoleName(objUserData.rolename);
     }
@@ -148,13 +150,16 @@ const Setting = () => {
                 borderRadius: "10px",
                 cursor: "pointer",
               }}
+              onClick={() => {
+                navigate("password");
+              }}
             >
               Ganti Password
             </div>
           </div>
         </div>
         {/* image */}
-        <div
+        {/* <div
           className={styles.imageChange}
           onMouseOver={() => {
             console.log("tes");
@@ -166,7 +171,7 @@ const Setting = () => {
           }}
         >
           <div className={imageFlip ? styles.imageFront : styles.imageBack}>
-            <div>Tes</div>
+            <div className={styles.buttonChangeImage}>Change Image</div>
           </div>
           {userFoto === "default" ? (
             <>
@@ -177,7 +182,7 @@ const Setting = () => {
               <img src={fotoUser} alt="user foto" className={styles.logo} />
             </>
           )}
-        </div>
+        </div> */}
       </div>
     </div>
   );

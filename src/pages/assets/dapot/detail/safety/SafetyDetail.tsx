@@ -155,7 +155,7 @@ export default function SafetyDetail() {
             <CardDetail
               title="Foto"
               type="foto"
-              urlImage="http://localhost:2001/images/safety"
+              urlImage="https://192.168.1.62:2001/images/safety"
               imageTitle1={photo1}
               imageTitle2={photo2}
               imageTitle3={photo3}

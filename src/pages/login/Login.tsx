@@ -4,10 +4,11 @@ import LoadingFetch from "@/components/loading/LoadingFetch";
 import { useRef, useEffect, useState } from "react";
 import styles from "@/css/module/Login.module.css";
 import Captcha from "@/components/captcha/Captcha";
-import axios from "axios";
+// import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import openEyes from "@/assets/svg/openEyes.svg";
 import closeEyes from "@/assets/svg/closeEyes.svg";
+import { apiUser } from "@/utils/apiUser";
 
 export default function Login() {
   const animationRef = useRef<LottieRefCurrentProps>(null);
@@ -38,8 +39,8 @@ export default function Login() {
   const handleLogin = async () => {
     try {
       setIsLoading(true);
-      const response = await axios.post(
-        `/api/v1/user/login`,
+      const response = await apiUser.post(
+        `/user/login`,
         {
           username,
           password,

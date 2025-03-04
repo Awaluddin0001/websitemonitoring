@@ -1,9 +1,8 @@
 import Pen from "@/assets/svg/pen.svg";
-import Trash from "@/assets/svg/trash.svg";
 import HeadPage from "@/components/header/HeadPageMonitoring";
 import styles from "@/css/module/Asset.module.css";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useReducer } from "react";
 import {
   ColumnDef,
   flexRender,
@@ -15,42 +14,40 @@ import {
 import LoadingFetch from "@/components/loading/LoadingFetch";
 import Lottie from "lottie-react";
 import noData from "@/assets/lottie/noData.json";
-import HomeModal from "@/components/modal/HomeModal";
+// import HomeModal from "@/components/modal/HomeModal";
 import { renderPagination } from "@/components/table/RenderPagination";
-import {
-  initialStateListMaintenanceLicenses,
-  listMaintenanceLicensesReducer,
-} from "src/reducers/licensesReducer";
-import {
-  deleteMaintenanceLicense,
-  getMaintenanceLicense,
-} from "@/services/licenses/dapotLicenses";
-import { License } from "@/types/licensesTypes";
+import { initialStateListUser, listUser } from "src/reducers/userReducer";
+import { getUsers } from "@/services/user/userServices";
+import { user } from "@/types/userTypes";
 
-export default function ListLicense() {
+export default function ListUser() {
   const navigate = useNavigate();
+  const listRole = [
+    "developer",
+    "monitoring",
+    "vip",
+    "admin",
+    "special_guest",
+    "fos",
+    "cro",
+    "me",
+    "security",
+    "guest",
+  ];
   const [searchParams, setSearchParams] = useSearchParams();
-  const [state, dispatch] = useReducer(
-    listMaintenanceLicensesReducer,
-    initialStateListMaintenanceLicenses
-  );
-  const { licenses, pagination, isLoading, globalFilter } = state;
-  const [isShowModal, setIsShowModal] = useState(false);
-  const [idOriginal, setIdOriginal] = useState("");
-  const [assetIdOriginal, setAssetIdOriginal] = useState("");
+  const [state, dispatch] = useReducer(listUser, initialStateListUser);
+  const { user, pagination, isLoading, globalFilter } = state;
+  // const [isShowModal, setIsShowModal] = useState(false);
+  // const [idOriginal, setIdOriginal] = useState("");
+  // const [assetIdOriginal, setAssetIdOriginal] = useState("");
   useEffect(() => {
     const fetchBrands = async () => {
       try {
         const page = searchParams.get("page") || "1";
         const nopage = globalFilter ? "no" : undefined;
-        const data = await getMaintenanceLicense(
-          page,
-          dispatch,
-          globalFilter,
-          nopage
-        );
+        const data = await getUsers(page, dispatch, globalFilter, nopage);
         dispatch({ type: "SET_PAGINATION", payload: data.pagination });
-        dispatch({ type: "SET_LICENSES", payload: data.data });
+        dispatch({ type: "SET_USER", payload: data.data });
       } catch (error) {
         dispatch({
           type: "SET_IS_ERROR",
@@ -61,28 +58,31 @@ export default function ListLicense() {
     fetchBrands();
   }, []);
 
-  const columns: ColumnDef<License>[] = [
+  const columns: ColumnDef<user>[] = [
     { accessorKey: "id", header: "Id" },
     {
-      accessorKey: "name_file",
-      header: "Name",
-      cell: ({ row }) => (
-        <div
-          onClick={() => {
-            const downloadUrl = `https://192.168.1.62:2001/download/license/${row.original.name_file}`;
-
-            // Redirect the browser to the download URL
-            window.location.href = downloadUrl;
-          }}
-          style={{ cursor: "pointer", color: "blue", fontSize: "1.8rem" }}
-        >
-          {row.original.name_file}
-        </div>
-      ),
+      accessorKey: "name",
+      header: "Nama",
     },
-    { accessorKey: "expired_at", header: "Expired" },
-    { accessorKey: "created_at", header: "Created At" },
-    { accessorKey: "user_name", header: "Update By" },
+    { accessorKey: "status", header: "Status" },
+    {
+      accessorKey: "role",
+      header: "Role",
+      cell: ({ row }) => {
+        return (
+          <div style={{ fontSize: "1.8rem", fontWeight: "500" }}>
+            {
+              listRole[
+                row.original.role.length > 3
+                  ? Number(row.original.role.slice(-2)) - 1
+                  : Number(row.original.role.slice(-1))
+              ]
+            }
+          </div>
+        );
+      },
+    },
+    { accessorKey: "phone_number", header: "Phone" },
     {
       id: "actions",
       header: "Action",
@@ -98,13 +98,11 @@ export default function ListLicense() {
         >
           <div
             className={styles.btnEdit}
-            onClick={() =>
-              navigate(`/main/license/update?id=${row.original.id}`)
-            }
+            onClick={() => navigate(`/main/admin/update?id=${row.original.id}`)}
           >
             <img src={Pen} alt="Edit" />
           </div>
-          <div
+          {/* <div
             className={styles.btnDelete}
             onClick={() => {
               setIdOriginal(row.original.id);
@@ -112,15 +110,15 @@ export default function ListLicense() {
               setIsShowModal(true);
             }}
           >
-            <img src={Trash} alt="Delete" />
-          </div>
+            <img src={Trash} alt="Turn Off" />
+          </div> */}
         </div>
       ),
     },
   ];
 
   const table = useReactTable({
-    data: licenses.sort((a: any, b: any) => a.id - b.id),
+    data: user,
     columns,
     columnResizeMode: "onChange",
     columnResizeDirection: "ltr",
@@ -141,12 +139,12 @@ export default function ListLicense() {
     setSearchParams({ page: String(page) });
   };
 
-  const deleteHandle = async (id: string, assetId: string) => {
-    const data = await deleteMaintenanceLicense(dispatch, id, assetId);
-    if (data.success) {
-      navigate(0);
-    }
-  };
+  // const deleteHandle = async (id: string, assetId: string) => {
+  //   const data = await deleteMaintenanceLicense(dispatch, id, assetId);
+  //   if (data.success) {
+  //     navigate(0);
+  //   }
+  // };
 
   return (
     <>
@@ -156,14 +154,14 @@ export default function ListLicense() {
         <>
           <HeadPage title={`List License`} />
           <div
-            onClick={() => navigate(`/main/license/add`)}
+            onClick={() => navigate(`/main/admin/add`)}
             className={styles.addButton}
           >
-            + Tambah Dokumen Baru
+            + Tambah User Baru
           </div>
           <div className={styles.tableSeal}>
             <div className={styles.tableWrapper}>
-              {licenses.length > 0 ? (
+              {user.length > 0 ? (
                 <div className={styles.tableDetail}>
                   <table className={styles.assetTable}>
                     <thead>
@@ -218,12 +216,11 @@ export default function ListLicense() {
                                   background:
                                     row.index % 2 !== 0 ? "#ffd1d1" : "",
                                   borderBottomLeftRadius:
-                                    row.index === licenses.length - 1 &&
-                                    ind === 0
+                                    row.index === user.length - 1 && ind === 0
                                       ? "10px"
                                       : undefined,
                                   borderBottomRightRadius:
-                                    row.index === licenses.length - 1 &&
+                                    row.index === user.length - 1 &&
                                     ind === row.getVisibleCells().length - 1
                                       ? "10px"
                                       : undefined,
@@ -254,7 +251,7 @@ export default function ListLicense() {
             </div>
           </div>
           {renderPagination(pagination, pageHandle, styles)}
-          <HomeModal display={isShowModal} action={setIsShowModal}>
+          {/* <HomeModal display={isShowModal} action={setIsShowModal}>
             <div
               style={{
                 display: "flex",
@@ -305,7 +302,7 @@ export default function ListLicense() {
                 </div>
               </div>
             </div>
-          </HomeModal>
+          </HomeModal> */}
         </>
       )}
     </>

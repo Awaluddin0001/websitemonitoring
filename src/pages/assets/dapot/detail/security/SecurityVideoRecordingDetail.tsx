@@ -157,7 +157,7 @@ export default function SecurityVideoRecordingDetail() {
             <CardDetail
               title="Foto"
               type="foto"
-              urlImage="http://localhost:2001/images/security"
+              urlImage="https://192.168.1.62:2001/images/security"
               imageTitle1={photo1}
               imageTitle2={photo2}
               imageTitle3={photo3}
